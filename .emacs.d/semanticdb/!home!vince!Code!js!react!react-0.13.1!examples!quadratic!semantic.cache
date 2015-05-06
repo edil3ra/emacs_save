@@ -1,0 +1,30 @@
+;; Object quadratic/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "quadratic/"
+  :tables (list 
+   (semanticdb-table "index.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Quadratic Formula Calculator" section nil nil [109 225])
+            ("Quadratic Formula Calculator" section (:members 
+              ( ("Quadratic Formula Calculator" section (:members 
+                  ( ("http://localhost:8000/" anchor nil nil [568 571])
+                    ("Example Details" section (:members 
+                      ( ("facebook.github.io/react" anchor nil nil [813 816]))                      ) nil [655 914]))                  ) nil [236 914]))              ) nil [225 914])
+            ("" section nil nil [914 979])
+            ("" section nil nil [979 1044])
+            ("" section nil nil [1044 1113])
+            ("" section nil nil [1113 1162])
+            ("" section nil nil [1162 1220])
+            ("" section nil nil [1220 1289]))          
+    :file "index.html"
+    :pointmax 1289
+    :fsize 1288
+    :lastmodtime '(21758 7146 0 0)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!js!react!react-0.13.1!examples!quadratic!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

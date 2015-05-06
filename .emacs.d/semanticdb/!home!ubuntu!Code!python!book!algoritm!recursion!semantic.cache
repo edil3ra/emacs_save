@@ -1,0 +1,65 @@
+;; Object recursion/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "recursion/"
+  :tables
+  (list
+    (semanticdb-table "ruler.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("draw_line" function (:arguments 
+              ( ("tick_length" variable nil (reparse-symbol function_parameters) [15 26])
+                ("tick_label" variable nil (reparse-symbol function_parameters) [28 38]))              ) nil [1 141])
+            ("draw_interval" function (:arguments 
+              ( ("center_length" variable nil (reparse-symbol function_parameters) [161 174]))              ) nil [143 314])
+            ("draw_ruler" function (:arguments 
+              ( ("num_inches" variable nil (reparse-symbol function_parameters) [331 341])
+                ("major_length" variable nil (reparse-symbol function_parameters) [343 355]))              ) nil [316 510])
+            ("draw_interval_trace" function (:arguments 
+              ( ("center_length" variable nil (reparse-symbol function_parameters) [536 549])
+                ("counter" variable nil (reparse-symbol function_parameters) [551 558]))              ) nil [512 734]))          
+      :file "ruler.py"
+      :pointmax 734
+      :fsize 733
+      :lastmodtime '(21822 40839 100685 812000)
+      :unmatched-syntax nil)
+    (semanticdb-table "binary_search.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("random" include nil nil [1 14])
+            ("l" variable nil nil [16 53])
+            ("find_element_seq" function (:arguments 
+              ( ("l" variable nil (reparse-symbol function_parameters) [77 78])
+                ("el" variable nil (reparse-symbol function_parameters) [80 82]))              ) nil [56 202])
+            ("binary_search" function (:arguments 
+              ( ("l" variable nil (reparse-symbol function_parameters) [222 223])
+                ("el" variable nil (reparse-symbol function_parameters) [225 227])
+                ("low" variable nil (reparse-symbol function_parameters) [229 232])
+                ("high" variable nil (reparse-symbol function_parameters) [236 240]))              ) nil [204 501])
+            ("print" code nil nil [528 536]))          
+      :file "binary_search.py"
+      :pointmax 537
+      :fsize 536
+      :lastmodtime '(21822 45222 151390 585000)
+      :unmatched-syntax nil)
+    (semanticdb-table "dir.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 10])
+            ("disk_usage" function (:arguments 
+              ( ("path" variable nil (reparse-symbol function_parameters) [27 31]))              ) nil [12 294]))          
+      :file "dir.py"
+      :pointmax 294
+      :fsize 293
+      :lastmodtime '(21822 45821 631507 286000)
+      :unmatched-syntax nil)
+    (semanticdb-table "bad_fib.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "bad_fib.py"
+      :pointmax 19
+      :fsize 28
+      :lastmodtime '(21824 65012 780386 967000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!book!algoritm!recursion!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

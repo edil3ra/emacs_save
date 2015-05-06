@@ -1,0 +1,70 @@
+;; Object main/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "main/"
+  :tables (list 
+   (semanticdb-table "views.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("main" include nil nil [8 19])
+            ("db" include nil nil [28 37])
+            ("permission_required" include nil nil [56 98])
+            ("admin_required" include nil nil [56 98])
+            ("User" include nil nil [113 142])
+            ("Permission" include nil nil [113 142])
+            ("Post" include nil nil [113 142])
+            ("EditProfileForm" include nil nil [155 202])
+            ("EditAdminForm" include nil nil [155 202])
+            ("PostForm" include nil nil [155 202])
+            ("flask" include nil nil [203 300])
+            ("datetime" include nil nil [301 330])
+            ("flask.ext.login" include nil nil [331 387])
+            ("" code nil nil [402 432])
+            ("" code nil nil [444 479])
+            ("index" function (:decorators 
+              ( ("login_required" function (:type "decorator") nil nil))              ) nil [480 1260])
+            ("" code nil nil [1277 1295])
+            ("post" function
+               (:decorators 
+                  ( ("login_required" function (:type "decorator") nil nil))                  
+                :arguments 
+                  ( ("id" variable nil (reparse-symbol function_parameters) [1321 1323]))                  )
+                nil [1296 1422])
+            ("" code nil nil [1435 1478])
+            ("edit" function
+               (:decorators 
+                  ( ("login_required" function (:type "decorator") nil nil))                  
+                :arguments 
+                  ( ("id" variable nil (reparse-symbol function_parameters) [1504 1506]))                  )
+                nil [1479 1925])
+            ("" code nil nil [1938 1948])
+            ("admin" function (:decorators 
+              ( ("login_required" function (:type "decorator") nil nil)
+                ("admin_required" function (:type "decorator") nil nil))              ) nil [1949 2028])
+            ("" code nil nil [2041 2055])
+            ("" code nil nil [2092 2122])
+            ("moderator" function nil nil [2123 2194])
+            ("" code nil nil [2207 2223])
+            ("user" function (:arguments 
+              ( ("name" variable nil (reparse-symbol function_parameters) [2233 2237]))              ) nil [2224 2383])
+            ("" code nil nil [2396 2438])
+            ("edit_profile" function (:decorators 
+              ( ("login_required" function (:type "decorator") nil nil))              ) nil [2439 3258])
+            ("" code nil nil [3275 3326])
+            ("edit_profile_admin" function
+               (:decorators 
+                  ( ("login_required" function (:type "decorator") nil nil)
+                    ("admin_required" function (:type "decorator") nil nil))                  
+                :arguments 
+                  ( ("id" variable nil (reparse-symbol function_parameters) [3382 3384]))                  )
+                nil [3327 3944]))          
+    :file "views.py"
+    :pointmax 3944
+    :fsize 3943
+    :lastmodtime '(21611 32697 108813 927000)
+    :unmatched-syntax '((FROM 143 . 147) (PERIOD 148 . 149) (PERIOD 105 . 106) (FROM 99 . 103) (PERIOD 104 . 105) (PERIOD 44 . 45) (FROM 38 . 42) (PERIOD 43 . 44) (PERIOD 26 . 27) (FROM 20 . 24) (PERIOD 25 . 26) (PERIOD 6 . 7))
+    )
+   )
+  :file "!home!vince!Envs!flask_book!flask_book!app!main!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

@@ -1,0 +1,17 @@
+;; Object introduction_networking/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "introduction_networking/"
+  :tables
+  (list
+
+    (semanticdb-table "search1.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "search1.py"
+      :pointmax 26
+      :fsize 35
+      :lastmodtime '(21801 27678 669932 902000)
+      :unmatched-syntax '(($EOI 39 . 39) ($EOI 20 . 20))))
+  :file "!home!ubuntu!Code!python!book!networking!introduction_networking!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

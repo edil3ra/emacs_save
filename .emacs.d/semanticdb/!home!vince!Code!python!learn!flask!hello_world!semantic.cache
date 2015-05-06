@@ -1,0 +1,24 @@
+;; Object hello_world/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "hello_world/"
+  :tables (list 
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("flask" include nil nil [1 24])
+            ("flask" include nil nil [25 37])
+            ("app" variable nil nil [41 62])
+            ("" code nil nil [73 78])
+            ("hello_world" function nil nil [79 128])
+            ("if" code nil nil [135 176]))          
+    :file "main.py"
+    :pointmax 181
+    :fsize 180
+    :lastmodtime '(21789 41727 483673 560000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!learn!flask!hello_world!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

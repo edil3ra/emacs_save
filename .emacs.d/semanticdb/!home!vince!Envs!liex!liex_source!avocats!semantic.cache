@@ -1,0 +1,38 @@
+;; Object avocats/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "avocats/"
+  :tables (list 
+   (semanticdb-table "bruno.html"
+    :major-mode 'html-mode
+    :tags nil
+    :file "bruno.html"
+    :pointmax 1842
+    :fsize 1916
+    :lastmodtime '(21744 40148 676771 699000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "marcel.html"
+    :major-mode 'html-mode
+    :tags nil
+    :file "marcel.html"
+    :pointmax 1032
+    :fsize 1068
+    :lastmodtime '(21783 58567 293234 270000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "marine.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Matières préférentielles:" section nil nil [943 1172])
+            ("Langues :" section nil nil [1172 1330]))          
+    :file "marine.html"
+    :pointmax 1330
+    :fsize 1376
+    :lastmodtime '(21649 37398 102657 129000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!liex!liex_source!avocats!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

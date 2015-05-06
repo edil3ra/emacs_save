@@ -1,0 +1,172 @@
+;; Object lucky/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "lucky/"
+  :tables
+  (list
+    (semanticdb-table "lucky.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 47])
+            ("bs4" include nil nil [1 47])
+            ("requests" include nil nil [1 47])
+            ("argparse" include nil nil [1 47])
+            ("webbrowser" include nil nil [1 47])
+            ("string" include nil nil [48 75])
+            ("host" variable nil nil [77 103])
+            ("search" variable nil nil [104 151])
+            ("Select" type
+               (:members 
+                  ( ("LINKS" variable nil (reparse-symbol indented_block_body) [172 186]))                  
+                :type "class")
+                nil [154 187])
+            ("Google" type
+               (:members 
+                  ( ("HOST" variable nil (reparse-symbol indented_block_body) [206 232])
+                    ("SEARCH" code nil (reparse-symbol indented_block_body) [237 274])
+                    ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [312 332])
+                            ("self" variable nil (reparse-symbol indented_block_body) [341 357])
+                            ("self" variable nil (reparse-symbol indented_block_body) [366 381]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [297 301]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [284 382])
+                    ("write" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [398 402]))                          )
+                        (reparse-symbol indented_block_body) [388 473])
+                    ("search" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [494 498])
+                            ("keyword" variable nil (reparse-symbol function_parameters) [500 507]))                          )
+                        (reparse-symbol indented_block_body) [483 669])
+                    ("write_soup" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [698 702]))                          )
+                        (reparse-symbol indented_block_body) [683 858])
+                    ("links_page" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [879 883]))                          )
+                        (reparse-symbol indented_block_body) [864 1035])
+                    ("open_links" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1072 1076]))                          )
+                        (reparse-symbol indented_block_body) [1057 1183])
+                    ("search_links_open" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1212 1216])
+                            ("keyword" variable nil (reparse-symbol function_parameters) [1218 1225]))                          )
+                        (reparse-symbol indented_block_body) [1190 1309]))                  
+                :type "class")
+                nil [188 1309])
+            ("search" function (:arguments 
+              ( ("keyword" variable nil (reparse-symbol function_parameters) [1330 1337]))              ) nil [1319 1391])
+            ("if" code nil nil [1398 1845]))          
+      :file "lucky.py"
+      :pointmax 1845
+      :fsize 1844
+      :lastmodtime '(21833 13424 413761 297000)
+      :unmatched-syntax '((INDENT_BLOCK 1184 . 1338) (INDENT_BLOCK 1184 . 1334)))
+
+    (semanticdb-table "test.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("test - Recherche Google" section nil nil [243 10822])
+            ("window.google = {y:{}};google.lc=[];google.li=0;var a=function(e,g,h){var k=\"\",b=new Image,l=google.lc,f=google.li;b.onerror=b.onload=b.onabort=function(){delete l[f]};l[f]=b;h||-1!=g.search(\"&ei=\")||(k=\"&ei=\"+google.kEI);e=h||\"/gen_204?atyp=i&ct=\"+e+\"&cad=\"+g+k+\"&zx=\"+(new Date).getTime();b.src=e;google.li=f+1},c=[\"google\",\"log\"],d=this;c[0]in d||!d.execScript||d.execScript(\"var \"+c[0]);for(var m;c.length&&(m=c.shift());)c.length||void 0===a?d[m]?d=d[m]:d=d[m]={}:d[m]=a;" section nil nil [10822 11348])
+            ("(function(){var a=function(f){for(var g=f.parentElement,d=null,e=0;e<g.childNodes.length;e++){var h=g.childNodes[e];-1<(\" \"+h.className+\" \").indexOf(\" am-dropdown-menu \")&&(d=h)}\"none\"==d.style.display?(d.style.display=\"\",google.log(\"hpam\",\"&ved=\"+f.getAttribute(\"data-ved\"))):d.style.display=\"none\"},b=[\"google\",\"sham\"],c=this;b[0]in c||!c.execScript||c.execScript(\"var \"+b[0]);for(var k;b.length&&(k=b.shift());)b.length||void 0===a?c[k]?c=c[k]:c=c[k]={}:c[k]=a;}).call(window);" section nil nil [11348 11394])
+            ("(function(){var a=function(f){for(var g=f.parentElement,d=null,e=0;e<g.childNodes.length;e++){var h=g.childNodes[e];-1<(\" \"+h.className+\" \").indexOf(\" am-dropdown-menu \")&&(d=h)}\"none\"==d.style.display?(d.style.display=\"\",google.log(\"hpam\",\"&ved=\"+f.getAttribute(\"data-ved\"))):d.style.display=\"none\"},b=[\"google\",\"sham\"],c=this;b[0]in c||!c.execScript||c.execScript(\"var \"+b[0]);for(var k;b.length&&(k=b.shift());)b.length||void 0===a?c[k]?c=c[k]:c=c[k]={}:c[k]=a;}).call(window);" section nil nil [11394 11909])
+            ("Recherche" section (:members 
+              ( ("Web" section (:members 
+                  ( ("Web" anchor nil nil [13972 13975])
+                    ("Search Options" section (:members 
+                      ( ("Pour quels métiers êtes-vous fait ?
+              <b>
+               Test" section (:members 
+                          ( ("Pour quels métiers êtes-vous fait ?
+              <b>
+               Test" anchor nil nil [20582 20585]))                          ) nil [20554 22815])
+                        ("Speedtest.net by Ookla -
+              <b>
+               Test" section (:members 
+                          ( ("Speedtest.net by Ookla -
+              <b>
+               Test" anchor nil nil [22843 22846])
+                            ("Mes résultats" anchor nil nil [24945 24948])
+                            ("Ookla Speedtest" anchor nil nil [25185 25188])
+                            ("Paramètres utilisateur" anchor nil nil [25422 25425])
+                            ("Connexion" anchor nil nil [25677 25680]))                          ) nil [22815 25981])
+                        ("Test" section (:members 
+                          ( ("Test" anchor nil nil [26009 26012])
+                            ("Test Personnalité" anchor nil nil [28283 28286])
+                            ("Tests - Moi" anchor nil nil [28541 28544])
+                            ("Test Couple" anchor nil nil [28783 28786])
+                            ("Test Amour" anchor nil nil [29028 29031]))                          ) nil [25981 29336])
+                        ("Tests" section (:members 
+                          ( ("Tests" anchor nil nil [29364 29367]))                          ) nil [29336 31537])
+                        ("Psycho
+              <b>
+               test" section (:members 
+                          ( ("Psycho
+              <b>
+               test" anchor nil nil [31565 31568]))                          ) nil [31537 34083])
+                        ("Mire ADSL" section (:members 
+                          ( ("Mire ADSL" anchor nil nil [34111 34114]))                          ) nil [34083 35967])
+                        ("Test" section (:members 
+                          ( ("Test" anchor nil nil [35995 35998]))                          ) nil [35967 38039])
+                        ("Test" section (:members 
+                          ( ("Test" anchor nil nil [38067 38070]))                          ) nil [38039 40488])
+                        ("Test" section (:members 
+                          ( ("Test" anchor nil nil [40516 40519]))                          ) nil [40488 42946])
+                        ("Test" section (:members 
+                          ( ("Test" anchor nil nil [42974 42977])
+                            ("test
+             <b>
+              debit" anchor nil nil [45812 45815])
+                            ("test
+             <b>
+              amour" anchor nil nil [46175 46178])
+                            ("test
+             <b>
+              adsl" anchor nil nil [46541 46544])
+                            ("test
+             <b>
+              fille" anchor nil nil [46902 46905])
+                            ("test
+             <b>
+              de personnalité" anchor nil nil [47268 47271])
+                            ("test
+             <b>
+              d'amour" anchor nil nil [47656 47659])
+                            ("test
+             <b>
+              qi" anchor nil nil [48026 48029])
+                            ("beauté" anchor nil nil [48383 48386])
+                            ("Suivant" anchor nil nil [51744 51747])
+                            ("Recherche avancée" anchor nil nil [52208 52211])
+                            ("Aide sur la recherche" anchor nil nil [52319 52322])
+                            ("Envoyer des commentaires" anchor nil nil [52439 52442])
+                            ("Accueil Google" anchor nil nil [52671 52674])
+                            ("Publicité" anchor nil nil [52729 52732])
+                            ("Confidentialité" anchor nil nil [52793 52796])
+                            ("Conditions" anchor nil nil [52877 52880])
+                            ("À propos de Google" anchor nil nil [52954 52957]))                          ) nil [42946 53198]))                      ) nil [17387 53198]))                  ) nil [13960 53198]))              ) nil [11909 53198])
+            ("(function(){var eventid='cCRJVf-YOcmsswHd6YCYCg';google.kEI = eventid;})();" section nil nil [53198 53323])
+            ("google.ac&&google.ac.c({\"agen\":true,\"cgen\":true,\"client\":\"heirloom-serp\",\"dh\":true,\"ds\":\"\",\"exp\":\"msedr\",\"fl\":true,\"host\":\"google.fr\",\"jam\":0,\"jsonp\":true,\"lm\":true,\"msgs\":{\"cibl\":\"Effacer la recherche\",\"dym\":\"Essayez avec cette orthographe :\",\"lcky\":\"J\\u0026#39;ai de la chance\",\"lml\":\"En savoir plus\",\"oskt\":\"Outils de saisie\",\"psrc\":\"Cette suggestion a bien été supprimée de votre \\u003Ca href=\\\"/history\\\"\\u003Ehistorique Web\\u003C/a\\u003E.\",\"psrl\":\"Supprimer\",\"sbit\":\"Recherche par image\",\"srch\":\"Recherche Google\"},\"ovr\":{},\"pq\":\"test\",\"refoq\":true,\"refpd\":true,\"rfs\":[\"test debit\",\"test adsl\",\"test de personnalité\",\"test qi\",\"test amour\",\"test fille\",\"test d'amour\",\"beauté test\"],\"scd\":10,\"sce\":5,\"stok\":\"_65DDR_RmdJ6l6hYDY1peo3tS8M\"})" section nil nil [53323 53455])
+            ("google.ac&&google.ac.c({\"agen\":true,\"cgen\":true,\"client\":\"heirloom-serp\",\"dh\":true,\"ds\":\"\",\"exp\":\"msedr\",\"fl\":true,\"host\":\"google.fr\",\"jam\":0,\"jsonp\":true,\"lm\":true,\"msgs\":{\"cibl\":\"Effacer la recherche\",\"dym\":\"Essayez avec cette orthographe :\",\"lcky\":\"J\\u0026#39;ai de la chance\",\"lml\":\"En savoir plus\",\"oskt\":\"Outils de saisie\",\"psrc\":\"Cette suggestion a bien été supprimée de votre \\u003Ca href=\\\"/history\\\"\\u003Ehistorique Web\\u003C/a\\u003E.\",\"psrl\":\"Supprimer\",\"sbit\":\"Recherche par image\",\"srch\":\"Recherche Google\"},\"ovr\":{},\"pq\":\"test\",\"refoq\":true,\"refpd\":true,\"rfs\":[\"test debit\",\"test adsl\",\"test de personnalité\",\"test qi\",\"test amour\",\"test fille\",\"test d'amour\",\"beauté test\"],\"scd\":10,\"sce\":5,\"stok\":\"_65DDR_RmdJ6l6hYDY1peo3tS8M\"})" section nil nil [53455 54264]))          
+      :file "test.html"
+      :pointmax 54264
+      :fsize 54336
+      :lastmodtime '(21833 13026 443449 845000)
+      :unmatched-syntax nil)
+)
+  :file "!home!ubuntu!Code!python!book!auto!web_scrapping!lucky!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

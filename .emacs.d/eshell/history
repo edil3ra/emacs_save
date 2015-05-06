@@ -1,0 +1,11 @@
+ls
+ll
+npm
+npm init
+npm install gulp --save-dev
+npm install gulp-livereload --save-dev
+ls
+ls
+touch test.com
+ls
+rm test.com

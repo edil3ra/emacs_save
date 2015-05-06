@@ -1,0 +1,153 @@
+;; Object chapter_1/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "chapter_1/"
+  :tables (list 
+   (semanticdb-table "main.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("stdio.h" include (:system-flag t) nil [1 19])
+            ("math.h" include (:system-flag t) nil [20 37])
+            ("LOWER" variable (:constant-flag t) nil [47 52])
+            ("UPPER" variable (:constant-flag t) nil [63 68])
+            ("STEP" variable (:constant-flag t) nil [81 85])
+            ("IN" variable (:constant-flag t) nil [97 99])
+            ("OUT" variable (:constant-flag t) nil [110 113])
+            ("MAXLINE" variable (:constant-flag t) nil [124 131])
+            ("farh_to_degree" function
+               (:prototype-flag t
+                :type "void")
+                nil [139 161])
+            ("degree_to_fahr" function
+               (:prototype-flag t
+                :type "void")
+                nil [162 184])
+            ("degree_to_fahr_simple" function
+               (:prototype-flag t
+                :type "void")
+                nil [185 214])
+            ("file_copying" function
+               (:prototype-flag t
+                :type "void")
+                nil [215 235])
+            ("count_character" function
+               (:prototype-flag t
+                :type "void")
+                nil [236 259])
+            ("count_character_lines_words" function
+               (:prototype-flag t
+                :type "void")
+                nil [260 295])
+            ("array_first" function
+               (:prototype-flag t
+                :type "void")
+                nil [296 315])
+            ("power_function" function
+               (:prototype-flag t
+                :type "void")
+                nil [316 338])
+            ("power" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("base" variable (:type "int") (reparse-symbol arg-sub-list) [349 358])
+                    ("number" variable (:type "int") (reparse-symbol arg-sub-list) [359 370]))                  
+                :type "int")
+                nil [339 371])
+            ("character_array" function
+               (:prototype-flag t
+                :type "void")
+                nil [373 396])
+            ("getline" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("line" variable
+                       (:dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [409 421])
+                    ("maxline" variable (:type "int") (reparse-symbol arg-sub-list) [422 434]))                  
+                :type "int")
+                nil [397 435])
+            ("copy" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("to" variable
+                       (:dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [446 456])
+                    ("from" variable
+                       (:dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [457 469]))                  
+                :type "void")
+                nil [436 470])
+            ("main" function (:type "int") nil [473 731])
+            ("farh_to_degree" function (:type "void") nil [733 998])
+            ("degree_to_fahr" function (:type "void") nil [1000 1274])
+            ("degree_to_fahr_simple" function (:type "void") nil [1276 1474])
+            ("file_character" function (:type "void") nil [1476 1560])
+            ("count_character" function (:type "void") nil [1563 1948])
+            ("count_character_lines_words" function (:type "void") nil [1950 2428])
+            ("array_first" function (:type "void") nil [2429 2920])
+            ("power_function" function (:type "void") nil [2922 2993])
+            ("power" function
+               (:arguments 
+                  ( ("base" variable (:type "int") (reparse-symbol arg-sub-list) [3005 3014])
+                    ("number" variable (:type "int") (reparse-symbol arg-sub-list) [3015 3026]))                  
+                :type "int")
+                nil [2995 3128])
+            ("getline" function
+               (:arguments 
+                  ( ("s" variable
+                       (:dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3143 3152])
+                    ("lim" variable (:type "int") (reparse-symbol arg-sub-list) [3153 3161]))                  
+                :type "int")
+                nil [3131 3286])
+            ("copy" function
+               (:arguments 
+                  ( ("to" variable
+                       (:dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3298 3308])
+                    ("from" variable
+                       (:dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [3309 3321]))                  
+                :type "void")
+                nil [3288 3391])
+            ("character_array" function (:type "void") nil [3393 3644]))          
+    :file "main.c"
+    :pointmax 3398
+    :fsize 3645
+    :lastmodtime '(21690 61382 651527 510000)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("LOWER" . ((number "0" 53 . 54)))
+          ("UPPER" . ((number "200" 69 . 72)))
+          ("STEP" . ((number "20" 86 . 88)))
+          ("OUT" . ((number "1" 114 . 115)))
+          ("IN" . ((number "0" 100 . 101)))
+          ("MAXLINE" . ((number "1000" 132 . 136)))
+          )
+
+    )
+   (semanticdb-table "Makefile"
+    :major-mode 'makefile-gmake-mode
+    :tags 
+        '( ("CFLAGS" variable (:default-value ("-Wall" "-g" "-O2")) nil [1 23])
+            ("all" function (:arguments ("main")) nil [24 34])
+            ("main" function (:arguments ("main.o")) nil [35 68])
+            ("main.o" function (:arguments ("main.c")) nil [69 99])
+            ("run" function nil nil [100 113])
+            ("clean" function nil nil [114 138]))          
+    :file "Makefile"
+    :pointmax 138
+    :fsize 137
+    :lastmodtime '(21689 14878 436739 833000)
+    :unmatched-syntax '((shell-command 122 . 137) (bol 121 . 121))
+    )
+   )
+  :file "!home!vince!Code!c++!c_learn!chapter_1!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

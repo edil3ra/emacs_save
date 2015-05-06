@@ -1,0 +1,52 @@
+;; Object test_blog/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "test_blog/"
+  :tables (list 
+   (semanticdb-table "index.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Ember Starter Kit" section nil nil [58 325])
+            ("{{#link-to 'index' class='brand'}}Bloggr{{/link-to}}
+        <ul class=\"nav\">
+          <li>{{#link-to 'posts'}}Posts{{/link-to}}" section nil nil [325 335])
+            ("{{#link-to 'index' class='brand'}}Bloggr{{/link-to}}
+        <ul class=\"nav\">
+          <li>{{#link-to 'posts'}}Posts{{/link-to}}" section nil nil [335 696])
+            ("Recent Posts" section nil nil [696 1389])
+            ("Please select a post" section nil nil [1389 1508])
+            ("{{#if isEditing}}
+      {{partial 'post/edit'}}
+      <button {{action 'doneEditing'}}>Done" section (:members 
+              ( ("{{title}}" section (:members 
+                  ( ("by {{author.name}} <small class='muted'>({{format-date date}})" section nil nil [1756 2007]))                  ) nil [1733 2007]))              ) nil [1508 2007])
+            ("{{input type=\"text\" value=title}}" section nil nil [2007 2199])
+            ("Yehuda Katz is a member of the <a href=\"http://emberjs.com\">Ember.js" section (:members 
+              ( ("Ember.js" anchor nil nil [2317 2320])
+                ("Ruby on Rails" anchor nil nil [2360 2363])
+                ("jQuery" anchor nil nil [2423 2426])
+                ("Tilde Inc." anchor nil nil [2541 2544])
+                ("jQuery in Action" anchor nil nil [2653 2656])
+                ("Rails 3 in Action" anchor nil nil [2754 2757])
+                ("Thor" anchor nil nil [2968 2971])
+                ("Handlebars" anchor nil nil [3027 3030])
+                ("Janus" anchor nil nil [3084 3087])
+                ("@wycats" anchor nil nil [3235 3238])
+                ("Ember.js" anchor nil nil [3374 3377])
+                ("Tilde" anchor nil nil [3523 3526]))              ) nil [2199 3749])
+            ("" section nil nil [3749 3801])
+            ("" section nil nil [3801 3856])
+            ("" section nil nil [3856 3906])
+            ("" section nil nil [3906 4001])
+            ("" section nil nil [4001 4095])
+            ("" section nil nil [4095 4145]))          
+    :file "index.html"
+    :pointmax 4145
+    :fsize 4148
+    :lastmodtime '(21768 18861 205300 800000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!js!ember!test_blog!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

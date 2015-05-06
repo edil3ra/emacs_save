@@ -1,0 +1,27 @@
+;; Object actions/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "actions/"
+  :tables (list 
+   (semanticdb-table "base_actions.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "base_actions.py"
+    :pointmax 33909
+    :fsize 33908
+    :lastmodtime '(21631 32925 46671 205000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "camera_actions.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "camera_actions.py"
+    :pointmax 6424
+    :fsize 6445
+    :lastmodtime '(21679 59108 9279 75000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!learn!cocos!examples!actions!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

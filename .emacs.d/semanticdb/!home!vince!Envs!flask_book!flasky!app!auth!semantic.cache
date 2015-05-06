@@ -1,0 +1,70 @@
+;; Object auth/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "auth/"
+  :tables (list 
+   (semanticdb-table "views.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("flask" include nil nil [1 69])
+            ("flask.ext.login" include nil nil [70 157])
+            ("auth" include nil nil [165 176])
+            ("db" include nil nil [185 194])
+            ("User" include nil nil [209 220])
+            ("send_email" include nil nil [234 251])
+            ("LoginForm" include nil nil [264 385])
+            ("RegistrationForm" include nil nil [264 385])
+            ("ChangePasswordForm" include nil nil [264 385])
+            ("PasswordResetRequestForm" include nil nil [264 385])
+            ("PasswordResetForm" include nil nil [264 385])
+            ("ChangeEmailForm" include nil nil [264 385])
+            ("before_request" function (:decorators 
+              ( ("auth.before_app_request" function (:type "decorator") nil nil))              ) nil [388 704])
+            ("" code nil nil [717 733])
+            ("unconfirmed" function nil nil [734 914])
+            ("" code nil nil [927 962])
+            ("login" function nil nil [963 1409])
+            ("" code nil nil [1422 1433])
+            ("logout" function (:decorators 
+              ( ("login_required" function (:type "decorator") nil nil))              ) nil [1434 1564])
+            ("" code nil nil [1577 1615])
+            ("register" function nil nil [1616 2241])
+            ("" code nil nil [2254 2274])
+            ("confirm" function
+               (:decorators 
+                  ( ("login_required" function (:type "decorator") nil nil))                  
+                :arguments 
+                  ( ("token" variable nil (reparse-symbol function_parameters) [2303 2308]))                  )
+                nil [2275 2559])
+            ("return" code nil nil [2564 2602])
+            ("" code nil nil [2616 2628])
+            ("resend_confirmation" function (:decorators 
+              ( ("login_required" function (:type "decorator") nil nil))              ) nil [2629 2967])
+            ("" code nil nil [2980 3025])
+            ("change_password" function (:decorators 
+              ( ("login_required" function (:type "decorator") nil nil))              ) nil [3026 3516])
+            ("" code nil nil [3529 3564])
+            ("password_reset_request" function nil nil [3565 4316])
+            ("" code nil nil [4329 4372])
+            ("password_reset" function (:arguments 
+              ( ("token" variable nil (reparse-symbol function_parameters) [4392 4397]))              ) nil [4373 4989])
+            ("" code nil nil [5002 5044])
+            ("change_email_request" function (:decorators 
+              ( ("login_required" function (:type "decorator") nil nil))              ) nil [5045 5796])
+            ("" code nil nil [5809 5834])
+            ("change_email" function
+               (:decorators 
+                  ( ("login_required" function (:type "decorator") nil nil))                  
+                :arguments 
+                  ( ("token" variable nil (reparse-symbol function_parameters) [5868 5873]))                  )
+                nil [5835 6058]))          
+    :file "views.py"
+    :pointmax 6058
+    :fsize 6057
+    :lastmodtime '(21779 8747 405053 67000)
+    :unmatched-syntax '((FROM 252 . 256) (PERIOD 257 . 258) (PERIOD 227 . 228) (FROM 221 . 225) (PERIOD 226 . 227) (PERIOD 201 . 202) (FROM 195 . 199) (PERIOD 200 . 201) (PERIOD 183 . 184) (FROM 177 . 181) (PERIOD 182 . 183) (FROM 158 . 162) (PERIOD 163 . 164) (FROM 252 . 256) (PERIOD 257 . 258) (PERIOD 227 . 228) (FROM 221 . 225) (PERIOD 226 . 227) (PERIOD 201 . 202) (FROM 195 . 199) (PERIOD 200 . 201) (PERIOD 183 . 184) (FROM 177 . 181) (PERIOD 182 . 183) (FROM 158 . 162) (PERIOD 163 . 164) (FROM 252 . 256) (PERIOD 257 . 258) (PERIOD 227 . 228) (FROM 221 . 225) (PERIOD 226 . 227) (PERIOD 201 . 202) (FROM 195 . 199) (PERIOD 200 . 201) (PERIOD 183 . 184) (FROM 177 . 181) (PERIOD 182 . 183) (FROM 158 . 162) (PERIOD 163 . 164))
+    )
+   )
+  :file "!home!vince!Envs!flask_book!flasky!app!auth!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

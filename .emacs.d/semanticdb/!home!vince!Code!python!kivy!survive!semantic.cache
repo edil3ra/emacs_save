@@ -1,0 +1,82 @@
+;; Object survive/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "survive/"
+  :tables (list 
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "main.py"
+    :pointmax 350
+    :fsize 347
+    :lastmodtime '(21724 34396 444922 731000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "world.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("kivy.uix.floatlayout" include nil nil [1 45])
+            ("kivy.clock" include nil nil [46 74])
+            ("kivy.core.window" include nil nil [75 110])
+            ("entities" include nil nil [111 145])
+            ("World" type
+               (:superclasses ("FloatLayout")
+                :members 
+                  ( ("COUNT_ENEMIES" variable nil (reparse-symbol indented_block_body) [178 196])
+                    ("__init__" function
+                       (:suite 
+                          ( ("super" code nil (reparse-symbol indented_block_body) [246 279])
+                            ("self" variable nil (reparse-symbol indented_block_body) [288 314])
+                            ("self" code nil (reparse-symbol indented_block_body) [323 351])
+                            ("self" variable nil (reparse-symbol indented_block_body) [361 378])
+                            ("self" code nil (reparse-symbol indented_block_body) [387 408])
+                            ("Clock" code nil (reparse-symbol indented_block_body) [435 477]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [214 218])
+                            ("args" variable nil (reparse-symbol function_parameters) [220 225])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [227 235]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [201 478])
+                    ("create_enemies" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [503 507]))                          )
+                        (reparse-symbol indented_block_body) [484 820])
+                    ("update" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [846 850])
+                            ("dt" variable nil (reparse-symbol function_parameters) [852 854]))                          )
+                        (reparse-symbol indented_block_body) [835 966])
+                    ("reset" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [983 987]))                          )
+                        (reparse-symbol indented_block_body) [973 1263]))                  
+                :type "class")
+                nil [148 1263]))          
+    :file "world.py"
+    :pointmax 1263
+    :fsize 1262
+    :lastmodtime '(21521 50271 379040 399000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "utils.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "utils.py"
+    :pointmax 202
+    :fsize 201
+    :lastmodtime '(21521 57072 863065 797000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "entities.py"
+    :file "entities.py"
+    :fsize 5894
+    :lastmodtime '(21521 57315 103069 724000)
+    )
+   )
+  :file "!home!vince!Code!python!kivy!survive!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

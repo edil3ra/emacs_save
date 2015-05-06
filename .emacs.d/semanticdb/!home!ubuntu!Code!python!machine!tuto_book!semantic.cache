@@ -1,0 +1,33 @@
+;; Object tuto_book/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "tuto_book/"
+  :tables
+  (list
+    (semanticdb-table "numpy_learn.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("numpy" include nil nil [1 19])
+            ("scipy" include nil nil [20 38])
+            ("matplotlib.pyplot" include nil nil [39 70])
+            ("sklearn" include nil nil [72 100])
+            ("data" variable nil nil [102 157])
+            ("x" variable nil nil [158 172])
+            ("y" variable nil nil [173 187])
+            ("x" variable nil nil [188 207])
+            ("y" variable nil nil [208 227])
+            ("plt" code nil nil [246 263])
+            ("plt" code nil nil [264 308])
+            ("plt" code nil nil [309 327])
+            ("plt" code nil nil [328 357])
+            ("plt" code nil nil [358 456])
+            ("plt" code nil nil [457 482])
+            ("plt" code nil nil [483 493])
+            ("plt" code nil nil [494 504]))          
+      :file "numpy_learn.py"
+      :pointmax 505
+      :fsize 504
+      :lastmodtime '(21534 60950 77493 0)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!machine!tuto_book!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

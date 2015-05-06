@@ -1,0 +1,41 @@
+;; Object hack3/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "hack3/"
+  :tables
+  (list
+    (semanticdb-table "main.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("requests" include nil nil [1 16])
+            ("sys" include nil nil [17 31])
+            ("os" include nil nil [17 31])
+            ("bs4" include nil nil [32 61])
+            ("re" include nil nil [63 72])
+            ("url" variable nil nil [74 127])
+            ("users" variable nil nil [129 191])
+            ("response" variable nil nil [194 230])
+            ("soup" variable nil nil [231 269])
+            ("write" function (:arguments 
+              ( ("name" variable nil (reparse-symbol function_parameters) [282 286])
+                ("content" variable nil (reparse-symbol function_parameters) [288 295]))              ) nil [272 354])
+            ("read" function (:arguments 
+              ( ("name" variable nil (reparse-symbol function_parameters) [374 378]))              ) nil [365 436])
+            ("parse_text" function (:arguments 
+              ( ("text" variable nil (reparse-symbol function_parameters) [462 466]))              ) nil [447 513]))          
+      :file "main.py"
+      :pointmax 514
+      :fsize 513
+      :lastmodtime '(21807 61492 735407 574000)
+      :unmatched-syntax nil)
+
+    (semanticdb-table "main.html"
+      :major-mode 'html-mode
+      :tags nil
+      :file "main.html"
+      :pointmax 3603
+      :fsize 11389
+      :lastmodtime '(21807 59466 290047 148000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!learn!hack3!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

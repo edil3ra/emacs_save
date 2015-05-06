@@ -1,0 +1,51 @@
+;; Object auth/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "auth/"
+  :tables (list 
+   (semanticdb-table "login.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Login Form" section nil nil [193 641]))          
+    :file "login.html"
+    :pointmax 641
+    :fsize 465
+    :lastmodtime '(21775 1545 516877 764000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "logout.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("You have been log out" section nil nil [47 170]))          
+    :file "logout.html"
+    :pointmax 170
+    :fsize 169
+    :lastmodtime '(21774 54320 708401 193000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "register.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Register Form" section nil nil [195 553]))          
+    :file "register.html"
+    :pointmax 553
+    :fsize 552
+    :lastmodtime '(21780 26653 175558 625000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "unconfirmed.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Hello, {{ current_user.name }}" section (:members 
+              ( ("You have not confirmed your account yet" section (:members 
+                  ( ("Clck here" anchor nil nil [319 322]))                  ) nil [90 400]))              ) nil [48 400]))          
+    :file "unconfirmed.html"
+    :pointmax 400
+    :fsize 399
+    :lastmodtime '(21780 31964 559700 859000)
+    :unmatched-syntax 'nil
+    )
+    )
+  :file "!home!vince!Envs!flask_learn!flask_book!app!templates!auth!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

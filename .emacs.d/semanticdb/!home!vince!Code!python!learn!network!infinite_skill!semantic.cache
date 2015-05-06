@@ -1,0 +1,68 @@
+;; Object infinite_skill/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "infinite_skill/"
+  :tables (list 
+   (semanticdb-table "capturing.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("pcapy" include nil nil [1 13]))          
+    :file "capturing.py"
+    :pointmax 17
+    :fsize 16
+    :lastmodtime '(21615 55990 337509 521000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "banner_grabbing.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("socket" include nil nil [1 14])
+            ("re" include nil nil [15 24])
+            ("sock" variable nil nil [27 83])
+            ("sock" code nil nil [84 123])
+            ("'GET / HTTP/1.1\\nHost: www.microsoft.com\\n\\n'" code nil nil [136 181])
+            ("data" variable nil nil [182 191])
+            ("try" code nil nil [194 319])
+            ("strdata" variable nil nil [378 411])
+            ("headers" variable nil nil [412 442])
+            ("for" code nil nil [444 548]))          
+    :file "banner_grabbing.py"
+    :pointmax 548
+    :fsize 547
+    :lastmodtime '(21615 54503 13469 692000)
+    :unmatched-syntax '((INDENT_BLOCK 328 . 377) (COLON 326 . 327) (FINALLY 319 . 326))
+    )
+   (semanticdb-table "network_client.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "network_client.py"
+    :pointmax 282
+    :fsize 281
+    :lastmodtime '(21615 57794 57557 823000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "network_server.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("socket" include nil nil [1 14])
+            ("size" variable nil nil [17 27])
+            ("host" variable nil nil [28 37])
+            ("port" variable nil nil [38 49])
+            ("sock" variable nil nil [51 107])
+            ("sock" code nil nil [108 166])
+            ("sock" code nil nil [169 192])
+            ("sock" code nil nil [193 207])
+            ("c, addr" code nil nil [210 233])
+            ("data" variable nil nil [234 253])
+            ("if" code nil nil [254 422])
+            ("sock" code nil nil [422 434]))          
+    :file "network_server.py"
+    :pointmax 435
+    :fsize 434
+    :lastmodtime '(21615 53694 57448 29000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!learn!network!infinite_skill!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

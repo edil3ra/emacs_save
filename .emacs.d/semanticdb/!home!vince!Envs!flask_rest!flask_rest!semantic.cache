@@ -1,0 +1,127 @@
+;; Object flask_rest/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "flask_rest/"
+  :tables (list 
+   (semanticdb-table "run.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("flask" include nil nil [42 139])
+            ("sqlalchemy" include nil nil [140 204])
+            ("sqlalchemy.orm" include nil nil [205 244])
+            ("flask.ext.script" include nil nil [245 288])
+            ("flask.ext.sqlalchemy" include nil nil [289 332])
+            ("flask.ext.migrate" include nil nil [333 386])
+            ("flask.ext.mail" include nil nil [387 427])
+            ("form" include nil nil [428 453])
+            ("os" include nil nil [454 463])
+            ("threading" include nil nil [464 492])
+            ("basedir" variable nil nil [495 547])
+            ("app" variable nil nil [548 569])
+            ("app" variable nil nil [570 612])
+            ("app" variable nil nil [613 753])
+            ("app" variable nil nil [754 804])
+            ("app" variable nil nil [805 849])
+            ("app" variable nil nil [850 879])
+            ("app" variable nil nil [880 913])
+            ("app" variable nil nil [914 975])
+            ("app" variable nil nil [976 1037])
+            ("app" variable nil nil [1038 1091])
+            ("app" variable nil nil [1092 1162])
+            ("app" variable nil nil [1163 1222])
+            ("manager" variable nil nil [1224 1246])
+            ("db" variable nil nil [1247 1267])
+            ("migrate" variable nil nil [1268 1294])
+            ("mail" variable nil nil [1295 1311])
+            ("Role" type
+               (:superclasses ("db.Model")
+                :members 
+                  ( ("__tablename__" variable nil (reparse-symbol indented_block_body) [1347 1370])
+                    ("id" variable nil (reparse-symbol indented_block_body) [1375 1413])
+                    ("name" variable nil (reparse-symbol indented_block_body) [1418 1456])
+                    ("users" variable nil (reparse-symbol indented_block_body) [1461 1505])
+                    ("__repr__" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1524 1528]))                          )
+                        (reparse-symbol indented_block_body) [1511 1575]))                  
+                :type "class")
+                nil [1321 1575])
+            ("User" type
+               (:superclasses ("db.Model")
+                :members 
+                  ( ("__tablename__" variable nil (reparse-symbol indented_block_body) [1603 1626])
+                    ("id" variable nil (reparse-symbol indented_block_body) [1631 1669])
+                    ("username" variable nil (reparse-symbol indented_block_body) [1674 1716])
+                    ("role_id" variable nil (reparse-symbol indented_block_body) [1721 1770])
+                    ("__repr__" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1789 1793]))                          )
+                        (reparse-symbol indented_block_body) [1776 1844]))                  
+                :type "class")
+                nil [1577 1844])
+            ("send_mail_async" function (:arguments 
+              ( ("app" variable nil (reparse-symbol function_parameters) [1872 1875])
+                ("message" variable nil (reparse-symbol function_parameters) [1877 1884]))              ) nil [1852 1942])
+            ("send_mail" function (:arguments 
+              ( ("to" variable nil (reparse-symbol function_parameters) [1958 1960])
+                ("subject" variable nil (reparse-symbol function_parameters) [1962 1969])
+                ("template" variable nil (reparse-symbol function_parameters) [1971 1979])
+                ("kwargs" variable nil (reparse-symbol function_parameters) [1981 1989]))              ) nil [1944 2388])
+            ("" code nil nil [2401 2431])
+            ("" code nil nil [2442 2478])
+            ("index" function nil nil [2479 3158])
+            ("" code nil nil [3171 3181])
+            ("" code nil nil [3192 3209])
+            ("user" function (:arguments 
+              ( ("name" variable nil (reparse-symbol function_parameters) [3219 3223]))              ) nil [3210 3285])
+            ("" code nil nil [3308 3313])
+            ("page_not_found" function (:arguments 
+              ( ("error" variable nil (reparse-symbol function_parameters) [3333 3338]))              ) nil [3314 3385])
+            ("" code nil nil [3404 3409])
+            ("internal_server_error" function (:arguments 
+              ( ("error" variable nil (reparse-symbol function_parameters) [3436 3441]))              ) nil [3410 3488])
+            ("if" code nil nil [3494 3765]))          
+    :file "run.py"
+    :pointmax 3765
+    :fsize 3764
+    :lastmodtime '(21773 32633 258860 664000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "form.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("flask.ext.wtf" include nil nil [1 31])
+            ("wtforms" include nil nil [32 76])
+            ("wtforms.validators" include nil nil [77 124])
+            ("NameForm" type
+               (:superclasses ("Form")
+                :members 
+                  ( ("name" variable nil (reparse-symbol indented_block_body) [153 232])
+                    ("submit" variable nil (reparse-symbol indented_block_body) [237 267]))                  
+                :type "class")
+                nil [127 268]))          
+    :file "form.py"
+    :pointmax 269
+    :fsize 268
+    :lastmodtime '(21772 8144 926335 403000)
+    :unmatched-syntax '(($EOI 269 . 269) ($EOI 269 . 269) ($EOI 261 . 261) ($EOI 248 . 248) ($EOI 239 . 239) ($EOI 233 . 233) ($EOI 231 . 231) ($EOI 221 . 221) ($EOI 206 . 206) ($EOI 200 . 200) ($EOI 205 . 205) ($EOI 168 . 168) ($EOI 166 . 166) ($EOI 114 . 114) ($EOI 113 . 113) (FROM 27 . 31) (NEWLINE 60 . 61) (FROM 61 . 65) ($EOI 74 . 74) (FROM 27 . 31) ($EOI 60 . 60) ($EOI 19 . 19))
+    )
+   (semanticdb-table "mail.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("run" include nil nil [1 26])
+            ("flask.ext.mail" include nil nil [27 61])
+            ("message" variable nil nil [62 239])
+            ("with" code nil nil [240 287]))          
+    :file "mail.py"
+    :pointmax 287
+    :fsize 286
+    :lastmodtime '(21773 30172 314768 757000)
+    :unmatched-syntax '(($EOI 286 . 286))
+    )
+   )
+  :file "!home!vince!Envs!flask_rest!flask_rest!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

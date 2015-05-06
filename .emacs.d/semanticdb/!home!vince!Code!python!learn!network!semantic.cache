@@ -1,0 +1,30 @@
+;; Object network/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "network/"
+  :tables (list 
+   (semanticdb-table "introduction.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("urllib" include nil nil [1 34])
+            ("http" include nil nil [35 58])
+            ("socket" include nil nil [59 72])
+            ("json" include nil nil [73 84])
+            ("pprint" include nil nil [85 110])
+            ("math" include nil nil [111 122])
+            ("math" code nil nil [124 136])
+            ("simple_urllib_request" function nil nil [138 553])
+            ("simple_http_request" function nil nil [555 845])
+            ("simple_socket" function nil nil [851 1207])
+            ("hostname_to_ip" function nil nil [1209 1306])
+            ("if" code nil nil [1308 1436]))          
+    :file "introduction.py"
+    :pointmax 1438
+    :fsize 1437
+    :lastmodtime '(21679 58177 333254 152000)
+    :unmatched-syntax '(($EOI 1438 . 1438))
+    )
+   )
+  :file "!home!vince!Code!python!learn!network!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

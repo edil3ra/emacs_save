@@ -1,0 +1,32 @@
+;; Object syste_security/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "syste_security/"
+  :tables
+  (list
+    (semanticdb-table "fork_demo.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 10])
+            ("child_process" function nil nil [13 138])
+            ("parent_process" function nil nil [141 586])
+            ("parent_process" code nil nil [587 603]))          
+      :file "fork_demo.py"
+      :pointmax 608
+      :fsize 607
+      :lastmodtime '(21821 21870 152314 755000)
+      :unmatched-syntax nil)
+    (semanticdb-table "directory.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 10])
+            ("tree" function (:arguments 
+              ( ("path" variable nil (reparse-symbol function_parameters) [21 25]))              ) nil [12 85])
+            ("tree" code nil nil [87 93]))          
+      :file "directory.py"
+      :pointmax 94
+      :fsize 550
+      :lastmodtime '(21821 25613 990495 442000)
+      :unmatched-syntax '((FOR 79 . 82) (NEWLINE 84 . 85) (FOR 79 . 82) (NEWLINE 82 . 83))))
+  :file "!home!ubuntu!Code!python!tutorial!scripting_expert!syste_security!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,16 @@
+;; Object app/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "app/"
+  :tables
+  (list
+    (semanticdb-table "__init__.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "__init__.py"
+      :pointmax 480
+      :fsize 479
+      :lastmodtime '(21773 59421 971453 0)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!templates!flask_foundation_template!app!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

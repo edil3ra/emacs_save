@@ -1,0 +1,18 @@
+;; Object distutils/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "distutils/"
+  :tables (list 
+   (semanticdb-table "__init__.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "__init__.py"
+    :pointmax 3984
+    :fsize 3983
+    :lastmodtime '(21462 13285 281428 285000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!.emacs.d!.python-environments!default!lib!python3.4!distutils!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

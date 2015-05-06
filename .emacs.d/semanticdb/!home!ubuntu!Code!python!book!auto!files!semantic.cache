@@ -1,0 +1,30 @@
+;; Object files/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "files/"
+  :tables
+  (list
+    (semanticdb-table "file.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 10])
+            ("os" include nil nil [11 30])
+            ("pprint" include nil nil [31 44])
+            ("cats" variable nil nil [204 286])
+            ("a" variable nil nil [287 311])
+            ("with" code nil nil [312 371]))          
+      :file "file.py"
+      :pointmax 371
+      :fsize 370
+      :lastmodtime '(21828 7752 602598 771000)
+      :unmatched-syntax '(($EOI 323 . 323) ($EOI 320 . 320) ($EOI 310 . 310) (NAME 300 . 301) ($EOI 323 . 323) ($EOI 324 . 324) ($EOI 313 . 313) ($EOI 309 . 309) ($EOI 182 . 182) ($EOI 160 . 160)))
+    (semanticdb-table "cats.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "cats.py"
+      :pointmax 83
+      :fsize 82
+      :lastmodtime '(21828 7730 50906 909000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!book!auto!files!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

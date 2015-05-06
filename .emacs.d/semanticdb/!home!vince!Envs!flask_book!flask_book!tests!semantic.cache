@@ -1,0 +1,92 @@
+;; Object tests/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "tests/"
+  :tables (list 
+   (semanticdb-table "test_basics.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("unittest" include nil nil [1 16])
+            ("flask" include nil nil [17 46])
+            ("app" include nil nil [47 77])
+            ("app.models" include nil nil [78 138])
+            ("BasicsTestCase" type
+               (:superclasses ("unittest.TestCase")
+                :members 
+                  ( ("setUp" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [196 200]))                          )
+                        (reparse-symbol indented_block_body) [186 347])
+                    ("tearDown" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [365 369]))                          )
+                        (reparse-symbol indented_block_body) [352 453])
+                    ("test_app_exists" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [478 482]))                          )
+                        (reparse-symbol indented_block_body) [458 531])
+                    ("test_app_is_testing" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [560 564]))                          )
+                        (reparse-symbol indented_block_body) [536 622])
+                    ("test_password_setter" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [652 656]))                          )
+                        (reparse-symbol indented_block_body) [627 751])
+                    ("test_passoword_getter" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [791 795]))                          )
+                        (reparse-symbol indented_block_body) [765 908])
+                    ("test_password_check" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [950 954]))                          )
+                        (reparse-symbol indented_block_body) [926 1098])
+                    ("test_password_are_random" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1132 1136]))                          )
+                        (reparse-symbol indented_block_body) [1103 1281])
+                    ("test_role_and_permission" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1325 1329]))                          )
+                        (reparse-symbol indented_block_body) [1296 1496])
+                    ("test_role_admin" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1530 1534]))                          )
+                        (reparse-symbol indented_block_body) [1510 1718])
+                    ("test_anonymous_user" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1756 1760]))                          )
+                        (reparse-symbol indented_block_body) [1732 1848]))                  
+                :type "class")
+                nil [141 1848]))          
+    :file "test_basics.py"
+    :pointmax 1848
+    :fsize 1848
+    :lastmodtime '(21631 32816 422669 444000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "test.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("math" include nil nil [1 12]))          
+    :file "test.py"
+    :pointmax 25
+    :fsize 24
+    :lastmodtime '(21631 32862 42670 183000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!flask_book!flask_book!tests!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

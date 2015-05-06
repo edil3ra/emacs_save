@@ -1,0 +1,30 @@
+;; Object templates/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "templates/"
+  :tables
+  (list
+    (semanticdb-table "500.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Document" section nil nil [75 111])
+            ("Page Introuvable <a href=\"http://liex.be\">retour" section (:members 
+              ( ("retour" anchor nil nil [136 139]))              ) nil [111 190]))          
+      :file "500.html"
+      :pointmax 190
+      :fsize 189
+      :lastmodtime '(21830 39491 549148 525000)
+      :unmatched-syntax nil)
+    (semanticdb-table "404.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Document" section nil nil [75 111])
+            ("Page Introuvable! <a href=\"http://liex.be\">retour" section (:members 
+              ( ("retour" anchor nil nil [137 140]))              ) nil [111 191]))          
+      :file "404.html"
+      :pointmax 191
+      :fsize 190
+      :lastmodtime '(21830 39483 397266 689000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Envs!liex!liex!templates!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,91 @@
+;; Object versions/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "versions/"
+  :tables (list 
+   (semanticdb-table "5267c9bda0f_initial_migration.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("\"\"\"initial  migration
+
+Revision ID: 5267c9bda0f
+Revises: None
+Create Date: 2015-03-21 12:54:33.220861
+
+\"\"\"" code nil nil [1 107])
+            ("revision" variable nil nil [150 174])
+            ("down_revision" variable nil nil [175 195])
+            ("alembic" include nil nil [197 219])
+            ("sqlalchemy" include nil nil [220 243])
+            ("upgrade" function nil nil [246 334])
+            ("downgrade" function nil nil [369 459]))          
+    :file "5267c9bda0f_initial_migration.py"
+    :pointmax 492
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "2ed184f17d0_initial_migration.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("\"\"\"initial  migration
+
+Revision ID: 2ed184f17d0
+Revises: 5267c9bda0f
+Create Date: 2015-03-21 12:57:39.544774
+
+\"\"\"" code nil nil [1 114])
+            ("revision" variable nil nil [157 181])
+            ("down_revision" variable nil nil [182 211])
+            ("alembic" include nil nil [213 235])
+            ("sqlalchemy" include nil nil [236 259])
+            ("upgrade" function nil nil [262 350])
+            ("downgrade" function nil nil [385 475]))          
+    :file "2ed184f17d0_initial_migration.py"
+    :pointmax 508
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "cbb39a4688_.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("\"\"\"empty message
+
+Revision ID: cbb39a4688
+Revises: None
+Create Date: 2015-03-21 13:02:17.997917
+
+\"\"\"" code nil nil [1 101])
+            ("revision" variable nil nil [144 167])
+            ("down_revision" variable nil nil [168 188])
+            ("alembic" include nil nil [190 212])
+            ("sqlalchemy" include nil nil [213 236])
+            ("upgrade" function nil nil [239 263])
+            ("downgrade" function nil nil [265 291]))          
+    :file "cbb39a4688_.py"
+    :pointmax 291
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "3ba0c7e9a4f_.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("\"\"\"empty message
+
+Revision ID: 3ba0c7e9a4f
+Revises: None
+Create Date: 2015-03-21 13:04:22.833128
+
+\"\"\"" code nil nil [1 102])
+            ("revision" variable nil nil [145 169])
+            ("down_revision" variable nil nil [170 190])
+            ("alembic" include nil nil [192 214])
+            ("sqlalchemy" include nil nil [215 238])
+            ("upgrade" function nil nil [241 867])
+            ("downgrade" function nil nil [902 1037]))          
+    :file "3ba0c7e9a4f_.py"
+    :pointmax 1070
+    :fsize 1069
+    :lastmodtime '(21773 24134 842543 279000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!flask_rest!flask_rest!migrations!versions!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

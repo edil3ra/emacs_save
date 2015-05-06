@@ -1,0 +1,16 @@
+;; Object automate_online-materials/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "automate_online-materials/"
+  :tables
+  (list
+    (semanticdb-table "renameDates.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "renameDates.py"
+      :pointmax 1387
+      :fsize 1426
+      :lastmodtime '(21829 63169 882321 207000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!book!auto!organizing!dest!automate_online-materials!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

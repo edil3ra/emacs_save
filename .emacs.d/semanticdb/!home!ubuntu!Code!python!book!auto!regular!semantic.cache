@@ -1,0 +1,54 @@
+;; Object regular/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "regular/"
+  :tables
+  (list
+    (semanticdb-table "regular_expression_jeuxvideo.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "regular_expression_jeuxvideo.py"
+      :pointmax 661
+      :fsize 660
+      :lastmodtime '(21827 62966 697132 828000)
+      :unmatched-syntax nil)
+    (semanticdb-table "regular_expression.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("re" include nil nil [1 10])
+            ("r" variable nil nil [1161 1188])
+            ("text" variable nil nil [1189 1217])
+            ("a" variable nil nil [1218 1236])
+            ("print" code nil nil [1237 1253])
+            ("text" variable nil nil [1256 1332])
+            ("re_name" variable nil nil [1333 1391])
+            ("a" variable nil nil [1392 1417])
+            ("a" variable nil nil [1418 1460])
+            ("for" code nil nil [1461 1492])
+            ("text" variable nil nil [1494 1509])
+            ("r" variable nil nil [1510 1540])
+            ("a" variable nil nil [1541 1567])
+            ("print" code nil nil [1568 1576])
+            ("nameRegex" variable nil nil [1579 1621])
+            ("text" variable nil nil [1622 1661])
+            ("a" variable nil nil [1662 1695])
+            ("print" code nil nil [1696 1704])
+            ("nameRegex" variable nil nil [1707 1755])
+            ("text" variable nil nil [1756 1801])
+            ("a" variable nil nil [1802 1859])
+            ("print" code nil nil [1860 1868]))          
+      :file "regular_expression.py"
+      :pointmax 1869
+      :fsize 1868
+      :lastmodtime '(21830 389 625259 96000)
+      :unmatched-syntax nil)
+    (semanticdb-table "contact.html"
+      :major-mode 'html-mode
+      :tags nil
+      :file "contact.html"
+      :pointmax 87248
+      :fsize 87295
+      :lastmodtime '(21827 61362 218907 543000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!book!auto!regular!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

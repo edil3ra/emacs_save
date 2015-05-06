@@ -1,0 +1,36 @@
+;; Object multiclipboard/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "multiclipboard/"
+  :tables
+  (list
+    (semanticdb-table "main.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("argparse" include nil nil [1 16])
+            ("sys" include nil nil [17 27])
+            ("shelve" include nil nil [28 41])
+            ("functools" include nil nil [42 71])
+            ("DATA_SAVE" variable nil nil [73 91])
+            ("fuck" function (:arguments 
+              ( ("func" variable nil (reparse-symbol function_parameters) [102 106]))              ) nil [93 271])
+            ("save" function (:arguments 
+              ( ("keyword" variable nil (reparse-symbol function_parameters) [287 294])
+                ("message" variable nil (reparse-symbol function_parameters) [296 303]))              ) nil [278 331])
+            ("load" function (:arguments 
+              ( ("keyword" variable nil (reparse-symbol function_parameters) [351 358])
+                ("message" variable nil (reparse-symbol function_parameters) [360 367]))              ) nil [342 392])
+            ("delete" function (:arguments 
+              ( ("keyword" variable nil (reparse-symbol function_parameters) [410 417]))              ) nil [399 439])
+            ("list_keywords" function nil nil [446 524])
+            ("list_messages" function nil nil [531 617])
+            ("list_all" function (:decorators 
+              ( ("fuck" function (:type "decorator") nil nil))              ) nil [618 755])
+            ("if" code nil nil [759 1828]))          
+      :file "main.py"
+      :pointmax 1833
+      :fsize 1832
+      :lastmodtime '(21829 3834 659746 374000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!book!auto!files!multiclipboard!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

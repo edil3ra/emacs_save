@@ -1,0 +1,16 @@
+;; Object learn1/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "learn1/"
+  :tables
+  (list
+    (semanticdb-table "main.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "main.py"
+      :pointmax 420
+      :fsize 415
+      :lastmodtime '(21806 35247 345975 56000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!sql!learn1!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

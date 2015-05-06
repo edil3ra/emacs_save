@@ -1,0 +1,40 @@
+;; Object ergo/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "ergo/"
+  :tables (list 
+   (semanticdb-table "contact.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Ergonomie Template" section nil nil [153 290])
+            ("Javea" section nil nil [290 366])
+            ("Javea" section (:members 
+              ( ("Javea" section (:members 
+                  ( ("Javea" anchor nil nil [593 596])
+                    ("Menu" anchor nil nil [718 721])
+                    ("Appartement" anchor nil nil [877 880])
+                    ("Région" anchor nil nil [943 946])
+                    ("Itinéraire" anchor nil nil [999 1002])
+                    ("Prix" anchor nil nil [1063 1066])
+                    ("Contact" anchor nil nil [1115 1118])
+                    ("Utilisateur" anchor nil nil [1166 1169])
+                    ("Contact" section (:members 
+                      ( ("g.machin@machin.com" anchor nil nil [1816 1819])
+                        ("Réservation et disponibilité" section (:members 
+                          ( ("www.hispacar.com" anchor nil nil [3535 3538])
+                            ("connexion" anchor nil nil [4046 4049])
+                            ("connexion" anchor nil nil [4134 4137])
+                            ("connexion" anchor nil nil [4206 4209]))                          ) nil [2005 4354]))                      ) nil [1460 4354]))                  ) nil [589 4354]))              ) nil [366 4354])
+            ("" section nil nil [4354 4399])
+            ("" section nil nil [4399 4448])
+            ("" section nil nil [4448 4510]))          
+    :file "contact.html"
+    :pointmax 4510
+    :fsize 4521
+    :lastmodtime '(21722 1696 139162 200000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!web!www!ergo!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

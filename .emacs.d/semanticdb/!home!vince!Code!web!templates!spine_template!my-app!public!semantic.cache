@@ -1,0 +1,30 @@
+;; Object public/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "public/"
+  :tables (list 
+   (semanticdb-table "index.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Spine App" section nil nil [56 165])
+            ("var exports = this;
+    jQuery(function(){
+      var App = require(\"index\");
+      exports.app = new App({el: $(\"body\")});
+    });" section nil nil [165 223])
+            ("var exports = this;
+    jQuery(function(){
+      var App = require(\"index\");
+      exports.app = new App({el: $(\"body\")});
+    });" section nil nil [223 403])
+            ("loading..." section nil nil [403 445]))          
+    :file "index.html"
+    :pointmax 445
+    :fsize 444
+    :lastmodtime '(21768 28720 185356 440000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!web!templates!spine_template!my-app!public!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

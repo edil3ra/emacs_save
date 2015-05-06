@@ -1,0 +1,19 @@
+;; Object coffee_sass_template/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "coffee_sass_template/"
+  :tables
+  (list
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Test" section nil nil [75 264])
+            ("Morbi non arcu risus, quis varius quam quisque id diam vel quam elementum pulvinar etiam non quam lacus suspendisse? Sed enim ut sem viverra aliquet eget sit amet tellus cras!" section nil nil [264 502])
+            ("" section nil nil [502 559]))          
+      :file "index.html"
+      :pointmax 559
+      :fsize 558
+      :lastmodtime '(21652 41118 366694 0)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!templates!coffee_sass_template!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

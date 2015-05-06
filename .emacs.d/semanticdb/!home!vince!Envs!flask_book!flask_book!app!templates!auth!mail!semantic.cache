@@ -1,0 +1,20 @@
+;; Object mail/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "mail/"
+  :tables (list 
+   (semanticdb-table "confirmation.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Dear {{ user.name }}" section (:members 
+              ( ("click her to confirm registration" anchor nil nil [103 106]))              ) nil [1 221]))          
+    :file "confirmation.html"
+    :pointmax 221
+    :fsize 220
+    :lastmodtime '(21603 30126 205918 687000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!flask_book!flask_book!app!templates!auth!mail!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

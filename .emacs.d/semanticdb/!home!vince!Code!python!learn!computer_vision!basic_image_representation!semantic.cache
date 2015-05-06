@@ -1,0 +1,59 @@
+;; Object basic_image_representation/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "basic_image_representation/"
+  :tables (list 
+   (semanticdb-table "functions.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("os" include nil nil [1 10])
+            ("list_files" function (:arguments 
+              ( ("path" variable nil (reparse-symbol function_parameters) [27 31]))              ) nil [12 126]))          
+    :file "functions.py"
+    :pointmax 126
+    :fsize 125
+    :lastmodtime '(21593 4843 256462 798000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("PIL" include nil nil [1 22])
+            ("PIL" include nil nil [23 50])
+            ("numpy" include nil nil [51 63])
+            ("os" include nil nil [64 73])
+            ("numpy" include nil nil [74 92])
+            ("functions" include nil nil [93 125])
+            ("sdl2" include nil nil [126 137])
+            ("numpy" include nil nil [138 156])
+            ("np" code nil nil [158 174])
+            ("FILE_PATH" variable nil nil [176 210])
+            ("image1" variable nil nil [211 244])
+            ("box" variable nil nil [246 272])
+            ("box2" variable nil nil [273 300])
+            ("region" variable nil nil [301 326])
+            ("region" variable nil nil [327 370])
+            ("image1" code nil nil [371 397]))          
+    :file "main.py"
+    :pointmax 399
+    :fsize 398
+    :lastmodtime '(21679 58829 953271 629000)
+    :unmatched-syntax '(($EOI 393 . 393) ($EOI 392 . 392) ($EOI 390 . 390) ($EOI 389 . 389) ($EOI 394 . 394))
+    )
+   (semanticdb-table "calculate_e.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("math" include nil nil [1 12])
+            ("e" variable nil nil [14 19])
+            ("for" code nil nil [20 86])
+            ("print" code nil nil [88 96]))          
+    :file "calculate_e.py"
+    :pointmax 97
+    :fsize 96
+    :lastmodtime '(21559 9999 243738 122000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!learn!computer_vision!basic_image_representation!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

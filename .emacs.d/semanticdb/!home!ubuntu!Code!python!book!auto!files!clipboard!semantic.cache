@@ -1,0 +1,59 @@
+;; Object clipboard/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "clipboard/"
+  :tables
+  (list
+    (semanticdb-table "main.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("argparse" include nil nil [1 16])
+            ("sys" include nil nil [17 27])
+            ("shelve" include nil nil [28 41])
+            ("functools" include nil nil [42 71])
+            ("DATA_SAVE" variable nil nil [73 91])
+            ("fuck" function (:arguments 
+              ( ("func" variable nil (reparse-symbol function_parameters) [102 106]))              ) nil [93 271])
+            ("save" function
+               (:decorators 
+                  ( ("fuck" function (:type "decorator") nil nil))                  
+                :arguments 
+                  ( ("keyword" variable nil (reparse-symbol function_parameters) [287 294])
+                    ("message" variable nil (reparse-symbol function_parameters) [296 303]))                  )
+                nil [272 331])
+            ("load" function
+               (:decorators 
+                  ( ("fuck" function (:type "decorator") nil nil))                  
+                :arguments 
+                  ( ("keyword" variable nil (reparse-symbol function_parameters) [351 358])
+                    ("message" variable nil (reparse-symbol function_parameters) [360 367]))                  )
+                nil [336 392])
+            ("delete" function
+               (:decorators 
+                  ( ("fuck" function (:type "decorator") nil nil))                  
+                :arguments 
+                  ( ("keyword" variable nil (reparse-symbol function_parameters) [410 417]))                  )
+                nil [393 439])
+            ("list_keywords" function (:decorators 
+              ( ("fuck" function (:type "decorator") nil nil))              ) nil [440 524])
+            ("list_messages" function (:decorators 
+              ( ("fuck" function (:type "decorator") nil nil))              ) nil [525 617])
+            ("list_all" function (:decorators 
+              ( ("fuck" function (:type "decorator") nil nil))              ) nil [618 755])
+            ("main" function nil nil [757 1811])
+            ("if" code nil nil [1818 1856]))          
+      :file "main.py"
+      :pointmax 1856
+      :fsize 1855
+      :lastmodtime '(21831 54054 328561 210000)
+      :unmatched-syntax nil)
+    (semanticdb-table "__init__.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "__init__.py"
+      :pointmax 2
+      :fsize 1
+      :lastmodtime '(21831 53913 162284 478000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!book!auto!files!clipboard!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

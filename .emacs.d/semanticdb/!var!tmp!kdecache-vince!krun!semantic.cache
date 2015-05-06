@@ -1,0 +1,440 @@
+;; Object krun/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "krun/"
+  :tables (list 
+    (semanticdb-table "3921_0_"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Apress" section nil nil [175 1145])
+            ("//<![CDATA[
+    var BLANK_URL = 'http://www.apress.com/js/blank.html';
+    var BLANK_IMG = 'http://www.apress.com/js/spacer.gif';
+    var SKIN_URL = 'http://www.apress.com/skin/frontend/enterprise/soho/';
+//]]>" section nil nil [1145 2990])
+            ("//<![CDATA[
+Mage.Cookies.path     = '/';
+Mage.Cookies.domain   = '.www.apress.com';
+//]]>" section nil nil [2990 3284])
+            ("//<![CDATA[
+Mage.Cookies.path     = '/';
+Mage.Cookies.domain   = '.www.apress.com';
+//]]>" section nil nil [3284 3412])
+            ("//<![CDATA[
+Mage.Cookies.path     = '/';
+Mage.Cookies.domain   = '.www.apress.com';
+//]]>" section nil nil [3412 3561])
+            ("var $jq = jQuery.noConflict();" section nil nil [3561 3690])
+            ("var $jq = jQuery.noConflict();" section nil nil [3690 3824])
+            ("var $jq = jQuery.noConflict();" section nil nil [3824 4060])
+            ("//<![CDATA[
+optionalZipCountries = [];
+//]]>" section nil nil [4060 4147])
+            ("//<![CDATA[
+	window.HDUSeed='d8bf5aa3ca097658fefc411c07d71ca4';
+	window.HDUSeedIntId = setInterval(function(){
+		if (document.observe) {
+			document.observe('dom:loaded', function(){
+				for (var i = 0; i < document.forms.length; i++) {
+					if (document.forms[i].getAttribute('action') && document.forms[i].getAttribute('action').match('contacts/index/post')) {
+						var el = document.createElement('input');
+						el.type = ('hidden');
+						el.name = 'hdu_seed';
+						el.value = window.HDUSeed;
+						document.forms[i].appendChild(el);
+						
+					}
+				}
+			});
+			clearInterval(window.HDUSeedIntId)
+		}
+	}, 100)
+//]]>" section nil nil [4147 4869])
+            ("(function(d,s){var js=d.getElementsByTagName(s)[0];var r=d.createElement(s);r.async=true;r.src=(\"https:\"==location.protocol?\"https:\":\"http:\")+\"//static.criteo.net/js/ld/ld.js\";js.parentNode.insertBefore(r,js)})(document,\"script\")" section nil nil [4869 5115])
+            ("window.criteo_q = window.criteo_q || [];
+window.criteo_q.push(
+ { event: \"setAccount\", account: 18344 },
+  { event: \"setHashedEmail\", email: \"d41d8cd98f00b204e9800998ecf8427e\" },
+  { event: \"setSiteType\", type: \"d\"},
+ { event: \"viewHome\" }
+);" section nil nil [5115 5428])
+            ("var Translator = new Translate([]);" section nil nil [5428 5547])
+            ("//<![CDATA[	 
+		impressions = [];
+		dataLayer = [{
+			'pageCategory': 'home'
+		}];
+		//]]>" section nil nil [5547 5620])
+            ("//<![CDATA[	 
+		impressions = [];
+		dataLayer = [{
+			'pageCategory': 'home'
+		}];
+		//]]>" section (:members 
+              ( ("-->
+<!-- SUBSCRIPTION 199 BANNER -->
+<!--
+<div style=\"margin: 0 auto; width: 100%; height: 144px;border-radius:4px 4px 4px 4px;\">
+<a href=\"/subscription\"><img src=\"/skin/frontend/enterprise/soho/images/AA_Main_V5b.jpg\" height=\"144\" width=\"955\">" anchor nil nil [5966 5969])
+                ("-->
+<!-- CYBER 2014-11-26 -->
+<!--
+<div style=\"margin: 0 auto; width: 100%; height: 150px;border-radius:4px 4px 4px 4px;\">
+<img src=\"/skin/frontend/enterprise/soho/images/CyberMonday_PreSale_2014-11-26.jpg\" height=\"150\" width=\"955\">" anchor nil nil [6230 6233])
+                ("Apress" section (:members 
+                  ( ("Apress" anchor nil nil [7407 7410])
+                    ("Your Account" anchor nil nil [7502 7505])
+                    ("Your Cart" anchor nil nil [7614 7617])
+                    ("Your Bookshelf" anchor nil nil [7737 7740])
+                    ("Sign In" anchor nil nil [7867 7870])
+                    ("Hot Topics :" section (:members 
+                      ( (".NET" anchor nil nil [8111 8114])
+                        ("iPhone" anchor nil nil [8163 8166])
+                        ("Android" anchor nil nil [8212 8215])
+                        ("Web Development" anchor nil nil [8271 8274])
+                        ("Show" anchor nil nil [8351 8354]))                      ) nil [8065 9079]))                  ) nil [7380 9079]))              ) nil [5620 9079])
+            ("Apple/Mac" section (:members 
+              ( ("Apple/Mac" anchor nil nil [9373 9376])
+                ("ApressOpen" anchor nil nil [9494 9497])
+                ("At Work" anchor nil nil [9617 9620])
+                ("Business" anchor nil nil [9734 9737])
+                ("Databases" anchor nil nil [9853 9856])
+                ("Game Programming" anchor nil nil [9974 9977])
+                ("Google" anchor nil nil [10109 10112])
+                ("Graphics" anchor nil nil [10224 10227])
+                ("IT" anchor nil nil [10343 10346])
+                ("Java" anchor nil nil [10451 10454])
+                ("Media" anchor nil nil [10563 10566])
+                ("Microsoft" anchor nil nil [10683 10686])
+                ("Mobile" anchor nil nil [10805 10808])
+                ("Networking" anchor nil nil [10921 10924])
+                ("Office" anchor nil nil [11045 11048])
+                ("Open Source" anchor nil nil [11161 11164])
+                ("Oracle" anchor nil nil [11287 11290])
+                ("Programming" anchor nil nil [11403 11406])
+                ("Robots and Electronics" anchor nil nil [11529 11532])
+                ("Servers" anchor nil nil [11677 11680])
+                ("User Guides" anchor nil nil [11795 11798])
+                ("Web Development" anchor nil nil [11921 11924])
+                ("Other Topics" anchor nil nil [12055 12058])
+                ("CA Press" anchor nil nil [12183 12186])
+                ("Springer" anchor nil nil [12303 12306])
+                ("HTML5" anchor nil nil [12423 12426])
+                ("Windows 8" anchor nil nil [12537 12540])
+                ("XAML" anchor nil nil [12659 12662])
+                ("Security" anchor nil nil [12771 12774])
+                ("IOUG Press" anchor nil nil [12891 12894])
+                ("Big Data" anchor nil nil [13015 13018])
+                ("Swift" anchor nil nil [13135 13138])
+                ("Mathematical Sciences" anchor nil nil [13249 13252])
+                ("Home" anchor nil nil [13422 13425])
+                ("Apress Access Library" anchor nil nil [13535 13538])
+                ("Alpha" anchor nil nil [13629 13632])
+                ("Springer" anchor nil nil [13675 13678])
+                ("Source Code" anchor nil nil [13719 13722])
+                ("About Apress" anchor nil nil [13769 13772])
+                ("Interact with Apress" anchor nil nil [13814 13817])
+                ("Featured Titles" anchor nil nil [13891 13894])
+                ("Featured Titles" anchor nil nil [14055 14058])
+                ("Featured Titles" section (:members 
+                  ( ("new Tip('A9781484206218', 
+            '<p><em>By Edward Crookshanks" anchor nil nil [14592 14595]))                  ) nil [14378 14765]))              ) nil [9079 14765])
+            ("new Tip('A9781484206218', 
+            '<p><em>By Edward Crookshanks" section (:members 
+              ( ("new Tip('A9781484202036', 
+            '<p><em>By Ben Smith" anchor nil nil [16060 16063]))              ) nil [14765 16233])
+            ("new Tip('A9781484202036', 
+            '<p><em>By Ben Smith" section (:members 
+              ( ("new Tip('A9781484211137', 
+            '<p><em>By Darl Kuhn" anchor nil nil [17025 17028]))              ) nil [16233 17198])
+            ("new Tip('A9781484211137', 
+            '<p><em>By Darl Kuhn" section (:members 
+              ( ("new Tip('A9781484202333', 
+            '<p><em>By David Pollak, Vishal Layka" anchor nil nil [17896 17899]))              ) nil [17198 18069])
+            ("new Tip('A9781484202333', 
+            '<p><em>By David Pollak, Vishal Layka" section (:members 
+              ( ("new Tip('A9781430267157', 
+            '<p><em>By Carlos Oliveira" anchor nil nil [18676 18679]))              ) nil [18069 18849])
+            ("new Tip('A9781430267157', 
+            '<p><em>By Carlos Oliveira" section (:members 
+              ( ("new Tip('A9781484205884', 
+            '<p><em>By Vladimir Silva, Massimo Nardone" anchor nil nil [19386 19389]))              ) nil [18849 19559])
+            ("new Tip('A9781484205884', 
+            '<p><em>By Vladimir Silva, Massimo Nardone" section (:members 
+              ( ("new Tip('A9781484200711', 
+            '<p><em>By Vincent Zimmer, Jiming Sun, Marc Jones, Stefan  Reinauer" anchor nil nil [20294 20297]))              ) nil [19559 20467])
+            ("new Tip('A9781484200711', 
+            '<p><em>By Vincent Zimmer, Jiming Sun, Marc Jones, Stefan  Reinauer" section (:members 
+              ( ("new Tip('A9781484205242', 
+            '<p><em>By Onur  Cinar" anchor nil nil [21271 21274]))              ) nil [20467 21444])
+            ("new Tip('A9781484205242', 
+            '<p><em>By Onur  Cinar" section (:members 
+              ( ("new Tip('A9781484200445', 
+            '<p><em>By Venkat Reddy Konasani, Shailendra Kadre" anchor nil nil [22067 22070]))              ) nil [21444 22240])
+            ("new Tip('A9781484200445', 
+            '<p><em>By Venkat Reddy Konasani, Shailendra Kadre" section (:members 
+              ( ("new Tip('A9781484204764', 
+            '<p><em>By Dave Smith" anchor nil nil [22877 22880]))              ) nil [22240 23050])
+            ("new Tip('A9781484204764', 
+            '<p><em>By Dave Smith" section (:members 
+              ( ("new Tip('A9781430265832', 
+            '<p><em>By Will Arthur, David Challener" anchor nil nil [23752 23755]))              ) nil [23050 23925])
+            ("new Tip('A9781430265832', 
+            '<p><em>By Will Arthur, David Challener" section (:members 
+              ( ("new Tip('A9781430264996', 
+            '<p><em>By Mikael  Olsson" anchor nil nil [24735 24738]))              ) nil [23925 24908])
+            ("new Tip('A9781430264996', 
+            '<p><em>By Mikael  Olsson" section nil nil [24908 25615])
+            ("new UI.Carousel(\"horizontal_carousel\");" section nil nil [25615 25702])
+            ("impressions = impressions.concat([{\"name\":\"Practical Enterprise Software Development Techniques\",\"price\":\"34.9900\",\"id\":\"A9781484206218\",\"brand\":\"Apress\",\"position\":1,\"list\":\"Featured Products\"},{\"name\":\"Beginning JSON\",\"price\":\"34.9900\",\"id\":\"A9781484202036\",\"brand\":\"Apress\",\"position\":2,\"list\":\"Featured Products\"},{\"name\":\"Oracle RMAN Database Duplication\",\"price\":\"20.9900\",\"id\":\"A9781484211137\",\"brand\":\"Apress\",\"position\":3,\"list\":\"Featured Products\"},{\"name\":\"Beginning Scala\",\"price\":\"34.9900\",\"id\":\"A9781484202333\",\"brand\":\"Apress\",\"position\":4,\"list\":\"Featured Products\"},{\"name\":\"Practical C++ Financial Programming\",\"price\":\"69.9900\",\"id\":\"A9781430267157\",\"brand\":\"Apress\",\"position\":5,\"list\":\"Featured Products\"},{\"name\":\"Pro Android Games\",\"price\":\"27.9900\",\"id\":\"A9781484205884\",\"brand\":\"Apress\",\"position\":6,\"list\":\"Featured Products\"},{\"name\":\"Embedded Firmware Solutions\",\"price\":\"0.0000\",\"id\":\"A9781484200711\",\"brand\":\"Apress\",\"position\":7,\"list\":\"Featured Products\"},{\"name\":\"Android Quick APIs Reference\",\"price\":\"20.9900\",\"id\":\"A9781484205242\",\"brand\":\"Apress\",\"position\":8,\"list\":\"Featured Products\"},{\"name\":\"Practical Business Analytics Using SAS\",\"price\":\"41.9900\",\"id\":\"A9781484200445\",\"brand\":\"Apress\",\"position\":9,\"list\":\"Featured Products\"},{\"name\":\"Android Recipes\",\"price\":\"34.9900\",\"id\":\"A9781484204764\",\"brand\":\"Apress\",\"position\":10,\"list\":\"Featured Products\"},{\"name\":\"A Practical Guide to TPM 2.0\",\"price\":\"0.0000\",\"id\":\"A9781430265832\",\"brand\":\"Apress\",\"position\":11,\"list\":\"Featured Products\"},{\"name\":\"C Quick Syntax Reference\",\"price\":\"13.9900\",\"id\":\"A9781430264996\",\"brand\":\"Apress\",\"position\":12,\"list\":\"Featured Products\"}]);" section (:members 
+              ( ("Our Categories:" section (:members 
+                  ( ("Apple/Mac" anchor nil nil [27833 27836])
+                    ("ApressOpen" anchor nil nil [28063 28066])
+                    ("At Work" anchor nil nil [28295 28298])
+                    ("Business" anchor nil nil [28521 28524])
+                    ("Databases" anchor nil nil [28749 28752])
+                    ("Game Programming" anchor nil nil [28979 28982])
+                    ("Google" anchor nil nil [29223 29226])
+                    ("Graphics" anchor nil nil [29447 29450])
+                    ("IT" anchor nil nil [29675 29678])
+                    ("Java" anchor nil nil [29891 29894])
+                    ("Media" anchor nil nil [30111 30114])
+                    ("Microsoft" anchor nil nil [30339 30342])
+                    ("Mobile" anchor nil nil [30569 30572])
+                    ("Networking" anchor nil nil [30793 30796])
+                    ("Office" anchor nil nil [31025 31028])
+                    ("Open Source" anchor nil nil [31249 31252])
+                    ("Oracle" anchor nil nil [31483 31486])
+                    ("Programming" anchor nil nil [31707 31710])
+                    ("Robots and Electronics" anchor nil nil [31941 31944])
+                    ("Servers" anchor nil nil [32197 32200])
+                    ("User Guides" anchor nil nil [32423 32426])
+                    ("Web Development" anchor nil nil [32657 32660])
+                    ("Other Topics" anchor nil nil [32899 32902])
+                    ("CA Press" anchor nil nil [33135 33138])
+                    ("Springer" anchor nil nil [33363 33366])
+                    ("HTML5" anchor nil nil [33591 33594])
+                    ("Windows 8" anchor nil nil [33813 33816])
+                    ("XAML" anchor nil nil [34043 34046])
+                    ("Security" anchor nil nil [34263 34266])
+                    ("IOUG Press" anchor nil nil [34491 34494])
+                    ("Big Data" anchor nil nil [34723 34726])
+                    ("Swift" anchor nil nil [34951 34954])
+                    ("Mathematical Sciences" anchor nil nil [35173 35176]))                  ) nil [27588 35408]))              ) nil [25702 35408])
+            ("//<![CDATA[
+document.observe(\"dom:loaded\", function() {
+ 	sortUnorderedList(\"az-list\", false);return false;
+});
+//]]>" section (:members 
+              ( ("This Week&rsquo;s Best-Sellers" section nil nil [35617 35662])
+                ("Weekly Best-Sellers" section (:members 
+                  ( ("new Tip('best_A9781430263371', 
+      '<p><em>By Dev Ramtal, Adrian Dobre" anchor nil nil [35751 35754]))                  ) nil [35662 35926]))              ) nil [35408 35926])
+            ("new Tip('best_A9781430263371', 
+      '<p><em>By Dev Ramtal, Adrian Dobre" section (:members 
+              ( ("new Tip('best_A9781430266730', 
+      '<p><em>By Gil Fink, Ido Flatow" anchor nil nil [36571 36574]))              ) nil [35926 36746])
+            ("new Tip('best_A9781430266730', 
+      '<p><em>By Gil Fink, Ido Flatow" section (:members 
+              ( ("new Tip('best_A9781430262114', 
+      '<p><em>By Paul Wright" anchor nil nil [37540 37543]))              ) nil [36746 37715])
+            ("new Tip('best_A9781430262114', 
+      '<p><em>By Paul Wright" section (:members 
+              ( ("new Tip('best_A9781430258575', 
+      '<p><em>By Godfrey Nolan, Onur  Cinar, David  Truxall" anchor nil nil [38307 38310]))              ) nil [37715 38482])
+            ("new Tip('best_A9781430258575', 
+      '<p><em>By Godfrey Nolan, Onur  Cinar, David  Truxall" section (:members 
+              ( ("new Tip('best_A9781430259299', 
+      '<p><em>By Scott Krig" anchor nil nil [39312 39315]))              ) nil [38482 39487])
+            ("new Tip('best_A9781430259299', 
+      '<p><em>By Scott Krig" section nil nil [39487 40265])
+            ("impressions = impressions.concat([{\"name\":\"Physics for JavaScript Games, Animation, and Simulations\",\"price\":\"34.9900\",\"id\":\"A9781430263371\",\"brand\":\"Apress\",\"position\":1,\"list\":\"Bestsellers\"},{\"name\":\"Pro Single Page Application Development\",\"price\":\"34.9900\",\"id\":\"A9781430266730\",\"brand\":\"Apress\",\"position\":2,\"list\":\"Bestsellers\"},{\"name\":\"Protecting Oracle Database 12c\",\"price\":\"41.9900\",\"id\":\"A9781430262114\",\"brand\":\"Apress\",\"position\":3,\"list\":\"Bestsellers\"},{\"name\":\"Android Best Practices\",\"price\":\"31.9900\",\"id\":\"A9781430258575\",\"brand\":\"Apress\",\"position\":4,\"list\":\"Bestsellers\"},{\"name\":\"Computer Vision Metrics\",\"price\":\"0.0000\",\"id\":\"A9781430259299\",\"brand\":\"Apress\",\"position\":5,\"list\":\"Bestsellers\"}]);" section (:members 
+              ( ("Apress Alpha" section (:members 
+                  ( ("Alpha eBooks" anchor nil nil [41910 41913])
+                    ("Beginning Blender" anchor nil nil [42288 42291])
+                    ("Learn More" anchor nil nil [43062 43065])
+                    ("Add to Wishlist" anchor nil nil [43204 43207])
+                    ("Python" anchor nil nil [43311 43314])
+                    ("JavaScript Recipes" anchor nil nil [43552 43555])
+                    ("Learn More" anchor nil nil [44257 44260])
+                    ("Add to Wishlist" anchor nil nil [44400 44403])
+                    ("Web Development Other" anchor nil nil [44507 44510])
+                    ("Dashboards for Excel" anchor nil nil [44856 44859])
+                    ("Learn More" anchor nil nil [45517 45520])
+                    ("Add to Wishlist" anchor nil nil [45662 45665])
+                    ("Office" anchor nil nil [45768 45771])
+                    ("How to Uncover Corporate Fraud" anchor nil nil [46004 46007])
+                    ("Learn More" anchor nil nil [46912 46915])
+                    ("Add to Wishlist" anchor nil nil [47067 47070])
+                    ("Management" anchor nil nil [47174 47177])
+                    ("Pro WordPress Marketing and Search Engine Optimization" anchor nil nil [47494 47497])
+                    ("Learn More" anchor nil nil [48247 48250])
+                    ("Add to Wishlist" anchor nil nil [48426 48429])
+                    ("Web Development Other" anchor nil nil [48533 48536])
+                    ("Learn Unity for Windows Phone Game Development" anchor nil nil [48808 48811])
+                    ("Learn More" anchor nil nil [49731 49734])
+                    ("Add to Wishlist" anchor nil nil [49902 49905])
+                    ("C#" anchor nil nil [50009 50012])
+                    ("Pro Bash Programming" anchor nil nil [50320 50323])
+                    ("Learn More" anchor nil nil [51301 51304])
+                    ("Add to Wishlist" anchor nil nil [51446 51449])
+                    ("Linux and Unix" anchor nil nil [51553 51556])
+                    ("Pro Java 8 Programming" anchor nil nil [51810 51813])
+                    ("Learn More" anchor nil nil [52614 52617])
+                    ("Add to Wishlist" anchor nil nil [52761 52764])
+                    ("Java" anchor nil nil [52868 52871])
+                    ("Beginning PHP and MySQL" anchor nil nil [53179 53182])
+                    ("Learn More" anchor nil nil [54048 54051])
+                    ("Add to Wishlist" anchor nil nil [54196 54199])
+                    ("PHP" anchor nil nil [54303 54306])
+                    ("Pro JavaScript Techniques" anchor nil nil [54538 54541])
+                    ("Learn More" anchor nil nil [55267 55270])
+                    ("Add to Wishlist" anchor nil nil [55417 55420])
+                    ("Web Development Other" anchor nil nil [55524 55527])
+                    ("Pro XAML with C#" anchor nil nil [55873 55876])
+                    ("Learn More" anchor nil nil [56767 56770])
+                    ("Add to Wishlist" anchor nil nil [56908 56911])
+                    ("Workflow" anchor nil nil [57015 57018])
+                    ("Beginning App Development with Parse and Phonegap" anchor nil nil [57258 57261])
+                    ("Learn More" anchor nil nil [58359 58362])
+                    ("Add to Wishlist" anchor nil nil [58533 58536])
+                    ("Programming" anchor nil nil [58640 58643])
+                    ("Learn Unity Programming with C#" anchor nil nil [58965 58968])
+                    ("Learn More" anchor nil nil [59730 59733])
+                    ("Add to Wishlist" anchor nil nil [59886 59889])
+                    ("C#" anchor nil nil [59993 59996])
+                    ("More iPhone Development with Objective-C" anchor nil nil [60225 60228])
+                    ("Learn More" anchor nil nil [61149 61152])
+                    ("Add to Wishlist" anchor nil nil [61314 61317])
+                    ("iPhone & iPad" anchor nil nil [61421 61424]))                  ) nil [41614 61789])
+                ("Your Cart" section nil nil [61789 61964])
+                ("Deal of the Day" section (:members 
+                  ( ("Beginning iOS Social Games" anchor nil nil [62017 62020])
+                    ("Beginning iOS Social Games" anchor nil nil [62397 62400])
+                    ("Springer Daily Deal" anchor nil nil [62865 62868]))                  ) nil [61964 63153])
+                ("Springer Daily Deal" section (:members 
+                  ( ("Health Information Science" anchor nil nil [63210 63213])
+                    ("Health Information Science" anchor nil nil [63597 63600])
+                    ("-->
+
+                <div>
+                        <a href=\"http://www.apress.com/index.php/dailydealsspringer/index/rss\"><img src=\"http://www.apress.com/skin/frontend/enterprise/soho/dailydealsspringer/rss.gif\" alt=\"Dailydeal RSS Feed\">" anchor nil nil [64085 64088])
+                    ("Companion eBooks" anchor nil nil [64198 64201]))                  ) nil [63153 64455])
+                ("Companion eBooks" section (:members 
+                  ( ("About Promotions" anchor nil nil [64666 64669])
+                    ("Buy a Companion eBook" anchor nil nil [64729 64732]))                  ) nil [64455 64912])
+                ("User Group Program" section (:members 
+                  ( ("Learn More" anchor nil nil [65110 65113]))                  ) nil [64912 65235])
+                ("Newsletter<a name=\"newsletter-box\">" section nil nil [65235 66076]))              ) nil [40265 66076])
+            ("//<![CDATA[
+    var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+//]]>" section (:members 
+              ( ("Academic Resources" section (:members 
+                  ( ("Learn More" anchor nil nil [66401 66404]))                  ) nil [66269 66493])
+                ("Bulk Sales Discount" section (:members 
+                  ( ("Learn More" anchor nil nil [66682 66685])
+                    ("Quick Links" section (:members 
+                      ( ("Contact Us" anchor nil nil [67054 67057])
+                        ("Customer Support" anchor nil nil [67103 67106])
+                        ("User Groups" anchor nil nil [67166 67169])
+                        ("Write For Us" anchor nil nil [67216 67219])
+                        ("About Us" anchor nil nil [67330 67333])
+                        ("Press Room" anchor nil nil [67374 67377])
+                        ("Sales and Distribution" anchor nil nil [67472 67475])
+                        ("Terms &amp; Conditions" anchor nil nil [67564 67567])
+                        ("Privacy Policy" anchor nil nil [67630 67633]))                      ) nil [66988 67742])
+                    ("Apress' Technology A-Z" section (:members 
+                      ( ("Android" anchor nil nil [67784 67787])
+                        ("Apple/Mac" anchor nil nil [67851 67854])
+                        ("Apress Recommended" anchor nil nil [67915 67918])
+                        ("ApressOpen" anchor nil nil [67988 67991])
+                        ("ASP.NET" anchor nil nil [68054 68057])
+                        ("At Work" anchor nil nil [68125 68128])
+                        ("Big Data" anchor nil nil [68185 68188])
+                        ("Business" anchor nil nil [68247 68250])
+                        ("Business and Economics" anchor nil nil [68309 68312])
+                        ("C#" anchor nil nil [68408 68411])
+                        ("CA Press" anchor nil nil [68469 68472])
+                        ("Computer Science" anchor nil nil [68531 68534])
+                        ("Current Events" anchor nil nil [68618 68621])
+                        ("Databases" anchor nil nil [68701 68704])
+                        ("Electrical Engineering" anchor nil nil [68765 68768])
+                        ("Game Programming" anchor nil nil [68864 68867])
+                        ("Google" anchor nil nil [68942 68945])
+                        ("Government" anchor nil nil [69000 69003])
+                        ("Graphics" anchor nil nil [69075 69078])
+                        ("GWT" anchor nil nil [69137 69140])
+                        ("HTML5" anchor nil nil [69196 69199])
+                        ("Investing" anchor nil nil [69252 69255])
+                        ("IOUG Press" anchor nil nil [69325 69328])
+                        ("iPhone & iPad" anchor nil nil [69391 69394])
+                        ("IT" anchor nil nil [69473 69476])
+                        ("Java" anchor nil nil [69523 69526])
+                        ("Mathematical Sciences" anchor nil nil [69577 69580])
+                        ("Media" anchor nil nil [69665 69668])
+                        ("Microsoft" anchor nil nil [69727 69730])
+                        ("Mobile" anchor nil nil [69791 69794])
+                        ("NetBeans" anchor nil nil [69849 69852])
+                        ("Networking" anchor nil nil [69916 69919])
+                        ("Office" anchor nil nil [69982 69985])
+                        ("Open Source" anchor nil nil [70040 70043])
+                        ("Oracle" anchor nil nil [70108 70111])
+                        ("Other Topics" anchor nil nil [70176 70179])
+                        ("Programming" anchor nil nil [70246 70249])
+                        ("Python" anchor nil nil [70314 70317])
+                        ("RMOUG" anchor nil nil [70384 70387])
+                        ("Robots and Electronics" anchor nil nil [70456 70459])
+                        ("Root Catalog" anchor nil nil [70546 70549])
+                        ("Security" anchor nil nil [70646 70649])
+                        ("Servers" anchor nil nil [70708 70711])
+                        ("Source Code" anchor nil nil [70778 70781])
+                        ("Springer" anchor nil nil [70849 70852])
+                        ("Swift" anchor nil nil [70911 70914])
+                        ("User Guides" anchor nil nil [70967 70970])
+                        ("Web Development" anchor nil nil [71035 71038])
+                        ("Web Standards" anchor nil nil [71111 71114])
+                        ("Windows 8" anchor nil nil [71199 71202])
+                        ("Windows Server" anchor nil nil [71263 71266])
+                        ("XAML" anchor nil nil [71345 71348]))                      ) nil [67742 71498]))                  ) nil [66493 71498]))              ) nil [66076 71498])
+            ("/* <![CDATA[ */
+	getTwitters('tweet', { 
+	  id: 'apress', 
+	  count: 0, 
+	  enableLinks: true, 
+	  ignoreReplies: true, 
+	  clearContents: true,
+	  template: '&ldquo;%text%&rdquo; <p><a href=\"https://twitter.com/%user_screen_name%/statuses/%id_str%/\">%time%" section (:members 
+              ( ("%time%" anchor nil nil [71729 71732]))              ) nil [71498 71906])
+            ("dataLayer.push({
+                'ecommerce': {
+                  'impressions': impressions
+                },
+                'event': 'prodImpressions'
+              });" section nil nil [71906 72010])
+            ("dataLayer.push({
+                'ecommerce': {
+                  'impressions': impressions
+                },
+                'event': 'prodImpressions'
+              });" section nil nil [72010 73821])
+            ("dataLayer.push({
+                'ecommerce': {
+                  'impressions': impressions
+                },
+                'event': 'prodImpressions'
+              });" section nil nil [73821 74322])
+            ("(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5CJBVJ');" section nil nil [74322 74790]))          
+    :file "3921_0_"
+    :pointmax 74790
+    :fsize 74791
+    :lastmodtime '(21758 54822 657856 195000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!var!tmp!kdecache-vince!krun!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

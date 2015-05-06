@@ -1,0 +1,20 @@
+;; Object terminal/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "terminal/"
+  :tables
+  (list
+    (semanticdb-table "te.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("socket" include nil nil [1 14])
+            ("s" variable nil nil [20 39])
+            ("s" code nil nil [40 61])
+            ("s" code nil nil [62 87]))          
+      :file "te.py"
+      :pointmax 88
+      :fsize 87
+      :lastmodtime '(21810 20470 118520 713000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!stuff!terminal!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

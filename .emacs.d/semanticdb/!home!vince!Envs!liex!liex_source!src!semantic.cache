@@ -1,0 +1,40 @@
+;; Object src/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "src/"
+  :tables (list 
+   (semanticdb-table "liex_accueil.html"
+    :major-mode 'html-mode
+    :tags nil
+    :file "liex_accueil.html"
+    :pointmax 2535
+    :fsize 2629
+    :lastmodtime '(21793 7856 754361 131000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "html_condition_generale.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Conditions générales et Tarif du Réseau d'Avocats LIEX" section nil nil [21 85])
+            ("Tous les montants sont majorés de la TVA  de 21 % à dater du  1er Janvier 2014" section nil nil [85 8490]))          
+    :file "html_condition_generale.html"
+    :pointmax 8490
+    :fsize 8890
+    :lastmodtime '(21793 12268 398292 780000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "html_honnoraires.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("HONORAIRE" section nil nil [1 4747])
+            ("FRAIS ET DEBOURS" section nil nil [4747 6898]))          
+    :file "html_honnoraires.html"
+    :pointmax 6898
+    :fsize 7214
+    :lastmodtime '(21793 12853 734283 711000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!liex!liex_source!src!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

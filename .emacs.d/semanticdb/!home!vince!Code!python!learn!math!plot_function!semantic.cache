@@ -1,0 +1,25 @@
+;; Object plot_function/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "plot_function/"
+  :tables (list 
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("matplotlib.pyplot" include nil nil [1 32])
+            ("numpy" include nil nil [33 51])
+            ("x" variable nil nil [54 82])
+            ("y" variable nil nil [83 96])
+            ("fig1" variable nil nil [98 117])
+            ("plt" code nil nil [118 132])
+            ("plt" code nil nil [133 143]))          
+    :file "main.py"
+    :pointmax 144
+    :fsize 143
+    :lastmodtime '(21729 64130 540934 421000)
+    :unmatched-syntax '(($EOI 144 . 144) ($EOI 113 . 113) ($EOI 113 . 113) ($EOI 100 . 100) ($EOI 98 . 98) ($EOI 87 . 87))
+    )
+   )
+  :file "!home!vince!Code!python!learn!math!plot_function!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

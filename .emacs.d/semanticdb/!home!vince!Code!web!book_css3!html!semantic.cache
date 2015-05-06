@@ -1,0 +1,41 @@
+;; Object html/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "html/"
+  :tables (list 
+   (semanticdb-table "media_queries.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Media" section nil nil [75 165])
+            ("Titre" section (:members 
+              ( ("Titre" section (:members 
+                  ( ("Magna etiam!" anchor nil nil [355 358])
+                    ("Eu tincidunt." anchor nil nil [396 399])
+                    ("Eu lobortis." anchor nil nil [438 441])
+                    ("Est placerat." anchor nil nil [479 482])
+                    ("Viverra ipsum!" anchor nil nil [521 524])
+                    ("Et malesuada." anchor nil nil [564 567]))                  ) nil [242 677]))              ) nil [165 677])
+            ("" section nil nil [677 767])
+            ("" section nil nil [767 833])
+            ("" section nil nil [833 905]))          
+    :file "media_queries.html"
+    :pointmax 905
+    :fsize 904
+    :lastmodtime '(21759 26670 346072 145000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "selector.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Selector" section nil nil [75 164])
+            ("Commodo sed egestas egestas fringilla phasellus faucibus scelerisque? Velit euismod in pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor." section nil nil [164 412]))          
+    :file "selector.html"
+    :pointmax 412
+    :fsize 411
+    :lastmodtime '(21759 20240 853899 968000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!web!book_css3!html!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

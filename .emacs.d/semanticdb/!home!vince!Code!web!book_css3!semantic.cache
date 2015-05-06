@@ -1,0 +1,24 @@
+;; Object book_css3/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "book_css3/"
+  :tables (list 
+   (semanticdb-table "index.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Document" section nil nil [75 158])
+            ("media_queries" section (:members 
+              ( ("media_queries" anchor nil nil [178 181])
+                ("" anchor nil nil [242 245])
+                ("" anchor nil nil [288 291])
+                ("" anchor nil nil [321 324]))              ) nil [158 372]))          
+    :file "index.html"
+    :pointmax 372
+    :fsize 371
+    :lastmodtime '(21759 20198 673898 839000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!web!book_css3!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

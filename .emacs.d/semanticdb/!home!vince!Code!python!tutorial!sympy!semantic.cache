@@ -1,0 +1,45 @@
+;; Object sympy/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "sympy/"
+  :tables (list 
+   (semanticdb-table "symbols.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("sympy" include nil nil [1 74])
+            ("sympy" include nil nil [75 93])
+            ("a" variable nil nil [95 111])
+            ("b" code nil nil [112 121])
+            ("c" variable nil nil [122 138])
+            ("x" variable nil nil [250 266])
+            ("y" variable nil nil [267 283])
+            ("eq1" variable nil nil [285 301])
+            ("eq2" code nil nil [302 322])
+            ("eq3" variable nil nil [323 333])
+            ("eq4" variable nil nil [334 344])
+            ("big" variable nil nil [464 490])
+            ("trig_id" code nil nil [491 552])
+            ("print" code nil nil [553 578])
+            ("print" code nil nil [580 595]))          
+    :file "symbols.py"
+    :pointmax 596
+    :fsize 595
+    :lastmodtime '(21731 22658 745757 510000)
+    :unmatched-syntax '(($EOI 596 . 596))
+    )
+   (semanticdb-table "symbolics_computation.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("sympy" include nil nil [1 19])
+            ("sympy" include nil nil [20 55])
+            ("sympy.abc" include nil nil [56 94]))          
+    :file "symbolics_computation.py"
+    :pointmax 95
+    :fsize 94
+    :lastmodtime '(21731 23105 653774 200000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!tutorial!sympy!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

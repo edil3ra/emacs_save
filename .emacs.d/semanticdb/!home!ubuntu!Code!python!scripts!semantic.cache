@@ -1,0 +1,26 @@
+;; Object scripts/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "scripts/"
+  :tables
+  (list
+    (semanticdb-table "first.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("print" code nil nil [21 41]))          
+      :file "first.py"
+      :pointmax 42
+      :fsize 41
+      :lastmodtime '(21828 61581 976547 743000)
+      :unmatched-syntax '(($EOI 33 . 33) ($EOI 33 . 33)))
+    (semanticdb-table "second.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("print" code nil nil [20 36]))          
+      :file "second.py"
+      :pointmax 37
+      :fsize 36
+      :lastmodtime '(21828 61670 503467 361000)
+      :unmatched-syntax '(($EOI 37 . 37))))
+  :file "!home!ubuntu!Code!python!scripts!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,43 @@
+;; Object alchemy_test/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "alchemy_test/"
+  :tables
+  (list
+    (semanticdb-table "declarative.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 10])
+            ("sys" include nil nil [11 21])
+            ("sqlalchemy" include nil nil [22 80])
+            ("sqlalchemy.ext.declarative" include nil nil [81 136])
+            ("sqlalchemy.orm" include nil nil [137 176])
+            ("sqlalchemy" include nil nil [177 213])
+            ("Base" variable nil nil [216 241])
+            ("Person" type
+               (:superclasses ("Base")
+                :members 
+                  ( ("__tablename__" variable nil (reparse-symbol indented_block_body) [267 291])
+                    ("id" variable nil (reparse-symbol indented_block_body) [296 336])
+                    ("name" variable nil (reparse-symbol indented_block_body) [341 383]))                  
+                :type "class")
+                nil [243 384])
+            ("Address" type
+               (:superclasses ("Base")
+                :members 
+                  ( ("__tablename__" variable nil (reparse-symbol indented_block_body) [415 440])
+                    ("id" variable nil (reparse-symbol indented_block_body) [445 494])
+                    ("street_name" variable nil (reparse-symbol indented_block_body) [499 534])
+                    ("street_number" variable nil (reparse-symbol indented_block_body) [539 574])
+                    ("post_code" variable nil (reparse-symbol indented_block_body) [579 630])
+                    ("person" variable nil (reparse-symbol indented_block_body) [696 732]))                  
+                :type "class")
+                nil [390 733])
+            ("Base" code nil nil [781 813]))          
+      :file "declarative.py"
+      :pointmax 815
+      :fsize 814
+      :lastmodtime '(21805 21729 723990 553000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!sql!alchemy_test!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,94 @@
+;; Object comic/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "comic/"
+  :tables (list 
+   (semanticdb-table "test.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "test.py"
+    :pointmax 1
+    :fsize 0
+    :lastmodtime '(21657 63150 902742 616000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "main.py"
+    :pointmax 467
+    :fsize 466
+    :lastmodtime '(21657 62556 478726 698000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "comicwidgets.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("kivy.uix.relativelayout" include nil nil [1 51])
+            ("kivy.graphics" include nil nil [52 82])
+            ("DraggableWidget" type
+               (:superclasses ("RelativeLayout")
+                :members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("super" code nil (reparse-symbol indented_block_body) [166 192])
+                            ("self" variable nil (reparse-symbol indented_block_body) [201 221]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [141 145])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [147 155]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [128 222])
+                    ("on_touch_down" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [254 258])
+                            ("touch" variable nil (reparse-symbol function_parameters) [260 265]))                          )
+                        (reparse-symbol indented_block_body) [236 437])
+                    ("select" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [457 461]))                          )
+                        (reparse-symbol indented_block_body) [446 691])
+                    ("on_touch_move" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [715 719])
+                            ("touch" variable nil (reparse-symbol function_parameters) [721 726]))                          )
+                        (reparse-symbol indented_block_body) [697 1010])
+                    ("translate" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1038 1042])
+                            ("x" variable nil (reparse-symbol function_parameters) [1044 1045])
+                            ("y" variable nil (reparse-symbol function_parameters) [1047 1048]))                          )
+                        (reparse-symbol indented_block_body) [1024 1143])
+                    ("on_touch_up" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1165 1169])
+                            ("touch" variable nil (reparse-symbol function_parameters) [1171 1176]))                          )
+                        (reparse-symbol indented_block_body) [1149 1327])
+                    ("deselected" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1348 1352]))                          )
+                        (reparse-symbol indented_block_body) [1333 1460]))                  
+                :type "class")
+                nil [85 1460])
+            ("Stickman" type
+               (:superclasses ("DraggableWidget")
+                :members 
+                  ( ("pass" code nil (reparse-symbol indented_block_body) [1499 1503]))                  
+                :type "class")
+                nil [1462 1504]))          
+    :file "comicwidgets.py"
+    :pointmax 1513
+    :fsize 1512
+    :lastmodtime '(21680 3274 96275 383000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!kivy!comic!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

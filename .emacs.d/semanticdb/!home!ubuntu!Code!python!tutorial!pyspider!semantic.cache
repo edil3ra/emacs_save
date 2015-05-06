@@ -1,0 +1,16 @@
+;; Object pyspider/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "pyspider/"
+  :tables
+  (list
+    (semanticdb-table "html_css.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "html_css.py"
+      :pointmax 1
+      :fsize 0
+      :lastmodtime '(21816 3724 926662 896000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!tutorial!pyspider!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

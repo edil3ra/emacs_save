@@ -1,0 +1,495 @@
+;; Object selenium/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "selenium/"
+  :tables (list 
+   (semanticdb-table "interaction.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("selenium.webdriver" include nil nil [1 39])
+            ("Driver" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [90 108])
+                            ("self" variable nil (reparse-symbol indented_block_body) [117 154]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [123 127]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [110 203])
+                    ("source" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [613 617]))                          
+                        :decorators 
+                          ( ("property" function (:type "decorator") nil nil))                          )
+                        (reparse-symbol indented_block_body) [588 659])
+                    ("save_current_source" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [697 701]))                          )
+                        (reparse-symbol indented_block_body) [673 820])
+                    ("main" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [851 855]))                          )
+                        (reparse-symbol indented_block_body) [842 907])
+                    ("connect" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [925 929]))                          )
+                        (reparse-symbol indented_block_body) [913 998])
+                    ("disconnect" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1023 1027]))                          )
+                        (reparse-symbol indented_block_body) [1008 1057]))                  
+                :type "class")
+                nil [90 1057])
+            ("driver" variable nil nil [1064 1081])
+            ("driver" code nil nil [1082 1098])
+            ("d" variable nil nil [1099 1116])
+            ("if" code nil nil [1119 1176]))          
+    :file "interaction.py"
+    :pointmax 1122
+    :fsize 1178
+    :lastmodtime '(21794 45809 28339 133000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "collect.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("requests" include nil nil [1 16])
+            ("bs4" include nil nil [17 46])
+            ("config" variable nil nil [49 127])
+            ("write" function (:arguments 
+              ( ("name" variable nil (reparse-symbol function_parameters) [140 144])
+                ("content" variable nil (reparse-symbol function_parameters) [146 153]))              ) nil [130 212])
+            ("read" function (:arguments 
+              ( ("name" variable nil (reparse-symbol function_parameters) [223 227]))              ) nil [214 284])
+            ("response" variable nil nil [286 324])
+            ("soup" variable nil nil [325 363])
+            ("write" code nil nil [364 400]))          
+    :file "collect.py"
+    :pointmax 402
+    :fsize 401
+    :lastmodtime '(21794 42564 276252 241000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "all.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("JEUXVIDEO.COM - La Référence des Jeux Vidéo sur PC et Consoles !" section nil nil [125 1560])
+            (">
+		<span class=\"menu-feedback\">
+		  <span class=\"btn-menu-feedback btn-menu-feedback-actif\" data-action=\"highlight\">Mettre en valeur" section nil nil [1560 1616])
+            ("(function () {
+	  var _fbq = window._fbq || (window._fbq = []);
+	  if (!_fbq.loaded) {
+	  var fbds = document.createElement('script');
+	  fbds.async = true;
+	  fbds.src = '//connect.facebook.net/en_US/fbds.js';
+	  var s = document.getElementsByTagName('script')[0];
+	  s.parentNode.insertBefore(fbds, s);
+	  _fbq.loaded = true;
+	  }
+	  _fbq.push(['addPixelId', '255576174639296']);
+	  _fbq.push(['addPixelId', '382202585238384']);
+	  })();
+	  window._fbq = window._fbq || [];
+	  window._fbq.push(['track', 'PixelInitialized', {}]);" section nil nil [1616 2195])
+            ("(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = \"//connect.facebook.net/fr_FR/all.js#xfbml=1&appId=202446416762\";
+	  fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));" section nil nil [2195 2308])
+            ("(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = \"//connect.facebook.net/fr_FR/all.js#xfbml=1&appId=202446416762\";
+	  fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));" section nil nil [2308 2342])
+            ("(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = \"//connect.facebook.net/fr_FR/all.js#xfbml=1&appId=202446416762\";
+	  fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));" section nil nil [2342 2908])
+            ("(function() {
+							   function addClass(elem, name) {
+							   if (elem) {
+							   var e = elem.className.split(/\\s+/);if (e.indexOf(name) <= -1) {e.push(name);}
+							   elem.className = e.join(\" \");
+							   }
+							   }
+							   var wads = {
+							   // config
+							   callUrl : 'http://wbdds.jeuxvideo.com/p-c-async',
+							   includeUrl : 'http://wbdds.jeuxvideo.com/include/async',
+							   sitePage : 'jeux_video_com/home',
+							   query : '',
+							   mode : 'async',
+
+							   // can't touch this
+							   getRandom:function() {
+							   return Math.round(Math.random()*1000000000);
+							   },
+							   loadAsync: function(d, src, id) {
+							   var dv; dv = d.getElementById('wads_' + id); if(dv) dv.parentNode.removeChild(dv);
+							   var a = d.createElement('script'); a.async = \"async\"; a.src = src;
+							   if(id) { a.id = 'wads_' + id; }
+							   if(id=='fetchAll') {
+							   if(typeof wads.callback=='function') {
+							   var loaded = false;
+							   a.onreadystatechange = function (callback) {
+							   if (a.readyState === \"loaded\" || a.readyState === \"complete\") {
+							   a.onreadystatechange = null;
+							   loaded = true;
+							   wads.callback();
+							   }
+							   };
+							   a.onload = function () {
+							   if (!loaded) {
+							   wads.callback();
+							   }
+							   };
+							   }
+							   }
+							   var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(a, s);
+							   },
+							   setSitePage:function(sp) {
+							   this.sitePage=sp;
+							   },
+							   setQuery: function(q) {
+							   this.query=q;
+							   },
+							   fetchAll:function() {
+							   this.loadAsync(top.document, this.callUrl + '/' + this.sitePage + '/r' + this.getRandom() + '/' + this.query, 'fetchAll');
+							   },
+							   refreshAll: function() {
+							   this.cleanAllPositions();
+							   this.creativeAndCallMasterInit();
+							   this.fetchAll();
+							   },
+							   setAsyncCallback: function(callback) {
+							   this.callback = callback;
+							   },
+							   unsetAsyncCallback: function() {
+							   this.callback = null;
+							   }
+							   }
+							   top.wads=wads;
+							   wads.setAsyncCallback(function () {
+							   if (wads.ads) {
+							   if (wads.ads['header-top'] && !wads.ads['header-top'][0].empty) {
+							   addClass(document.getElementById(\"prospect\"), 'show-pub');
+							   }
+							   if (wads.ads['middle'] && !wads.ads['middle'][0].empty) {
+							   addClass(document.getElementById(\"prospect-square\"), 'show-pub');
+							   }
+							   if (wads.ads['push-right-1'] && !wads.ads['push-right-1'][0].empty) {
+							   addClass(document.getElementById(\"prospect-square2\"), 'show-pub');
+							   }
+							   if (wads.ads['middle2'] && !wads.ads['middle2'][0].empty) {
+							   addClass(document.getElementById(\"prospect-square3\"), 'show-pub');
+							   }
+							   if (wads.ads['onglet'] && !wads.ads['onglet'][0].empty) {
+							   addClass(document.getElementById(\"prospect-onglet\"), 'show-pub');
+							   }
+							   }
+							   });
+							   wads.loadAsync(top.document, wads.includeUrl, 'include');
+							   })();
+							   // -->" section (:members 
+              ( ("Bienvenue sur jeuxvideo.com." section (:members 
+                  ( ("Mortal Kombat 10 : Le trailer de lancement sur fond de System Of A Down" section nil nil [45096 46271])
+                    ("Le Fond de l'Affaire - Les secrets des consoles portables !" section nil nil [46271 47108])
+                    ("GTA 5 pèsera \"au moins\" 65 gigas sur PC !" section nil nil [47108 48270])
+                    ("Journal de bord : Import Dragon Quest Heroes – Partie 3 : Un zeste de tower defense" section nil nil [48270 49325])
+                    ("Kilaye et Realmyop s'affrontent sur fond de placement de produit" section nil nil [49325 50289])
+                    ("Call of Duty : Advanced Warfare - Ascendance : la verticalité à son paroxysme ?" section nil nil [50289 51486])
+                    ("L'excellent Teslagrad terminé à 100% en 42 minutes ?" section nil nil [51486 52684])
+                    ("Minecraft Hardcore : Pirates des Cuboides - Episode 1" section nil nil [52684 53930])
+                    ("Indie Games Play 2015 : At0mium vous présente la crème des jeux indépendants" section nil nil [53930 54867])
+                    ("After Work : Reign of Kings ou la chevalerie pour les nuls" section nil nil [54867 55870])
+                    ("Back to 2000, retour en vidéo et en musique sur une année folle du jeu vidéo" section nil nil [55870 56810])
+                    ("Un lecteur de jeuxvideo.com au EVE Fanfest 2015 : revivez son épopée !" section nil nil [56810 57810])
+                    ("Alt.Ctrl : et si nous jouions autrement ? Découvrez des idées inédites !" section nil nil [57810 58733])
+                    ("Inazuma Eleven Go Chrono Stones Tonnerre &amp; Brasier : Plus RPG que football sur 3DS" section nil nil [58733 59684])
+                    ("L'univers du jeu indépendant - Axiom Verge, un Metroid-like fantastique !" section nil nil [59684 60695])
+                    ("Forza Horizon 2 / Fast &amp; Furious : 2 Gaming Live, et notre avis" section nil nil [60695 61657])
+                    ("Nintendo Direct du 1er avril : Notre récapitulatif" section nil nil [61657 62617])
+                    ("Les Sims 4 : Au Travail - L'extension qu'on attendait tous ?" section (:members 
+                      ( ("Actualités à la une" anchor nil nil [106602 106605])
+                        ("Toutes les news" anchor nil nil [106671 106674])
+                        ("Tous les tests" anchor nil nil [106738 106741])
+                        ("Vidéos à la une" anchor nil nil [106888 106891]))                      ) nil [62617 107049])
+                    ("Nintendo Direct : le récap de toutes les annonces !" section (:members 
+                      ( ("Mario Kart 8 accélère et passe aux 200cc" section nil nil [107649 108643])
+                        ("News jeu : <span>Project Zero 5 confirmé en Europe" section nil nil [108643 109572])
+                        ("News jeu : <span>Splatoon : Une date, un nouveau mode de jeu et des Amiibo" section nil nil [109572 110405])
+                        ("News jeu : <span>Mario Maker se précise" section nil nil [110405 111286])
+                        ("News jeu : <span>Lucas rejoint Mewtwo en DLC de Super Smash Bros. Wii U et 3DS." section nil nil [111286 112283])
+                        ("News jeu : <span>La Wii U accueille les jeux N64 et Nintendo DS sur la Console Virtuelle" section nil nil [112283 113253])
+                        ("News jeu : <span>Pokémon Rumble World annoncé sur 3DS... pour le 8 avril !" section nil nil [113253 114006])
+                        ("Gaming live TV" section (:members 
+                          ( ("  Chaînes" section nil nil [114078 114156])
+                            ("  Programmes" section nil nil [114156 133511]))                          ) nil [114006 133511]))                      ) nil [107049 133511])
+                    ("Chroniques et Gaming-Live" section (:members 
+                      ( ("Le Fond de l'Affaire - Les secrets des consoles portables !" section nil nil [134422 135750])
+                        ("Chronique : <span>Kilaye et Realmyop s'affrontent sur fond de placement de produit" section nil nil [135750 136683])
+                        ("Chronique : <span>L'excellent Teslagrad terminé à 100% en 42 minutes ?" section nil nil [136683 137553])
+                        ("Chronique : <span>Pause Process - Les flingues" section nil nil [137553 138359])
+                        ("Chronique : <span>After Bit - La série Bayonetta 1/2" section nil nil [138359 139289])
+                        ("Chronique : <span>L'histoire du jeu vidéo - L'ascension de la Game Boy" section nil nil [139289 140186])
+                        ("Chronique : <span>Le Fond de l'Affaire : Les Mortal Kombat récents" section nil nil [140186 141009])
+                        ("Chronique : <span>Merci Dorian : Les avatars" section nil nil [141009 141913])
+                        ("Chronique : <span>After Work : Les architectes culs-nuls s'attaquent à Reign of Kings !" section nil nil [141913 148071]))                      ) nil [133511 148071])
+                    ("Bandes annonces &amp; Extraits de jeux" section (:members 
+                      ( ("GTA V : Un dernier trailer avant la sortie PC" section nil nil [148960 150184])
+                        ("Bande-annonce : <span>Cours sanglant d'anatomie avec Goro !" section nil nil [150184 151094])
+                        ("Extrait : <span>Mario Kart 8 : Comparatif 150cc / 200cc sur Lagon Tourbillon" section nil nil [151094 151970])
+                        ("Bande-annonce : <span>Mortal Kombat X : Portrait de la famille Briggs" section nil nil [151970 152870])
+                        ("Bande-annonce : <span>Mortal Kombat 10 : Les Kombattants prêts pour la sortie du jeu" section nil nil [152870 153825])
+                        ("Bande-annonce : <span>Grand Theft Auto V dévoile ses braquages sur PC" section nil nil [153825 154750])
+                        ("Bande-annonce : <span>Assassin's Creed Chronicles : Direction la Chine, l'Inde et la Russie !" section nil nil [154750 155614])
+                        ("Bande-annonce : <span>Les Titans attaquent l'Europe" section nil nil [155614 156386])
+                        ("Bande-annonce : <span>Mario Kart 8 passe aux 200cc" section nil nil [156386 156905]))                      ) nil [148071 156905])
+                    ("Analyses" section (:members 
+                      ( ("BTG : Il y a 10 ans, une pétition pour Beyond Good &amp; Evil 2 voyait le jour..." section nil nil [157562 159144])
+                        ("News débat et opinion : <span>Gran Turismo, Forza Motorsport : Des séries qui s'essoufflent ?" section nil nil [159144 160181])
+                        ("News débat et opinion : <span>\"Trop de communication tue la réputation\" : Billet d'humeur d'un joueur désabusé" section nil nil [160181 161177])
+                        ("News débat et opinion : <span>FPS et Seconde Guerre mondiale : Point de salut sans cinéma ?" section nil nil [161177 162114])
+                        ("News débat et opinion : <span>L'annualisation des licences" section nil nil [162114 163015])
+                        ("News débat et opinion : <span>Jouer avec la soluce : Hérésie ou gain de temps ?" section nil nil [163015 163902])
+                        ("News débat et opinion : <span>Roleplay et jeu vidéo : Un mariage compliqué" section nil nil [163902 164773])
+                        ("News débat et opinion : <span>\"S'il vous plaît, ne tuez pas DONTNOD !\"" section nil nil [164773 165680])
+                        ("News débat et opinion : <span>Jouer sur consoles, c'était plus pratique avant ?" section nil nil [165680 166380]))                      ) nil [156905 166380])
+                    ("Top forums" section nil nil [166380 167533])
+                    ("Les autres forums" section nil nil [167533 169655])
+                    ("Boutique" section nil nil [169655 178383]))                  ) nil [43848 178383]))              ) nil [2908 178383])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178383 178448])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178448 178515])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178515 178581])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178581 178649])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178649 178710])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178710 178774])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178774 178840])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178840 178907])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178907 178970])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [178970 179037])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [179037 179085])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [179085 179128])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [179128 179170])
+            ("// <![CDATA[
+var disp_pub = false; var new_jv_disp_vu = false;
+var url_comscore = '&jv_login=non_loggue&name=jeuxvideo_com&jv_page_url=%2F&jv_nom_categorie=hp&jv_type_element=hp';
+// ]]>" section nil nil [179170 179401])
+            ("// <![CDATA[
+if (window.location.hash) {
+    var infos = window.location.hash.substr(1).split('-');
+    if (infos.length === 4) {
+        url_comscore += '&jv_ev_name=' + encodeURIComponent(infos[3]);
+        url_comscore += '&jv_ev_zone=' + encodeURIComponent(infos[0]);
+        url_comscore += '&jv_ev_type=' + encodeURIComponent(infos[1]);
+        url_comscore += '&jv_menu_lev1=' + encodeURIComponent(infos[2]);
+        url_comscore += '&jv_menu_lev2=' + encodeURIComponent(infos[3]);
+    }
+}
+
+if ((typeof new_jv_disp_vu !== 'undefined') && (new_jv_disp_vu == true)) {
+    url_comscore = url_comscore + '&jv_disp_pub=new_block';
+} else {
+    if (typeof disp_pub !== 'undefined') url_comscore = url_comscore + '&jv_disp_pub=' + encodeURIComponent(disp_pub);
+}
+// ]]>" section nil nil [179401 179482])
+            ("// <![CDATA[
+if (window.location.hash) {
+    var infos = window.location.hash.substr(1).split('-');
+    if (infos.length === 4) {
+        url_comscore += '&jv_ev_name=' + encodeURIComponent(infos[3]);
+        url_comscore += '&jv_ev_zone=' + encodeURIComponent(infos[0]);
+        url_comscore += '&jv_ev_type=' + encodeURIComponent(infos[1]);
+        url_comscore += '&jv_menu_lev1=' + encodeURIComponent(infos[2]);
+        url_comscore += '&jv_menu_lev2=' + encodeURIComponent(infos[3]);
+    }
+}
+
+if ((typeof new_jv_disp_vu !== 'undefined') && (new_jv_disp_vu == true)) {
+    url_comscore = url_comscore + '&jv_disp_pub=new_block';
+} else {
+    if (typeof disp_pub !== 'undefined') url_comscore = url_comscore + '&jv_disp_pub=' + encodeURIComponent(disp_pub);
+}
+// ]]>" section nil nil [179482 179570])
+            ("// <![CDATA[
+if (window.location.hash) {
+    var infos = window.location.hash.substr(1).split('-');
+    if (infos.length === 4) {
+        url_comscore += '&jv_ev_name=' + encodeURIComponent(infos[3]);
+        url_comscore += '&jv_ev_zone=' + encodeURIComponent(infos[0]);
+        url_comscore += '&jv_ev_type=' + encodeURIComponent(infos[1]);
+        url_comscore += '&jv_menu_lev1=' + encodeURIComponent(infos[2]);
+        url_comscore += '&jv_menu_lev2=' + encodeURIComponent(infos[3]);
+    }
+}
+
+if ((typeof new_jv_disp_vu !== 'undefined') && (new_jv_disp_vu == true)) {
+    url_comscore = url_comscore + '&jv_disp_pub=new_block';
+} else {
+    if (typeof disp_pub !== 'undefined') url_comscore = url_comscore + '&jv_disp_pub=' + encodeURIComponent(disp_pub);
+}
+// ]]>" section nil nil [179570 180530])
+            ("// <![CDATA[
+function udm_(e){var t=\"comScore=\",n=document,r=n.cookie,i=\"\",s=\"indexOf\",o=\"substring\",u=\"length\",a=2048,f,l=\"&ns_\",c=\"&\",h,p,d,v,m=window,g=m.encodeURIComponent||escape;if(r[s](t)+1)for(d=0,p=r.split(\";\"),v=p[u];d<v;d++)h=p[d][s](t),h+1&&(i=c+unescape(p[d][o](h+t[u])));e+=l+\"_t=\"+ +(new Date)+l+\"c=\"+(n.characterSet||n.defaultCharset||\"\")+\"&c8=\"+g(n.title)+i+\"&c7=\"+g(n.URL)+\"&c9=\"+g(n.referrer),e[u]>a&&e[s](c)>0&&(f=e[o](0,a-8).lastIndexOf(c),e=(e[o](0,f)+l+\"cut=\"+g(e[o](f+1)))[o](0,a)),n.images?(h=new Image,m.ns_p||(ns_p=h),h.src=e):n.write(\"<\",\"p\",\"><\",'img src=\"',e,'\" height=\"1\" width=\"1\" alt=\"*\"',\"><\",\"/p\",\">\")};
+udm_('http'+(document.location.href.charAt(4)=='s'?'s://sb':'://b')+'.scorecardresearch.com/b?c1=2&c2=8823104'+url_comscore);
+// ]]>" section nil nil [180530 181591])
+            ("var _merchantSettings=_merchantSettings || [];_merchantSettings.push(['AT', '11lHhL']);
+	(function(){var autolink=document.createElement('script');autolink.type='text/javascript';autolink.async=true;
+	autolink.src= ('https:' == document.location.protocol) ? 'https://autolinkmaker.itunes.apple.com/js/itunes_autolinkmaker.js' : 'http://autolinkmaker.itunes.apple.com/js/itunes_autolinkmaker.js';
+	var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(autolink, s);})();" section nil nil [181591 181733])
+            ("var _merchantSettings=_merchantSettings || [];_merchantSettings.push(['AT', '11lHhL']);
+	(function(){var autolink=document.createElement('script');autolink.type='text/javascript';autolink.async=true;
+	autolink.src= ('https:' == document.location.protocol) ? 'https://autolinkmaker.itunes.apple.com/js/itunes_autolinkmaker.js' : 'http://autolinkmaker.itunes.apple.com/js/itunes_autolinkmaker.js';
+	var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(autolink, s);})();" section nil nil [181733 181890])
+            ("var _merchantSettings=_merchantSettings || [];_merchantSettings.push(['AT', '11lHhL']);
+	(function(){var autolink=document.createElement('script');autolink.type='text/javascript';autolink.async=true;
+	autolink.src= ('https:' == document.location.protocol) ? 'https://autolinkmaker.itunes.apple.com/js/itunes_autolinkmaker.js' : 'http://autolinkmaker.itunes.apple.com/js/itunes_autolinkmaker.js';
+	var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(autolink, s);})();" section nil nil [181890 182423])
+            ("(function(){
+	var loc = window.location.href;
+	var dd = document.createElement('script');
+	dd.type = 'text/javascript'; dd.src = '//jeuxvideo.digidip.net/js?loc=' + loc;
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(dd, s);
+	})();" section nil nil [182423 182738])
+            ("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-30147725-3', 'auto');
+  ga('send', 'pageview');" section nil nil [182738 183176])
+            ("var _qevents = _qevents || [];
+
+  (function() {
+  var elem = document.createElement('script');
+  elem.src = (document.location.protocol == \"https:\" ? \"https://secure\" : \"http://edge\") + \".quantserve.com/quant.js\";
+  elem.async = true;
+  elem.type = \"text/javascript\";
+  var scpt = document.getElementsByTagName('script')[0];
+  scpt.parentNode.insertBefore(elem, scpt);
+  })();
+
+  _qevents.push(
+  {qacct:\"p-tgAXBXy0wYmWc\"}
+  );" section nil nil [183176 183834])
+            ("var _eStat_Whap_loaded=0;
+	  //-->" section nil nil [183834 183921])
+            ("if(_eStat_Whap_loaded){
+	  eStatWhap.serial(\"800000207013\");
+	  eStatWhap.send();}
+	  //-->" section nil nil [183921 183998])
+            ("if(_eStat_Whap_loaded){
+	  eStatWhap.serial(\"800000207013\");
+	  eStatWhap.send();}
+	  //-->" section nil nil [183998 184158]))          
+    :file "all.html"
+    :pointmax 184158
+    :fsize 184653
+    :lastmodtime '(21794 42578 652252 626000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "menu.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Avocats" anchor nil nil [52 55])
+            ("Cabinets" anchor nil nil [95 98])
+            ("Honnoraires" anchor nil nil [140 143])
+            ("Conditions générales" anchor nil nil [191 194])
+            ("Contact" anchor nil nil [260 263]))          
+    :file "menu.html"
+    :pointmax 314
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "alert_test.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("selenium.webdriver" include nil nil [1 39])
+            ("selenium.webdriver.common.keys" include nil nil [40 87])
+            ("driver" variable nil nil [89 107])
+            ("connect" function nil nil [110 163])
+            ("tab" function nil nil [168 291])
+            ("tab_close" function nil nil [293 384])
+            ("click" function nil nil [390 464])
+            ("dismiss" function nil nil [470 542])
+            ("disconnect" function nil nil [544 581])
+            ("main" function nil nil [583 635]))          
+    :file "alert_test.py"
+    :pointmax 654
+    :fsize 653
+    :lastmodtime '(21794 51962 60503 906000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "index.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Document" section nil nil [75 111])
+            ("Vel quam elementum pulvinar etiam non quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit amet, consectetur adipiscing elit! Enim nulla aliquet porttitor lacus, luctus accumsan tortor posuere ac." section nil nil [111 385])
+            ("el = document.getElementById('click');
+	  el.addEventListener('click', function(e){
+	  e.preventDefault();
+	  alert('coucou')
+	  });" section nil nil [385 561]))          
+    :file "index.html"
+    :pointmax 561
+    :fsize 560
+    :lastmodtime '(21794 50299 848459 393000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!lua!selenium!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

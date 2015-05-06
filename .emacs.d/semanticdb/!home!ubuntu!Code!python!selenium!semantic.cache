@@ -1,0 +1,48 @@
+;; Object selenium/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "selenium/"
+  :tables
+  (list
+    (semanticdb-table "all.html"
+      :major-mode 'html-mode
+      :tags nil
+      :file "all.html"
+      :pointmax 184158
+      :fsize 184653
+      :lastmodtime '(21794 42578 652252 0)
+      :unmatched-syntax nil)
+    (semanticdb-table "collect.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "collect.py"
+      :pointmax 402
+      :fsize 401
+      :lastmodtime '(21794 42564 276252 0)
+      :unmatched-syntax nil)
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags nil
+      :file "index.html"
+      :pointmax 561
+      :fsize 560
+      :lastmodtime '(21794 50299 848459 0)
+      :unmatched-syntax nil)
+    (semanticdb-table "interaction.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "interaction.py"
+      :pointmax 1179
+      :fsize 1178
+      :lastmodtime '(21794 45809 28339 0)
+      :unmatched-syntax nil)
+    (semanticdb-table "alert_test.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "alert_test.py"
+      :pointmax 654
+      :fsize 653
+      :lastmodtime '(21794 51962 60503 0)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!selenium!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

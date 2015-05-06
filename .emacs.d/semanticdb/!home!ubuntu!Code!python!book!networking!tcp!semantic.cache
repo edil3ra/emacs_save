@@ -1,0 +1,28 @@
+;; Object tcp/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "tcp/"
+  :tables
+  (list
+    (semanticdb-table "tcp_sixteen.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("socket" include nil nil [1 14])
+            ("argparse" include nil nil [15 30])
+            ("recvall" function (:arguments 
+              ( ("sock" variable nil (reparse-symbol function_parameters) [45 49])
+                ("length" variable nil (reparse-symbol function_parameters) [51 57]))              ) nil [33 388])
+            ("server" function (:arguments 
+              ( ("interface" variable nil (reparse-symbol function_parameters) [402 411])
+                ("port" variable nil (reparse-symbol function_parameters) [413 417]))              ) nil [391 1044])
+            ("client" function (:arguments 
+              ( ("host" variable nil (reparse-symbol function_parameters) [1058 1062])
+                ("port" variable nil (reparse-symbol function_parameters) [1064 1068]))              ) nil [1047 1355])
+            ("if" code nil nil [1358 1905]))          
+      :file "tcp_sixteen.py"
+      :pointmax 1905
+      :fsize 1904
+      :lastmodtime '(21821 6664 69230 323000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!book!networking!tcp!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

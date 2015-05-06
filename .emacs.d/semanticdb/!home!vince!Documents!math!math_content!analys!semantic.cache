@@ -1,0 +1,23 @@
+;; Object analys/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "analys/"
+  :tables (list 
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("numpy" include nil nil [1 19])
+            ("matplotlib.pyplot" include nil nil [20 51])
+            ("x" variable nil nil [53 80])
+            ("y" variable nil nil [81 102])
+            ("plt" code nil nil [119 129]))          
+    :file "main.py"
+    :pointmax 130
+    :fsize 129
+    :lastmodtime '(21746 11929 608011 254000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Documents!math!math_content!analys!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

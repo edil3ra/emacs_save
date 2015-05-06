@@ -1,0 +1,45 @@
+;; Object data_encoding/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "data_encoding/"
+  :tables (list 
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("csv" code nil nil [9 12])
+            ("collections" include nil nil [13 47])
+            ("json" include nil nil [48 59])
+            ("urllib.request" include nil nil [60 94])
+            ("pprint" include nil nil [95 120])
+            ("JSONObject" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [178 195]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [160 164])
+                            ("d" variable nil (reparse-symbol function_parameters) [166 167]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [147 196]))                  
+                :type "class")
+                nil [123 196])
+            ("read_csv" function nil nil [215 831])
+            ("write_csv" function nil nil [833 1147])
+            ("json_write" function nil nil [1149 1488])
+            ("json_read" function nil nil [1490 1899])
+            ("serialize_instance" function (:arguments 
+              ( ("obj" variable nil (reparse-symbol function_parameters) [1924 1927]))              ) nil [1901 2013])
+            ("unserialize_object" function (:arguments 
+              ( ("d" variable nil (reparse-symbol function_parameters) [2038 2039]))              ) nil [2015 2322])
+            ("json_read" code nil nil [2324 2335]))          
+    :file "main.py"
+    :pointmax 2336
+    :fsize 2335
+    :lastmodtime '(21679 57960 857248 355000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!learn!cookbook!data_encoding!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

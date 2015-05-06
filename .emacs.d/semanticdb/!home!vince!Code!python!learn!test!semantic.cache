@@ -1,0 +1,40 @@
+;; Object test/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "test/"
+  :tables (list 
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("a" variable nil nil [1 31])
+            ("print" code nil nil [32 40]))          
+    :file "main.py"
+    :pointmax 41
+    :fsize 40
+    :lastmodtime '(21724 35402 92960 288000)
+    :unmatched-syntax '(($EOI 41 . 41) ($EOI 32 . 32) ($EOI 27 . 27) ($EOI 22 . 22) ($EOI 17 . 17) ($EOI 42 . 42))
+    )
+   (semanticdb-table "prime_serie.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("a" variable nil nil [1 49])
+            ("prime_number" function (:arguments 
+              ( ("size" variable nil (reparse-symbol function_parameters) [69 73]))              ) nil [52 381])
+            ("find_prime_euclid_way" function (:arguments 
+              ( ("prime_list" variable nil (reparse-symbol function_parameters) [409 419]))              ) nil [383 489])
+            ("a" variable nil nil [495 515])
+            ("next_prime" variable nil nil [516 553])
+            ("b" variable nil nil [554 582])
+            ("print" code nil nil [585 593])
+            ("print" code nil nil [594 611])
+            ("print" code nil nil [612 620]))          
+    :file "prime_serie.py"
+    :pointmax 621
+    :fsize 620
+    :lastmodtime '(21729 10208 823593 208000)
+    :unmatched-syntax '(($EOI 622 . 622))
+    )
+   )
+  :file "!home!vince!Code!python!learn!test!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

@@ -1,0 +1,45 @@
+;; Object app/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "app/"
+  :tables (list 
+   (semanticdb-table "__init__.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("flask" include nil nil [1 24])
+            ("app" variable nil nil [26 47])
+            ("app" include nil nil [48 69]))          
+    :file "__init__.py"
+    :pointmax 71
+    :fsize 69
+    :lastmodtime '(21770 49016 524961 987000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "views.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("app" include nil nil [1 20])
+            ("" code nil nil [32 37])
+            ("" code nil nil [48 58])
+            ("index" function nil nil [59 97]))          
+    :file "views.py"
+    :pointmax 98
+    :fsize 97
+    :lastmodtime '(21770 48600 412950 844000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "run.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("app" include nil nil [21 40])
+            ("app" code nil nil [41 60]))          
+    :file "run.py"
+    :pointmax 61
+    :fsize 60
+    :lastmodtime '(21770 48933 704959 769000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!flask_rest!app!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

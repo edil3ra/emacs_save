@@ -1,0 +1,88 @@
+;; Object main/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "main/"
+  :tables
+  (list
+    (semanticdb-table "admin.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("django.contrib" include nil nil [1 33])
+            ("Lien" include nil nil [47 93])
+            ("MeilleursCas" include nil nil [47 93])
+            ("Page" include nil nil [47 93])
+            ("Faq" include nil nil [47 93])
+            ("Rubrique" include nil nil [47 93])
+            ("django_summernote.admin" include nil nil [94 150])
+            ("RubriqueAdmin" type
+               (:superclasses ("admin.ModelAdmin")
+                :members 
+                  ( ("has_add_permission" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [219 223])
+                            ("request" variable nil (reparse-symbol function_parameters) [225 232]))                          )
+                        (reparse-symbol indented_block_body) [196 256])
+                    ("has_delete_permission" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [286 290])
+                            ("request" variable nil (reparse-symbol function_parameters) [292 299])
+                            ("obj" variable nil (reparse-symbol function_parameters) [301 304]))                          )
+                        (reparse-symbol indented_block_body) [260 333])
+                    ("fields" variable nil (reparse-symbol indented_block_body) [338 384])
+                    ("list_display" variable nil (reparse-symbol indented_block_body) [389 455])
+                    ("actions" variable nil (reparse-symbol indented_block_body) [460 474]))                  
+                :type "class")
+                nil [153 475])
+            ("PageAdmin" type
+               (:superclasses ("SummernoteModelAdmin")
+                :members 
+                  ( ("has_add_permission" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [543 547])
+                            ("request" variable nil (reparse-symbol function_parameters) [549 556]))                          )
+                        (reparse-symbol indented_block_body) [520 580])
+                    ("has_delete_permission" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [610 614])
+                            ("request" variable nil (reparse-symbol function_parameters) [616 623])
+                            ("obj" variable nil (reparse-symbol function_parameters) [625 628]))                          )
+                        (reparse-symbol indented_block_body) [584 657])
+                    ("fields" variable nil (reparse-symbol indented_block_body) [666 698])
+                    ("actions" variable nil (reparse-symbol indented_block_body) [703 717]))                  
+                :type "class")
+                nil [477 718])
+            ("FaqAdmin" type
+               (:superclasses ("admin.ModelAdmin")
+                :members 
+                  ( ("list_display" variable nil (reparse-symbol indented_block_body) [758 782]))                  
+                :type "class")
+                nil [720 783])
+            ("MeilleursCasAdmin" type
+               (:superclasses ("admin.ModelAdmin")
+                :members 
+                  ( ("list_display" variable nil (reparse-symbol indented_block_body) [833 857]))                  
+                :type "class")
+                nil [786 858])
+            ("LiensAdmin" type
+               (:superclasses ("admin.ModelAdmin")
+                :members 
+                  ( ("list_display" variable nil (reparse-symbol indented_block_body) [900 930])
+                    ("fields" variable nil (reparse-symbol indented_block_body) [935 959]))                  
+                :type "class")
+                nil [860 960])
+            ("admin" code nil nil [962 1006])
+            ("admin" code nil nil [1007 1043])
+            ("admin" code nil nil [1044 1078])
+            ("admin" code nil nil [1079 1131])
+            ("admin" code nil nil [1132 1169]))          
+      :file "admin.py"
+      :pointmax 1170
+      :fsize 1169
+      :lastmodtime '(21613 2940 102267 200000)
+      :unmatched-syntax '((FROM 34 . 38) (PERIOD 39 . 40))))
+  :file "!home!ubuntu!Envs!liex!liex!main!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

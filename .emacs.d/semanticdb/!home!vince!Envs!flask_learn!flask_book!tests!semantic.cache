@@ -1,0 +1,124 @@
+;; Object tests/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "tests/"
+  :tables (list 
+   (semanticdb-table "__init__.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "__init__.py"
+    :pointmax 1
+    :fsize 0
+    :lastmodtime '(21773 39068 79100 982000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "test_users_model.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("unittest" include nil nil [1 16])
+            ("app.models" include nil nil [17 77])
+            ("itsdangerous" include nil nil [78 143])
+            ("flask" include nil nil [144 173])
+            ("app" include nil nil [174 204])
+            ("UserModelTestCase" type
+               (:superclasses ("unittest.TestCase")
+                :members 
+                  ( ("setUp" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [265 269]))                          )
+                        (reparse-symbol indented_block_body) [255 416])
+                    ("tearDown" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [438 442]))                          )
+                        (reparse-symbol indented_block_body) [425 526])
+                    ("test_password_setter" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [556 560]))                          )
+                        (reparse-symbol indented_block_body) [531 655])
+                    ("test_no_password_setter" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [696 700]))                          )
+                        (reparse-symbol indented_block_body) [668 809])
+                    ("test_password_verification" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [845 849]))                          )
+                        (reparse-symbol indented_block_body) [814 993])
+                    ("test_password_salts_are_random" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1041 1045]))                          )
+                        (reparse-symbol indented_block_body) [1006 1188])
+                    ("test_token_genration" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1218 1222]))                          )
+                        (reparse-symbol indented_block_body) [1193 1334])
+                    ("test_token_confirmation" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1375 1379]))                          )
+                        (reparse-symbol indented_block_body) [1347 1571])
+                    ("test_roles_and_permissions" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1607 1611]))                          )
+                        (reparse-symbol indented_block_body) [1576 2000])
+                    ("test_anonymous_user" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [2033 2037]))                          )
+                        (reparse-symbol indented_block_body) [2009 2125]))                  
+                :type "class")
+                nil [207 2125]))          
+    :file "test_users_model.py"
+    :pointmax 2125
+    :fsize 2124
+    :lastmodtime '(21783 5550 896563 999000)
+    :unmatched-syntax '((INDENT_BLOCK 1343 . 2125) ($EOI 2143 . 2143))
+    )
+   (semanticdb-table "test_basics.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("unittest" include nil nil [1 16])
+            ("flask" include nil nil [17 46])
+            ("app" include nil nil [47 77])
+            ("BasicTestCase" type
+               (:superclasses ("unittest.TestCase")
+                :members 
+                  ( ("setUp" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [133 137]))                          )
+                        (reparse-symbol indented_block_body) [123 284])
+                    ("tearDown" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [306 310]))                          )
+                        (reparse-symbol indented_block_body) [293 394])
+                    ("test_app_exists" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [427 431]))                          )
+                        (reparse-symbol indented_block_body) [407 480])
+                    ("test_app_is_testing" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [517 521]))                          )
+                        (reparse-symbol indented_block_body) [493 576]))                  
+                :type "class")
+                nil [79 576]))          
+    :file "test_basics.py"
+    :pointmax 576
+    :fsize 575
+    :lastmodtime '(21774 463 719698 771000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!flask_learn!flask_book!tests!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

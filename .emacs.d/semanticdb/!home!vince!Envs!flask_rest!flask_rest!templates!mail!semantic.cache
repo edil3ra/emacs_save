@@ -1,0 +1,20 @@
+;; Object mail/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "mail/"
+  :tables (list 
+   (semanticdb-table "new_user.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("New User" section nil nil [75 111])
+            ("Pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate dignissim suspendisse! Erat imperdiet sed euismod nisi porta lorem mollis aliquam?" section nil nil [111 343]))          
+    :file "new_user.html"
+    :pointmax 343
+    :fsize 342
+    :lastmodtime '(21773 31844 626831 212000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!flask_rest!flask_rest!templates!mail!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

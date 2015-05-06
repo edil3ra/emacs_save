@@ -1,0 +1,22 @@
+;; Object analys/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "analys/"
+  :tables (list 
+   (semanticdb-table "mathematic_review.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("math" include nil nil [1 12])
+            ("sum1" function (:arguments 
+              ( ("a" variable nil (reparse-symbol function_parameters) [22 23])
+                ("n" variable nil (reparse-symbol function_parameters) [25 26]))              ) nil [13 65]))          
+    :file "mathematic_review.py"
+    :pointmax 67
+    :fsize 66
+    :lastmodtime '(21741 56207 271458 908000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!algorithm!analys!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

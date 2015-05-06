@@ -1,0 +1,164 @@
+;; Object tetris/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "tetris/"
+  :tables
+  (list
+    (semanticdb-table "main.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("pyglet" include nil nil [1 14])
+            ("pyglet.window" include nil nil [15 47])
+            ("pyglet.sprite" include nil nil [48 80])
+            ("pyglet.graphics" include nil nil [81 114])
+            ("pyglet" include nil nil [115 139])
+            ("entities" include nil nil [140 155])
+            ("entities" include nil nil [156 209])
+            ("resources" include nil nil [210 226])
+            ("MyWindow" type
+               (:superclasses ("Window")
+                :members 
+                  ( ("WINDOW_WIDTH" variable nil (reparse-symbol indented_block_body) [257 275])
+                    ("WINDOW_HEIGHT" variable nil (reparse-symbol indented_block_body) [280 299])
+                    ("__init__" function
+                       (:suite 
+                          ( ("super" code nil (reparse-symbol indented_block_body) [350 469])
+                            ("self" variable nil (reparse-symbol indented_block_body) [487 511])
+                            ("clock" code nil (reparse-symbol indented_block_body) [542 585]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [318 322])
+                            ("args" variable nil (reparse-symbol function_parameters) [324 329])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [331 339]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [305 586])
+                    ("on_draw" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [604 608]))                          )
+                        (reparse-symbol indented_block_body) [592 660])
+                    ("update" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [686 690])
+                            ("dt" variable nil (reparse-symbol function_parameters) [692 694]))                          )
+                        (reparse-symbol indented_block_body) [675 727]))                  
+                :type "class")
+                nil [229 727])
+            ("World" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [785 805])
+                            ("self" variable nil (reparse-symbol indented_block_body) [814 844])
+                            ("self" variable nil (reparse-symbol indented_block_body) [853 885]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [762 766])
+                            ("window" variable nil (reparse-symbol function_parameters) [768 774]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [749 886])
+                    ("render" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [903 907]))                          )
+                        (reparse-symbol indented_block_body) [892 937])
+                    ("update" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [984 988])
+                            ("dt" variable nil (reparse-symbol function_parameters) [990 992]))                          )
+                        (reparse-symbol indented_block_body) [973 1024]))                  
+                :type "class")
+                nil [730 1024])
+            ("Game" type
+               (:members 
+                  ( ("PIECE_SIZE" variable nil (reparse-symbol indented_block_body) [1086 1101])
+                    ("GRID_X" variable nil (reparse-symbol indented_block_body) [1106 1117])
+                    ("GRID_Y" variable nil (reparse-symbol indented_block_body) [1122 1133])
+                    ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [1183 1201])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1210 1230])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1239 1259])
+                            ("self" code nil (reparse-symbol indented_block_body) [1269 1311])
+                            ("self" code nil (reparse-symbol indented_block_body) [1320 1363])
+                            ("self" code nil (reparse-symbol indented_block_body) [1372 1420])
+                            ("self" code nil (reparse-symbol indented_block_body) [1429 1480])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1490 1551])
+                            ("self" code nil (reparse-symbol indented_block_body) [1569 1618])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1627 1645])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1672 1820])
+                            ("self" code nil (reparse-symbol indented_block_body) [1831 1869])
+                            ("self" code nil (reparse-symbol indented_block_body) [1878 1911])
+                            ("self" code nil (reparse-symbol indented_block_body) [1954 1966]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1153 1157])
+                            ("world" variable nil (reparse-symbol function_parameters) [1159 1164])
+                            ("window" variable nil (reparse-symbol function_parameters) [1166 1172]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [1140 1967])
+                    ("bords" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1991 1995]))                          )
+                        (reparse-symbol indented_block_body) [1981 2737])
+                    ("render" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [2754 2758]))                          )
+                        (reparse-symbol indented_block_body) [2743 2787])
+                    ("update" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [2804 2808])
+                            ("dt" variable nil (reparse-symbol function_parameters) [2810 2812]))                          )
+                        (reparse-symbol indented_block_body) [2793 2878]))                  
+                :type "class")
+                nil [1068 2878])
+            ("Score" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [2943 2961])
+                            ("self" variable nil (reparse-symbol indented_block_body) [2970 2990])
+                            ("self" variable nil (reparse-symbol indented_block_body) [2999 3017])
+                            ("self" variable nil (reparse-symbol indented_block_body) [3026 3042]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [2913 2917])
+                            ("world" variable nil (reparse-symbol function_parameters) [2919 2924])
+                            ("window" variable nil (reparse-symbol function_parameters) [2926 2932]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [2900 3043])
+                    ("render" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [3060 3064]))                          )
+                        (reparse-symbol indented_block_body) [3049 3093])
+                    ("update" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [3110 3114])
+                            ("dt" variable nil (reparse-symbol function_parameters) [3116 3118]))                          )
+                        (reparse-symbol indented_block_body) [3099 3176]))                  
+                :type "class")
+                nil [2881 3176])
+            ("window" variable nil nil [3180 3210])
+            ("pyglet" code nil nil [3211 3227]))          
+      :file "main.py"
+      :pointmax 3228
+      :fsize 3227
+      :lastmodtime '(21797 44076 313827 851000)
+      :unmatched-syntax nil)
+    (semanticdb-table "entities.py"
+      :file "entities.py"
+      :fsize 5611
+      :lastmodtime '(21496 1657 471691 0))
+    (semanticdb-table "resources.py"
+      :file "resources.py"
+      :fsize 271
+      :lastmodtime '(21495 60874 163522 0)))
+  :file "!home!ubuntu!Code!python!pyglet!tetris!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

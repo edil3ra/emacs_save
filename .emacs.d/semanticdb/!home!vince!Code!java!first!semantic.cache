@@ -1,0 +1,32 @@
+;; Object first/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "first/"
+  :tables (list 
+   (semanticdb-table "HelloWorld.java"
+    :major-mode 'java-mode
+    :tags 
+        '( ("HelloWorld" type
+               (:typemodifiers ("public")
+                :members 
+                  ( ("main" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("args" variable
+                               (:dereference 1
+                                :type "String")
+                                (reparse-symbol formal_parameters) [53 66]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [28 111]))                  
+                :type "class")
+                nil [1 113]))          
+    :file "HelloWorld.java"
+    :pointmax 120
+    :fsize 119
+    :lastmodtime '(21793 33034 242080 971000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!java!first!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

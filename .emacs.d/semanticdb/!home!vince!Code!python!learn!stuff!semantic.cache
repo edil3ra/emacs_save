@@ -1,0 +1,18 @@
+;; Object stuff/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "stuff/"
+  :tables (list 
+   (semanticdb-table "try.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "try.py"
+    :pointmax 1
+    :fsize 0
+    :lastmodtime '(21678 41275 314572 614000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!learn!stuff!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

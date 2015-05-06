@@ -1,0 +1,18 @@
+;; Object postgresql-common/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "postgresql-common/"
+  :tables (list 
+   (semanticdb-table "architecture.html"
+    :major-mode 'html-mode
+    :tags nil
+    :file "architecture.html"
+    :pointmax 7739
+    :fsize 7738
+    :lastmodtime '(20877 42078 0 0)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!usr!share!doc!postgresql-common!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

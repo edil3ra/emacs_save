@@ -1,0 +1,45 @@
+;; Object migrations/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "migrations/"
+  :tables (list 
+   (semanticdb-table "env.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("__future__" include nil nil [1 38])
+            ("alembic" include nil nil [39 66])
+            ("sqlalchemy" include nil nil [67 114])
+            ("logging.config" include nil nil [115 152])
+            ("config" variable nil nil [258 281])
+            ("fileConfig" code nil nil [370 405])
+            ("flask" include nil nil [546 575])
+            ("config" code nil nil [576 667])
+            ("target_metadata" variable nil nil [668 731])
+            ("run_migrations_offline" function (:documentation "Run migrations in 'offline' mode.
+
+    This configures the context with just a URL
+    and not an Engine, though an Engine is acceptable
+    here as well.  By skipping the Engine creation
+    we don't even need a DBAPI to be available.
+
+    Calls to context.execute() here emit the given string to the
+    script output.
+
+    ") nil [898 1419])
+            ("run_migrations_online" function (:documentation "Run migrations in 'online' mode.
+
+    In this scenario we need to create an Engine
+    and associate a connection with the context.
+
+    ") nil [1420 2064])
+            ("if" code nil nil [2065 2158]))          
+    :file "env.py"
+    :pointmax 2159
+    :fsize 2158
+    :lastmodtime '(21773 24127 606543 9000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!flask_rest!flask_rest!migrations!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

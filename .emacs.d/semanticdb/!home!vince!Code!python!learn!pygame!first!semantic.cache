@@ -1,0 +1,36 @@
+;; Object first/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "first/"
+  :tables (list 
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("pygame" include nil nil [1 14])
+            ("pygame" code nil nil [15 28])
+            ("DISPLAY_WIDTH" variable nil nil [30 49])
+            ("DISPLAY_HEIGHT" variable nil nil [50 70])
+            ("BLACK" variable nil nil [73 88])
+            ("WHITE" variable nil nil [89 110])
+            ("window" variable nil nil [113 178])
+            ("pygame" code nil nil [179 221])
+            ("clock" variable nil nil [222 249])
+            ("spaceship_img" variable nil nil [250 296])
+            ("move_spaceship" function (:arguments 
+              ( ("x" variable nil (reparse-symbol function_parameters) [317 318])
+                ("y" variable nil (reparse-symbol function_parameters) [320 321]))              ) nil [298 363])
+            ("x" code nil nil [365 389])
+            ("y" code nil nil [390 414])
+            ("crashed" variable nil nil [416 431])
+            ("while" code nil nil [432 767])
+            ("pygame" code nil nil [768 781]))          
+    :file "main.py"
+    :pointmax 782
+    :fsize 781
+    :lastmodtime '(21730 24982 29919 899000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!learn!pygame!first!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

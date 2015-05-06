@@ -1,0 +1,43 @@
+;; Object pyspider_test/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "pyspider_test/"
+  :tables
+  (list
+    (semanticdb-table "main.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("pyspider.libs.base_handler" include nil nil [1 41])
+            ("Handler" type
+               (:superclasses ("BaseHandler")
+                :members 
+                  ( ("crawl_config" variable nil (reparse-symbol indented_block_body) [75 97])
+                    ("" code nil (reparse-symbol indented_block_body) [108 125])
+                    ("on_start" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [143 147]))                          )
+                        (reparse-symbol indented_block_body) [130 218])
+                    ("" code nil (reparse-symbol indented_block_body) [238 261])
+                    ("index_page" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [281 285])
+                            ("response" variable nil (reparse-symbol function_parameters) [287 295]))                          )
+                        (reparse-symbol indented_block_body) [266 425])
+                    ("" code nil (reparse-symbol indented_block_body) [437 449])
+                    ("detail_page" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [470 474])
+                            ("response" variable nil (reparse-symbol function_parameters) [476 484]))                          )
+                        (reparse-symbol indented_block_body) [454 599]))                  
+                :type "class")
+                nil [43 599]))          
+      :file "main.py"
+      :pointmax 600
+      :fsize 599
+      :lastmodtime '(21807 58171 999136 232000)
+      :unmatched-syntax '((RETURN 495 . 501) (ASSIGN 502 . 503) (RETURN 495 . 501) (ASSIGN 502 . 503) (FOR 306 . 309) (NEWLINE 357 . 358) (FOR 306 . 309) (NEWLINE 357 . 358) (FOR 306 . 309) (NEWLINE 357 . 358) (FOR 306 . 309) (NEWLINE 357 . 358) (FOR 306 . 309) (NEWLINE 357 . 358))))
+  :file "!home!ubuntu!Code!learn!pyspider_test!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

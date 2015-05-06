@@ -1,0 +1,27 @@
+;; Object algorithm/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "algorithm/"
+  :tables
+  (list
+    (semanticdb-table "algorithm_analys.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("math" include nil nil [1 12])
+            ("power" function (:arguments 
+              ( ("a" variable nil (reparse-symbol function_parameters) [23 24])
+                ("n" variable nil (reparse-symbol function_parameters) [26 27]))              ) nil [13 158])
+            ("harmonic_serie" function (:arguments 
+              ( ("n" variable nil (reparse-symbol function_parameters) [180 181]))              ) nil [161 254])
+            ("maximum" function (:arguments 
+              ( ("a" variable nil (reparse-symbol function_parameters) [267 268]))              ) nil [255 340])
+            ("maximum_recursion" function (:arguments 
+              ( ("a" variable nil (reparse-symbol function_parameters) [364 365])
+                ("n" variable nil (reparse-symbol function_parameters) [367 368]))              ) nil [342 463]))          
+      :file "algorithm_analys.py"
+      :pointmax 464
+      :fsize 463
+      :lastmodtime '(21798 43320 21188 838000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!learn!algorithm!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

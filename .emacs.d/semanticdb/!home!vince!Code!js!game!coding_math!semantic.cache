@@ -1,0 +1,53 @@
+;; Object coding_math/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "coding_math/"
+  :tables (list 
+   (semanticdb-table "index.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Animation" section nil nil [75 163])
+            ("introduction" section (:members 
+              ( ("introduction" anchor nil nil [196 199])
+                ("intro to trigono" anchor nil nil [247 250])
+                ("more trigono" anchor nil nil [302 305])
+                ("circle ellipses and lissajous" anchor nil nil [353 356])
+                ("arctangent" anchor nil nil [421 424])
+                ("vector part1" anchor nil nil [470 473])
+                ("vector part2" anchor nil nil [521 524])
+                ("velocity" anchor nil nil [572 575])
+                ("acceleration" anchor nil nil [619 622])
+                ("advenced acceleration" anchor nil nil [670 673])
+                ("gravity" anchor nil nil [731 734])
+                ("edge handing" anchor nil nil [778 781])
+                ("friction" anchor nil nil [830 833])
+                ("collision detection" anchor nil nil [878 881]))              ) nil [163 956]))          
+    :file "index.html"
+    :pointmax 956
+    :fsize 955
+    :lastmodtime '(21761 57606 85380 707000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "main.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("math" include nil nil [1 12])
+            ("p" variable nil nil [15 21])
+            ("l" code nil nil [22 29])
+            ("a" variable nil nil [30 38])
+            ("p2" variable nil nil [41 48])
+            ("d" code nil nil [49 65])
+            ("r" code nil nil [66 73])
+            ("a2" code nil nil [74 93])
+            ("print" code nil nil [95 162])
+            ("print" code nil nil [163 247]))          
+    :file "main.py"
+    :pointmax 248
+    :fsize 247
+    :lastmodtime '(21762 9660 13683 976000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!js!game!coding_math!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

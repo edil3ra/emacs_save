@@ -1,0 +1,28 @@
+;; Object app/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "app/"
+  :tables
+  (list
+    (semanticdb-table "__init__.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("flask" include nil nil [1 41])
+            ("flask.ext.mail" include nil nil [42 73])
+            ("flask.ext.sqlalchemy" include nil nil [74 117])
+            ("config" include nil nil [118 143])
+            ("flask.ext.login" include nil nil [144 184])
+            ("db" variable nil nil [186 203])
+            ("mail" variable nil nil [204 217])
+            ("login_manager" variable nil nil [218 248])
+            ("login_manager" variable nil nil [249 292])
+            ("login_manager" variable nil nil [293 332])
+            ("create_app" function (:arguments 
+              ( ("config_name" variable nil (reparse-symbol function_parameters) [350 361]))              ) nil [335 776]))          
+      :file "__init__.py"
+      :pointmax 777
+      :fsize 776
+      :lastmodtime '(21774 46763 344118 900000)
+      :unmatched-syntax '((FROM 652 . 656) (PERIOD 657 . 658) (FROM 563 . 567) (PERIOD 568 . 569))))
+  :file "!media!ubuntu!My Passport!important!Envs!flask_learn!flask_book!app!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

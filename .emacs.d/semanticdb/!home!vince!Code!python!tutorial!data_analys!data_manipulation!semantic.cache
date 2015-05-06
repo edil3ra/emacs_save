@@ -1,0 +1,98 @@
+;; Object data_manipulation/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "data_manipulation/"
+  :tables (list 
+   (semanticdb-table "intro_pandas.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("pandas" include nil nil [1 20])
+            ("pandas" include nil nil [21 49])
+            ("datetime" include nil nil [51 66])
+            ("pandas.io.data" include nil nil [67 88])
+            ("df" variable nil nil [310 380])
+            ("print" code nil nil [381 397]))          
+    :file "intro_pandas.py"
+    :pointmax 398
+    :fsize 397
+    :lastmodtime '(21730 1330 889036 613000)
+    :unmatched-syntax '(($EOI 398 . 398))
+    )
+   (semanticdb-table "column_manipulation.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("pandas" include nil nil [1 20])
+            ("pandas" include nil nil [21 49])
+            ("pandas.io.data" include nil nil [50 71])
+            ("df" variable nil nil [74 144])
+            ("df2" variable nil nil [152 168])
+            ("df3" variable nil nil [169 195])
+            ("df4" variable nil nil [501 538])
+            ("df5" variable nil nil [553 591]))          
+    :file "column_manipulation.py"
+    :pointmax 605
+    :fsize 604
+    :lastmodtime '(21730 3486 217117 107000)
+    :unmatched-syntax '(($EOI 605 . 605) ($EOI 603 . 603) ($EOI 597 . 597))
+    )
+   (semanticdb-table "math_operation.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("pandas" include nil nil [1 20])
+            ("pandas" include nil nil [21 49])
+            ("datetime" include nil nil [51 66])
+            ("pandas.io.data" include nil nil [67 88])
+            ("df" variable nil nil [90 160])
+            ("df" code nil nil [162 193])
+            ("df" variable nil nil [194 247])
+            ("df" variable nil nil [248 277]))          
+    :file "math_operation.py"
+    :pointmax 346
+    :fsize 345
+    :lastmodtime '(21730 5357 397186 989000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "visualisation_2d.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "visualisation_2d.py"
+    :pointmax 1
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "std.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("pandas" include nil nil [1 20])
+            ("pandas" include nil nil [21 49])
+            ("matplotlib.pyplot" include nil nil [50 81])
+            ("df" variable nil nil [83 160])
+            ("df" variable nil nil [161 219])
+            ("close" variable nil nil [221 249])
+            ("std" variable nil nil [250 278])
+            ("close" code nil nil [280 303])
+            ("std" code nil nil [304 323])
+            ("plt" code nil nil [324 334]))          
+    :file "std.py"
+    :pointmax 335
+    :fsize 334
+    :lastmodtime '(21730 11624 897421 58000)
+    :unmatched-syntax '(($EOI 333 . 333) ($EOI 321 . 321))
+    )
+   (semanticdb-table "describe.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("pandas" include nil nil [1 20])
+            ("pandas" include nil nil [21 49])
+            ("matplotlib.pyplot" include nil nil [50 81])
+            ("df" variable nil nil [83 153])
+            ("df" code nil nil [154 167]))          
+    :file "describe.py"
+    :pointmax 172
+    :fsize 171
+    :lastmodtime '(21730 12012 213435 523000)
+    :unmatched-syntax '(($EOI 172 . 172))
+    )
+   )
+  :file "!home!vince!Code!python!tutorial!data_analys!data_manipulation!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

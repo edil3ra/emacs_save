@@ -1,0 +1,276 @@
+;; Object class/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "class/"
+  :tables (list 
+   (semanticdb-table "abstract_class.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("abc" include nil nil [1 40])
+            ("io" include nil nil [41 50])
+            ("IStream" type
+               (:superclasses ("ABCMeta")
+                :members 
+                  ( ("read" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [119 123])
+                            ("maxbytes" variable nil (reparse-symbol function_parameters) [125 133]))                          
+                        :decorators 
+                          ( ("abstractmethod" function (:type "decorator") nil nil))                          )
+                        (reparse-symbol indented_block_body) [90 152])
+                    ("write" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [186 190])
+                            ("data" variable nil (reparse-symbol function_parameters) [192 196]))                          
+                        :decorators 
+                          ( ("abstractmethod" function (:type "decorator") nil nil))                          )
+                        (reparse-symbol indented_block_body) [156 212])
+                    ("name" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [259 263]))                          
+                        :decorators 
+                          ( ("property" function (:type "decorator") nil nil)
+                            ("abstractmethod" function (:type "decorator") nil nil))                          )
+                        (reparse-symbol indented_block_body) [216 279])
+                    ("name" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [334 338])
+                            ("value" variable nil (reparse-symbol function_parameters) [340 345]))                          
+                        :decorators 
+                          ( ("name.setter" function (:type "decorator") nil nil)
+                            ("abstractmethod" function (:type "decorator") nil nil))                          )
+                        (reparse-symbol indented_block_body) [288 361])
+                    ("stat" function
+                       (:typemodifiers ("static")
+                        :arguments 
+                          ( ("cls" variable nil (reparse-symbol function_parameters) [421 424]))                          
+                        :decorators 
+                          ( ("staticmethod" function (:type "decorator") nil nil)
+                            ("abstractmethod" function (:type "decorator") nil nil))                          )
+                        (reparse-symbol indented_block_body) [374 440])
+                    ("stat2" function (:decorators 
+                      ( ("classmethod" function (:type "decorator") nil nil)
+                        ("abstractmethod" function (:type "decorator") nil nil))                      ) (reparse-symbol indented_block_body) [445 508]))                  
+                :type "class")
+                nil [52 508])
+            ("IStream" code nil nil [518 545])
+            ("SocketStream" type
+               (:members 
+                  ( ("read" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [581 585])
+                            ("maxbites" variable nil (reparse-symbol function_parameters) [587 595]))                          )
+                        (reparse-symbol indented_block_body) [572 614])
+                    ("write" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [637 641])
+                            ("data" variable nil (reparse-symbol function_parameters) [643 647]))                          )
+                        (reparse-symbol indented_block_body) [627 663]))                  
+                :type "class")
+                nil [546 663])
+            ("Foo" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("if" code nil (reparse-symbol indented_block_body) [721 845]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [693 697])
+                            ("names" variable nil (reparse-symbol function_parameters) [699 704]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [680 844]))                  
+                :type "class")
+                nil [665 844]))          
+    :file "abstract_class.py"
+    :pointmax 907
+    :fsize 906
+    :lastmodtime '(21730 25031 853921 760000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "class_method.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("Structure" type
+               (:members 
+                  ( ("_fields" variable nil (reparse-symbol indented_block_body) [23 35])
+                    ("__init__" function
+                       (:suite 
+                          ( ("if" code nil (reparse-symbol indented_block_body) [86 195])
+                            ("for" code nil (reparse-symbol indented_block_body) [216 299])
+                            ("for" code nil (reparse-symbol indented_block_body) [308 392])
+                            ("if" code nil (reparse-symbol indented_block_body) [413 505]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [54 58])
+                            ("args" variable nil (reparse-symbol function_parameters) [60 65])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [67 75]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [41 505]))                  
+                :type "class")
+                nil [2 505])
+            ("Point" type
+               (:superclasses ("Structure")
+                :members 
+                  ( ("_fields" variable nil (reparse-symbol indented_block_body) [543 563])
+                    ("create_origin" function
+                       (:decorators 
+                          ( ("classmethod" function (:type "decorator") nil nil))                          
+                        :arguments 
+                          ( ("cls" variable nil (reparse-symbol function_parameters) [608 611]))                          )
+                        (reparse-symbol indented_block_body) [573 639])
+                    ("__getitem__" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [660 664])
+                            ("key" variable nil (reparse-symbol function_parameters) [666 669]))                          )
+                        (reparse-symbol indented_block_body) [644 706]))                  
+                :type "class")
+                nil [515 706]))          
+    :file "class_method.py"
+    :pointmax 706
+    :fsize 705
+    :lastmodtime '(21619 31576 87396 653000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "context.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("socket" include nil nil [1 48])
+            ("functools" include nil nil [49 78])
+            ("math" include nil nil [79 98])
+            ("LazyConnection" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [196 218])
+                            ("self" variable nil (reparse-symbol indented_block_body) [227 247])
+                            ("self" variable nil (reparse-symbol indented_block_body) [256 272])
+                            ("self" variable nil (reparse-symbol indented_block_body) [281 297]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [138 142])
+                            ("address" variable nil (reparse-symbol function_parameters) [144 151])
+                            ("family" variable nil (reparse-symbol function_parameters) [153 159])
+                            ("type" variable nil (reparse-symbol function_parameters) [169 173]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [125 298])
+                    ("__enter__" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [317 321]))                          )
+                        (reparse-symbol indented_block_body) [303 526])
+                    ("__exit__" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [544 548])
+                            ("exec_ty" variable nil (reparse-symbol function_parameters) [550 557])
+                            ("exc_val" variable nil (reparse-symbol function_parameters) [559 566])
+                            ("tb" variable nil (reparse-symbol function_parameters) [568 570]))                          )
+                        (reparse-symbol indented_block_body) [531 624]))                  
+                :type "class")
+                nil [99 624])
+            ("conn" variable nil nil [629 674])
+            ("with" code nil nil [675 873])
+            ("print" code nil nil [873 884]))          
+    :file "context.py"
+    :pointmax 887
+    :fsize 886
+    :lastmodtime '(21730 25055 621922 647000)
+    :unmatched-syntax '((DEF 628 . 631) (NEWLINE 634 . 635))
+    )
+   (semanticdb-table "custom_container.py"
+    :major-mode 'python-mode
+    :tags nil
+    :file "custom_container.py"
+    :pointmax 573
+    :fsize 572
+    :lastmodtime '(21619 27822 115454 814000)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "data_model_decorator.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("Descriptor" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [72 88])
+                            ("for" code nil (reparse-symbol indented_block_body) [97 169]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [36 40])
+                            ("name" variable nil (reparse-symbol function_parameters) [42 46])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [53 61]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [23 169])
+                    ("__set__" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [186 190])
+                            ("instance" variable nil (reparse-symbol function_parameters) [192 200])
+                            ("value" variable nil (reparse-symbol function_parameters) [202 207]))                          )
+                        (reparse-symbol indented_block_body) [174 252]))                  
+                :type "class")
+                nil [1 252])
+            ("Typed" function (:arguments 
+              ( ("expected_type" variable nil (reparse-symbol function_parameters) [264 277])
+                ("cls" variable nil (reparse-symbol function_parameters) [279 282]))              ) nil [254 624])
+            ("Unsigned" function (:arguments 
+              ( ("cls" variable nil (reparse-symbol function_parameters) [638 641]))              ) nil [625 861])
+            ("MaxSized" function (:arguments 
+              ( ("cls" variable nil (reparse-symbol function_parameters) [880 883]))              ) nil [867 1369])
+            ("" code nil nil [1378 1383])
+            ("Integer" type
+               (:superclasses ("Descriptor")
+                :members 
+                  ( ("pass" code nil (reparse-symbol indented_block_body) [1415 1419]))                  
+                :type "class")
+                nil [1384 1420])
+            ("UnsignedInteger" type
+               (:superclasses ("Integer")
+                :members 
+                  ( ("pass" code nil (reparse-symbol indented_block_body) [1467 1471]))                  
+                :type "class")
+                nil [1431 1472])
+            ("" code nil nil [1479 1486])
+            ("Float" type
+               (:superclasses ("Descriptor")
+                :members 
+                  ( ("pass" code nil (reparse-symbol indented_block_body) [1516 1520]))                  
+                :type "class")
+                nil [1487 1521])
+            ("UnsignedFloat" type
+               (:superclasses ("Float")
+                :members 
+                  ( ("pass" code nil (reparse-symbol indented_block_body) [1564 1568]))                  
+                :type "class")
+                nil [1532 1569])
+            ("" code nil nil [1576 1581])
+            ("String" type
+               (:superclasses ("Descriptor")
+                :members 
+                  ( ("pass" code nil (reparse-symbol indented_block_body) [1612 1616]))                  
+                :type "class")
+                nil [1582 1617])
+            ("SizedString" type
+               (:superclasses ("String")
+                :members 
+                  ( ("pass" code nil (reparse-symbol indented_block_body) [1659 1663]))                  
+                :type "class")
+                nil [1628 1664]))          
+    :file "data_model_decorator.py"
+    :pointmax 1666
+    :fsize 1665
+    :lastmodtime '(21619 12032 339699 451000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Code!python!learn!cookbook!class!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

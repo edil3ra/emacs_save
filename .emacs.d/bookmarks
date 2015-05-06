@@ -1,0 +1,35 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+((".emacs"
+ (filename . "~/.emacs")
+ (front-context-string . "(require 'packag")
+ (rear-context-string)
+ (position . 1))
+("python"
+ (filename . "~/Code/python/")
+ (front-context-string . "book\n  drwx-----")
+ (rear-context-string . "96 avr 11 18:24 ")
+ (position . 227))
+("all.org"
+ (filename . "~/Documents/all.org")
+ (front-context-string . "** Emacs\n*** pac")
+ (rear-context-string . "sh\n	workon liex\n")
+ (position . 1126))
+("~"
+ (filename . "~/")
+ (front-context-string . ".adobe\n  -rw----")
+ (rear-context-string . "96 avr  8 18:44 ")
+ (position . 222))
+("web"
+ (filename . "~/Code/web/")
+ (front-context-string . "angular_learning")
+ (rear-context-string . "96 Dez  2 01:01 ")
+ (position . 216))
+("Code"
+ (filename . "~/Code/")
+ (front-context-string . "..\n  drwxrwxr-x ")
+ (rear-context-string . "96 Nov 10 23:11 ")
+ (position . 163))
+)

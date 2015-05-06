@@ -1,0 +1,31 @@
+;; Object versions/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "versions/"
+  :tables (list 
+    (semanticdb-table "17d52c03f7b_.py"
+    :major-mode 'python-mode
+    :tags 
+        '( ("\"\"\"empty message
+
+Revision ID: 17d52c03f7b
+Revises: None
+Create Date: 2015-03-29 01:01:22.836689
+
+\"\"\"" code nil nil [1 102])
+            ("revision" variable nil nil [145 169])
+            ("down_revision" variable nil nil [170 190])
+            ("alembic" include nil nil [192 214])
+            ("sqlalchemy" include nil nil [215 238])
+            ("upgrade" function nil nil [241 1836])
+            ("downgrade" function nil nil [1871 2033]))          
+    :file "17d52c03f7b_.py"
+    :pointmax 2066
+    :fsize 2065
+    :lastmodtime '(21783 16594 840626 327000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!vince!Envs!flask_learn!flask_book!migrations!versions!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2"
+  )

@@ -1,0 +1,49 @@
+;; Object flask_book/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "flask_book/"
+  :tables
+  (list
+    (semanticdb-table "__init__.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("manage" include nil nil [1 27])
+            ("db_command" include nil nil [28 45]))          
+      :file "__init__.py"
+      :pointmax 46
+      :fsize 45
+      :lastmodtime '(21784 26871 650140 400000)
+      :unmatched-syntax nil)
+    (semanticdb-table "manage.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 10])
+            ("app" include nil nil [11 41])
+            ("app.models" include nil nil [42 81])
+            ("flask.ext.script" include nil nil [82 125])
+            ("flask.ext.migrate" include nil nil [126 179])
+            ("flask_debugtoolbar" include nil nil [180 232])
+            ("datetime" include nil nil [233 262])
+            ("app" variable nil nil [265 321])
+            ("manager" variable nil nil [322 344])
+            ("migrate" variable nil nil [345 371])
+            ("toolbar" variable nil nil [372 408])
+            ("make_shell_context" function nil nil [411 547])
+            ("manager" code nil nil [549 617])
+            ("manager" code nil nil [618 659])
+            ("test" function (:decorators 
+              ( ("manager.command" function (:type "decorator") nil nil))              ) nil [662 843])
+            ("create_admin" function (:decorators 
+              ( ("manager.command" function (:type "decorator") nil nil))              ) nil [845 1482])
+            ("if" code nil nil [1484 1529]))          
+      :file "manage.py"
+      :pointmax 1530
+      :fsize 1529
+      :lastmodtime '(21798 35067 949157 363000)
+      :unmatched-syntax '((INDENT_BLOCK 1250 . 1475) (INDENT_BLOCK 1250 . 1475)))
+    (semanticdb-table "db_command.py"
+      :file "db_command.py"
+      :fsize 1831
+      :lastmodtime '(21784 26638 106134 200000)))
+  :file "!home!ubuntu!Envs!flask_book!flask_book!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

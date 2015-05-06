@@ -1,0 +1,57 @@
+;; Object liex/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "liex/"
+  :tables
+  (list
+    (semanticdb-table "settings.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("\"\"\"
+Django settings for liex project.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/dev/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/dev/ref/settings/
+\"\"\"" code nil nil [1 242])
+            ("os" include nil nil [316 325])
+            ("django.conf" include nil nil [326 358])
+            ("BASE_DIR" variable nil nil [359 412])
+            ("SECRET_KEY" variable nil nil [481 546])
+            ("DEBUG" variable nil nil [614 627])
+            ("TEMPLATE_DEBUG" variable nil nil [628 650])
+            ("ALLOWED_HOSTS" variable nil nil [652 694])
+            ("INSTALLED_APPS" variable nil nil [724 1065])
+            ("MIDDLEWARE_CLASSES" variable nil nil [1070 1507])
+            ("ROOT_URLCONF" variable nil nil [1509 1535])
+            ("WSGI_APPLICATION" variable nil nil [1536 1578])
+            ("if" code nil nil [1658 2085])
+            ("LANGUAGE_CODE" variable nil nil [2573 2593])
+            ("TIME_ZONE" variable nil nil [2595 2624])
+            ("USE_I18N" variable nil nil [2626 2641])
+            ("USE_L10N" variable nil nil [2643 2658])
+            ("USE_TZ" variable nil nil [2660 2673])
+            ("APPEND_SLASH" variable nil nil [2691 2710])
+            ("if" code nil nil [2722 2935])
+            ("TEMPLATE_DIRS" variable nil nil [2949 2992])
+            ("MEDIA_URL" variable nil nil [3002 3023])
+            ("MEDIA_ROOT" variable nil nil [3024 3085])
+            ("TEMPLATE_CONTEXT_PROCESSORS" code nil nil [3110 3548])
+            ("SUMMERNOTE_CONFIG" variable nil nil [3550 3814]))          
+      :file "settings.py"
+      :pointmax 3817
+      :fsize 3816
+      :lastmodtime '(21830 38267 961279 864000)
+      :unmatched-syntax nil)
+    (semanticdb-table "__init__.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "__init__.py"
+      :pointmax 1
+      :fsize 0
+      :lastmodtime '(21465 25932 512310 0)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Envs!liex!liex!liex!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")
