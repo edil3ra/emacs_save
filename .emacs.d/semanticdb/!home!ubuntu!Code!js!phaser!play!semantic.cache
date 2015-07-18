@@ -1,0 +1,21 @@
+;; Object play/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "play/"
+  :tables
+  (list
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("game" section nil nil [75 192])
+            ("" section nil nil [192 223])
+            ("" section nil nil [223 287])
+            ("" section nil nil [287 357])
+            ("" section nil nil [357 417]))          
+      :file "index.html"
+      :pointmax 417
+      :fsize 416
+      :lastmodtime '(21914 57260 538620 385000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!js!phaser!play!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

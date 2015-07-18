@@ -1,0 +1,23 @@
+;; Object stuff/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "stuff/"
+  :tables
+  (list
+    (semanticdb-table "test_password.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("itertools" include nil nil [1 17])
+            ("possibility" variable nil nil [19 45])
+            ("size" variable nil nil [46 54])
+            ("possibilities" variable nil nil [55 120])
+            ("product" function (:arguments 
+              ( ("chain" variable nil (reparse-symbol function_parameters) [135 140])
+                ("size" variable nil (reparse-symbol function_parameters) [142 146]))              ) nil [123 176]))          
+      :file "test_password.py"
+      :pointmax 185
+      :fsize 184
+      :lastmodtime '(21856 31459 763805 218000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!learn!stuff!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

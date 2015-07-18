@@ -1,0 +1,16 @@
+;; Object templates/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "templates/"
+  :tables
+  (list
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags nil
+      :file "index.html"
+      :pointmax 267
+      :fsize 266
+      :lastmodtime '(21884 3878 958510 28000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!templates!flask_template!app!templates!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

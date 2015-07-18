@@ -6,13 +6,15 @@
     (semanticdb-table "index.html"
       :major-mode 'html-mode
       :tags 
-        '( ("Test" section nil nil [75 264])
-            ("Morbi non arcu risus, quis varius quam quisque id diam vel quam elementum pulvinar etiam non quam lacus suspendisse? Sed enim ut sem viverra aliquet eget sit amet tellus cras!" section nil nil [264 502])
-            ("" section nil nil [502 559]))          
+        '( ("Titre" section nil nil [75 161])
+            ("" section nil nil [161 169])
+            ("" section nil nil [169 212])
+            ("" section nil nil [212 269])
+            ("" section nil nil [269 358]))          
       :file "index.html"
-      :pointmax 559
-      :fsize 558
-      :lastmodtime '(21652 41118 366694 0)
+      :pointmax 358
+      :fsize 357
+      :lastmodtime '(21914 55372 365172 679000)
       :unmatched-syntax nil))
   :file "!home!ubuntu!Code!web!templates!coffee_sass_template!semantic.cache"
   :semantic-tag-version "2.0"

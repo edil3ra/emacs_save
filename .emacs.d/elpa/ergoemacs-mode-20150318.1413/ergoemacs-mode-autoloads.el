@@ -1,11 +1,10 @@
 ;;; ergoemacs-mode-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (ergoemacs-svgs ergoemacs-keyfreq-image ergoemacs-extras
-;;;;;;  ergoemacs-bash ergoemacs-ghpages) "ergoemacs-extras" "ergoemacs-extras.el"
-;;;;;;  (21783 48156 444955 476000))
+;;;### (autoloads nil "ergoemacs-extras" "ergoemacs-extras.el" (21924
+;;;;;;  59393 415151 431000))
 ;;; Generated autoloads from ergoemacs-extras.el
 
 (autoload 'ergoemacs-ghpages "ergoemacs-extras" "\
@@ -44,10 +43,8 @@ Generate SVGs for all the defined layouts and themes.
 
 ;;;***
 
-;;;### (autoloads (ergoemacs-unaccent-char ergoemacs-unaccent-region
-;;;;;;  ergoemacs-unaccent-word ergoemacs-paste ergoemacs-paste-cycle)
-;;;;;;  "ergoemacs-functions" "ergoemacs-functions.el" (21783 48156
-;;;;;;  360955 473000))
+;;;### (autoloads nil "ergoemacs-functions" "ergoemacs-functions.el"
+;;;;;;  (21924 59393 411151 485000))
 ;;; Generated autoloads from ergoemacs-functions.el
 
 (autoload 'ergoemacs-paste-cycle "ergoemacs-functions" "\
@@ -96,13 +93,8 @@ Guillemet -> quote, degree -> @, s-zed -> ss, upside-down ?! -> ?!.
 
 ;;;***
 
-;;;### (autoloads (ergoemacs-save-buffer-state ergoemacs-deftheme
-;;;;;;  ergoemacs-theme ergoemacs-test-layout ergoemacs-theme-component
-;;;;;;  ergoemacs-component ergoemacs-theme-component--parse-remaining
-;;;;;;  ergoemacs-without-emulation ergoemacs-with-major-and-minor-modes
-;;;;;;  ergoemacs-with-global ergoemacs-with-overrides ergoemacs-with-ergoemacs
-;;;;;;  ergoemacs-sv) "ergoemacs-macros" "ergoemacs-macros.el" (21783
-;;;;;;  48156 92955 466000))
+;;;### (autoloads nil "ergoemacs-macros" "ergoemacs-macros.el" (21924
+;;;;;;  59393 395151 696000))
 ;;; Generated autoloads from ergoemacs-macros.el
 
 (autoload 'ergoemacs-sv "ergoemacs-macros" "\
@@ -249,8 +241,8 @@ This was stole/modified from `c-save-buffer-state'
 
 ;;;***
 
-;;;### (autoloads (ergoemacs-preprocess-menu-keybindings) "ergoemacs-menus"
-;;;;;;  "ergoemacs-menus.el" (21783 48156 136955 467000))
+;;;### (autoloads nil "ergoemacs-menus" "ergoemacs-menus.el" (21924
+;;;;;;  59393 399151 644000))
 ;;; Generated autoloads from ergoemacs-menus.el
 
 (autoload 'ergoemacs-preprocess-menu-keybindings "ergoemacs-menus" "\
@@ -260,8 +252,8 @@ Put `ergoemacs-mode' key bindings on menus.
 
 ;;;***
 
-;;;### (autoloads (ergoemacs-mode-start ergoemacs-mode) "ergoemacs-mode"
-;;;;;;  "ergoemacs-mode.el" (21783 48156 484955 477000))
+;;;### (autoloads nil "ergoemacs-mode" "ergoemacs-mode.el" (21924
+;;;;;;  59393 419151 378000))
 ;;; Generated autoloads from ergoemacs-mode.el
 
 (defvar ergoemacs-mode nil "\
@@ -299,8 +291,8 @@ Start `ergoemacs-mode' if not already started.
 
 ;;;***
 
-;;;### (autoloads (ergoemacs-test) "ergoemacs-test" "ergoemacs-test.el"
-;;;;;;  (21783 48156 520955 478000))
+;;;### (autoloads nil "ergoemacs-test" "ergoemacs-test.el" (21924
+;;;;;;  59393 419151 378000))
 ;;; Generated autoloads from ergoemacs-test.el
 
 (autoload 'ergoemacs-test "ergoemacs-test" "\
@@ -310,10 +302,8 @@ Test ergoemacs issues.
 
 ;;;***
 
-;;;### (autoloads (ergoemacs-key ergoemacs-theme-option-on ergoemacs-theme-option-off
-;;;;;;  ergoemacs-theme-component--create-component ergoemacs-save
-;;;;;;  ergoemacs-set) "ergoemacs-theme-engine" "ergoemacs-theme-engine.el"
-;;;;;;  (21783 48155 952955 463000))
+;;;### (autoloads nil "ergoemacs-theme-engine" "ergoemacs-theme-engine.el"
+;;;;;;  (21924 59393 387151 804000))
 ;;; Generated autoloads from ergoemacs-theme-engine.el
 
 (autoload 'ergoemacs-set "ergoemacs-theme-engine" "\
@@ -353,8 +343,8 @@ _DESC is ignored, as is _FIXED-KEY.
 
 ;;;***
 
-;;;### (autoloads (ergoemacs-ignore-prev-global) "ergoemacs-unbind"
-;;;;;;  "ergoemacs-unbind.el" (21783 48156 328955 473000))
+;;;### (autoloads nil "ergoemacs-unbind" "ergoemacs-unbind.el" (21924
+;;;;;;  59393 403151 592000))
 ;;; Generated autoloads from ergoemacs-unbind.el
 
 (autoload 'ergoemacs-ignore-prev-global "ergoemacs-unbind" "\
@@ -367,15 +357,13 @@ Ignore previously defined global keys.
 ;;;### (autoloads nil nil ("ergoemacs-advices.el" "ergoemacs-layouts.el"
 ;;;;;;  "ergoemacs-modal.el" "ergoemacs-mode-pkg.el" "ergoemacs-shortcuts.el"
 ;;;;;;  "ergoemacs-themes.el" "ergoemacs-track.el" "ergoemacs-translate.el")
-;;;;;;  (21783 48156 605391 121000))
+;;;;;;  (21924 59393 437486 469000))
 
 ;;;***
 
-(provide 'ergoemacs-mode-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; ergoemacs-mode-autoloads.el ends here

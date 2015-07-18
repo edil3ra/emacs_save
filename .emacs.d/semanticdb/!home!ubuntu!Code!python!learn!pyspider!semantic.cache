@@ -1,0 +1,55 @@
+;; Object pyspider/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "pyspider/"
+  :tables
+  (list
+    (semanticdb-table "first.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("pyspider.libs.base_handler" include nil nil [1 41])
+            ("Handler" type
+               (:superclasses ("BaseHandler")
+                :members 
+                  ( ("crawl_config" variable nil (reparse-symbol indented_block_body) [75 106])
+                    ("" code nil (reparse-symbol indented_block_body) [118 135])
+                    ("on_start" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [153 157]))                          )
+                        (reparse-symbol indented_block_body) [140 231])
+                    ("" code nil (reparse-symbol indented_block_body) [243 266])
+                    ("index_page" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [286 290])
+                            ("response" variable nil (reparse-symbol function_parameters) [292 300]))                          )
+                        (reparse-symbol indented_block_body) [271 430])
+                    ("" code nil (reparse-symbol indented_block_body) [442 454])
+                    ("detail_page" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [475 479])
+                            ("response" variable nil (reparse-symbol function_parameters) [481 489]))                          )
+                        (reparse-symbol indented_block_body) [459 601]))                  
+                :type "class")
+                nil [43 601]))          
+      :file "first.py"
+      :pointmax 610
+      :unmatched-syntax nil)
+    (semanticdb-table "t.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("partial" include nil nil [1 15])
+            ("time" include nil nil [16 27])
+            ("decorator" function (:arguments 
+              ( ("f" variable nil (reparse-symbol function_parameters) [42 43]))              ) nil [28 118])
+            ("foo" function (:decorators 
+              ( ("decorator" function (:type "decorator") nil nil))              ) nil [120 222]))          
+      :file "t.py"
+      :pointmax 222
+      :fsize 221
+      :lastmodtime '(21863 36694 867687 379000)
+      :unmatched-syntax '((DEF 39 . 42) (NEWLINE 53 . 54) (DEF 39 . 42) (NEWLINE 53 . 54) (DEF 39 . 42) (NEWLINE 50 . 51) (DEF 39 . 42) (NEWLINE 50 . 51) (DEF 17 . 20) ($EOI 41 . 41))))
+  :file "!home!ubuntu!Code!python!learn!pyspider!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,22 @@
+;; Object flask_backbone_template/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "flask_backbone_template/"
+  :tables
+  (list
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Titre" section nil nil [75 161])
+            ("test" section (:members 
+              ( ("test" section nil nil [169 408]))              ) nil [161 408])
+            ("" section nil nil [408 465])
+            ("" section nil nil [465 526])
+            ("" section nil nil [526 590]))          
+      :file "index.html"
+      :pointmax 590
+      :fsize 589
+      :lastmodtime '(21884 5265 537176 617000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!templates!flask_backbone_template!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,32 @@
+;; Object main/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "main/"
+  :tables
+  (list
+    (semanticdb-table "__init__.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("flask" include nil nil [1 28])
+            ("main" variable nil nil [30 64])
+            ("errors" include nil nil [73 93])
+            ("views" include nil nil [73 93]))          
+      :file "__init__.py"
+      :pointmax 94
+      :fsize 93
+      :lastmodtime '(21773 57738 747390 200000)
+      :unmatched-syntax '((FROM 66 . 70) (PERIOD 71 . 72)))
+    (semanticdb-table "errors.py"
+      :file "errors.py"
+      :fsize 361
+      :lastmodtime '(21782 55226 824474 400000))
+    (semanticdb-table "views.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "views.py"
+      :pointmax 544
+      :fsize 543
+      :lastmodtime '(21783 3672 732553 400000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Envs!flask_book!flask_book!app!main!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

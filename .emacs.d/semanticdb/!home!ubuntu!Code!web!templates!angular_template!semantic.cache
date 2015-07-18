@@ -1,0 +1,19 @@
+;; Object angular_template/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "angular_template/"
+  :tables
+  (list
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Angular" section nil nil [75 110])
+            ("lorem" section (:members 
+              ( ("lorem" section nil nil [121 155]))              ) nil [110 155]))          
+      :file "index.html"
+      :pointmax 155
+      :fsize 154
+      :lastmodtime '(21928 63983 996826 62000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!templates!angular_template!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

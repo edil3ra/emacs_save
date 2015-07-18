@@ -1,0 +1,35 @@
+<!doctype html> 
+<html lang="en" ng-app="exampleApp">
+  Id cursus metus aliquam eleifend mi in. Interdum consectetur libero, id faucibus nisl tincidunt eget nullam non nisi est, sit amet facilisis magna etiam tempor, orci eu lobortis elementum, nibh!
+  Quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam! Morbi leo urna, molestie at elementum eu, facilisis sed odio morbi quis commodo odio.
+  <p></p>
+<head>
+    <meta charset="UTF-8" />
+    <title>angular</title>
+    <link href="css/style.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
+    <script src="js/app.js"></script>
+</head>
+  
+<body ng-controller="exampleCtrl">
+    <div class="inner">
+        <div class="panel">
+            <h2>Velit egestas!</h2>
+            <h4> today is ({{ today || 'unkown' | dayName }})</h4>
+        </div>
+        <p highlight="Tuesday">
+            Augue ut lectus arcu, bibendum at varius vel, pharetra vel turpis nunc eget. Augue neque, gravida in fermentum et, sollicittudin ac orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt!
+        </p>
+        <div ng-controller="dayName">
+            {{ day }}
+        </div>
+        <div ng-controller="tomorrowName">
+            {{ tomorrow }}
+        </div>
+	<div>
+	  
+	</div>
+</body>
+</div>
+
+</html>

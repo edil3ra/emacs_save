@@ -22,6 +22,26 @@
       :pointmax 1905
       :fsize 1904
       :lastmodtime '(21821 6664 69230 323000)
+      :unmatched-syntax nil)
+    (semanticdb-table "tcp.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("socket" include nil nil [1 14])
+            ("argparse" include nil nil [15 30])
+            ("recvall" function (:arguments 
+              ( ("s" variable nil (reparse-symbol function_parameters) [45 46])
+                ("length" variable nil (reparse-symbol function_parameters) [48 54]))              ) nil [33 382])
+            ("server" function (:arguments 
+              ( ("host" variable nil (reparse-symbol function_parameters) [396 400])
+                ("port" variable nil (reparse-symbol function_parameters) [402 406]))              ) nil [385 1030])
+            ("client" function (:arguments 
+              ( ("host" variable nil (reparse-symbol function_parameters) [1043 1047])
+                ("port" variable nil (reparse-symbol function_parameters) [1049 1053]))              ) nil [1032 1322])
+            ("if" code nil nil [1325 1882]))          
+      :file "tcp.py"
+      :pointmax 1883
+      :fsize 1882
+      :lastmodtime '(21886 411 56043 472000)
       :unmatched-syntax nil))
   :file "!home!ubuntu!Code!python!book!networking!tcp!semantic.cache"
   :semantic-tag-version "2.0"

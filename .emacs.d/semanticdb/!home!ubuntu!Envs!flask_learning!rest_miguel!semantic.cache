@@ -1,0 +1,39 @@
+;; Object rest_miguel/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "rest_miguel/"
+  :tables
+  (list
+    (semanticdb-table "manage.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("flask" include nil nil [49 89])
+            ("flask.ext.script" include nil nil [90 142])
+            ("flask.ext.sqlalchemy" include nil nil [143 186])
+            ("flask.ext.debugtoolbar" include nil nil [187 257])
+            ("flask.ext.migrate" include nil nil [258 311])
+            ("app" variable nil nil [314 335])
+            ("app" variable nil nil [336 422])
+            ("db" variable nil nil [423 443])
+            ("migration" variable nil nil [444 472])
+            ("debug" variable nil nil [473 507])
+            ("manager" variable nil nil [508 530])
+            ("User" type
+               (:superclasses ("db.Model")
+                :members 
+                  ( ("__tablename__" variable nil (reparse-symbol indented_block_body) [559 582])
+                    ("id" variable nil (reparse-symbol indented_block_body) [588 632])
+                    ("name" variable nil (reparse-symbol indented_block_body) [637 668])
+                    ("__str__" function nil (reparse-symbol indented_block_body) [678 721]))                  
+                :type "class")
+                nil [533 721])
+            ("" code nil nil [734 739])
+            ("index" function nil nil [740 778])
+            ("if" code nil nil [780 871]))          
+      :file "manage.py"
+      :pointmax 873
+      :fsize 872
+      :lastmodtime '(21845 57204 951806 675000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Envs!flask_learning!rest_miguel!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -29,17 +29,18 @@
             ("l" variable nil nil [16 53])
             ("find_element_seq" function (:arguments 
               ( ("l" variable nil (reparse-symbol function_parameters) [77 78])
-                ("el" variable nil (reparse-symbol function_parameters) [80 82]))              ) nil [56 202])
+                ("el" variable nil (reparse-symbol function_parameters) [80 82]))              ) nil [56 198])
             ("binary_search" function (:arguments 
-              ( ("l" variable nil (reparse-symbol function_parameters) [222 223])
-                ("el" variable nil (reparse-symbol function_parameters) [225 227])
-                ("low" variable nil (reparse-symbol function_parameters) [229 232])
-                ("high" variable nil (reparse-symbol function_parameters) [236 240]))              ) nil [204 501])
-            ("print" code nil nil [528 536]))          
+              ( ("l" variable nil (reparse-symbol function_parameters) [220 221])
+                ("el" variable nil (reparse-symbol function_parameters) [223 225])
+                ("low" variable nil (reparse-symbol function_parameters) [227 230])
+                ("high" variable nil (reparse-symbol function_parameters) [234 238]))              ) nil [202 495])
+            ("d" variable nil nil [497 521])
+            ("print" code nil nil [522 530]))          
       :file "binary_search.py"
-      :pointmax 537
-      :fsize 536
-      :lastmodtime '(21822 45222 151390 585000)
+      :pointmax 531
+      :fsize 530
+      :lastmodtime '(21928 59896 215193 492000)
       :unmatched-syntax nil)
     (semanticdb-table "dir.py"
       :major-mode 'python-mode
@@ -48,18 +49,50 @@
             ("disk_usage" function (:arguments 
               ( ("path" variable nil (reparse-symbol function_parameters) [27 31]))              ) nil [12 294]))          
       :file "dir.py"
-      :pointmax 294
-      :fsize 293
-      :lastmodtime '(21822 45821 631507 286000)
+      :pointmax 295
+      :fsize 294
+      :lastmodtime '(21928 59938 386727 515000)
       :unmatched-syntax nil)
     (semanticdb-table "bad_fib.py"
       :major-mode 'python-mode
-      :tags nil
+      :tags 
+        '( ("math" include nil nil [1 26])
+            ("Test" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [82 98]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [56 60])
+                            ("name" variable nil (reparse-symbol function_parameters) [62 66]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [43 99])
+                    ("__str__" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [116 120]))                          )
+                        (reparse-symbol indented_block_body) [104 148]))                  
+                :type "class")
+                nil [27 148])
+            ("test" variable nil nil [157 170])
+            ("test" variable nil nil [171 191])
+            ("print" code nil nil [192 203]))          
       :file "bad_fib.py"
-      :pointmax 19
-      :fsize 28
-      :lastmodtime '(21824 65012 780386 967000)
-      :unmatched-syntax nil))
+      :pointmax 204
+      :fsize 203
+      :lastmodtime '(21929 38739 748789 16000)
+      :unmatched-syntax nil)
+    (semanticdb-table "fact.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("fact" function (:arguments 
+              ( ("x" variable nil (reparse-symbol function_parameters) [10 11]))              ) nil [1 86]))          
+      :file "fact.py"
+      :pointmax 86
+      :fsize 85
+      :lastmodtime '(21857 51936 845403 591000)
+      :unmatched-syntax '((INDENT_BLOCK 56 . 86) (NEWLINE 55 . 56) (NAME 50 . 54) (COLON 54 . 55) (INDENT_BLOCK 56 . 86) (NEWLINE 55 . 56) (NAME 50 . 54) (COLON 54 . 55))))
   :file "!home!ubuntu!Code!python!book!algoritm!recursion!semantic.cache"
   :semantic-tag-version "2.0"
   :semanticdb-version "2.2")

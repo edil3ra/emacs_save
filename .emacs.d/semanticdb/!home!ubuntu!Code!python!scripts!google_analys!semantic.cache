@@ -1,0 +1,39 @@
+;; Object google_analys/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "google_analys/"
+  :tables
+  (list
+    (semanticdb-table "googleanalys.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("requests" include nil nil [1 16])
+            ("bs4" include nil nil [17 46])
+            ("Google" type
+               (:members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("host" variable nil (reparse-symbol indented_block_body) [97 130])
+                            ("parameters" variable nil (reparse-symbol indented_block_body) [139 275])
+                            ("url" variable nil (reparse-symbol indented_block_body) [284 292])
+                            ("response" variable nil (reparse-symbol indented_block_body) [317 332])
+                            ("soup" variable nil (reparse-symbol indented_block_body) [341 352]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [82 86]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [69 353])
+                    ("write" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [378 382]))                          )
+                        (reparse-symbol indented_block_body) [368 398]))                  
+                :type "class")
+                nil [49 398]))          
+      :file "googleanalys.py"
+      :pointmax 405
+      :fsize 404
+      :lastmodtime '(21866 59821 975001 366000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!scripts!google_analys!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

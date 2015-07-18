@@ -1,0 +1,32 @@
+;; Object templates/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "templates/"
+  :tables
+  (list
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags nil
+      :file "index.html"
+      :pointmax 70
+      :fsize 69
+      :lastmodtime '(21884 5291 220859 739000)
+      :unmatched-syntax nil)
+    (semanticdb-table "base.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Flask App" section nil nil [97 238])
+            ("{% block content %}
+	
+  {% endblock content %}
+  <script src=\"{{ url_for('static', filename='components/lodash/lodash.min.js') }}\">" section nil nil [238 296])
+            ("" section nil nil [296 390])
+            ("" section nil nil [390 488])
+            ("" section nil nil [488 575]))          
+      :file "base.html"
+      :pointmax 575
+      :fsize 574
+      :lastmodtime '(21884 5502 510248 371000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!templates!flask_backbone_template!app!templates!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

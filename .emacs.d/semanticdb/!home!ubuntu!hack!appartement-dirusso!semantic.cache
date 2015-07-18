@@ -1,0 +1,103 @@
+;; Object appartement-dirusso/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "appartement-dirusso/"
+  :tables
+  (list
+    (semanticdb-table "main.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 10])
+            ("requests" include nil nil [11 26])
+            ("dictionnary_american" variable nil nil [28 85])
+            ("dictionnary_british" variable nil nil [86 141])
+            ("dictionnary_my" variable nil nil [142 163])
+            ("password" variable nil nil [164 182])
+            ("host" variable nil nil [184 228])
+            ("login_path" variable nil nil [229 280])
+            ("\"<html>\\n<head></head>\\n<body>\\n<center>\\n<br>\\n<form action='/update/admin.php' method='post'>Mot de passe : <input type='text' name='try_pass'><input type='submit' value='Entrer'></form>\\n</center>\\n</body>\\n</html>\\n\"" code nil nil [299 519])
+            ("content_length" variable nil nil [520 542])
+            ("crack" function (:arguments 
+              ( ("dictionnary_path" variable nil (reparse-symbol function_parameters) [555 571]))              ) nil [545 997])
+            ("if" code nil nil [999 1057]))          
+      :file "main.py"
+      :pointmax 1057
+      :fsize 1056
+      :lastmodtime '(21859 6655 289498 742000)
+      :unmatched-syntax nil)
+    (semanticdb-table "login.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Mot de passe : <input type='text' name='try_pass'><input type='submit' value='Entrer'>" section nil nil [22 209]))          
+      :file "login.html"
+      :pointmax 209
+      :fsize 208
+      :lastmodtime '(21859 4780 907258 392000)
+      :unmatched-syntax nil)
+    (semanticdb-table "test.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("test - Google zoeken" section nil nil [233 10799])
+            ("window.google = {y:{}};google.lc=[];google.li=0;var a=function(e,g,h){var k=\"\",b=new Image,l=google.lc,f=google.li;b.onerror=b.onload=b.onabort=function(){delete l[f]};l[f]=b;h||-1!=g.search(\"&ei=\")||(k=\"&ei=\"+google.kEI);e=h||\"/gen_204?atyp=i&ct=\"+e+\"&cad=\"+g+k+\"&zx=\"+(new Date).getTime();b.src=e;google.li=f+1},c=[\"google\",\"log\"],d=this;c[0]in d||!d.execScript||d.execScript(\"var \"+c[0]);for(var m;c.length&&(m=c.shift());)c.length||void 0===a?d[m]?d=d[m]:d=d[m]={}:d[m]=a;" section nil nil [10799 11315])
+            ("(function(){var a=function(f){for(var g=f.parentElement,d=null,e=0;e<g.childNodes.length;e++){var h=g.childNodes[e];-1<(\" \"+h.className+\" \").indexOf(\" am-dropdown-menu \")&&(d=h)}\"none\"==d.style.display?(d.style.display=\"\",google.log(\"hpam\",\"&ved=\"+f.getAttribute(\"data-ved\"))):d.style.display=\"none\"},b=[\"google\",\"sham\"],c=this;b[0]in c||!c.execScript||c.execScript(\"var \"+b[0]);for(var k;b.length&&(k=b.shift());)b.length||void 0===a?c[k]?c=c[k]:c=c[k]={}:c[k]=a;}).call(window);" section nil nil [11315 11355])
+            ("(function(){var a=function(f){for(var g=f.parentElement,d=null,e=0;e<g.childNodes.length;e++){var h=g.childNodes[e];-1<(\" \"+h.className+\" \").indexOf(\" am-dropdown-menu \")&&(d=h)}\"none\"==d.style.display?(d.style.display=\"\",google.log(\"hpam\",\"&ved=\"+f.getAttribute(\"data-ved\"))):d.style.display=\"none\"},b=[\"google\",\"sham\"],c=this;b[0]in c||!c.execScript||c.execScript(\"var \"+b[0]);for(var k;b.length&&(k=b.shift());)b.length||void 0===a?c[k]?c=c[k]:c=c[k]={}:c[k]=a;}).call(window);" section nil nil [11355 11859])
+            ("Zoeken" section (:members 
+              ( ("Webgeschiedenis" anchor nil nil [12839 12842])
+                ("Instellingen" anchor nil nil [12923 12927])
+                ("&nbsp;" section (:members 
+                  ( ("&nbsp;" anchor nil nil [13436 13439])
+                    ("Search Options" section (:members 
+                      ( ("Test" section (:members 
+                          ( ("Test" anchor nil nil [18148 18151])
+                            ("Contacteer ons" anchor nil nil [19451 19454])
+                            ("Huishoudelektro" anchor nil nil [19626 19629])
+                            ("Koopwijzer tarieven telefoon ..." anchor nil nil [19810 19813])
+                            ("Uw klacht" anchor nil nil [20059 20062]))                          ) nil [18134 20256])
+                        ("Test" section (:members 
+                          ( ("Test" anchor nil nil [20270 20273])
+                            ("Intelligentietesten | VDAB" anchor nil nil [21335 21338])
+                            ("Beroepstesten" anchor nil nil [21538 21541])
+                            ("Persoonlijkheidstesten | VDAB" anchor nil nil [21722 21725]))                          ) nil [20256 21959])
+                        ("eID Authenticatie <b>Test" section (:members 
+                          ( ("eID Authenticatie <b>Test" anchor nil nil [21973 21976]))                          ) nil [21959 23271])
+                        ("Je installatie <b>testen" section (:members 
+                          ( ("Je installatie <b>testen" anchor nil nil [23285 23288]))                          ) nil [23271 24754])
+                        ("VREG V-<b>test" section (:members 
+                          ( ("VREG V-<b>test" anchor nil nil [24768 24771]))                          ) nil [24754 25843])
+                        ("Prijzen vergelijken (V-<b>TEST" section (:members 
+                          ( ("Prijzen vergelijken (V-<b>TEST" anchor nil nil [25857 25860]))                          ) nil [25843 27025])
+                        ("Ontdek hier welke <b>testen" section (:members 
+                          ( ("Ontdek hier welke <b>testen" anchor nil nil [27039 27042]))                          ) nil [27025 28434])
+                        ("Speedtest" section (:members 
+                          ( ("Speedtest" anchor nil nil [28448 28451]))                          ) nil [28434 29689])
+                        ("Hoe rijvaardig bent u? | BIVV" section (:members 
+                          ( ("Hoe rijvaardig bent u? | BIVV" anchor nil nil [29703 29706]))                          ) nil [29689 30963])
+                        ("Luci-<b>test" section (:members 
+                          ( ("Luci-<b>test" anchor nil nil [30977 30980])
+                            ("speedtest" anchor nil nil [32326 32329])
+                            ("belbin" anchor nil nil [32550 32553])
+                            ("depressie" anchor nil nil [32761 32764])
+                            ("soa" anchor nil nil [32995 32998])
+                            ("autisme" anchor nil nil [33200 33203])
+                            ("add" anchor nil nil [33430 33433])
+                            ("borderline" anchor nil nil [33635 33638])
+                            ("vreg" anchor nil nil [33871 33874])
+                            ("Volgende" anchor nil nil [36183 36186])
+                            ("Geavanceerd zoeken" anchor nil nil [36530 36533])
+                            ("Hulp bij zoeken" anchor nil nil [36614 36617])
+                            ("Feedback verzenden" anchor nil nil [36701 36704])
+                            ("Google&nbsp;Home" anchor nil nil [36886 36889])
+                            ("Advertentieprogramma&#8217;s" anchor nil nil [36919 36922])
+                            ("Privacy" anchor nil nil [36975 36978])
+                            ("Voorwaarden" anchor nil nil [37024 37027])
+                            ("Over Google" anchor nil nil [37075 37078]))                          ) nil [30963 37231]))                      ) nil [15907 37231]))                  ) nil [13432 37231]))              ) nil [11859 37231])
+            ("(function(){var eventid='0FVjVYIKzYjsBsKggqgL';google.kEI = eventid;})();" section nil nil [37231 37344])
+            ("google.ac&&google.ac.c({\"agen\":true,\"cgen\":true,\"client\":\"heirloom-serp\",\"dh\":true,\"ds\":\"\",\"fl\":true,\"host\":\"google.be\",\"jam\":0,\"jsonp\":true,\"msgs\":{\"cibl\":\"Zoekopdracht wissen\",\"dym\":\"Bedoelde u:\",\"lcky\":\"Ik doe een gok\",\"lml\":\"Meer informatie\",\"oskt\":\"Invoertools\",\"psrc\":\"Deze zoekopdracht is verwijderd uit uw \\u003Ca href=\\\"/history\\\"\\u003EWebgeschiedenis\\u003C/a\\u003E\",\"psrl\":\"Verwijderen\",\"sbit\":\"Zoeken op afbeelding\",\"srch\":\"Google zoeken\"},\"ovr\":{},\"pq\":\"test\",\"refoq\":true,\"refpd\":true,\"rfs\":[\"speedtest\",\"depressie test\",\"autisme test\",\"borderline test\",\"belbin test\",\"soa test\",\"add test\",\"vreg test\"],\"scd\":10,\"sce\":5,\"stok\":\"pwMIIPHKTAyNbtSnx_iyTQIflJE\"})" section nil nil [37344 37470])
+            ("google.ac&&google.ac.c({\"agen\":true,\"cgen\":true,\"client\":\"heirloom-serp\",\"dh\":true,\"ds\":\"\",\"fl\":true,\"host\":\"google.be\",\"jam\":0,\"jsonp\":true,\"msgs\":{\"cibl\":\"Zoekopdracht wissen\",\"dym\":\"Bedoelde u:\",\"lcky\":\"Ik doe een gok\",\"lml\":\"Meer informatie\",\"oskt\":\"Invoertools\",\"psrc\":\"Deze zoekopdracht is verwijderd uit uw \\u003Ca href=\\\"/history\\\"\\u003EWebgeschiedenis\\u003C/a\\u003E\",\"psrl\":\"Verwijderen\",\"sbit\":\"Zoeken op afbeelding\",\"srch\":\"Google zoeken\"},\"ovr\":{},\"pq\":\"test\",\"refoq\":true,\"refpd\":true,\"rfs\":[\"speedtest\",\"depressie test\",\"autisme test\",\"borderline test\",\"belbin test\",\"soa test\",\"add test\",\"vreg test\"],\"scd\":10,\"sce\":5,\"stok\":\"pwMIIPHKTAyNbtSnx_iyTQIflJE\"})" section nil nil [37470 38196]))          
+      :file "test.html"
+      :pointmax 38196
+      :fsize 38195
+      :lastmodtime '(21859 28266 330407 495000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!hack!appartement-dirusso!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

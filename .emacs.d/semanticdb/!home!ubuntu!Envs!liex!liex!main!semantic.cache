@@ -63,26 +63,26 @@
             ("MeilleursCasAdmin" type
                (:superclasses ("admin.ModelAdmin")
                 :members 
-                  ( ("list_display" variable nil (reparse-symbol indented_block_body) [833 857]))                  
+                  ( ("list_display" variable nil (reparse-symbol indented_block_body) [831 855]))                  
                 :type "class")
-                nil [786 858])
+                nil [784 856])
             ("LiensAdmin" type
                (:superclasses ("admin.ModelAdmin")
                 :members 
-                  ( ("list_display" variable nil (reparse-symbol indented_block_body) [900 930])
-                    ("fields" variable nil (reparse-symbol indented_block_body) [935 959]))                  
+                  ( ("list_display" variable nil (reparse-symbol indented_block_body) [897 927])
+                    ("fields" variable nil (reparse-symbol indented_block_body) [932 956]))                  
                 :type "class")
-                nil [860 960])
-            ("admin" code nil nil [962 1006])
-            ("admin" code nil nil [1007 1043])
-            ("admin" code nil nil [1044 1078])
-            ("admin" code nil nil [1079 1131])
-            ("admin" code nil nil [1132 1169]))          
+                nil [857 957])
+            ("admin" code nil nil [958 1002])
+            ("admin" code nil nil [1003 1039])
+            ("admin" code nil nil [1040 1074])
+            ("admin" code nil nil [1075 1127])
+            ("admin" code nil nil [1128 1165]))          
       :file "admin.py"
-      :pointmax 1170
-      :fsize 1169
-      :lastmodtime '(21613 2940 102267 200000)
-      :unmatched-syntax '((FROM 34 . 38) (PERIOD 39 . 40))))
+      :pointmax 1166
+      :fsize 1165
+      :lastmodtime '(21884 8022 723578 73000)
+      :unmatched-syntax nil))
   :file "!home!ubuntu!Envs!liex!liex!main!semantic.cache"
   :semantic-tag-version "2.0"
   :semanticdb-version "2.2")

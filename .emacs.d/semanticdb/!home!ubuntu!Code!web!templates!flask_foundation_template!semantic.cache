@@ -1,0 +1,29 @@
+;; Object flask_foundation_template/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "flask_foundation_template/"
+  :tables
+  (list
+    (semanticdb-table "manage.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("os" include nil nil [1 10])
+            ("app" include nil nil [11 41])
+            ("flask.ext.script" include nil nil [42 85])
+            ("flask.ext.migrate" include nil nil [86 139])
+            ("flask_debugtoolbar" include nil nil [140 192])
+            ("app" variable nil nil [194 250])
+            ("manager" variable nil nil [251 273])
+            ("migrate" variable nil nil [274 300])
+            ("toolbar" variable nil nil [301 337])
+            ("make_shell_context" function nil nil [339 399])
+            ("manager" code nil nil [399 467])
+            ("manager" code nil nil [468 509])
+            ("if" code nil nil [512 557]))          
+      :file "manage.py"
+      :pointmax 557
+      :fsize 556
+      :lastmodtime '(21773 60126 871479 0)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!templates!flask_foundation_template!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

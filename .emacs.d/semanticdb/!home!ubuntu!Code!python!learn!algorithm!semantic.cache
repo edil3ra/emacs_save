@@ -6,21 +6,20 @@
     (semanticdb-table "algorithm_analys.py"
       :major-mode 'python-mode
       :tags 
-        '( ("math" include nil nil [1 12])
-            ("power" function (:arguments 
-              ( ("a" variable nil (reparse-symbol function_parameters) [23 24])
-                ("n" variable nil (reparse-symbol function_parameters) [26 27]))              ) nil [13 158])
+        '( ("power" function (:arguments 
+              ( ("a" variable nil (reparse-symbol function_parameters) [30 31])
+                ("n" variable nil (reparse-symbol function_parameters) [33 34]))              ) nil [20 165])
             ("harmonic_serie" function (:arguments 
-              ( ("n" variable nil (reparse-symbol function_parameters) [180 181]))              ) nil [161 254])
+              ( ("n" variable nil (reparse-symbol function_parameters) [187 188]))              ) nil [168 261])
             ("maximum" function (:arguments 
-              ( ("a" variable nil (reparse-symbol function_parameters) [267 268]))              ) nil [255 340])
+              ( ("a" variable nil (reparse-symbol function_parameters) [274 275]))              ) nil [262 347])
             ("maximum_recursion" function (:arguments 
-              ( ("a" variable nil (reparse-symbol function_parameters) [364 365])
-                ("n" variable nil (reparse-symbol function_parameters) [367 368]))              ) nil [342 463]))          
+              ( ("a" variable nil (reparse-symbol function_parameters) [371 372])
+                ("n" variable nil (reparse-symbol function_parameters) [374 375]))              ) nil [349 470]))          
       :file "algorithm_analys.py"
-      :pointmax 464
-      :fsize 463
-      :lastmodtime '(21798 43320 21188 838000)
+      :pointmax 471
+      :fsize 470
+      :lastmodtime '(21925 32214 979133 388000)
       :unmatched-syntax nil))
   :file "!home!ubuntu!Code!python!learn!algorithm!semantic.cache"
   :semantic-tag-version "2.0"

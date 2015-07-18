@@ -1,0 +1,19 @@
+;; Object retroingenierie/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "retroingenierie/"
+  :tables
+  (list
+    (semanticdb-table "main.c"
+      :major-mode 'c-mode
+      :tags 
+        '( ("stdio.h" include (:system-flag t) nil [1 19])
+            ("stdlib.h" include (:system-flag t) nil [20 39])
+            ("main" function (:type "int") nil [42 103]))          
+      :file "main.c"
+      :pointmax 105
+      :fsize 104
+      :lastmodtime '(21925 9017 694551 135000)
+      :unmatched-syntax '((symbol 104 . 107))))
+  :file "!home!ubuntu!Code!c!sdz!retroingenierie!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

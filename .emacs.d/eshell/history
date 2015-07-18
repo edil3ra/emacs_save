@@ -9,3 +9,9 @@ ls
 touch test.com
 ls
 rm test.com
+ascii
+man ascii
+ls
+ebp 
+gdb
+cd '/home/ubuntu/Code/python/book/algoritm/recursion/'

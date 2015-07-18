@@ -1,0 +1,129 @@
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
+
+lucky :: (Integral a) => a -> String
+lucky 1 = "LUCKY NUMBER ONE!"
+lucky 2 = "LUCKY NUMBER TWO!"
+lucky 3 = "LUCKY NUMBER THREE!"
+lucky 7 = "LUCKY NUMBER SEVEN!"
+lucky x = "Sorry you're out of luck"
+
+factorial :: (Integral a) => a -> a
+factorial 0 = 1
+factorial x = factorial (x - 1) * x
+
+factorialCond x =
+  if x == 0
+  then 1
+  else factorialCond (x - 1) * x
+
+addVector :: (Num a) => (a, a) -> (a, a) -> (a, a)
+addVector (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
+
+addVector2 :: (Num a) => a -> a -> a -> a -> (a, a)
+addVector2 a b c d = (a + c, b + d) 
+
+first :: (a, b, c) -> a
+first (a, _, _) = a
+
+second :: (a, b, c) -> b
+second (_, b, _) = b
+
+third :: (a, b, c) -> c
+third (_, _, c) = c
+
+xs = [(1, 2), (4, 3), (2, 4), (5, 3), (5, 6), (3, 1)]
+r = sum [a + b | (a, b) <- xs]
+
+head' :: [a] -> a
+head' (x:_) = x
+head' [] = error "Can't call head on an empty list"
+
+tell :: (Show a) => [a] -> String
+tell [] = "the list is null"
+tell (a:[]) = "the list has element" ++ show a
+tell (a:b:[]) = "the list has element" ++ show a ++ "and element" ++ show b
+tell (a:b:_) = "the list has element" ++ show a  ++ "and element" ++ show b ++ "others elements"
+               
+length' :: (Num y) => [x] -> y
+length' [] = 0
+length' (x:xs) = 1 + length' xs
+
+sum' :: (Num x) => [x] -> x
+sum' [] = 0
+sum' (x:xs) = x + sum' xs
+
+-- capital :: String -> String
+capital :: String -> String
+capital all@(x:xs) = "capital: " ++ all ++ " start with letter " ++ [x]
+
+bimTell :: (RealFloat a) => a -> String
+bimTell bmi
+  | bmi <= 18.5 = "You're underweight, you emo, you"
+  | bmi <= 25.0 = "You're underweight, you emo, you"
+  | bmi <= 30.0 = "You're underweight, you emo, you"
+  | otherwise   = "You're underweight, you emo, you"
+
+bimTell' :: (RealFloat x) => x -> x -> String
+bimTell' weight height
+  | weight / height ^ 2 <= 18.5 = "You're underweight, you emo, you"
+  | weight / height ^ 2 <= 25.0 = "You're normal"
+  | weight / height ^ 2 <= 30.0 = "You're fat"
+  | otherwise                   = "you are a whale"
+
+bimTell'' :: (RealFloat x) => x -> x -> String
+bimTell'' weight height
+  | bmi <= 18.5 = "You're underweight, you emo, you"
+  | bmi <= 18.5 = "you're normal"
+  | bmi <= 18.5 = "You're fat"
+  | otherwise   = "You're a whale"
+  where bmi = weight / height^2
+
+bimTell''' :: (RealFloat x) => x -> x -> String
+bimTell''' weight height
+  | bmi <= skinny = "You're underweight, you emo, you"
+  | bmi <= normal = "you're normal"
+  | bmi <= fat    = "You're fat"
+  | otherwise     = "You're a whale"
+  where bmi    = weight / height^2
+        skinny = 18.5
+        normal = 25.0
+        fat    = 30.0
+
+bimTell'''' :: (RealFloat x) => x -> x -> String
+bimTell'''' weight height
+  | bmi <= skinny = "You're underweight, you emo, you"
+  | bmi <= normal = "you're normal"
+  | bmi <= fat    = "You're fat"
+  | otherwise     = "You're a whale"
+  where bmi    = weight / height^2
+        (skinny, normal, fat) = (18.5, 25.0, 30.0)
+
+max' :: (Ord a) => a -> a -> a
+max' a b
+  | a > b = a
+  | otherwise = b
+
+initials :: String -> String -> String
+initials firstName lastName =
+  [f] ++ " "++ " " ++ [l]
+  where (f: _) = firstName
+        (l: _) = lastName
+        
+calcBmis :: (RealFloat x) => [(x, x)] -> [x]
+calcBmis xs = [bmi w h | (w, h) <- xs]
+  where bmi weight height = weight / height ^ 2
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+  let sideArea = 2 * h * pi * r * h
+      topArea = pi * r^2
+  in sideArea + 2 * topArea
+
+calc :: (RealFloat a) => [(a, a)] -> [a]
+calc  xs = [bmi | (w, h) <- xs, let bmi = w / h^2, bmi >= 20]
+
+describeList :: [a] -> String  
+describeList xs = "The list is " ++ case xs of [] -> "empty."  
+                                               [x] -> "a singleton list."   
+                                               xs -> "a longer list."  

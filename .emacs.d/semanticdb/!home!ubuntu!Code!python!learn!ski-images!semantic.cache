@@ -1,0 +1,18 @@
+;; Object ski-images/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "ski-images/"
+  :tables
+  (list
+    (semanticdb-table "started.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("skimage" include nil nil [1 25])
+            ("skimage.transform" include nil nil [26 63]))          
+      :file "started.py"
+      :pointmax 64
+      :fsize 73
+      :lastmodtime '(21870 3987 646837 188000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!python!learn!ski-images!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

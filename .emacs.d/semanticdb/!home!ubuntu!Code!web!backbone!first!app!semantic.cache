@@ -1,0 +1,24 @@
+;; Object app/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "app/"
+  :tables
+  (list
+    (semanticdb-table "__init__.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("flask" include nil nil [1 41])
+            ("flask.ext.sqlalchemy" include nil nil [42 85])
+            ("config" include nil nil [86 111])
+            ("flask.ext.restless" include nil nil [112 153])
+            ("manager_rest" variable nil nil [155 182])
+            ("db" variable nil nil [183 200])
+            ("create_app" function (:arguments 
+              ( ("config_name" variable nil (reparse-symbol function_parameters) [218 229]))              ) nil [203 640]))          
+      :file "__init__.py"
+      :pointmax 640
+      :fsize 639
+      :lastmodtime '(21884 25131 746964 412000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!backbone!first!app!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

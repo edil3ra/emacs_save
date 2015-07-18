@@ -13,143 +13,144 @@
             ("kivy.uix.floatlayout" include nil nil [137 181])
             ("kivy.clock" include nil nil [182 210])
             ("kivy.graphics" include nil nil [211 246])
+            ("math" include nil nil [247 271])
             ("Sprite" type
                (:superclasses ("Widget")
                 :members 
                   ( ("__init__" function
                        (:suite 
-                          ( ("super" code nil (reparse-symbol indented_block_body) [320 346])
-                            ("self" variable nil (reparse-symbol indented_block_body) [355 375])
-                            ("with" code nil (reparse-symbol indented_block_body) [384 469])
-                            ("self" code nil (reparse-symbol indented_block_body) [478 517])
-                            ("self" code nil (reparse-symbol indented_block_body) [526 567]))                          
+                          ( ("super" code nil (reparse-symbol indented_block_body) [336 362])
+                            ("self" variable nil (reparse-symbol indented_block_body) [371 391])
+                            ("with" code nil (reparse-symbol indented_block_body) [400 485])
+                            ("self" code nil (reparse-symbol indented_block_body) [494 533])
+                            ("self" code nil (reparse-symbol indented_block_body) [542 583]))                          
                         :parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [288 292])
-                            ("kwargs" variable nil (reparse-symbol function_parameters) [294 302]))                          
+                          ( ("self" variable nil (reparse-symbol function_parameters) [311 315])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [317 325]))                          
                         :constructor-flag t)
-                        (reparse-symbol indented_block_body) [275 561])
+                        (reparse-symbol indented_block_body) [298 584])
                     ("update_graphics_pos" function
                        (:parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [591 595])
-                            ("instance" variable nil (reparse-symbol function_parameters) [597 605])
-                            ("value" variable nil (reparse-symbol function_parameters) [607 612]))                          )
-                        (reparse-symbol indented_block_body) [567 651])
+                          ( ("self" variable nil (reparse-symbol function_parameters) [614 618])
+                            ("instance" variable nil (reparse-symbol function_parameters) [620 628])
+                            ("value" variable nil (reparse-symbol function_parameters) [630 635]))                          )
+                        (reparse-symbol indented_block_body) [590 674])
                     ("update_graphics_size" function
                        (:parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [689 693])
-                            ("instance" variable nil (reparse-symbol function_parameters) [695 703])
-                            ("value" variable nil (reparse-symbol function_parameters) [705 710]))                          )
-                        (reparse-symbol indented_block_body) [664 751]))                  
+                          ( ("self" variable nil (reparse-symbol function_parameters) [712 716])
+                            ("instance" variable nil (reparse-symbol function_parameters) [718 726])
+                            ("value" variable nil (reparse-symbol function_parameters) [728 733]))                          )
+                        (reparse-symbol indented_block_body) [687 774]))                  
                 :type "class")
-                nil [249 751])
+                nil [272 774])
             ("Bar" type
                (:superclasses ("Sprite")
                 :members 
                   ( ("__init__" function
                        (:suite 
-                          ( ("super" code nil (reparse-symbol indented_block_body) [821 847])
-                            ("self" variable nil (reparse-symbol indented_block_body) [856 875]))                          
+                          ( ("super" code nil (reparse-symbol indented_block_body) [837 863])
+                            ("self" variable nil (reparse-symbol indented_block_body) [872 891]))                          
                         :parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [789 793])
-                            ("kwargs" variable nil (reparse-symbol function_parameters) [795 803]))                          
+                          ( ("self" variable nil (reparse-symbol function_parameters) [812 816])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [818 826]))                          
                         :constructor-flag t)
-                        (reparse-symbol indented_block_body) [776 869])
+                        (reparse-symbol indented_block_body) [799 892])
                     ("update" function
                        (:parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [886 890]))                          )
-                        (reparse-symbol indented_block_body) [875 906]))                  
+                          ( ("self" variable nil (reparse-symbol function_parameters) [909 913]))                          )
+                        (reparse-symbol indented_block_body) [898 929]))                  
                 :type "class")
-                nil [753 906])
+                nil [776 929])
             ("Ball" type
                (:superclasses ("Sprite")
                 :members 
                   ( ("__init__" function
                        (:suite 
-                          ( ("super" code nil (reparse-symbol indented_block_body) [976 1002])
-                            ("self" variable nil (reparse-symbol indented_block_body) [1011 1029]))                          
+                          ( ("super" code nil (reparse-symbol indented_block_body) [992 1018])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1027 1045]))                          
                         :parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [944 948])
-                            ("kwargs" variable nil (reparse-symbol function_parameters) [950 958]))                          
+                          ( ("self" variable nil (reparse-symbol function_parameters) [967 971])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [973 981]))                          
                         :constructor-flag t)
-                        (reparse-symbol indented_block_body) [931 1023])
+                        (reparse-symbol indented_block_body) [954 1046])
                     ("update" function
                        (:parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [1040 1044]))                          )
-                        (reparse-symbol indented_block_body) [1029 1060]))                  
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1063 1067]))                          )
+                        (reparse-symbol indented_block_body) [1052 1083]))                  
                 :type "class")
-                nil [907 1060])
+                nil [930 1083])
             ("Game" type
                (:superclasses ("Widget")
                 :members 
                   ( ("__init__" function
                        (:suite 
-                          ( ("super" code nil (reparse-symbol indented_block_body) [1135 1161])
-                            ("self" variable nil (reparse-symbol indented_block_body) [1170 1188])
-                            ("self" variable nil (reparse-symbol indented_block_body) [1197 1213])
-                            ("self" code nil (reparse-symbol indented_block_body) [1222 1248])
-                            ("self" code nil (reparse-symbol indented_block_body) [1257 1282])
-                            ("self" code nil (reparse-symbol indented_block_body) [1291 1316]))                          
+                          ( ("super" code nil (reparse-symbol indented_block_body) [1151 1177])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1186 1204])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1213 1229])
+                            ("self" code nil (reparse-symbol indented_block_body) [1238 1264])
+                            ("self" code nil (reparse-symbol indented_block_body) [1273 1298])
+                            ("self" code nil (reparse-symbol indented_block_body) [1307 1332]))                          
                         :parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [1103 1107])
-                            ("kwargs" variable nil (reparse-symbol function_parameters) [1109 1117]))                          
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1126 1130])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [1132 1140]))                          
                         :constructor-flag t)
-                        (reparse-symbol indented_block_body) [1090 1310])
+                        (reparse-symbol indented_block_body) [1113 1333])
                     ("repos" function
                        (:parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [1326 1330])
-                            ("instance" variable nil (reparse-symbol function_parameters) [1332 1340])
-                            ("value" variable nil (reparse-symbol function_parameters) [1342 1347]))                          )
-                        (reparse-symbol indented_block_body) [1316 1408])
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1349 1353])
+                            ("instance" variable nil (reparse-symbol function_parameters) [1355 1363])
+                            ("value" variable nil (reparse-symbol function_parameters) [1365 1370]))                          )
+                        (reparse-symbol indented_block_body) [1339 1431])
                     ("update" function
                        (:parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [1425 1429]))                          )
-                        (reparse-symbol indented_block_body) [1414 1459]))                  
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1448 1452]))                          )
+                        (reparse-symbol indented_block_body) [1437 1482]))                  
                 :type "class")
-                nil [1066 1459])
+                nil [1089 1482])
             ("Window" type
                (:superclasses ("FloatLayout")
                 :members 
                   ( ("__init__" function
                        (:suite 
-                          ( ("super" code nil (reparse-symbol indented_block_body) [1538 1564])
-                            ("self" variable nil (reparse-symbol indented_block_body) [1573 1600])
-                            ("game" variable nil (reparse-symbol indented_block_body) [1610 1623])
-                            ("Clock" code nil (reparse-symbol indented_block_body) [1632 1672])
-                            ("self" code nil (reparse-symbol indented_block_body) [1681 1702]))                          
+                          ( ("super" code nil (reparse-symbol indented_block_body) [1554 1580])
+                            ("self" variable nil (reparse-symbol indented_block_body) [1589 1616])
+                            ("game" variable nil (reparse-symbol indented_block_body) [1626 1639])
+                            ("Clock" code nil (reparse-symbol indented_block_body) [1648 1688])
+                            ("self" code nil (reparse-symbol indented_block_body) [1697 1718]))                          
                         :parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [1506 1510])
-                            ("kwargs" variable nil (reparse-symbol function_parameters) [1512 1520]))                          
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1529 1533])
+                            ("kwargs" variable nil (reparse-symbol function_parameters) [1535 1543]))                          
                         :constructor-flag t)
-                        (reparse-symbol indented_block_body) [1493 1696]))                  
+                        (reparse-symbol indented_block_body) [1516 1719]))                  
                 :type "class")
-                nil [1462 1696])
+                nil [1485 1719])
             ("BreakOutApp" type
                (:superclasses ("App")
                 :members 
                   ( ("build" function
                        (:parent "dummy"
                         :arguments 
-                          ( ("self" variable nil (reparse-symbol function_parameters) [1737 1741]))                          )
-                        (reparse-symbol indented_block_body) [1727 1768]))                  
+                          ( ("self" variable nil (reparse-symbol function_parameters) [1760 1764]))                          )
+                        (reparse-symbol indented_block_body) [1750 1791]))                  
                 :type "class")
-                nil [1699 1768])
-            ("if" code nil nil [1770 1822]))          
+                nil [1722 1791])
+            ("if" code nil nil [1793 1845]))          
       :file "main.py"
-      :pointmax 1822
-      :fsize 1821
-      :lastmodtime '(21797 42632 385822 344000)
-      :unmatched-syntax nil))
+      :pointmax 1845
+      :fsize 1844
+      :lastmodtime '(21925 32456 684076 16000)
+      :unmatched-syntax '(($EOI 1845 . 1845))))
   :file "!home!ubuntu!Code!python!kivy!break_out!semantic.cache"
   :semantic-tag-version "2.0"
   :semanticdb-version "2.2")

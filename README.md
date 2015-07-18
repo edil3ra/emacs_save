@@ -1,1 +1,2 @@
-it just a backup for emacs file and folder
+my awesome emacs config file
+for general editing python, javascript, coffeescript, lua and haskell 

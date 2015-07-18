@@ -1,0 +1,96 @@
+import qualified Data.Map as Map
+import qualified Data.List as List
+
+
+multiply :: (Num a) => a -> a -> a -> a
+multiply x y z = x * y * z
+
+compareWithHundred :: (Num a, Ord a) => a -> Ordering  
+compareWithHundred = compare 100
+
+divideByTen :: (Fractional a) => a -> a
+divideByTen = (/10)
+
+isUpperAlpha :: Char -> Bool
+isUpperAlpha = (`elem` ['a'..'z'])
+
+substractNine :: (Num x) => x -> x
+substractNine = subtract 9
+
+applyTwice :: (a -> a) -> a -> a
+applyTwice f x = f(f x)
+
+sumTest :: Integer -> Integer -> Integer
+sumTest x y = x + y
+
+zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith' _ [] _ = []
+zipWith' _ _ [] = []
+zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
+
+flip' :: (a -> b -> c) -> b -> a -> c
+flip' f x y =  f y x
+
+first :: a -> a -> a
+first x y = x
+
+map' :: (a -> b) -> [a] -> [b]
+map' _ [] = []
+map' f (x:xs) =  f x : map' f xs
+  
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' f (x:xs) 
+  | f x = x : filter' f xs
+  | otherwise = filter' f xs 
+
+smaller x = if x < 6 then False else True 
+
+test :: (Num a) => a -> Integer -> a
+test x y
+  | y == 0 = 0
+  | otherwise = x + test x (y-1) 
+
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) =
+  let smaller = quicksort (filter (<=x) xs)
+      bigger = quicksort (filter (>x) xs)
+  in smaller ++ [x] ++ bigger
+
+largestDivisible :: (Integral a) => a
+largestDivisible = head (filter p [10000,9999..])
+  where p x = x `mod` 3829 == 0
+
+collatz :: (Integral a) => a -> [a] 
+collatz (x)
+  | x == 1 = [1]
+  | even x = x:collatz (x `div` 2) 
+  | odd x = x:collatz (x * 3 + 1) 
+
+sum' :: Integral a => [a] -> a
+sum' [] = 0
+sum' (x:xs) = x + sum' xs
+
+sum'' :: Num a => [a] -> a
+sum'' xs = foldl (\acc x -> acc + x) 0 xs
+
+multiply'' :: Num a => [a] -> a
+multiply'' =  foldl (*) 1
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' y xs = foldl (\acc x -> if y == x then True else acc) False xs
+
+map'' :: (a -> b) -> [a] -> [b]
+map'' f xs = foldr (\x acc -> f x : acc) [] xs
+
+func a = map (\f -> f(a)) [(+ 3), (* 2)]
+
+l = [5, -3, -6, 7, -3, 2, -19, 24]
+
+neg = map (\x -> negate (abs x)) l
+neg' = map (negate . abs) l
+neg'' = map (negate . sum . tail) [[1..5], [3..6], [1..7]]
+
+rep = replicate 2 (product(map (*3)(zipWith max [1, 2] [3, 4])))
+

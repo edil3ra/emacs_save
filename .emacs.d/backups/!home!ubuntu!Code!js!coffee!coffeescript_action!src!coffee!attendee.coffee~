@@ -1,0 +1,35 @@
+count_word = ->
+  node = document.createElement('p')
+  attendee = document.querySelector('#how-many-attendee')
+  count = attendee.textContent.split(" ").length
+  node.innerHTML = count
+  document.body.appendChild(node)
+
+timer = window.setInterval(count_word, 1000)
+stop = document.querySelector('#stop')
+
+stop.addEventListener 'click', (event) ->
+  event.preventDefault()
+  console.log timer 
+  if timer >= 1
+    window.clearInterval(timer)
+    @.textContent = 'play'
+    timer = 0
+  else
+    timer = window.setInterval(count_word, 1000)
+    @.textContent = 'stopO'
+
+document.height
+
+test () ->
+  console.log 'fu'
+  
+
+
+  
+
+
+
+
+
+

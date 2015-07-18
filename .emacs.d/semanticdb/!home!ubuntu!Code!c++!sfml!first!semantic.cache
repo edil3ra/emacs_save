@@ -1,0 +1,19 @@
+;; Object first/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "first/"
+  :tables
+  (list
+    (semanticdb-table "main.cpp"
+      :major-mode 'c++-mode
+      :tags 
+        '( ("SFML/Graphics.hpp" include (:system-flag t) nil [1 29])
+            ("string" include (:system-flag t) nil [30 47])
+            ("main" function (:type "int") nil [50 486]))          
+      :file "main.cpp"
+      :pointmax 487
+      :fsize 486
+      :lastmodtime '(21689 13558 984732 0)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!c++!sfml!first!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

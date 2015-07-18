@@ -1,0 +1,19 @@
+;; Object test_susy/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "test_susy/"
+  :tables
+  (list
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("test" section nil nil [75 149])
+            ("" section nil nil [149 225])
+            ("" section nil nil [225 592]))          
+      :file "index.html"
+      :pointmax 592
+      :fsize 591
+      :lastmodtime '(21888 38165 564769 956000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!web!test!test_susy!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -3,8 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "molokai-theme" "molokai-theme.el" (21797 43966
-;;;;;;  81827 431000))
+;;;### (autoloads nil "molokai-theme" "molokai-theme.el" (21928 51369
+;;;;;;  402097 98000))
 ;;; Generated autoloads from molokai-theme.el
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))

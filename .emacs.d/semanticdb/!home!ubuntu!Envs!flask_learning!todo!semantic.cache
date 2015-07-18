@@ -1,0 +1,76 @@
+;; Object todo/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "todo/"
+  :tables
+  (list
+    (semanticdb-table "manage.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("app" include nil nil [49 72])
+            ("flask" include nil nil [73 113])
+            ("flask.ext.script" include nil nil [114 166])
+            ("flask.ext.debugtoolbar" include nil nil [167 237])
+            ("flask.ext.migrate" include nil nil [238 291])
+            ("debug" variable nil nil [309 343])
+            ("manager" variable nil nil [344 366])
+            ("migration" variable nil nil [367 395])
+            ("if" code nil nil [399 633]))          
+      :file "manage.py"
+      :pointmax 635
+      :fsize 634
+      :lastmodtime '(21884 7646 112128 219000)
+      :unmatched-syntax nil)
+    (semanticdb-table "app.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("flask" include nil nil [1 24])
+            ("flask.ext.sqlalchemy" include nil nil [25 68])
+            ("app" variable nil nil [70 91])
+            ("app" variable nil nil [92 178])
+            ("db" variable nil nil [179 199])
+            ("views" include nil nil [201 213]))          
+      :file "app.py"
+      :pointmax 214
+      :fsize 213
+      :lastmodtime '(21845 58744 321592 975000)
+      :unmatched-syntax nil)
+    (semanticdb-table "models.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("flask.ext.sqlalchemy" include nil nil [1 44])
+            ("User" type
+               (:superclasses ("db.Model")
+                :members 
+                  ( ("__tablename__" variable nil (reparse-symbol indented_block_body) [72 95])
+                    ("id" variable nil (reparse-symbol indented_block_body) [101 145])
+                    ("name" variable nil (reparse-symbol indented_block_body) [150 181])
+                    ("__str__" function nil (reparse-symbol indented_block_body) [191 234]))                  
+                :type "class")
+                nil [46 234]))          
+      :file "models.py"
+      :pointmax 234
+      :fsize 233
+      :lastmodtime '(21845 58481 981425 542000)
+      :unmatched-syntax nil)
+    (semanticdb-table "views.py"
+      :major-mode 'python-mode
+      :tags 
+        '( ("app" include nil nil [1 20])
+            ("flask" include nil nil [21 85])
+            ("tasks" variable nil nil [87 409])
+            ("" code nil nil [421 457])
+            ("get_tasks" function nil nil [458 512])
+            ("" code nil nil [524 573])
+            ("get_task" function (:arguments 
+              ( ("task_id" variable nil (reparse-symbol function_parameters) [587 594]))              ) nil [574 752])
+            ("" code nil nil [771 776])
+            ("not_found" function (:arguments 
+              ( ("error" variable nil (reparse-symbol function_parameters) [791 796]))              ) nil [777 857]))          
+      :file "views.py"
+      :pointmax 857
+      :fsize 856
+      :lastmodtime '(21845 60659 422508 929000)
+      :unmatched-syntax '(($EOI 845 . 845) ($EOI 837 . 837) ($EOI 836 . 836) ($EOI 834 . 834) ($EOI 823 . 823) ($EOI 833 . 833) ($EOI 831 . 831) ($EOI 821 . 821) ($EOI 827 . 827) ($EOI 827 . 827) ($EOI 793 . 793) ($EOI 793 . 793) ($EOI 789 . 789))))
+  :file "!home!ubuntu!Envs!flask_learning!todo!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,43 @@
+;; Object coffeescript_action/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "coffeescript_action/"
+  :tables
+  (list
+    (semanticdb-table "attendee.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Attendee" section nil nil [75 111])
+            ("How many attendees" section nil nil [111 214])
+            ("" section nil nil [214 275]))          
+      :file "attendee.html"
+      :pointmax 275
+      :fsize 274
+      :lastmodtime '(21730 24425 697899 0)
+      :unmatched-syntax nil)
+    (semanticdb-table "index.html"
+      :major-mode 'html-mode
+      :tags 
+        '( ("Test" section nil nil [75 264])
+            ("composing object" section (:members 
+              ( ("composing object" anchor nil nil [303 306])
+                ("mixin" anchor nil nil [362 365])
+                ("composing function" anchor nil nil [399 402]))              ) nil [264 990])
+            ("-->
+    <!-- <script src=\"src/js/closure.js\">" section nil nil [990 1061])
+            ("-->
+    <!-- <script src=\"src/js/closure.js\">" section nil nil [1061 1109])
+            ("-->
+    <!-- <script src=\"src/js/closure.js\">" section nil nil [1109 1176])
+            ("-->
+    <!-- <script src=\"src/js/objects.js\">" section nil nil [1176 1231])
+            ("-->
+    <!-- <script src=\"src/js/class.js\">" section nil nil [1231 1286])
+            ("-->" section nil nil [1286 1355]))          
+      :file "index.html"
+      :pointmax 1355
+      :fsize 1354
+      :lastmodtime '(21928 62113 98168 370000)
+      :unmatched-syntax nil))
+  :file "!home!ubuntu!Code!js!coffee!coffeescript_action!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

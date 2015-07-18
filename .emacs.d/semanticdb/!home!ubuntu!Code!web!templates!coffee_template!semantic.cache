@@ -7,12 +7,12 @@
       :major-mode 'html-mode
       :tags 
         '( ("Coffee" section nil nil [75 109])
-            ("Risus viverra adipiscing at in tellus integer feugiat! Aliquam id diam maecenas ultricies mi eget mauris pharetra et ultrices neque ornare aenean euismod elementum nisi, quis eleifend quam adipiscing vitae?" section nil nil [109 338])
-            ("" section nil nil [338 400]))          
+            ("" section nil nil [109 179])
+            ("" section nil nil [179 236]))          
       :file "index.html"
-      :pointmax 400
-      :fsize 399
-      :lastmodtime '(21652 40933 330689 0)
+      :pointmax 236
+      :fsize 235
+      :lastmodtime '(21856 43074 773788 582000)
       :unmatched-syntax nil))
   :file "!home!ubuntu!Code!web!templates!coffee_template!semantic.cache"
   :semantic-tag-version "2.0"

@@ -1,0 +1,16 @@
+;; Object foundation/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "foundation/"
+  :tables
+  (list
+    (semanticdb-table "insert.py"
+      :major-mode 'python-mode
+      :tags nil
+      :file "insert.py"
+      :pointmax 26
+      :fsize 25
+      :lastmodtime '(21926 24453 631804 547000)
+      :unmatched-syntax '(($EOI 26 . 26))))
+  :file "!home!ubuntu!Code!algorithm!foundation!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")
