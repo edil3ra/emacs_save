@@ -190,7 +190,6 @@
 (use-package emmet-mode
   :ensure t :defer t
   :init(progn
-	 (add-hook 'web-mode-hook 'emmet-mode)
 	 (add-hook 'html-mode-hook 'emmet-mode)
 	 (add-hook 'jinja2-mode-hook 'emmet-mode)
 	 (add-hook 'css-mode-hook 'emmet-mode)
@@ -200,7 +199,7 @@
 	 (add-hook' emmet-mode-hook(lambda()
 				     (bind-key "C-c C-w" #'emmet-wrap-with-markup emmet-mode-keymap)
 				     (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)
-				     (bind-key "C-TAB" #'emmet-expand-line emmet-mode-keymap)))))
+				     (bind-key "TAB" #'emmet-expand-line emmet-mode-keymap)))))
 (use-package jinja2-mode
   :ensure t :defer t)
 
