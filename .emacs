@@ -48,17 +48,22 @@
 
 
 (use-package helm-swoop
-  :ensure t)
-
+  :ensure t :defer t)
 
 (use-package helm-projectile
+  :ensure t :defer t)
+
+(use-package helm-css-scss
   :ensure t)
 
-  
+
 (use-package company
   :ensure t
   :init (progn
 	  (add-hook 'prog-mode-hook 'company-mode)
+	  (add-hook 'html-mode-hook 'company-mode)
+	  (add-hook 'css-mode-hook 'company-mode)
+	  (add-hook 'scss-mode-hook 'company-mode)
 	  ;; (global-company-mode 1)
 	  (setq company-tooltip-limit 20) ; bigger popup window
 	  (setq company-idle-delay 0.5)   ; decrease delay before autocompletion popup shows
@@ -118,7 +123,8 @@
 (use-package rainbow-delimiters
   :ensure t :defer t
   :init (progn
-	  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)))
+	  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+	  (add-hook 'scss-mode-hook #'rainbow-delimiters-mode)))
 
 
 (use-package uniquify
@@ -138,6 +144,7 @@
 
 
 (use-package drag-stuff
+  :diminish drag-stuff-mode
   :ensure t :defer t
   :init(progn
 	 (drag-stuff-global-mode t)))
@@ -194,21 +201,29 @@
 	 (add-hook 'html-mode-hook 'emmet-mode)
 	 (add-hook 'jinja2-mode-hook 'emmet-mode)
 	 (add-hook 'css-mode-hook 'emmet-mode)
-	 (add-hook 'scss-mode-hook 'emmet-mode)
 	 (setq emmet-indentation 2)
 	 (setq emmet-preview-default nil)
 	 (add-hook' emmet-mode-hook(lambda()
 				     (bind-key "C-c C-w" #'emmet-wrap-with-markup emmet-mode-keymap)
-				     (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)
-				     (bind-key "C-TAB" #'emmet-expand-line emmet-mode-keymap)))))
+				     (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)))))
+
+
 (use-package jinja2-mode
   :ensure t :defer t)
 
 
+(use-package css-mode
+  :ensure t
+  :config(progn
+	 (bind-key "C-p" #'helm-css-scss css-mode-map)))
+
+
 (use-package scss-mode
-  :ensure t :defer t
-  :init(progn
-	 (setq scss-compile-at-save nil)))
+ :ensure t 
+ :init(progn
+	(setq scss-compile-at-save nil))
+ :config(progn
+	  (bind-key "C-p" #'helm-css-scss scss-mode-map)))
 
 
 (use-package markdown-mode
@@ -558,6 +573,7 @@
 (bind-key  "C-." 'keyboard-espace-quit)
 (bind-key "<escape>" 'keyboard-espace-quit)
 (bind-key "C-a" 'mark-whole-buffer)
+(bind-key "M-m" 'emmet-expand-line)
 (bind-key "C-x j" 'dired-jump)
 ;; (define-key key-translation-map (kbd "<f8>") (kbd "<menu>"))
 
@@ -638,7 +654,7 @@
 
 (bind-key* "C-o" 'helm-find-files)
 (bind-key* "M-o" 'helm-projectile-find-file-dwim)
-(bind-key* "C-p" 'helm-semantic-or-imenu)
+(bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key "C-y" 'helm-show-kill-ring)
 (bind-key "C-f" 'helm-projectile-switch-to-buffer)
 (bind-key "C-S-f" 'helm-locate)
