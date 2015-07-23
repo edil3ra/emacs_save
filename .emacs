@@ -54,7 +54,7 @@
   :ensure t :defer t)
 
 (use-package helm-css-scss
-  :ensure t)
+  :ensure t :defer t)
 
 
 (use-package company
@@ -69,6 +69,7 @@
 	  (setq company-idle-delay 0.5)   ; decrease delay before autocompletion popup shows
 	  (setq company-echo-delay 0)     ; remove annoying blinking
 	  (setq company-show-numbers t)   ; show numbers for easy selection
+	  (company-quickhelp-mode 1)
 	  '(company-backends
 	    (quote
 	     (company-ghc company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-cmake company-capf
@@ -78,9 +79,13 @@
   :config (progn
             (bind-key "<tab>" #'company-complete company-active-map)
             (bind-key "M-/" #'company-show-doc-buffer company-active-map)
-	    (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
-	    (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
+						(bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
+						(bind-key "C-c d" #'company-show-doc-buffer company-active-map)
             (bind-key "M-l" #'company-show-location company-active-map)))
+
+
+(use-package company-quickhelp
+  :ensure t)
 
 
 (use-package projectile
@@ -197,6 +202,7 @@
 (use-package emmet-mode
   :ensure t :defer t
   :init(progn
+	 (add-hook 'web-mode-hook 'emmet-mode)
 	 (add-hook 'html-mode-hook 'emmet-mode)
 	 (add-hook 'jinja2-mode-hook 'emmet-mode)
 	 (add-hook 'css-mode-hook 'emmet-mode)
@@ -205,8 +211,7 @@
 	 (add-hook' emmet-mode-hook(lambda()
 				     (bind-key "C-c C-w" #'emmet-wrap-with-markup emmet-mode-keymap)
 				     (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)))))
-				     (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)
-				     (bind-key "TAB" #'emmet-expand-line emmet-mode-keymap)))))
+
 
 (use-package jinja2-mode
   :ensure t :defer t)
@@ -219,7 +224,7 @@
 
 
 (use-package scss-mode
- :ensure t 
+ :ensure t
  :init(progn
 	(setq scss-compile-at-save nil))
  :config(progn
@@ -263,7 +268,7 @@
 			       (mode . web-mode)
 			       (mode . jinja2-mode)))
 		      ("coffee" (mode . coffee-mode))
-		      ("js" (mode . js2-mode))
+		      ("js" (mode . js3-mode))
 		      ("coffee" (mode . coffee-mode))
 		      ("haskell" (mode . haskell-mode))
 		      ("python" (mode . python-mode))
@@ -350,12 +355,21 @@
   :ensure t :defer t)
 
 
+;; (use-package js2-mode
+;;   :ensure t
+;;   :init(progn
+;; 	 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; 	 (add-hook 'js-mode-hook 'js2-minor-mode)))
+
+
 ;; JAVASCRIPT
-(use-package js2-mode
-  :ensure t :defer t
+(use-package js3-mode
+  :ensure t
   :init(progn
-	 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-	 (add-hook 'js-mode-hook 'js2-minor-mode)))
+	 '(js3-auto-indent-p t)         ; it's nice for commas to right themselves.
+	 '(js3-enter-indents-newline t) ; don't need to push tab before typing
+	 '(js3-indent-on-enter-key t)   ; fix indenting before moving on
+	 ))
 
   
 ;; COFFEESCRIPT
@@ -410,6 +424,8 @@
 	   (bind-key "C-c C-n" #'haskell-process-do-info haskell-mode-map)
 	   (bind-key "C-c c" #'haskell-process-cabal haskell-mode-map)
 	   (bind-key "C-c C-c" #'haskell-process-cabal-build haskell-mode-map)
+	   (bind-key "C-c d" #'haskell-hoogle haskell-mode-map)
+	   (bind-key "C-c C-d" #'haskell-hoogle haskell-mode-map)
 	   (bind-key "C-c l" #'haskell-process-load-or-reload haskell-mode-map)
 	   (bind-key "C-c C-l" #'haskell-process-load-or-reload haskell-mode-map)
 	   (bind-key "C-c r" #'haskell-debug haskell-mode-map)
@@ -418,10 +434,10 @@
 	   (bind-key [f8] #'haskell-navigate-imports haskell-mode-map)))
 	   
 	   
-(use-package company-ghc
-  :ensure t :defer t
-  :init (progn
-	  (add-to-list 'company-backends 'company-ghc)))
+;; (use-package company-ghc
+;;   :ensure t
+;;   :init (progn
+;; 	  (add-to-list 'company-backends 'company-ghc)))
 
 
 (use-package ghc
@@ -429,7 +445,8 @@
   :init (progn
 	  (autoload 'ghc-init "ghc" nil t)
 	  (autoload 'ghc-debug "ghc" nil t)
-	  (add-hook 'haskell-mode-hook (lambda () (ghc-init)))))
+	  (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+	  ))
 
 ;; STUFF
 ;; remove window decoration
@@ -609,7 +626,7 @@
 
 ;; COPY, CUT, PASTE, REDO, UNDO
 (bind-key* "M-q" 'ergoemacs-cut-line-or-region)
-(bind-key "M-j" 'ergoemacs-copy-line-or-region)
+(bind-key* "M-j" 'ergoemacs-copy-line-or-region)
 (bind-key* "M-k" 'ergoemacs-paste)
 (bind-key* "M-Q" 'ergoemacs-cut-all)
 (bind-key* "M-J" 'ergoemacs-copy-all)
@@ -644,6 +661,7 @@
 
 ;; COMMAND, SHELL, RUN, EMMET
 (bind-key* "M-a" 'helm-M-x)
+(bind-key* "M-A" 'shell-command)
 (bind-key* "M-1" 'shell-dwim)
 (bind-key* "<f1>" 'shell_buffer)
 (bind-key* "<f5>" 'xah-run-current-file)
