@@ -66,26 +66,21 @@
 	  (add-hook 'scss-mode-hook 'company-mode)
 	  ;; (global-company-mode 1)
 	  (setq company-tooltip-limit 20) ; bigger popup window
-	  (setq company-idle-delay 0.5)   ; decrease delay before autocompletion popup shows
+	  (setq company-idle-delay 0.1)   ; decrease delay before autocompletion popup shows
 	  (setq company-echo-delay 0)     ; remove annoying blinking
 	  (setq company-show-numbers t)   ; show numbers for easy selection
-	  (company-quickhelp-mode 1)
-	  '(company-backends
-	    (quote
-	     (company-ghc company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-cmake company-capf
-			  (company-dabbrev-code company-gtags company-etags company-keywords)
-			  company-oddmuse company-files company-dabbrev company-jedi company-tern))))
-  
+	  (setq company-minimum-prefix-length 1)
+	  (company-quickhelp-mode 1))
   :config (progn
             (bind-key "<tab>" #'company-complete company-active-map)
             (bind-key "M-/" #'company-show-doc-buffer company-active-map)
-						(bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
-						(bind-key "C-c d" #'company-show-doc-buffer company-active-map)
+	    (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
+	    (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
             (bind-key "M-l" #'company-show-location company-active-map)))
 
 
 (use-package company-quickhelp
-  :ensure t)
+  :ensure t :defer t)
 
 
 (use-package projectile
@@ -97,13 +92,6 @@
    (setq projectile-use-native-indexing t)
    (projectile-global-mode)))
 
-
-(use-package cua
-  :init(progn
-    (setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
-    (transient-mark-mode 1) ;; No region when it is not highlighted
-    (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
-    (cua-mode t)))
 
 
 (use-package yasnippet
@@ -185,18 +173,23 @@
 	 '(dired-clean-up-buffers-too nil)
 	 '(dired-use-ls-dired t))
   :config(progn
-	   (unbind-key  "M-c" dired-mode-map)))
+	   (unbind-key  "M-c" dired-mode-map)
+	   (bind-key "M-C" #'scroll-up dired-mode-map)
+	   (bind-key "M-T" #'scroll-down dired-mode-map)
+	   (bind-key "M-b" #'ergoemacs-beginning-or-end-of-buffer dired-mode-map)
+	   (bind-key "M-B" #'ergoemacs-end-or-beginning-of-buffer dired-mode-map)))
 
 
 (use-package dired+
-  :ensure t)
+  :ensure t :defer t)
 
 
 (use-package ergoemacs-mode
 :ensure t
 :init(progn
- '(ergoemacs-keyboard-layout "dv")
- '(ergoemacs-mode nil)))
+       (setq ergoemacs-theme nil)
+       '(ergoemacs-keyboard-layout "dv")
+       '(ergoemacs-mode nil)))
 
 
 (use-package emmet-mode
@@ -250,7 +243,7 @@
 
 (use-package semantic
   :init(progn
-	 (semantic-mode t)))
+	 (semantic-mode 1)))
 
 
 (use-package undo-tree
@@ -344,7 +337,7 @@
 	 (setq elpy-rpc-backend "jedi")
 	 (setq elpy-modules
 	   (quote
-	    (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-sane-defaults)))))
+	    (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults)))))
 
 
 (use-package jedi
@@ -353,13 +346,6 @@
 
 (use-package pyvenv
   :ensure t :defer t)
-
-
-;; (use-package js2-mode
-;;   :ensure t
-;;   :init(progn
-;; 	 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;; 	 (add-hook 'js-mode-hook 'js2-minor-mode)))
 
 
 ;; JAVASCRIPT
@@ -433,20 +419,35 @@
 	   (bind-key "C-c C-k" #'haskell-interactive-mode-clear haskell-mode-map)
 	   (bind-key [f8] #'haskell-navigate-imports haskell-mode-map)))
 	   
-	   
-;; (use-package company-ghc
-;;   :ensure t
-;;   :init (progn
-;; 	  (add-to-list 'company-backends 'company-ghc)))
-
 
 (use-package ghc
   :ensure t
   :init (progn
 	  (autoload 'ghc-init "ghc" nil t)
 	  (autoload 'ghc-debug "ghc" nil t)
-	  (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
-	  ))
+	  (add-hook 'haskell-mode-hook (lambda () (ghc-init)))))
+
+
+;;C C++
+(use-package c-mode-common-hook
+  :defer t
+  :init(progn
+	 (setq-default c-basic-offset 4)
+	 (setq-default c-basic-offset 4))
+  :config(progn(
+		(unbind-key "M-l M-q" c-mode-common-map))))
+
+(use-package irony
+  :ensure t :defer t
+  :init(progn
+	 (add-hook 'c++-mode-hook 'irony-mode)
+	 (add-hook 'c-mode-hook 'irony-mode)
+	 (add-hook 'objc-mode-hook 'irony-mode)))
+
+(use-package company-irony
+  :ensure t :defer t
+  :init(add-to-list 'company-backends 'company-irony))
+
 
 ;; STUFF
 ;; remove window decoration
@@ -461,7 +462,6 @@
 (setq inhibit-splash-screen t)
 (bookmark-bmenu-list)
 (switch-to-buffer "*Bookmark List*")
-
 
 
 ;; replace yes to y 
@@ -614,7 +614,6 @@
 (bind-key "M-B" 'ergoemacs-end-or-beginning-of-buffer)
 
 
-
 ;; DELETE KEY
 (bind-key* "M-e" 'backward-delete-char-untabify)
 (bind-key* "M-u" 'delete-char)
@@ -704,7 +703,7 @@
 
 
 ;; MULTIPLE CURSORS
-(bind-key "C-d" 'mc/mark-next-like-this)
+(bind-key* "C-d" 'mc/mark-next-like-this)
 (bind-key "C-S-d" 'mc/mark-all-like-this)
 (unbind-key "M-<down-mouse-1>")
 (bind-key* "M-<mouse-1>" 'mc/add-cursor-on-click)
@@ -742,6 +741,10 @@
 
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
@@ -761,6 +764,9 @@
  '(exec-path
    (quote
     ("/home/ubuntu/.cabal/bin" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/usr/local/libexec/emacs/24.4/x86_64-unknown-linux-gnu")))
+ '(package-selected-packages
+   (quote
+    (ergoemacs-mode elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(recentf-menu-before nil)
  '(recentf-mode t)
  '(shift-select-mode nil)
@@ -786,12 +792,17 @@
      (340 . "#ebcb8b")
      (360 . "#B4EB89"))))
  '(vc-annotate-very-old-color nil))
+;; (setq debug-on-error t)
 
 ;; theme and font
 (set-default-font "DejaVu Sans Mono 9")
 (load-theme 'molokai)
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(rainbow-delimiters-depth-1-face ((t (:foreground "royal blue"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "firebrick"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "forest green"))))
