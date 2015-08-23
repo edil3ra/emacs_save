@@ -393,6 +393,15 @@
   :init (add-to-list 'company-backends 'company-tern))
 
 
+
+(use-package clojure-mode
+  :config
+  (defun my/clojure-mode-defaults ()
+    (bind-key "<f8>" 'cider-jack-in))
+  (add-hook 'clojure-mode-hook 'my/clojure-mode-defaults))
+
+
+
 ;; LUA
 (use-package lua-mode
   :ensure t :defer t
@@ -466,20 +475,7 @@
   :init(add-to-list 'company-backends 'company-irony))
 
 
-;; CIDER
-(use-package cider
-  :ensure t :defer t)
 
-
-(use-package clojure-mode-hook
-  :config(progn
-	  (bind-key "C-c C-c" #'cider-load-buffer clojure-mode-map)
-	  (bind-key "C-c c" #'cider-load-buffer cider-mode-map)
-	  (bind-key "C-c C-n" #'cider-eval-defun-at-point cider-mode-map)
-	  (bind-key "C-c n" #'cider-eval-defun-at-point cider-mode-map)
-	  (bind-key [f8] #'cider-jack-in clojure-mode-map)
-	  (bind-key [f9] #'cider-restart clojure-mode-map)
-	))
 
 
 ;; STUFF
@@ -644,7 +640,8 @@
 ;; (bind-key* "M-N" 'ergoemacs-forward-close-bracket)
 (bind-key* "M-H" 'sp-backward-sexp)
 (bind-key* "M-N" 'sp-forward-sexp)
-(bind-key* "M-*" 'sp-unwrap-sexp)
+(bind-key* "M-(" 'sp-unwrap-sexp)
+(bind-key* "M-S-(" 'sp-unwrap-sexp)
 (bind-key* "M-G" 'ergoemacs-backward-block)
 (bind-key* "M-R" 'ergoemacs-forward-block)
 (bind-key* "M-d" 'ergoemacs-beginning-of-line-or-what)
@@ -786,9 +783,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
-	 [default default default italic underline success warning error])
+   [default default default italic underline success warning error])
  '(ansi-color-names-vector
-	 ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(auto-save-default nil)
  '(auto-save-interval 0)
  '(blink-cursor-mode nil)
@@ -797,43 +794,43 @@
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes nil)
  '(custom-safe-themes
-	 (quote
-		("08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+   (quote
+    ("08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(custom-theme-load-path (quote ("~/.emacs.d/themes" t)))
  '(delete-selection-mode t)
  '(elpy-rpc-python-command "python3")
  '(exec-path
-	 (quote
-		("/home/ubuntu/.cabal/bin" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/usr/local/libexec/emacs/24.4/x86_64-unknown-linux-gnu")))
+   (quote
+    ("/home/ubuntu/.cabal/bin" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/usr/local/libexec/emacs/24.4/x86_64-unknown-linux-gnu")))
  '(expand-region-preferred-python-mode (quote fgallina-python))
  '(package-selected-packages
-	 (quote
-		(cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
+   (quote
+    (cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(recentf-menu-before nil)
  '(recentf-mode t)
  '(same-window-buffer-names (quote ("*shell*")))
  '(shift-select-mode nil)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
-	 (quote
-		((20 . "#bf616a")
-		 (40 . "#DCA432")
-		 (60 . "#ebcb8b")
-		 (80 . "#B4EB89")
-		 (100 . "#89EBCA")
-		 (120 . "#89AAEB")
-		 (140 . "#C189EB")
-		 (160 . "#bf616a")
-		 (180 . "#DCA432")
-		 (200 . "#ebcb8b")
-		 (220 . "#B4EB89")
-		 (240 . "#89EBCA")
-		 (260 . "#89AAEB")
-		 (280 . "#C189EB")
-		 (300 . "#bf616a")
-		 (320 . "#DCA432")
-		 (340 . "#ebcb8b")
-		 (360 . "#B4EB89"))))
+   (quote
+    ((20 . "#bf616a")
+     (40 . "#DCA432")
+     (60 . "#ebcb8b")
+     (80 . "#B4EB89")
+     (100 . "#89EBCA")
+     (120 . "#89AAEB")
+     (140 . "#C189EB")
+     (160 . "#bf616a")
+     (180 . "#DCA432")
+     (200 . "#ebcb8b")
+     (220 . "#B4EB89")
+     (240 . "#89EBCA")
+     (260 . "#89AAEB")
+     (280 . "#C189EB")
+     (300 . "#bf616a")
+     (320 . "#DCA432")
+     (340 . "#ebcb8b")
+     (360 . "#B4EB89"))))
  '(vc-annotate-very-old-color nil))
 ;; (setq debug-on-error t)
 
@@ -846,7 +843,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(rainbow-delimiters-depth-1-face ((t (:foreground "royal blue")))) 
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "royal blue"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "firebrick"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "forest green"))))
  '(rainbow-delimiters-depth-4-face ((t (:foreground "dark magenta"))))
