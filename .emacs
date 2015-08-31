@@ -1,8 +1,8 @@
 (require 'package)
 (package-initialize)
-;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; (add-to-list 'package-archives
+;;              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -77,6 +77,8 @@
             (bind-key "<tab>" #'company-complete company-active-map)
             (bind-key "M-/" #'company-show-doc-buffer company-active-map)
 	    (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
+	    (bind-key "C-c -" #'company-show-doc-buffer company-active-map)
+	    (bind-key "C-c C--" #'company-show-doc-buffer company-active-map)
 	    (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
             (bind-key "M-l" #'company-show-location company-active-map)))
 
@@ -132,9 +134,12 @@
 (use-package framemove
   :ensure t)
 
+(use-package buffer-move
+  :ensure t)
+
 
 (use-package popwin
-  :ensure t
+  :ensure t :defer t
   :config(progn
 	 (popwin-mode 1)))
 
@@ -159,6 +164,8 @@
 (use-package goto-chg
   :ensure t :defer t)
 
+(use-package neotree
+  :ensure t)
 
 (use-package fullscreen-mode
   :ensure t
@@ -193,6 +200,7 @@
   :ensure t :defer t)
 
 
+
 (use-package ergoemacs-mode
 :ensure t
 :init(progn
@@ -213,7 +221,6 @@
 	 (add-hook' emmet-mode-hook(lambda()
 				     (bind-key "C-c C-w" #'emmet-wrap-with-markup emmet-mode-keymap)
 				     (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)))))
-
 
 (use-package jinja2-mode
   :ensure t :defer t)
@@ -393,6 +400,8 @@
   :init (add-to-list 'company-backends 'company-tern))
 
 
+(use-package cider
+  :ensure t :defer t)
 
 (use-package clojure-mode
   :config
@@ -473,7 +482,6 @@
 (use-package company-irony
   :ensure t :defer t
   :init(add-to-list 'company-backends 'company-irony))
-
 
 
 
@@ -624,6 +632,7 @@
 (bind-key "C-a" 'mark-whole-buffer)
 (bind-key "M-m" 'emmet-expand-line)
 (bind-key "C-x j" 'dired-jump)
+(bind-key "<f2>" 'neotree-toggle)
 ;; (define-key key-translation-map (kbd "<f8>") (kbd "<menu>"))
 
 
@@ -646,8 +655,8 @@
 (bind-key* "M-R" 'ergoemacs-forward-block)
 (bind-key* "M-d" 'ergoemacs-beginning-of-line-or-what)
 (bind-key* "M-D" 'ergoemacs-end-of-line-or-what)
-(bind-key* "M-b" 'ergoemacs-beginning-or-end-of-buffer)
-(bind-key "M-B" 'ergoemacs-end-or-beginning-of-buffer)
+(bind-key* "M-b" 'beginning-of-buffer)
+(bind-key "M-B" 'end-of-buffer)
 
 
 ;; DELETE KEY
@@ -752,6 +761,11 @@
 (bind-key* "C-S-c" 'windmove-up)
 (bind-key* "C-S-t" 'windmove-down)
 
+;; WINDOW SWITCH
+(bind-key* "C-S-M-h" 'buf-move-left)
+(bind-key* "C-S-M-n" 'buf-move-right)
+(bind-key* "C-S-M-c" 'buf-move-up)
+(bind-key* "C-S-M-t" 'buf-move-down)
 
 ;; WINDOW CREATE SPLIT CLOSE
 (bind-key* "M-2" 'delete-window)
@@ -799,14 +813,17 @@
  '(custom-theme-load-path (quote ("~/.emacs.d/themes" t)))
  '(delete-selection-mode t)
  '(elpy-rpc-python-command "python3")
+ '(ergoemacs-command-loop-blink-character "•")
+ '(ergoemacs-mode nil)
  '(exec-path
    (quote
     ("/home/ubuntu/.cabal/bin" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/usr/local/libexec/emacs/24.4/x86_64-unknown-linux-gnu")))
  '(expand-region-preferred-python-mode (quote fgallina-python))
+ '(org-CUA-compatible nil)
+ '(org-replace-disputed-keys nil)
  '(package-selected-packages
    (quote
-    (cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
- '(recentf-menu-before nil)
+    (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(recentf-mode t)
  '(same-window-buffer-names (quote ("*shell*")))
  '(shift-select-mode nil)
