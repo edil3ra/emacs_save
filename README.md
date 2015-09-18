@@ -1,4 +1,4 @@
-drop the .emacs in the approriate folder 
+copy .emacs in the apropriate folder
 run install-package use-package
-restart emacs 
+restart emacs
 enjoy
