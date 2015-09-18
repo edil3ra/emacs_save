@@ -1,1 +1,4 @@
-emacs support general editing, python, javascript, coffeescript, lua, haskell, css, scss 
+drop the .emacs in the approriate folder 
+run install-package use-package
+restart emacs 
+enjoy
