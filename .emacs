@@ -1,8 +1,8 @@
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-;; (add-to-list 'package-archives
-;;              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -13,22 +13,26 @@
 (use-package helm
   :ensure t
   :init (progn
-    (require 'helm-config)
-    (setq helm-candidate-number-limit 100)
-    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-	  helm-input-idle-delay 0.01  ; this actually updates things
-	  helm-yas-display-key-on-candidate t
-	  helm-quick-update t
-	  helm-M-x-requires-pattern nil
-	  helm-M-x-fuzzy-match t
-	  helm-ff-skip-boring-files t
-	  helm-buffers-fuzzy-matching t
-	  helm-recentf-fuzzy-match t
-	  helm-locate-fuzzy-match t
-	  helm-split-window-in-side-p t
-	  helm-scroll-amount 8
-	  helm-autoresize-mode 1)
-    (helm-mode))
+	  (require 'helm-config)
+	  (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+		helm-input-idle-delay 0.01  ; this actually updates things
+		helm-yas-display-key-on-candidate t
+		helm-candidate-number-limit 100
+		helm-quick-update t
+		helm-M-x-requires-pattern nil
+		helm-M-x-fuzzy-match t
+		helm-ff-skip-boring-files t
+		helm-move-to-line-cycle-in-source t
+		helm-buffers-fuzzy-matching t
+		helm-recentf-fuzzy-match t
+		helm-locate-fuzzy-match t
+		helm-split-window-in-side-p t
+		helm-scroll-amount 8
+		helm-autoresize-mode 1
+		helm-boring-buffer-regexp-list
+		(quote
+		 ("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf" "\\*.*\\*")))
+	  (helm-mode))
   :config
   (progn
     (bind-key  "<tab>" #'helm-execute-persistent-action helm-map) ; rebind tab to do persistent action
@@ -36,6 +40,7 @@
     (bind-key  "C-z" #'helm-select-action helm-map) ; list actions using C-z
     (bind-key  "M-c" #'helm-previous-line helm-map)
     (bind-key  "M-t" #'helm-next-line helm-map)
+    (bind-key  "M-o" #'helm-next-source helm-map)
     (bind-key  "M-C" #'helm-previous-page helm-map)
     (bind-key  "M-T" #'helm-next-page helm-map)
     (bind-key  "M-b" #'helm-beginning-of-buffer helm-map)
@@ -58,21 +63,21 @@
 (use-package helm-css-scss
   :ensure t :defer t)
 
-
 (use-package company
   :ensure t
   :init (progn
+	  ;; (global-company-mode 1)
 	  (add-hook 'prog-mode-hook 'company-mode)
 	  (add-hook 'html-mode-hook 'company-mode)
 	  (add-hook 'css-mode-hook 'company-mode)
 	  (add-hook 'scss-mode-hook 'company-mode)
-	  ;; (global-company-mode 1)
 	  (setq company-tooltip-limit 20) ; bigger popup window
 	  (setq company-idle-delay 0.1)   ; decrease delay before autocompletion popup shows
 	  (setq company-echo-delay 0)     ; remove annoying blinking
 	  (setq company-show-numbers t)   ; show numbers for easy selection
 	  (setq company-minimum-prefix-length 1)
-	  (company-quickhelp-mode 1))
+	  (company-quickhelp-mode 1)
+	  (push 'company-robe company-backends))
   :config (progn
             (bind-key "<tab>" #'company-complete company-active-map)
             (bind-key "M-/" #'company-show-doc-buffer company-active-map)
@@ -83,23 +88,24 @@
             (bind-key "M-l" #'company-show-location company-active-map)))
 
 
+
 (use-package company-quickhelp
   :ensure t :defer t)
 
 
 (use-package projectile
- :ensure t :defer t
- :init(progn
-   (setq projectile-completion-system 'default)
-   (setq projectile-enable-caching t)
-   (setq projectile-completion-system 'helm)
-   (setq projectile-switch-project-actian 'helm-projectile)
-   (setq projectile-use-native-indexing t)
-   (projectile-global-mode)))
+  :ensure t :defer t
+  :init(progn
+	 (setq projectile-completion-system 'default)
+	 (setq projectile-enable-caching t)
+	 (setq projectile-completion-system 'helm)
+	 (setq projectile-switch-project-actian 'helm-projectile)
+	 (setq projectile-use-native-indexing t)
+	 (projectile-global-mode)))
 
 
 (use-package yasnippet
-  :ensure t
+  :ensure t :defer t
   :diminish yas-minor-mode
   :init(progn
 	 (yas-global-mode 1))
@@ -108,6 +114,10 @@
 	   (unbind-key "<tab>" yas-minor-mode-map)
 	   (unbind-key "C-SPC" yas-minor-mode-map)
 	   (bind-key "C-i" #'yas-expand yas-minor-mode-map)))
+
+
+(use-package molokai-theme
+  :ensure t :defer t)
 
 
 (use-package smartparens
@@ -127,12 +137,13 @@
 
 (use-package uniquify
   :init(progn
-	   uniquify-buffer-name-style 'post-forward
-	   uniquify-separator ":"))
+	 uniquify-buffer-name-style 'post-forward
+	 uniquify-separator ":"))
 
 
 (use-package framemove
   :ensure t)
+
 
 (use-package buffer-move
   :ensure t)
@@ -141,7 +152,7 @@
 (use-package popwin
   :ensure t :defer t
   :config(progn
-	 (popwin-mode 1)))
+	   (popwin-mode 1)))
 
 
 (use-package auto-save-buffers-enhanced
@@ -160,12 +171,11 @@
 (use-package expand-region
   :ensure t :defer t)
 
-
 (use-package goto-chg
   :ensure t :defer t)
 
 (use-package neotree
-  :ensure t)
+  :ensure t :defer t)
 
 (use-package fullscreen-mode
   :ensure t
@@ -197,16 +207,22 @@
 
 
 (use-package dired+
-  :ensure t :defer t)
+  :ensure t :defer t
+  :config(progn
+	   (unbind-key "M-c" dired-mode-map)
+	   (bind-key "M-C" #'scroll-up dired-mode-map)
+	   (bind-key "M-T" #'scroll-down dired-mode-map)
+	   (bind-key "M-b" #'ergoemacs-beginning-or-end-of-buffer dired-mode-map)
+	   (bind-key "M-B" #'ergoemacs-end-or-beginning-of-buffer dired-mode-map)))
 
 
 
 (use-package ergoemacs-mode
-:ensure t
-:init(progn
-       (setq ergoemacs-theme nil)
-       '(ergoemacs-keyboard-layout "dv")
-       '(ergoemacs-mode nil)))
+  :ensure t
+  :init(progn
+	 (setq ergoemacs-theme nil)
+	 '(ergoemacs-keyboard-layout "dv")
+	 '(ergoemacs-mode nil)))
 
 
 (use-package emmet-mode
@@ -229,15 +245,15 @@
 (use-package css-mode
   :ensure t
   :config(progn
-	 (bind-key "C-p" #'helm-css-scss css-mode-map)))
+	   (bind-key "C-p" #'helm-css-scss css-mode-map)))
 
 
 (use-package scss-mode
- :ensure t :defer t
- :init(progn
-	(setq scss-compile-at-save nil))
- :config(progn
-	  (bind-key "C-p" #'helm-css-scss scss-mode-map)))
+  :ensure t :defer t
+  :init(progn
+	 (setq scss-compile-at-save nil))
+  :config(progn
+	   (bind-key "C-p" #'helm-css-scss scss-mode-map)))
 
 
 (use-package markdown-mode
@@ -269,40 +285,41 @@
 (use-package ido
   :defer t
   :init(progn
-       (setq ibuffer-saved-filter-groups
-	     (quote (("default"
-		      ("dired" (mode . dired-mode))
-		      ("html" (or
-			       (mode . html-mode)
-			       (mode . web-mode)
-			       (mode . jinja2-mode)))
-		      ("coffee" (mode . coffee-mode))
-		      ("js" (mode . js3-mode))
-		      ("coffee" (mode . coffee-mode))
-		      ("haskell" (mode . haskell-mode))
-		      ("clojure" (mode . clojure-mode))
-		      ("python" (mode . python-mode))
-		      ("css" (or
-			      (mode . scss-mode)
-			      (mode . css-mode)))
-		      ("c/c++" (or
-			      (mode . c-mode-common-hook)))
-		      ("scratch" (or
-				  (name . "^\\*scratch\\*$")
-				  (name . "^\\*Messages\\*$")))
-		      ("gnus" (or
-			       (mode . message-mode)
-			       (mode . bbdb-mode)
-			       (mode . mail-mode)
-			       (mode . gnus-group-mode)
-			       (mode . gnus-summary-mode)
-			       (mode . gnus-article-mode)
-			       (name . "^\\.bbdb$")
-			       (name . "^\\.newsrc-dribble")))))))
-       (add-hook 'ibuffer-mode-hook
-		 (lambda ()
-		   (ibuffer-switch-to-saved-filter-groups "default")))
-       (setq ido-ignore-buffers '("\\` " "^\*"))))
+	 (setq ibuffer-saved-filter-groups
+	       (quote (("default"
+			("dired" (mode . dired-mode))
+			("html" (or
+				 (mode . html-mode)
+				 (mode . web-mode)
+				 (mode . jinja2-mode)))
+			("coffee" (mode . coffee-mode))
+			("js" (mode . js3-mode))
+			("coffee" (mode . coffee-mode))
+			("haskell" (mode . haskell-mode))
+			("ruby" (mode . ruby-mode))
+			("clojure" (mode . clojure-mode))
+			("python" (mode . python-mode))
+			("css" (or
+				(mode . scss-mode)
+				(mode . css-mode)))
+			("c/c++" (or
+				  (mode . c-mode-common-hook)))
+			("scratch" (or
+				    (name . "^\\*scratch\\*$")
+				    (name . "^\\*Messages\\*$")))
+			("gnus" (or
+				 (mode . message-mode)
+				 (mode . bbdb-mode)
+				 (mode . mail-mode)
+				 (mode . gnus-group-mode)
+				 (mode . gnus-summary-mode)
+				 (mode . gnus-article-mode)
+				 (name . "^\\.bbdb$")
+				 (name . "^\\.newsrc-dribble")))))))
+	 (add-hook 'ibuffer-mode-hook
+		   (lambda ()
+		     (ibuffer-switch-to-saved-filter-groups "default")))
+	 (setq ido-ignore-buffers '("\\` " "^\*"))))
 
 
 
@@ -344,9 +361,9 @@
   :defer t :ensure t
   :mode ("\\.py\\'" . python-mode)
   :init (progn
-	   (setq expand-region-preferred-python-mode (quote fgallina-python))
-	   (setq python-shell-interpreter "ipython3")
-	   (setq python-check-command nil)))
+	  (setq expand-region-preferred-python-mode (quote fgallina-python))
+	  (setq python-shell-interpreter "ipython3")
+	  (setq python-check-command nil)))
 
 
 (use-package elpy
@@ -356,8 +373,8 @@
 	 (setq elpy-rpc-python-command "python3")
 	 (setq elpy-rpc-backend "jedi")
 	 (setq elpy-modules
-	   (quote
-	    (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults)))))
+	       (quote
+		(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults)))))
 
 
 (use-package jedi
@@ -367,7 +384,23 @@
 (use-package pyvenv
   :ensure t :defer t
   :init(progn
-	 (setq pyvenv-virtualenvwrapper-python "/usr/bin/python") ))
+	 (setq pyvenv-virtualenvwrapper-python "/usr/bin/python3") ))
+
+
+;; RUBY
+(use-package ruby-mode
+  :config(progn
+	   (setq inf-ruby-default-implementation "pry")
+	   (bind-key "<f8>" #'inf-ruby ruby-mode-map)
+	   (bind-key "<f9>" #'robe-start ruby-mode-map)
+	   (bind-key "C-c C-c" #'ruby-send-last-sexp)))
+
+
+(use-package robe
+  :ensure t :defer t
+  :init (progn
+	  (add-hook 'ruby-mode-hook 'robe-mode)))
+
 
 
 ;; JAVASCRIPT
@@ -379,7 +412,7 @@
 	 '(js3-indent-on-enter-key t)   ; fix indenting before moving on
 	 ))
 
-  
+
 ;; COFFEESCRIPT
 (use-package coffee-mode
   :ensure t :defer t
@@ -403,12 +436,12 @@
 (use-package cider
   :ensure t :defer t)
 
+
 (use-package clojure-mode
   :config
   (defun my/clojure-mode-defaults ()
     (bind-key "<f8>" 'cider-jack-in))
   (add-hook 'clojure-mode-hook 'my/clojure-mode-defaults))
-
 
 
 ;; LUA
@@ -420,6 +453,11 @@
   :config(progn
 	   (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 	   (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))))
+
+;; PHP
+(use-package php-mode
+  :ensure t :defer t
+  :mode ("\\.php\\'" . php-mode))
 
 
 ;; HASKELL
@@ -451,7 +489,7 @@
 	   (bind-key "C-c C-r" #'haskell-debug haskell-mode-map)
 	   (bind-key "C-c C-k" #'haskell-interactive-mode-clear haskell-mode-map)
 	   (bind-key [f8] #'haskell-navigate-imports haskell-mode-map)))
-	   
+
 
 (use-package ghc
   :ensure t
@@ -471,18 +509,17 @@
 		(unbind-key "C-c d" c-mode-common-map)
 		(unbind-key "M-q" c-mode-common-map))))
 
+
 (use-package irony
   :ensure t :defer t
   :init(progn
 	 (add-hook 'c++-mode-hook 'irony-mode)
-	 (add-hook 'c-mode-hook 'irony-mode)
-	 (add-hook 'objc-mode-hook 'irony-mode)))
+	 (add-hook 'c-mode-hook 'irony-mode)))
 
 
 (use-package company-irony
   :ensure t :defer t
   :init(add-to-list 'company-backends 'company-irony))
-
 
 
 
@@ -533,38 +570,50 @@
   (on-blur--refresh))
 
 
-;; run current file
 (defun xah-run-current-file ()
   (interactive)
   (let* (
-         (suffixMap
+         (ξsuffix-map
+          ;; (‹extension› . ‹shell program name›)
           `(
             ("php" . "php")
             ("pl" . "perl")
-            ("py" . "python3")
+            ("py" . "python")
             ("py3" . ,(if (string-equal system-type "windows-nt") "c:/Python32/python.exe" "python3"))
-            ("js" . "node")             ; node.js
+            ("rb" . "ruby")
+            ("js" . "node") ; node.js
             ("sh" . "bash")
-            ("lua" . "lua")
-            )
-          )
-         (fName (buffer-file-name))
-         (fSuffix (file-name-extension fName))
-         (progName (cdr (assoc fSuffix suffixMap)))
-         (cmdStr (concat progName " \""   fName "\""))
-         )
+            ("clj" . "java -cp /home/xah/apps/clojure-1.6.0/clojure-1.6.0.jar clojure.main")
+            ("ml" . "ocaml")
+            ("vbs" . "cscript")
+            ("tex" . "pdflatex")
+            ("latex" . "pdflatex")
+            ("java" . "javac")
+            ;; ("pov" . "/usr/local/bin/povray +R2 +A0.1 +J1.2 +Am2 +Q9 +H480 +W640")
+            ))
+         (ξfname (buffer-file-name))
+         (ξfSuffix (file-name-extension ξfname))
+         (ξprog-name (cdr (assoc ξfSuffix ξsuffix-map)))
+         (ξcmd-str (concat ξprog-name " \""   ξfname "\"")))
+
     (when (buffer-modified-p)
       (when (y-or-n-p "Buffer modified. Do you want to save first?")
-	(save-buffer)))
-    (if (string-equal fSuffix "el") ; special case for emacs lisp
-        (load (file-name-sans-extension fName))
-      (if progName
-          (progn
-            (message "Running…")
-            (shell-command cmdStr "*xah-run-current-file output*" )
-            )
-        (message "No recognized program file suffix for this file.")
-        ))))
+        (save-buffer)))
+
+    (cond
+     ((string-equal ξfSuffix "el") (load ξfname))
+     ((string-equal ξfSuffix "java")
+      (progn
+        (shell-command ξcmd-str "*xah-run-current-file output*" )
+        (shell-command
+         (format "java %s" (file-name-sans-extension (file-name-nondirectory ξfname))))))
+     (t (if ξprog-name
+            (progn
+              (message "Running…")
+              (shell-command ξcmd-str "*xah-run-current-file output*" ))
+          (message "No recognized program file suffix for this file."))))))
+
+
 
 
 
@@ -655,8 +704,8 @@
 (bind-key* "M-R" 'ergoemacs-forward-block)
 (bind-key* "M-d" 'ergoemacs-beginning-of-line-or-what)
 (bind-key* "M-D" 'ergoemacs-end-of-line-or-what)
-(bind-key* "M-b" 'beginning-of-buffer)
-(bind-key "M-B" 'end-of-buffer)
+(bind-key* "M-b" 'ergoemacs-beginning-or-end-of-buffer)
+(bind-key* "M-B" 'ergoemacs-end-or-beginning-of-buffer)
 
 
 ;; DELETE KEY
@@ -716,7 +765,7 @@
 
 
 (bind-key* "C-o" 'helm-find-files)
-(bind-key* "M-o" 'helm-projectile)
+(global-set-key (kbd "M-o") 'helm-projectile)
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key "C-y" 'helm-show-kill-ring)
 (bind-key "C-f" 'helm-projectile-switch-to-buffer)
@@ -749,7 +798,7 @@
 
 
 ;; MULTIPLE CURSORS
-(bind-key* "C-d" 'mc/mark-next-like-this)
+(bind-key "C-d" 'mc/mark-next-like-this)
 (bind-key "C-S-d" 'mc/mark-all-like-this)
 (unbind-key "M-<down-mouse-1>")
 (bind-key* "M-<mouse-1>" 'mc/add-cursor-on-click)
@@ -809,24 +858,21 @@
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
- '(custom-theme-load-path (quote ("~/.emacs.d/themes" t)))
- '(delete-selection-mode t)
+    ("50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(elpy-rpc-python-command "python3")
  '(ergoemacs-command-loop-blink-character "•")
  '(ergoemacs-mode nil)
  '(exec-path
-   (quote
-    ("/home/ubuntu/.cabal/bin" "/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/usr/games" "/usr/local/games" "/usr/local/libexec/emacs/24.4/x86_64-unknown-linux-gnu")))
+   (append exec-path
+	   (quote
+	    ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
  '(expand-region-preferred-python-mode (quote fgallina-python))
- '(org-CUA-compatible nil)
  '(org-replace-disputed-keys nil)
  '(package-selected-packages
    (quote
     (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
- '(recentf-mode t)
+ '(ring-bell-function (quote ignore) t)
  '(same-window-buffer-names (quote ("*shell*")))
- '(shift-select-mode nil)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -867,5 +913,4 @@
  '(rainbow-delimiters-depth-5-face ((t (:foreground "gold3"))))
  '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrange3"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta")))))
-
 
