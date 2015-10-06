@@ -12,6 +12,7 @@
 
 (use-package helm
   :ensure t
+  :diminish helm-mode
   :init (progn
 	  (require 'helm-config)
 	  (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
@@ -49,8 +50,8 @@
     (bind-key  "M-B" #'helm-end-of-buffer helm-find-files-map)
     (bind-key  "C-f" #'helm-ff-run-find-sh-command helm-find-files-map)
     (bind-key  "C-S-f" #'helm-ff-run-locate helm-find-files-map)
-    (bind-key  "C-d" #'helm-buffer-run-kill-persistent helm-buffer-map)
-    (bind-key  "C-S-d" #'helm-buffer-run-kill-buffers helm-buffer-map)
+    (bind-key  "C-S-d" #'helm-buffer-run-kill-persistent helm-buffer-map)
+    (bind-key  "C-d" #'helm-buffer-run-kill-buffers helm-buffer-map)
     (bind-key  "M-SPC" #'helm-toggle-visible-mark helm-map)))
 
 
@@ -144,7 +145,6 @@
 (use-package framemove
   :ensure t)
 
-
 (use-package buffer-move
   :ensure t)
 
@@ -175,7 +175,16 @@
   :ensure t :defer t)
 
 (use-package neotree
-  :ensure t :defer t)
+  :ensure t :defer t
+	:config(progn
+					 (defun neotree-enter-in-place ()
+						 (interactive)
+						 (neotree-enter)
+						 (neotree-show))
+					 (bind-key "<tab>" #'neotree-enter neotree-mode-map)
+					 (bind-key "e" #'neotree-enter-in-place neotree-mode-map )
+					))
+
 
 (use-package fullscreen-mode
   :ensure t
@@ -523,6 +532,8 @@
 
 
 
+
+
 ;; STUFF
 ;; remove window decoration
 (when window-system
@@ -652,11 +663,43 @@
   (switch-to-buffer "*Python*"))
 
 
-(defun split-3-windows-horizontally-evenly ()
+(defun split-3-3-0 ()
   (interactive)
+	(delete-other-windows)
   (command-execute 'split-window-horizontally)
   (command-execute 'split-window-horizontally)
   (command-execute 'balance-windows))
+
+(defun split-3-2-1 ()
+  (interactive)
+  (delete-other-windows)
+  (command-execute 'split-window-vertically)
+  (command-execute 'split-window-horizontally)
+  (enlarge-window 20))
+
+(defun split-6-3-1 ()
+  (interactive)
+  (delete-other-windows)
+  (command-execute 'split-window-vertically)
+  (command-execute 'split-window-horizontally)
+  (command-execute 'split-window-horizontally)
+  (command-execute 'balance-windows)
+  (enlarge-window 20))
+
+(defun split-6-3-3 ()
+  (interactive)
+  (delete-other-windows)
+  (command-execute 'split-window-vertically)
+  (command-execute 'split-window-horizontally)
+  (command-execute 'split-window-horizontally)
+  (windmove-down)
+  (command-execute 'split-window-horizontally)
+  (command-execute 'split-window-horizontally)
+  (command-execute 'balance-windows)
+  (windmove-up)
+  (enlarge-window 20))
+
+
 
 
 (defun org-export-latex-format-toc-org-article (depth)
@@ -694,8 +737,6 @@
 (bind-key* "M-r" 'forward-word)
 (bind-key "M-C" 'scroll-down-command)
 (bind-key "M-T" 'scroll-up-command)
-;; (bind-key* "M-H" 'ergoemacs-backward-close-bracket)
-;; (bind-key* "M-N" 'ergoemacs-forward-close-bracket)
 (bind-key* "M-H" 'sp-backward-sexp)
 (bind-key* "M-N" 'sp-forward-sexp)
 (bind-key* "M-(" 'sp-unwrap-sexp)
@@ -715,6 +756,7 @@
 (bind-key* "M-p" 'kill-word)
 (bind-key* "M-i" 'kill-line)
 (bind-key* "M-I" 'ergoemacs-kill-line-backward)
+(bind-key* "M-y" 'delete-indentation)
 
 
 ;; COPY, CUT, PASTE, REDO, UNDO
@@ -822,7 +864,10 @@
 (bind-key* "M-4" 'split-window-below)
 (bind-key* "M-$" 'split-window-right)
 (bind-key* "M-@" 'balance-windows)
-(bind-key* "M-#" 'split-3-windows-horizontally-evenly)
+(bind-key* "M-5" 'split-3-2-1)
+(bind-key* "M-%" 'split-6-3-3)
+(bind-key* "M-6" 'split-6-3-1)
+(bind-key* "M-^" 'split-3-3-0)
 
 
 ;; WINDOW SHRINK, WINDOW INCREASE
@@ -858,7 +903,7 @@
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+    ("11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(elpy-rpc-python-command "python3")
  '(ergoemacs-command-loop-blink-character "•")
  '(ergoemacs-mode nil)
