@@ -1,11 +1,12 @@
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
+
 (setq use-package-verbose t)
 (require 'use-package)
 
@@ -46,6 +47,8 @@
     (bind-key  "M-T" #'helm-next-page helm-map)
     (bind-key  "M-b" #'helm-beginning-of-buffer helm-map)
     (bind-key  "M-B" #'helm-end-of-buffer helm-map)
+    (bind-key  "M-l" #'helm-find-files-up-one-level helm-find-files-map)
+    (bind-key  "M-L" #'helm-find-files-down-last-level helm-find-files-map)
     (bind-key  "M-C" #'helm-previous-page helm-find-files-map)
     (bind-key  "M-B" #'helm-end-of-buffer helm-find-files-map)
     (bind-key  "C-f" #'helm-ff-run-find-sh-command helm-find-files-map)
@@ -120,6 +123,8 @@
 (use-package molokai-theme
   :ensure t :defer t)
 
+(use-package grandshell-theme
+  :ensure t :defer t)
 
 (use-package smartparens
   :ensure t :defer t
@@ -176,14 +181,14 @@
 
 (use-package neotree
   :ensure t :defer t
-	:config(progn
-					 (defun neotree-enter-in-place ()
-						 (interactive)
-						 (neotree-enter)
-						 (neotree-show))
-					 (bind-key "<tab>" #'neotree-enter neotree-mode-map)
-					 (bind-key "e" #'neotree-enter-in-place neotree-mode-map )
-					))
+  :config(progn
+	   (defun neotree-enter-in-place ()
+	     (interactive)
+	     (neotree-enter)
+	     (neotree-show))
+	   (bind-key "<tab>" #'neotree-enter neotree-mode-map)
+	   (bind-key "e" #'neotree-enter-in-place neotree-mode-map )
+	   ))
 
 
 (use-package fullscreen-mode
@@ -199,7 +204,49 @@
 
 
 (use-package multiple-cursors
-  :ensure t :defer t)
+  :ensure t :defer t
+  :diminish multiple-cursors-mode)
+
+(use-package phi-search
+	:ensure t :defer t
+	:config (progn
+		  (bind-key "," #'phi-search-again-or-previous phi-search-default-map)
+		  (bind-key "." #'phi-search-again-or-next phi-search-default-map)))
+
+
+
+(use-package region-bindings-mode
+  :ensure t
+  :diminish region-bindings-mode
+  :config(progn
+	 (region-bindings-mode-enable)
+	 (bind-key "h" #'mc/mark-previous-like-this region-bindings-mode-map)
+	 (bind-key "n" #'mc/mark-next-like-this region-bindings-mode-map)
+	 (bind-key "C-h" #'mc/skip-to-previous-like-this region-bindings-mode-map)
+	 (bind-key "C-n" #'mc/skip-to-next-like-this region-bindings-mode-map)
+	 (bind-key "c" #'mc/unmark-previous-like-this region-bindings-mode-map)
+	 (bind-key "t" #'mc/unmark-next-like-this region-bindings-mode-map)
+	 (bind-key "a" #'mc/mark-all-like-this region-bindings-mode-map)
+	 (bind-key "m" #'mc/mark-more-like-this-extended region-bindings-mode-map)
+	 (bind-key "-" #'mc/edit-lines region-bindings-mode-map)
+	 (bind-key "l" #'mc/edit-beginnings-of-lines region-bindings-mode-map)
+	 (bind-key "r" #'mc/edit-ends-of-lines region-bindings-mode-map)
+	 (bind-key "f" #'mc/mark-all-in-region-regexp region-bindings-mode-map)
+	 (bind-key "m" #'mc/mark-sgml-tag-pair region-bindings-mode-map)
+	 (bind-key "." #'phi-search region-bindings-mode-map)
+	 (bind-key "," #'phi-search-backward region-bindings-mode-map)
+	 (bind-key "e" #'backward-delete-char region-bindings-mode-map)
+	 (bind-key "g" #'keyboard-escape-quit region-bindings-mode-map)
+	 (bind-key "C-g" #'keyboard-escape-quit region-bindings-mode-map)
+	 (bind-key "q" #'kill-region region-bindings-mode-map)
+	 (bind-key "j" #'kill-ring-save region-bindings-mode-map)
+	 (bind-key "k" #'yank region-bindings-mode-map)
+	 (bind-key "x" #'kill-rectangle region-bindings-mode-map)
+	 (bind-key "b" #'replace-rectangle region-bindings-mode-map)
+	 (bind-key "p" #'ergoemacs-compact-uncompact-block region-bindings-mode-map)
+	 (bind-key "d" #'duplicate-current-line-or-region region-bindings-mode-map)
+	 (bind-key "i" #'join-line-or-lines-in-region region-bindings-mode-map)
+	))
 
 
 (use-package dired
@@ -209,8 +256,8 @@
 	 '(dired-use-ls-dired t))
   :config(progn
 	   (unbind-key "M-c" dired-mode-map)
-	   (bind-key "M-C" #'scroll-up dired-mode-map)
-	   (bind-key "M-T" #'scroll-down dired-mode-map)
+	   (bind-key "M-T" #'scroll-up dired-mode-map)
+	   (bind-key "M-C" #'scroll-down dired-mode-map)
 	   (bind-key "M-b" #'ergoemacs-beginning-or-end-of-buffer dired-mode-map)
 	   (bind-key "M-B" #'ergoemacs-end-or-beginning-of-buffer dired-mode-map)))
 
@@ -223,7 +270,6 @@
 	   (bind-key "M-T" #'scroll-down dired-mode-map)
 	   (bind-key "M-b" #'ergoemacs-beginning-or-end-of-buffer dired-mode-map)
 	   (bind-key "M-B" #'ergoemacs-end-or-beginning-of-buffer dired-mode-map)))
-
 
 
 (use-package ergoemacs-mode
@@ -362,16 +408,18 @@
 	  '(org-babel-load-languages (quote ((python . t) (latex . t) (sh . t))))
 	  '(org-pretty-entities t)
 	  '(org-pretty-entities-include-sub-superscripts t)
+	  '(org-startup-truncated t)
 	  '(org-replace-disputed-keys nil)))
 
 
-;;PYTHON
+;; PYTHON
 (use-package python
   :defer t :ensure t
   :mode ("\\.py\\'" . python-mode)
   :init (progn
 	  (setq expand-region-preferred-python-mode (quote fgallina-python))
 	  (setq python-shell-interpreter "ipython3")
+	  (setq python-indent-offset 4)
 	  (setq python-check-command nil)))
 
 
@@ -402,7 +450,7 @@
 	   (setq inf-ruby-default-implementation "pry")
 	   (bind-key "<f8>" #'inf-ruby ruby-mode-map)
 	   (bind-key "<f9>" #'robe-start ruby-mode-map)
-	   (bind-key "C-c C-c" #'ruby-send-last-sexp)))
+	   (bind-key "C-c C-c" #'ruby-send-last-sexp ruby-mode-map)))
 
 
 (use-package robe
@@ -453,6 +501,10 @@
   (add-hook 'clojure-mode-hook 'my/clojure-mode-defaults))
 
 
+
+
+
+
 ;; LUA
 (use-package lua-mode
   :ensure t :defer t
@@ -471,7 +523,7 @@
 
 ;; HASKELL
 (use-package haskell-mode
-  :ensure t
+  :ensure t :defer t
   :init(progn
 	 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 	 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
@@ -501,7 +553,7 @@
 
 
 (use-package ghc
-  :ensure t
+  :ensure t :defer t
   :init (progn
 	  (autoload 'ghc-init "ghc" nil t)
 	  (autoload 'ghc-debug "ghc" nil t)
@@ -529,8 +581,6 @@
 (use-package company-irony
   :ensure t :defer t
   :init(add-to-list 'company-backends 'company-irony))
-
-
 
 
 
@@ -627,7 +677,6 @@
 
 
 
-
 ;; shell buffer
 (defun my-filter (condp lst)
   (delq nil (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
@@ -665,7 +714,7 @@
 
 (defun split-3-3-0 ()
   (interactive)
-	(delete-other-windows)
+  (delete-other-windows)
   (command-execute 'split-window-horizontally)
   (command-execute 'split-window-horizontally)
   (command-execute 'balance-windows))
@@ -700,19 +749,52 @@
   (enlarge-window 20))
 
 
-
-
-(defun org-export-latex-format-toc-org-article (depth)
-  (when depth
-    (format "\\setcounter{secnumdepth}{%s}\n\\tableofcontents\n"
-            depth)))
-(setq org-export-latex-format-toc-function 'org-export-latex-format-toc-org-article)
-
-
 (defun smart-ret()
   (interactive)
   (end-of-line)
   (newline-and-indent))
+
+
+;; there is a bug with multiple-cursors and ergoemacs-cut-line-or-region 
+(defun my-cut-line-or-region ()
+  (interactive)
+  (if current-prefix-arg
+      (progn ; not using kill-region because we don't want to include previous kill
+        (kill-new (buffer-string))
+        (delete-region (point-min) (point-max)))
+    (progn (if (use-region-p)
+               (kill-region (region-beginning) (region-end) t)
+             (kill-region (line-beginning-position) (line-beginning-position 2))))))
+
+
+(defun join-line-or-lines-in-region ()
+  "Join this line or the lines in the selected region."
+  (interactive)
+  (cond ((region-active-p)
+         (let ((min (line-number-at-pos (region-beginning))))
+           (goto-char (region-end))
+           (while (> (line-number-at-pos) min)
+             (join-line))))
+        (t (call-interactively 'join-line))))
+
+
+(defun duplicate-current-line-or-region (arg)
+  (interactive "p")
+  (let (beg end (origin (point)))
+    (if (and (region-active-p) (> (point) (mark)))
+        (exchange-point-and-mark))
+    (setq beg (line-beginning-position))
+    (if (region-active-p)
+        (exchange-point-and-mark))
+    (setq end (line-end-position))
+    (let ((region (buffer-substring-no-properties beg end)))
+      (dotimes (i arg)
+        (goto-char end)
+        (newline)
+        (insert region)
+        (setq end (point)))
+      (goto-char (+ origin (* (length region) arg) arg)))))
+
 
 
 ;; KEYBOARD
@@ -721,7 +803,7 @@
 (bind-key "C-SPC" 'company-complete)
 (bind-key  "C-." 'keyboard-espace-quit)
 (bind-key "<escape>" 'keyboard-espace-quit)
-(bind-key "C-a" 'mark-whole-buffer)
+(bind-key* "C-a" 'mark-whole-buffer)
 (bind-key "M-m" 'emmet-expand-line)
 (bind-key "C-x j" 'dired-jump)
 (bind-key "<f2>" 'neotree-toggle)
@@ -739,14 +821,17 @@
 (bind-key "M-T" 'scroll-up-command)
 (bind-key* "M-H" 'sp-backward-sexp)
 (bind-key* "M-N" 'sp-forward-sexp)
-(bind-key* "M-(" 'sp-unwrap-sexp)
-(bind-key* "M-S-(" 'sp-unwrap-sexp)
+(bind-key* "M-9" 'sp-unwrap-sexp)
 (bind-key* "M-G" 'ergoemacs-backward-block)
 (bind-key* "M-R" 'ergoemacs-forward-block)
 (bind-key* "M-d" 'ergoemacs-beginning-of-line-or-what)
 (bind-key* "M-D" 'ergoemacs-end-of-line-or-what)
 (bind-key* "M-b" 'ergoemacs-beginning-or-end-of-buffer)
 (bind-key* "M-B" 'ergoemacs-end-or-beginning-of-buffer)
+(bind-key* "M-[" 'sp-forward-barf-sexp)
+(bind-key* "M-]" 'sp-forward-barf-sexp)
+(bind-key* "M-{" 'sp-splice-sexp)
+(bind-key* "M-}" 'sp-join-sexp)
 
 
 ;; DELETE KEY
@@ -759,10 +844,11 @@
 (bind-key* "M-y" 'delete-indentation)
 
 
+
 ;; COPY, CUT, PASTE, REDO, UNDO
-(bind-key* "M-q" 'ergoemacs-cut-line-or-region)
+(bind-key* "M-q" 'my-cut-line-or-region)
 (bind-key* "M-j" 'ergoemacs-copy-line-or-region)
-(bind-key* "M-k" 'ergoemacs-paste)
+(bind-key* "M-k" 'yank)
 (bind-key* "M-Q" 'ergoemacs-cut-all)
 (bind-key* "M-J" 'ergoemacs-copy-all)
 (bind-key* "M-K" 'ergoemacs-paste-cycle)
@@ -772,7 +858,7 @@
 (bind-key* "C-S-z" 'undo-tree-redo)
 
 
-;; POP, SAVE, GOTO, INFO, SCALE, CAMEL, RECENTER
+;; POP, SAVE, GOTO, INFO, SCALE, CAMEL, RECENTER, REPLACE
 (bind-key* "M-f" 'goto-last-change)
 (bind-key* "M-F" 'goto-last-change-reverse)
 (bind-key* "C-s" 'save-buffer)
@@ -782,8 +868,7 @@
 (bind-key* "C-=" 'text-scale-increase)
 (bind-key* "C--" 'text-scale-decrease)
 (bind-key* "M-z" 'ergoemacs-toggle-letter-case)
-(bind-key* "C-S-z" 'ergoemacs-toggle-camel-case)
-(bind-key* "M-9" 'recenter-top-bottom)
+(bind-key* "M-*" 'replace-regexp)
 
 
 ;; NEW BUFFER, FRAME CLOSE BUFFER, COMMENT
@@ -804,10 +889,8 @@
 (bind-key* "<f6>" 'helm-recentf)
 (bind-key* "<f7>" 'helm-bookmarks)
 (bind-key* "<f12>" 'fullscreen-mode-fullscreen-toggle) 
-
-
 (bind-key* "C-o" 'helm-find-files)
-(global-set-key (kbd "M-o") 'helm-projectile)
+(global-set-key (kbd "M-o") 'helm-projectile-find-file)
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key "C-y" 'helm-show-kill-ring)
 (bind-key "C-f" 'helm-projectile-switch-to-buffer)
@@ -824,8 +907,8 @@
 
 
 ;; SELECTION RETURN 
-(bind-key* "M-l" 'ergoemacs-select-current-line)
-(bind-key* "M-L" 'ergoemacs-select-current-block)
+(bind-key "M-l" 'ergoemacs-select-current-line)
+(bind-key "M-L" 'ergoemacs-select-current-block)
 (bind-key* "M-S" 'er/mark-inside-pairs)
 (bind-key* "M-s" 'er/expand-region)
 (bind-key* "M-RET" 'smart-ret)
@@ -840,8 +923,8 @@
 
 
 ;; MULTIPLE CURSORS
-(bind-key "C-d" 'mc/mark-next-like-this)
-(bind-key "C-S-d" 'mc/mark-all-like-this)
+(bind-key "C-d" 'duplicate-current-line-or-region)
+(bind-key "C-S-d" 'join-line-or-lines-in-region)
 (unbind-key "M-<down-mouse-1>")
 (bind-key* "M-<mouse-1>" 'mc/add-cursor-on-click)
 
@@ -883,6 +966,10 @@
 (bind-key "<M-left>" 'drag-stuff-left)
 (bind-key "<M-right>" 'drag-stuff-right)
 
+;; LISP
+(bind-key "C-c C-c" #'eval-last-sexp emacs-lisp-mode-map)
+(bind-key "C-c C-r" #'eval-region emacs-lisp-mode-map)
+(bind-key "C-c C-b" #'eval-buffer emacs-lisp-mode-map)
 
 
 (custom-set-variables
@@ -894,6 +981,7 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
+ '(auto-compression-mode nil)
  '(auto-save-default nil)
  '(auto-save-interval 0)
  '(blink-cursor-mode nil)
@@ -903,16 +991,14 @@
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
- '(elpy-rpc-python-command "python3")
- '(ergoemacs-command-loop-blink-character "•")
- '(ergoemacs-mode nil)
+    ("8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+ '(delete-selection-mode 1)
  '(exec-path
    (append exec-path
 	   (quote
 	    ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
- '(expand-region-preferred-python-mode (quote fgallina-python))
- '(org-replace-disputed-keys nil)
+ '(global-visual-line-mode t)
+ '(org-agenda-files (quote ("~/Documents/test/example.org")))
  '(package-selected-packages
    (quote
     (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
@@ -945,6 +1031,7 @@
 ;; theme and font
 (set-default-font "DejaVu Sans Mono 9")
 (load-theme 'molokai)
+(load-theme 'grandshell)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -958,4 +1045,3 @@
  '(rainbow-delimiters-depth-5-face ((t (:foreground "gold3"))))
  '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrange3"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta")))))
-
