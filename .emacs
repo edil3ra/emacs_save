@@ -179,6 +179,15 @@
 (use-package goto-chg
   :ensure t :defer t)
 
+(use-package smartscan
+  :ensure t :defer t
+  :init (progn
+	  (smartscan-mode 1)
+
+	 )
+  )
+
+
 (use-package neotree
   :ensure t :defer t
   :config(progn
@@ -187,7 +196,7 @@
 	     (neotree-enter)
 	     (neotree-show))
 	   (bind-key "<tab>" #'neotree-enter neotree-mode-map)
-	   (bind-key "e" #'neotree-enter-in-place neotree-mode-map )
+	   (bind-key "e" #'neotree-enter-in-place neotree-mode-map)
 	   ))
 
 
@@ -214,41 +223,6 @@
 		  (bind-key "." #'phi-search-again-or-next phi-search-default-map)))
 
 
-
-(use-package region-bindings-mode
-  :ensure t
-  :diminish region-bindings-mode
-  :config(progn
-	 (region-bindings-mode-enable)
-	 (bind-key "h" #'mc/mark-previous-like-this region-bindings-mode-map)
-	 (bind-key "n" #'mc/mark-next-like-this region-bindings-mode-map)
-	 (bind-key "C-h" #'mc/skip-to-previous-like-this region-bindings-mode-map)
-	 (bind-key "C-n" #'mc/skip-to-next-like-this region-bindings-mode-map)
-	 (bind-key "c" #'mc/unmark-previous-like-this region-bindings-mode-map)
-	 (bind-key "t" #'mc/unmark-next-like-this region-bindings-mode-map)
-	 (bind-key "a" #'mc/mark-all-like-this region-bindings-mode-map)
-	 (bind-key "m" #'mc/mark-more-like-this-extended region-bindings-mode-map)
-	 (bind-key "-" #'mc/edit-lines region-bindings-mode-map)
-	 (bind-key "l" #'mc/edit-beginnings-of-lines region-bindings-mode-map)
-	 (bind-key "r" #'mc/edit-ends-of-lines region-bindings-mode-map)
-	 (bind-key "f" #'mc/mark-all-in-region-regexp region-bindings-mode-map)
-	 (bind-key "m" #'mc/mark-sgml-tag-pair region-bindings-mode-map)
-	 (bind-key "." #'phi-search region-bindings-mode-map)
-	 (bind-key "," #'phi-search-backward region-bindings-mode-map)
-	 (bind-key "e" #'backward-delete-char region-bindings-mode-map)
-	 (bind-key "g" #'keyboard-escape-quit region-bindings-mode-map)
-	 (bind-key "C-g" #'keyboard-escape-quit region-bindings-mode-map)
-	 (bind-key "q" #'kill-region region-bindings-mode-map)
-	 (bind-key "j" #'kill-ring-save region-bindings-mode-map)
-	 (bind-key "k" #'yank region-bindings-mode-map)
-	 (bind-key "x" #'kill-rectangle region-bindings-mode-map)
-	 (bind-key "b" #'replace-rectangle region-bindings-mode-map)
-	 (bind-key "p" #'ergoemacs-compact-uncompact-block region-bindings-mode-map)
-	 (bind-key "d" #'duplicate-current-line-or-region region-bindings-mode-map)
-	 (bind-key "i" #'join-line-or-lines-in-region region-bindings-mode-map)
-	))
-
-
 (use-package dired
   :init(progn
 	 (toggle-diredp-find-file-reuse-dir 1)
@@ -258,8 +232,8 @@
 	   (unbind-key "M-c" dired-mode-map)
 	   (bind-key "M-T" #'scroll-up dired-mode-map)
 	   (bind-key "M-C" #'scroll-down dired-mode-map)
-	   (bind-key "M-b" #'ergoemacs-beginning-or-end-of-buffer dired-mode-map)
-	   (bind-key "M-B" #'ergoemacs-end-or-beginning-of-buffer dired-mode-map)))
+	   (bind-key "M-b" #'my-beginning-or-end-of-buffer dired-mode-map)
+	   (bind-key "M-B" #'my-end-or-beginning-of-buffer dired-mode-map)))
 
 
 (use-package dired+
@@ -268,16 +242,9 @@
 	   (unbind-key "M-c" dired-mode-map)
 	   (bind-key "M-C" #'scroll-up dired-mode-map)
 	   (bind-key "M-T" #'scroll-down dired-mode-map)
-	   (bind-key "M-b" #'ergoemacs-beginning-or-end-of-buffer dired-mode-map)
-	   (bind-key "M-B" #'ergoemacs-end-or-beginning-of-buffer dired-mode-map)))
+	   (bind-key "M-b" #'my-beginning-or-end-of-buffer dired-mode-map)
+	   (bind-key "M-B" #'my-end-or-beginning-of-buffer dired-mode-map)))
 
-
-(use-package ergoemacs-mode
-  :ensure t
-  :init(progn
-	 (setq ergoemacs-theme nil)
-	 '(ergoemacs-keyboard-layout "dv")
-	 '(ergoemacs-mode nil)))
 
 
 (use-package emmet-mode
@@ -298,7 +265,7 @@
 
 
 (use-package css-mode
-  :ensure t
+  :ensure t :defer t
   :config(progn
 	   (bind-key "C-p" #'helm-css-scss css-mode-map)))
 
@@ -334,7 +301,10 @@
 
 
 (use-package undo-tree
-  :ensure t :defer t)
+  :ensure t :defer t
+  :init (progn
+	 (global-undo-tree-mode)
+	 ))
 
 
 (use-package ido
@@ -501,10 +471,6 @@
   (add-hook 'clojure-mode-hook 'my/clojure-mode-defaults))
 
 
-
-
-
-
 ;; LUA
 (use-package lua-mode
   :ensure t :defer t
@@ -603,6 +569,8 @@
 ;; backup
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
+;; insert ret if last line
+(setq next-line-add-newlines t)
 
 ;; save on lost focus to change when i switch window
 (when
@@ -656,11 +624,9 @@
          (ξfSuffix (file-name-extension ξfname))
          (ξprog-name (cdr (assoc ξfSuffix ξsuffix-map)))
          (ξcmd-str (concat ξprog-name " \""   ξfname "\"")))
-
     (when (buffer-modified-p)
       (when (y-or-n-p "Buffer modified. Do you want to save first?")
         (save-buffer)))
-
     (cond
      ((string-equal ξfSuffix "el") (load ξfname))
      ((string-equal ξfSuffix "java")
@@ -673,7 +639,6 @@
               (message "Running…")
               (shell-command ξcmd-str "*xah-run-current-file output*" ))
           (message "No recognized program file suffix for this file."))))))
-
 
 
 
@@ -703,14 +668,13 @@
     (shell buffer)))
 
 
-(defun shell_buffer ()
+(defun shell-buffer ()
   (interactive)
   (switch-to-buffer "*Shell Command Output*"))
 
-(defun python_buffer ()
+(defun python-buffer ()
   (interactive)
   (switch-to-buffer "*Python*"))
-
 
 (defun split-3-3-0 ()
   (interactive)
@@ -748,11 +712,17 @@
   (windmove-up)
   (enlarge-window 20))
 
-
 (defun smart-ret()
   (interactive)
   (end-of-line)
   (newline-and-indent))
+
+(defun smart-ret-reverse()
+  (interactive)
+  (beginning-of-line)
+  (newline)
+  (previous-line)
+  (indent-for-tab-command))
 
 
 ;; there is a bug with multiple-cursors and ergoemacs-cut-line-or-region 
@@ -767,8 +737,40 @@
              (kill-region (line-beginning-position) (line-beginning-position 2))))))
 
 
+(defun my-copy-line-or-region (&optional arg)
+  "Copy current line, or current text selection."
+  (interactive "P")
+  (cond
+   ;;; cua-copy-rectangle
+   ((and (boundp 'cua--rectangle) cua--rectangle cua-mode)
+    (cua-copy-rectangle arg))
+   ((and (region-active-p) cua-mode)
+    (cua-copy-region arg))
+   ((region-active-p)
+    (kill-ring-save (region-beginning) (region-end)))
+   (t
+    ;; Hack away to support `org-mode' folded reg
+    (kill-ring-save
+     (save-excursion
+       (let ((pt (point)))
+         (ergoemacs-shortcut-remap
+          'move-beginning-of-line)
+         (when (= pt (point))
+           (call-interactively 'move-beginning-of-line)))
+       (when (not (bolp))
+         (beginning-of-line))
+       (point))
+     (save-excursion
+       (let ((pt (point)))
+         (ergoemacs-shortcut-remap
+          'move-end-of-line)
+         (when (= pt (point))
+           (call-interactively 'move-end-of-line)))
+       (re-search-forward "\\=\n" nil t) ;; Include newline
+       (point)))))
+  (deactivate-mark))
+
 (defun join-line-or-lines-in-region ()
-  "Join this line or the lines in the selected region."
   (interactive)
   (cond ((region-active-p)
          (let ((min (line-number-at-pos (region-beginning))))
@@ -776,7 +778,6 @@
            (while (> (line-number-at-pos) min)
              (join-line))))
         (t (call-interactively 'join-line))))
-
 
 (defun duplicate-current-line-or-region (arg)
   (interactive "p")
@@ -795,6 +796,118 @@
         (setq end (point)))
       (goto-char (+ origin (* (length region) arg) arg)))))
 
+(defun push-mark-no-activate ()
+  (interactive)
+  (push-mark (point) t nil)
+  (message "Pushed mark to ring"))
+
+(defun jump-to-mark ()
+  (interactive)
+  (set-mark-command 1))
+
+(defun my-forward-block (&optional number)
+  (interactive "p")
+  (if (and number
+           (> 0 number))
+      (ergoemacs-backward-block (- 0 number))
+  (if (search-forward-regexp "\n[[:blank:]\n]*\n+" nil "NOERROR" number)
+      (progn (backward-char))
+    (progn (goto-char (point-max))))))
+
+(defun my-backward-block (&optional number)
+  (interactive "p")
+  (if (and number
+           (> 0 number))
+      (ergoemacs-forward-block (- 0 number))
+    (if (search-backward-regexp "\n[\t\n ]*\n+" nil "NOERROR" number)
+        (progn
+          (skip-chars-backward "\n\t ")
+          (forward-char 1))
+      (progn (goto-char (point-min))))))
+
+(defun my-beginning-of-line-or-block (&optional n)
+  (interactive "p")
+  (let ((n (if (null n) 1 n)))
+    (if (equal n 1)
+        (if (or (equal (point) (line-beginning-position))
+                (equal last-command this-command))
+            (my-backward-block n)
+          (beginning-of-line)
+	  (back-to-indentation))
+      (my-backward-block n))))
+
+(defun my-end-of-line-or-block (&optional n)
+  (interactive "p")
+  (let ((n (if (null n) 1 n)))
+    (if (equal n 1)
+        (if (or (equal (point) (line-end-position))
+                (equal last-command this-command))
+            (my-forward-block)
+          (end-of-line))
+      (progn (my-forward-block n)))))
+
+(defun my-select-current-line ()
+  (interactive)
+  (end-of-line) ; move to end of line
+  (set-mark (line-beginning-position)))
+
+(defun my-select-current-block ()
+  (interactive)
+  (let (p1)
+    (if (re-search-backward "\n[ \t]*\n" nil "move")
+        (progn (re-search-forward "\n[ \t]*\n")
+               (setq p1 (point)))
+      (setq p1 (point)))
+    (if (re-search-forward "\n[ \t]*\n" nil "move")
+        (re-search-backward "\n[ \t]*\n"))
+    (set-mark p1)))
+
+(defun my-kill-line-backward (arg)
+  (interactive "p")
+  (kill-line (- 1 arg))
+  (indent-for-tab-command))
+
+(defun my-toggle-letter-case (φp1 φp2)
+  (interactive
+   (if (use-region-p)
+       (list (region-beginning) (region-end))
+     (let ((ξbds (bounds-of-thing-at-point 'word)))
+       (list (car ξbds) (cdr ξbds)))))
+  (let ((deactivate-mark nil))
+    (when (not (eq last-command this-command))
+      (put this-command 'state 0))
+    (cond
+     ((equal 0 (get this-command 'state))
+      (upcase-initials-region φp1 φp2)
+      (put this-command 'state 1))
+     ((equal 1  (get this-command 'state))
+      (upcase-region φp1 φp2)
+      (put this-command 'state 2))
+     ((equal 2 (get this-command 'state))
+      (downcase-region φp1 φp2)
+      (put this-command 'state 0)))))
+
+(defun my-new-empty-buffer ()
+  (interactive)
+  (let ((ξbuf (generate-new-buffer "untitled")))
+    (switch-to-buffer ξbuf)
+    (funcall (and initial-major-mode))
+    (setq buffer-offer-save t)))
+
+(defun my-previous-user-buffer ()
+  (interactive)
+  (previous-buffer)
+  (let ((i 0))
+    (while (and (string-equal "*" (substring (buffer-name) 0 1)) (< i 20))
+      (setq i (1+ i)) (previous-buffer) )))
+
+(defun my-next-user-buffer ()
+  (interactive)
+  (next-buffer)
+  (let ((i 0))
+    (while (and (string-equal "*" (substring (buffer-name) 0 1)) (< i 20))
+      (setq i (1+ i)) (next-buffer) )))
+
 
 
 ;; KEYBOARD
@@ -807,8 +920,9 @@
 (bind-key "M-m" 'emmet-expand-line)
 (bind-key "C-x j" 'dired-jump)
 (bind-key "<f2>" 'neotree-toggle)
+(bind-key* "C-t" 'jump-to-mark)
+(bind-key "C-S-t" 'push-mark-no-activate)
 ;; (define-key key-translation-map (kbd "<f8>") (kbd "<menu>"))
-
 
 ;; MOVE KEY
 (bind-key "M-c" 'previous-line)
@@ -819,19 +933,27 @@
 (bind-key* "M-r" 'forward-word)
 (bind-key "M-C" 'scroll-down-command)
 (bind-key "M-T" 'scroll-up-command)
+(bind-key* "M-G" 'my-backward-block)
+(bind-key* "M-R" 'my-forward-block)
+(bind-key* "M-d" 'my-beginning-of-line-or-block)
+(bind-key* "M-D" 'my-end-of-line-or-block)
+(bind-key* "M-b" 'beginning-of-buffer)
+(bind-key* "M-B" 'end-of-buffer)
+(bind-key* "C--" 'smartscan-symbol-go-backward)
+(bind-key "C-\\" 'smartscan-symbol-go-forward)
+
+
+;; SMARTPARENS
 (bind-key* "M-H" 'sp-backward-sexp)
 (bind-key* "M-N" 'sp-forward-sexp)
-(bind-key* "M-9" 'sp-unwrap-sexp)
-(bind-key* "M-G" 'ergoemacs-backward-block)
-(bind-key* "M-R" 'ergoemacs-forward-block)
-(bind-key* "M-d" 'ergoemacs-beginning-of-line-or-what)
-(bind-key* "M-D" 'ergoemacs-end-of-line-or-what)
-(bind-key* "M-b" 'ergoemacs-beginning-or-end-of-buffer)
-(bind-key* "M-B" 'ergoemacs-end-or-beginning-of-buffer)
-(bind-key* "M-[" 'sp-forward-barf-sexp)
-(bind-key* "M-]" 'sp-forward-barf-sexp)
-(bind-key* "M-{" 'sp-splice-sexp)
-(bind-key* "M-}" 'sp-join-sexp)
+(bind-key* "M-9" 'sp-splice-sexp)
+(bind-key* "C-j" 'sp-join-sexp)
+(bind-key* "M-[" 'sp-forward-slurp-sexp)
+(bind-key* "M-]" 'sp-backward-slurp-sexp)
+(bind-key* "M-{" 'sp-backward-barf-sexp)
+(bind-key* "M-}" 'sp-forward-barf-sexp)
+(bind-key* "C-k" 'sp-backward-kill-sexp)
+(bind-key* "C-S-k" 'sp-forward-barf-sexp)
 
 
 ;; DELETE KEY
@@ -840,23 +962,17 @@
 (bind-key* "M-." 'backward-kill-word)
 (bind-key* "M-p" 'kill-word)
 (bind-key* "M-i" 'kill-line)
-(bind-key* "M-I" 'ergoemacs-kill-line-backward)
+(bind-key* "M-I" 'my-kill-line-backward)
 (bind-key* "M-y" 'delete-indentation)
-
-
 
 ;; COPY, CUT, PASTE, REDO, UNDO
 (bind-key* "M-q" 'my-cut-line-or-region)
-(bind-key* "M-j" 'ergoemacs-copy-line-or-region)
+(bind-key* "M-j" 'my-copy-line-or-region)
 (bind-key* "M-k" 'yank)
-(bind-key* "M-Q" 'ergoemacs-cut-all)
-(bind-key* "M-J" 'ergoemacs-copy-all)
-(bind-key* "M-K" 'ergoemacs-paste-cycle)
 (bind-key* "M-;" 'undo-tree-undo)
 (bind-key* "M-:" 'undo-tree-redo)
 (bind-key "C-z" 'undo-tree-undo)
 (bind-key* "C-S-z" 'undo-tree-redo)
-
 
 ;; POP, SAVE, GOTO, INFO, SCALE, CAMEL, RECENTER, REPLACE
 (bind-key* "M-f" 'goto-last-change)
@@ -866,25 +982,22 @@
 (bind-key* "C-l" 'goto-line)
 (bind-key* "C-/" 'helm-info-at-point)
 (bind-key* "C-=" 'text-scale-increase)
-(bind-key* "C--" 'text-scale-decrease)
-(bind-key* "M-z" 'ergoemacs-toggle-letter-case)
+(bind-key* "C-+" 'text-scale-decrease)
+(bind-key* "M-z" 'my-toggle-letter-case)
 (bind-key* "M-*" 'replace-regexp)
 
-
 ;; NEW BUFFER, FRAME CLOSE BUFFER, COMMENT
-(bind-key "C-n" 'ergoemacs-new-empty-buffer)
+(bind-key "C-n" 'my-new-empty-buffer)
 (bind-key* "C-b"  'make-frame-command)
-(bind-key* "C-w" 'ergoemacs-close-current-buffer)
-(bind-key* "C-S-w" 'delete-frame)
+(bind-key* "C-w" 'kill-this-buffer)
 (bind-key* "M--" 'comment-dwim)
-
 
 ;; COMMAND, SHELL, RUN, EMMET
 (bind-key* "M-a" 'helm-M-x)
 (bind-key* "M-A" 'shell-command)
 (bind-key* "M-1" 'shell-dwim)
-(bind-key* "M-!" 'python_buffer)
-(bind-key* "<f1>" 'shell_buffer)
+(bind-key* "M-!" 'python-buffer)
+(bind-key* "<f1>" 'shell-buffer)
 (bind-key* "<f5>" 'xah-run-current-file)
 (bind-key* "<f6>" 'helm-recentf)
 (bind-key* "<f7>" 'helm-bookmarks)
@@ -898,36 +1011,32 @@
 (bind-key "C-h a" 'helm-apropos)
 (global-set-key (kbd "C-e") 'helm-buffers-list)
 
-
 ;; HELM SWOOP
 (bind-key* "C-r" 'helm-swoop)
 (bind-key* "C-S-r" 'helm-swoop-back-to-last-point)
 (bind-key* "M-7" 'helm-multi-swoop)
 (bind-key* "M-8" 'helm-multi-swoop-all)
 
-
 ;; SELECTION RETURN 
-(bind-key "M-l" 'ergoemacs-select-current-line)
-(bind-key "M-L" 'ergoemacs-select-current-block)
+(bind-key "M-l" 'my-select-current-line)
+(bind-key "M-L" 'my-select-current-block)
 (bind-key* "M-S" 'er/mark-inside-pairs)
 (bind-key* "M-s" 'er/expand-region)
-(bind-key* "M-RET" 'smart-ret)
-
+(bind-key* "<M-return>" 'smart-ret)
+(bind-key* "<S-return>" 'smart-ret-reverse)
 
 ;; BUFFER SWITCHING ENANCEMENT
-(bind-key* "M-'" 'ergoemacs-previous-user-buffer)
-(bind-key* "M-," 'ergoemacs-next-user-buffer)
+(bind-key* "M-'" 'my-previous-user-buffer)
+(bind-key* "M-," 'my-next-user-buffer)
 (bind-key* "M-<" 'register-to-point)
 (bind-key* "M-\"" 'point-to-register)
 (bind-key* "C-S-e" 'ibuffer)
-
 
 ;; MULTIPLE CURSORS
 (bind-key "C-d" 'duplicate-current-line-or-region)
 (bind-key "C-S-d" 'join-line-or-lines-in-region)
 (unbind-key "M-<down-mouse-1>")
 (bind-key* "M-<mouse-1>" 'mc/add-cursor-on-click)
-
 
 ;; WINDOW MOVE
 (bind-key* "C-S-h" 'windmove-left)
@@ -952,13 +1061,11 @@
 (bind-key* "M-6" 'split-6-3-1)
 (bind-key* "M-^" 'split-3-3-0)
 
-
 ;; WINDOW SHRINK, WINDOW INCREASE
 (bind-key "S-<left>" 'shrink-window-horizontally)
 (bind-key "S-<right>" 'enlarge-window-horizontally)
 (bind-key "S-<down>" 'shrink-window)
 (bind-key "S-<up>" 'enlarge-window)
-
 
 ;; DRAG STUFF
 (bind-key "<M-up>" 'drag-stuff-up)
@@ -966,10 +1073,52 @@
 (bind-key "<M-left>" 'drag-stuff-left)
 (bind-key "<M-right>" 'drag-stuff-right)
 
+
 ;; LISP
-(bind-key "C-c C-c" #'eval-last-sexp emacs-lisp-mode-map)
-(bind-key "C-c C-r" #'eval-region emacs-lisp-mode-map)
-(bind-key "C-c C-b" #'eval-buffer emacs-lisp-mode-map)
+(bind-key "C-c C-c" 'eval-last-sexp emacs-lisp-mode-map)
+(bind-key "C-c C-r" 'eval-region emacs-lisp-mode-map)
+(bind-key "C-c C-b" 'eval-buffer emacs-lisp-mode-map)
+(bind-key "C-c C-b" 'eval-buffer emacs-lisp-mode-map)
+
+
+
+(use-package region-bindings-mode
+  :ensure t
+  :diminish region-bindings-mode
+  :config(progn
+	 (region-bindings-mode-enable)
+	 (bind-key "h" #'mc/mark-previous-like-this region-bindings-mode-map)
+	 (bind-key "n" #'mc/mark-next-like-this region-bindings-mode-map)
+	 (bind-key "C-h" #'mc/skip-to-previous-like-this region-bindings-mode-map)
+	 (bind-key "C-n" #'mc/skip-to-next-like-this region-bindings-mode-map)
+	 (bind-key "c" #'mc/unmark-previous-like-this region-bindings-mode-map)
+	 (bind-key "u" #'universal-argument region-bindings-mode-map)
+	 (bind-key "t" #'mc/unmark-next-like-this region-bindings-mode-map)
+	 (bind-key "a" #'mc/mark-all-like-this region-bindings-mode-map)
+	 (bind-key "m" #'mc/mark-more-like-this-extended region-bindings-mode-map)
+	 (bind-key "r" #'mc/edit-lines region-bindings-mode-map)
+	 (bind-key "l" #'mc/edit-beginnings-of-lines region-bindings-mode-map)
+	 (bind-key "/" #'mc/edit-ends-of-lines region-bindings-mode-map)
+	 (bind-key "f" #'mc/mark-all-in-region-regexp region-bindings-mode-map)
+	 (bind-key "m" #'mc/mark-sgml-tag-pair region-bindings-mode-map)
+	 (bind-key "." #'phi-search region-bindings-mode-map)
+	 (bind-key "," #'phi-search-backward region-bindings-mode-map)
+	 (bind-key "e" #'backward-delete-char region-bindings-mode-map)
+	 (bind-key "g" #'keyboard-escape-quit region-bindings-mode-map)
+	 (bind-key "C-g" #'keyboard-escape-quit region-bindings-mode-map)
+	 (bind-key "-" #'comment-dwim region-bindings-mode-map)
+	 (bind-key "q" #'kill-region region-bindings-mode-map)
+	 (bind-key "j" #'kill-ring-save region-bindings-mode-map)
+	 (bind-key "k" #'yank region-bindings-mode-map)
+	 (bind-key "x" #'kill-rectangle region-bindings-mode-map)
+	 (bind-key "b" #'replace-rectangle region-bindings-mode-map)
+	 (bind-key "d" #'duplicate-current-line-or-region region-bindings-mode-map)
+	 (bind-key "i" #'join-line-or-lines-in-region region-bindings-mode-map)
+	 (bind-key "9" #'sp-splice-sexp region-bindings-mode-map)
+	 (bind-key "o" #'exchange-point-and-mark region-bindings-mode-map)
+	 (bind-key "M-o" #'exchange-point-and-mark region-bindings-mode-map)
+))
+
 
 
 (custom-set-variables
@@ -997,7 +1146,6 @@
    (append exec-path
 	   (quote
 	    ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
- '(global-visual-line-mode t)
  '(org-agenda-files (quote ("~/Documents/test/example.org")))
  '(package-selected-packages
    (quote
