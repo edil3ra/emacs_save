@@ -10,12 +10,18 @@
 (setq use-package-verbose t)
 (require 'use-package)
 
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
+
 
 (use-package helm
   :ensure t
   :diminish helm-mode
   :init (progn
 	  (require 'helm-config)
+	  (bind-key "C-c h" #'helm-command-prefix)
 	  (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
 		helm-input-idle-delay 0.01  ; this actually updates things
 		helm-yas-display-key-on-candidate t
@@ -90,8 +96,10 @@
             (bind-key "C-c C-l" #'company-show-location company-active-map)
             (bind-key "C-c l" #'company-show-location company-active-map)))
 
-
 (use-package company-quickhelp
+  :ensure t :defer t)
+
+(use-package magit
   :ensure t :defer t)
 
 
@@ -110,10 +118,8 @@
   :ensure t :defer t
   :diminish yas-minor-mode
   :init(progn
-	 (yas-global-mode 1))
-  :config(progn
-	   (yas-global-mode 0)
-	   (unbind-key "<tab>" yas-minor-mode-map)
+	 (yas-global-mode 0)
+  	   (unbind-key "<tab>" yas-minor-mode-map)
 	   (unbind-key "C-SPC" yas-minor-mode-map)
 	   (bind-key "C-i" #'yas-expand yas-minor-mode-map)))
 
@@ -217,6 +223,7 @@
 
 
 (use-package dired
+  :defer t
   :init(progn
 	 (setq toggle-diredp-find-file-reuse-dir 1
 	       dired-clean-up-buffers-too nil
@@ -281,33 +288,30 @@
 (use-package yaml-mode
   :ensure t :defer t)
 
-
 (use-package inf-mongo
   :ensure t :defer t
   :init(progn
 	 (setq inf-mongo-command "mongo")))
 
-
 (use-package imenu
+  :defer t
   :init(progn
 	 (setq imenu-auto-rescan t
 	       imenup-ignore-comments-flag nil
 	       imenup-sort-ignores-case-flag nil)))
 
-
 (use-package semantic
+  :defer t
   :init(progn
 	 (semantic-mode 1)))
-
 
 (use-package undo-tree
   :ensure t :defer t
   :init (progn
 	  (global-undo-tree-mode)))
 
-
 (use-package ido
-  ;; :defer t
+  :defer t
   :init(progn
 	 (setq ido-enable-flex-matching t
 	       ibuffer-saved-filter-groups
@@ -339,7 +343,6 @@
 	 (add-hook 'ibuffer-mode-hook
 		   (lambda ()
 		     (ibuffer-switch-to-saved-filter-groups "default")))))
-
 
 
 (use-package erc
@@ -391,7 +394,6 @@
 (use-package ob-mongo
   :ensure t :defer t)
 
-
 ;; PYTHON
 (use-package python
   :defer t :ensure t
@@ -431,12 +433,10 @@
 	   (bind-key "<f9>" #'robe-start ruby-mode-map)
 	   (bind-key "C-c C-c" #'ruby-send-last-sexp ruby-mode-map)))
 
-
 (use-package robe
   :ensure t :defer t
   :init (progn
 	  (add-hook 'ruby-mode-hook 'robe-mode)))
-
 
 
 ;; JAVASCRIPT
@@ -648,21 +648,15 @@
 	  (message "No recognized program file suffix for this file."))))))
 
 
-
 ;; shell buffer
-(defun my-filter (condp lst)
+(defun my-filter-shell (condp lst)
   (delq nil (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
 (defun shell-dwim (&optional create)
-  "Start or switch to an inferior shell process, in a smart way.  If 
-  buffer with a running shell process exists, simply switch to that 
-  If a shell buffer exists, but the shell process is not running, restart 
-  shell.  If already in an active shell buffer, switch to the next one, 
-  any.  With prefix argument CREATE always start a new shell."
   (interactive "P")
   (let ((next-shell-buffer) (buffer)
 	(shell-buf-list (identity ;;used to be reverse                                                                         
 			 (sort
-			  (my-filter (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
+			  (my-filter-shell (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
 			  #'(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
     (setq next-shell-buffer
 	  (if (string-match "^\\*shell\\*" (buffer-name buffer))
@@ -744,13 +738,10 @@
 	       (kill-region (region-beginning) (region-end) t)
 	     (kill-region (line-beginning-position) (line-beginning-position 2))))))
 
-
-
 (defun my-copy-line-or-region (&optional arg)
   "Copy current line, or current text selection."
   (interactive "P")
   (cond
-   ;;; cua-copy-rectangle
    ((and (boundp 'cua--rectangle) cua--rectangle cua-mode)
     (cua-copy-rectangle arg))
    ((and (region-active-p) cua-mode)
@@ -758,7 +749,6 @@
    ((region-active-p)
     (kill-ring-save (region-beginning) (region-end)))
    (t
-    ;; Hack away to support `org-mode' folded reg
     (kill-ring-save
      (save-excursion
        (let ((pt (point)))
@@ -919,14 +909,19 @@
 ;; MARK COMMAND, COMPLETE, YAS, TAB
 (bind-key "M-SPC" 'set-mark-command)
 (bind-key "C-SPC" 'company-complete)
-(bind-key  "C-." 'keyboard-espace-quit)
-(bind-key "<escape>" 'keyboard-espace-quit)
+(bind-key "<tab>" 'indent-for-tab-command)
 (bind-key* "C-a" 'mark-whole-buffer)
+(bind-key* "<M-return>" 'smart-ret)
+(bind-key* "<S-return>" 'smart-ret-reverse)
+(bind-key "<escape>" 'keyboard-espace-quit)
 (bind-key "M-m" 'emmet-expand-line)
 (bind-key "C-x j" 'dired-jump)
 (bind-key "<f2>" 'neotree-toggle)
 (bind-key* "C-t" 'jump-to-mark)
 (bind-key "C-S-t" 'push-mark-no-activate)
+(bind-key "C-c g" #' magit-status)
+(bind-key "C-c C-g" #' magit-tatus)
+(bind-key "C-c M-g" #' magit-dispatch-popup)
 ;; (define-key key-translation-map (kbd "<f8>") (kbd "<menu>"))
 
 ;; MOVE KEY
@@ -944,20 +939,21 @@
 (bind-key* "M-D" 'my-end-of-line-or-block)
 (bind-key* "M-b" 'beginning-of-buffer)
 (bind-key* "M-B" 'end-of-buffer)
-(bind-key* "C--" 'smartscan-symbol-go-backward)
+(bind-key "C--" 'smartscan-symbol-go-backward)
 (bind-key "C-\\" 'smartscan-symbol-go-forward)
 
 ;; SMARTPARENS
 (bind-key* "M-H" 'sp-backward-sexp)
 (bind-key* "M-N" 'sp-forward-sexp)
 (bind-key* "M-9" 'sp-splice-sexp)
-(bind-key "C-S-j" 'sp-join-sexp)
 (bind-key* "M-[" 'sp-forward-slurp-sexp)
 (bind-key* "M-]" 'sp-backward-slurp-sexp)
 (bind-key* "M-{" 'sp-backward-barf-sexp)
 (bind-key* "M-}" 'sp-forward-barf-sexp)
-(bind-key* "C-k" 'sp-backward-kill-sexp)
-(bind-key* "C-S-k" 'sp-forward-barf-sexp)
+(bind-key "C-S-j" 'sp-join-sexp)
+(bind-key "C-k" 'sp-backward-kill-sexp)
+(bind-key "C-S-k" 'sp-kill-sexp)
+(bind-key "C-i" 'sp-transpose-hybrid-sexp)
 
 ;; DELETE KEY
 (bind-key* "M-e" 'backward-delete-char-untabify)
@@ -991,7 +987,7 @@
 
 ;; NEW BUFFER, FRAME CLOSE BUFFER, COMMENT
 (bind-key "C-n" 'my-new-empty-buffer)
-(bind-key* "C-b"  'make-frame-command)
+(bind-key* "C-b" 'make-frame-command)
 (bind-key* "C-w" 'kill-this-buffer)
 (bind-key* "M--" 'comment-dwim)
 
@@ -999,19 +995,18 @@
 (bind-key* "M-a" 'helm-M-x)
 (bind-key* "M-A" 'shell-command)
 (bind-key* "M-1" 'shell-dwim)
-(bind-key* "M-!" 'python-buffer)
 (bind-key* "<f1>" 'shell-buffer)
 (bind-key* "<f5>" 'xah-run-current-file)
 (bind-key* "<f6>" 'helm-recentf)
 (bind-key* "<f7>" 'helm-bookmarks)
 (bind-key* "<f12>" 'fullscreen-mode-fullscreen-toggle) 
 (bind-key* "C-o" 'helm-find-files)
-(global-set-key (kbd "M-o") 'helm-projectile-find-file)
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key "C-y" 'helm-show-kill-ring)
 (bind-key "C-f" 'helm-projectile-switch-to-buffer)
 (bind-key "C-S-f" 'helm-locate)
 (bind-key "C-h a" 'helm-apropos)
+(global-set-key (kbd "M-o") 'helm-projectile-find-file)
 (global-set-key (kbd "C-e") 'helm-buffers-list)
 
 ;; HELM SWOOP
@@ -1020,13 +1015,11 @@
 (bind-key* "M-7" 'helm-multi-swoop)
 (bind-key* "M-8" 'helm-multi-swoop-all)
 
-;; SELECTION RETURN 
+;; SELECTION
 (bind-key "M-l" 'my-select-current-line)
 (bind-key "M-L" 'my-select-current-block)
 (bind-key* "M-S" 'er/mark-inside-pairs)
 (bind-key* "M-s" 'er/expand-region)
-(bind-key* "<M-return>" 'smart-ret)
-(bind-key* "<S-return>" 'smart-ret-reverse)
 
 ;; BUFFER SWITCHING ENANCEMENT
 (bind-key* "M-'" 'my-previous-user-buffer)
@@ -1083,7 +1076,6 @@
 (bind-key "C-c C-e" 'eval-last-sexp emacs-lisp-mode-map)
 (bind-key "C-c e" 'eval-last-sexp emacs-lisp-mode-map)
 (bind-key "C-c C-f" 'eval-last-sexp emacs-lisp-mode-map)
-
 
 
 (use-package region-bindings-mode
