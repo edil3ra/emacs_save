@@ -75,21 +75,20 @@
 	  (add-hook 'html-mode-hook 'company-mode)
 	  (add-hook 'css-mode-hook 'company-mode)
 	  (add-hook 'scss-mode-hook 'company-mode)
-	  (setq company-tooltip-limit 20) ; bigger popup window
-	  (setq company-idle-delay 0.1)   ; decrease delay before autocompletion popup shows
-	  (setq company-echo-delay 0)     ; remove annoying blinking
-	  (setq company-show-numbers t)   ; show numbers for easy selection
-	  (setq company-minimum-prefix-length 1)
+	  (setq company-tooltip-limit 20
+		company-idle-delay 0.1
+		company-echo-delay 0   
+		company-show-numbers t  
+		company-minimum-prefix-length 1)
 	  (company-quickhelp-mode 1)
 	  (push 'company-robe company-backends))
   :config (progn
             (bind-key "<tab>" #'company-complete company-active-map)
             (bind-key "M-/" #'company-show-doc-buffer company-active-map)
 	    (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
-	    (bind-key "C-c -" #'company-show-doc-buffer company-active-map)
-	    (bind-key "C-c C--" #'company-show-doc-buffer company-active-map)
 	    (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
-            (bind-key "M-l" #'company-show-location company-active-map)))
+            (bind-key "C-c C-l" #'company-show-location company-active-map)
+            (bind-key "C-c l" #'company-show-location company-active-map)))
 
 
 (use-package company-quickhelp
@@ -952,7 +951,7 @@
 (bind-key* "M-H" 'sp-backward-sexp)
 (bind-key* "M-N" 'sp-forward-sexp)
 (bind-key* "M-9" 'sp-splice-sexp)
-(bind-key* "C-j" 'sp-join-sexp)
+(bind-key "C-S-j" 'sp-join-sexp)
 (bind-key* "M-[" 'sp-forward-slurp-sexp)
 (bind-key* "M-]" 'sp-backward-slurp-sexp)
 (bind-key* "M-{" 'sp-backward-barf-sexp)
@@ -1037,8 +1036,8 @@
 (bind-key* "C-S-e" 'ibuffer)
 
 ;; MULTIPLE CURSORS
-(bind-key "C-S-d" 'duplicate-current-line-or-region)
-(bind-key "C-d" 'join-line-or-lines-in-region)
+(bind-key "C-d" 'duplicate-current-line-or-region)
+(bind-key "C-j" 'join-line-or-lines-in-region)
 (unbind-key "M-<down-mouse-1>")
 (bind-key* "M-<mouse-1>" 'mc/add-cursor-on-click)
 
@@ -1078,10 +1077,12 @@
 (bind-key "<M-right>" 'drag-stuff-right)
 
 ;; LISP
-(bind-key "C-c C-c" 'eval-last-sexp emacs-lisp-mode-map)
+(bind-key "C-c C-c" 'eval-defun emacs-lisp-mode-map)
 (bind-key "C-c C-r" 'eval-region emacs-lisp-mode-map)
 (bind-key "C-c C-b" 'eval-buffer emacs-lisp-mode-map)
-(bind-key "C-c C-f" 'eval-defun emacs-lisp-mode-map)
+(bind-key "C-c C-e" 'eval-last-sexp emacs-lisp-mode-map)
+(bind-key "C-c e" 'eval-last-sexp emacs-lisp-mode-map)
+(bind-key "C-c C-f" 'eval-last-sexp emacs-lisp-mode-map)
 
 
 
@@ -1092,8 +1093,8 @@
 	   (region-bindings-mode-enable)
 	   (bind-key "h" #'mc/mark-previous-like-this region-bindings-mode-map)
 	   (bind-key "n" #'mc/mark-next-like-this region-bindings-mode-map)
-	   (bind-key "C-h" #'mc/skip-to-previous-like-this region-bindings-mode-map)
-	   (bind-key "C-n" #'mc/skip-to-next-like-this region-bindings-mode-map)
+	   (bind-key "H" #'mc/skip-to-previous-like-this region-bindings-mode-map)
+	   (bind-key "N" #'mc/skip-to-next-like-this region-bindings-mode-map)
 	   (bind-key "c" #'mc/unmark-previous-like-this region-bindings-mode-map)
 	   (bind-key "u" #'universal-argument region-bindings-mode-map)
 	   (bind-key "t" #'mc/unmark-next-like-this region-bindings-mode-map)
@@ -1120,8 +1121,9 @@
 	   (bind-key "i" #'join-line-or-lines-in-region region-bindings-mode-map)
 	   (bind-key "9" #'sp-splice-sexp region-bindings-mode-map)
 	   (bind-key "o" #'exchange-point-and-mark region-bindings-mode-map)
+	   (bind-key "C-c d" #'company-show-doc-buffer region-bindings-mode-map)
+	   (bind-key "C-c C-d" #'company-show-doc-buffer region-bindings-mode-map)
 	   (bind-key "M-o" #'exchange-point-and-mark region-bindings-mode-map)))
-
 
 
 
@@ -1150,7 +1152,6 @@
    (append exec-path
 	   (quote
 	    ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
- '(inf-mongo-command "mongo")
  '(package-selected-packages
    (quote
     (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
