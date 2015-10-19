@@ -198,12 +198,6 @@
 	   (bind-key "e" #'neotree-enter-in-place neotree-mode-map)))
 
 
-(use-package fullscreen-mode
-  :ensure t
-  :init(progn
-	 (fullscreen-mode t)))
-
-
 (use-package nyan-mode
   :ensure t :defer t
   :init(progn
@@ -563,6 +557,7 @@
   (tooltip-mode -1)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
+  (set-face-inverse-video-p 'vertical-border nil)
   (scroll-bar-mode -1))
 
 ;; bookmark startup
@@ -578,6 +573,9 @@
 
 ;; insert ret if last line
 (setq next-line-add-newlines t)
+
+;; scrath message
+(setq initial-scratch-message nil)
 
 ;; save on lost focus to change when i switch window
 (when
@@ -999,7 +997,7 @@
 (bind-key* "<f5>" 'xah-run-current-file)
 (bind-key* "<f6>" 'helm-recentf)
 (bind-key* "<f7>" 'helm-bookmarks)
-(bind-key* "<f12>" 'fullscreen-mode-fullscreen-toggle) 
+(bind-key* "<f12>" 'toggle-frame-fullscreen) 
 (bind-key* "C-o" 'helm-find-files)
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key "C-y" 'helm-show-kill-ring)
@@ -1118,7 +1116,6 @@
 	   (bind-key "M-o" #'exchange-point-and-mark region-bindings-mode-map)))
 
 
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1138,7 +1135,7 @@
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+    ("af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(delete-selection-mode 1)
  '(exec-path
    (append exec-path
