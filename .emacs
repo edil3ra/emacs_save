@@ -405,7 +405,13 @@
 	 (elpy-enable)
 	 (setq elpy-rpc-python-command "python3"
 	       elpy-rpc-backend "jedi"
-	       elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults)))))
+	       elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults))))
+  :config(progn
+	   (bind-key "C-c C-i" #'elpy-importmagic-fixup elpy-mode-map)
+	   (bind-key "C-c i" #'elpy-importmagic-fixup elpy-mode-map)
+	   (bind-key "C-c C-n" #'elpy-goto-definition elpy-mode-map)
+	   (bind-key "C-c n" #'elpy-goto-definition elpy-mode-map)))
+
 
 
 (use-package jedi
@@ -461,6 +467,7 @@
   :init (add-to-list 'company-backends 'company-tern))
 
 
+;; CLOJURE
 (use-package cider
   :ensure t :defer t)
 
@@ -716,7 +723,6 @@
   (end-of-line)
   (newline-and-indent))
 
-
 (defun smart-ret-reverse()
   (interactive)
   (beginning-of-line)
@@ -916,7 +922,7 @@
 (bind-key "C-x j" 'dired-jump)
 (bind-key "<f2>" 'neotree-toggle)
 (bind-key* "C-t" 'jump-to-mark)
-(bind-key "C-S-t" 'push-mark-no-activate)
+(bind-key "C-x t" 'push-mark-no-activate)
 (bind-key "C-c g" #' magit-status)
 (bind-key "C-c C-g" #' magit-tatus)
 (bind-key "C-c M-g" #' magit-dispatch-popup)
@@ -992,6 +998,7 @@
 ;; COMMAND, SHELL, RUN, EMMET
 (bind-key* "M-a" 'helm-M-x)
 (bind-key* "M-A" 'shell-command)
+(bind-key* "M-C-A" 'eval-expression)
 (bind-key* "M-1" 'shell-dwim)
 (bind-key* "<f1>" 'shell-buffer)
 (bind-key* "<f5>" 'xah-run-current-file)
@@ -1111,8 +1118,6 @@
 	   (bind-key "i" #'join-line-or-lines-in-region region-bindings-mode-map)
 	   (bind-key "9" #'sp-splice-sexp region-bindings-mode-map)
 	   (bind-key "o" #'exchange-point-and-mark region-bindings-mode-map)
-	   (bind-key "C-c d" #'company-show-doc-buffer region-bindings-mode-map)
-	   (bind-key "C-c C-d" #'company-show-doc-buffer region-bindings-mode-map)
 	   (bind-key "M-o" #'exchange-point-and-mark region-bindings-mode-map)))
 
 
