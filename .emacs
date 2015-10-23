@@ -21,33 +21,33 @@
   :ensure t
   :diminish helm-mode
   :init (progn
-	  (require 'helm-config)
-	  (bind-key "C-c h" #'helm-command-prefix)
-	  (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-		helm-input-idle-delay 0.01  ; this actually updates things
-		helm-yas-display-key-on-candidate t
-		helm-candidate-number-limit 100
-		helm-quick-update t
-		helm-M-x-requires-pattern nil
-		helm-M-x-fuzzy-match t
-		helm-ff-skip-boring-files t
-		helm-move-to-line-cycle-in-source t
-		helm-buffers-fuzzy-matching t
-		helm-recentf-fuzzy-match t
-		helm-locate-fuzzy-match t
-		helm-split-window-in-side-p t
-		helm-scroll-amount 8
-		helm-autoresize-mode 1
-		helm-boring-buffer-regexp-list
-		(quote
-		 ("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf" "\\*.*\\*")))
-	  (setq helm-c-source-swoop-match-functions
-		'(helm-mm-exact-match
-		  helm-mm-match
-		  ;;helm-fuzzy-match
-		  ;;helm-mm-3-migemo-match
-		  ))
-	  (helm-mode))
+          (require 'helm-config)
+          (bind-key "C-c h" #'helm-command-prefix)
+          (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+                helm-input-idle-delay 0.01  ; this actually updates things
+                helm-yas-display-key-on-candidate t
+                helm-candidate-number-limit 100
+                helm-quick-update t
+                helm-M-x-requires-pattern nil
+                helm-M-x-fuzzy-match t
+                helm-ff-skip-boring-files t
+                helm-move-to-line-cycle-in-source t
+                helm-buffers-fuzzy-matching t
+                helm-recentf-fuzzy-match t
+                helm-locate-fuzzy-match t
+                helm-split-window-in-side-p t
+                helm-scroll-amount 8
+                helm-autoresize-mode 1
+                helm-boring-buffer-regexp-list
+                (quote
+                 ("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf" "\\*.*\\*")))
+          (setq helm-c-source-swoop-match-functions
+                '(helm-mm-exact-match
+                  helm-mm-match
+                  ;;helm-fuzzy-match
+                  ;;helm-mm-3-migemo-match
+                  ))
+          (helm-mode))
   :config
   (progn
     (bind-key  "<tab>" #'helm-execute-persistent-action helm-map) ; rebind tab to do persistent action
@@ -74,13 +74,13 @@
 (use-package helm-swoop
   :ensure t :defer t
   :init (progn
-	  (setq helm-c-source-swoop-search-functions
-		'(helm-mm-exact-search
-		  helm-mm-search
-		  helm-candidates-in-buffer-search-default-fn
-		  ;;helm-fuzzy-search
-		  ;;helm-mm-3-migemo-search
-		  ))))
+          (setq helm-c-source-swoop-search-functions
+                '(helm-mm-exact-search
+                  helm-mm-search
+                  helm-candidates-in-buffer-search-default-fn
+                  ;;helm-fuzzy-search
+                  ;;helm-mm-3-migemo-search
+                  ))))
 
 (use-package helm-projectile
   :ensure t :defer t)
@@ -91,26 +91,26 @@
 (use-package company
   :ensure t
   :init (progn
-	  ;; (global-company-mode 1)
-	  (add-hook 'prog-mode-hook 'company-mode)
-	  (add-hook 'html-mode-hook 'company-mode)
-	  (add-hook 'css-mode-hook 'company-mode)
-	  (add-hook 'scss-mode-hook 'company-mode)
-	  (setq company-tooltip-limit 20
-		company-idle-delay 0.1
-		company-echo-delay 0   
-		company-show-numbers t  
-		company-minimum-prefix-length 1)
-	  (company-quickhelp-mode 1)
-	  (push 'company-robe company-backends))
+          ;; (global-company-mode 1)
+          (add-hook 'prog-mode-hook 'company-mode)
+          (add-hook 'html-mode-hook 'company-mode)
+          (add-hook 'css-mode-hook 'company-mode)
+          (add-hook 'scss-mode-hook 'company-mode)
+          (setq company-tooltip-limit 20
+                company-idle-delay 0.1
+                company-echo-delay 0   
+                company-show-numbers t  
+                company-minimum-prefix-length 1)
+          (company-quickhelp-mode 1)
+          (push 'company-robe company-backends))
   :config (progn
             (bind-key "<tab>" #'company-complete company-active-map)
             (bind-key "M-/" #'company-show-doc-buffer company-active-map)
-	    (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
-	    (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
+            (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
+            (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
             (bind-key "C-c C-l" #'company-show-location company-active-map)
             (bind-key "C-c l" #'company-show-location company-active-map)
-	    (bind-key "C-i" #'yas-expand company-active-map)))
+            (bind-key "C-i" #'yas-expand company-active-map)))
 
 (use-package company-quickhelp
   :ensure t :defer t)
@@ -118,31 +118,31 @@
 (use-package eldoc
   :ensure t :defer t
   :config (progn
-	    (add-hook 'prog-mode-hook 'eldoc-mode)))
+            (add-hook 'prog-mode-hook 'eldoc-mode)))
 
-;;(use-package magit
-;; :ensure t :defer t)
+(use-package magit
+:ensure t :defer t)
 
 (use-package projectile
   :ensure t :defer t
   :init(progn
-	 (setq projectile-completion-system 'default
-	       projectile-enable-caching t
-	       projectile-completion-system 'helm
-	       projectile-switch-project-actian 'helm-projectile
-	       projectile-use-native-indexing t)
-	 (projectile-global-mode)))
+         (setq projectile-completion-system 'default
+               projectile-enable-caching t
+               projectile-completion-system 'helm
+               projectile-switch-project-actian 'helm-projectile
+               projectile-use-native-indexing t)
+         (projectile-global-mode)))
 
 
 (use-package yasnippet
   :ensure t :defer t
   :diminish yas-minor-mode
   :init(progn
-	 (yas-global-mode 1)
-	 (define-key yas-minor-mode-map [(tab)] nil)
-	 ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
-	 (define-key yas-minor-mode-map (kbd "<tab>") nil)
-	 (bind-key "C--" #'yas-expand yas-minor-mode-map)))
+         (yas-global-mode 1)
+         (define-key yas-minor-mode-map [(tab)] nil)
+         ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
+         (define-key yas-minor-mode-map (kbd "<tab>") nil)
+         (bind-key "C--" #'yas-expand yas-minor-mode-map)))
 
 
 (use-package molokai-theme
@@ -154,22 +154,22 @@
 (use-package smartparens
   :ensure t :defer t
   :init (progn
-	  (smartparens-global-mode t)
-	  (show-smartparens-global-mode t))
+          (smartparens-global-mode t)
+          (show-smartparens-global-mode t))
   :config (use-package smartparens-config))
 
 
 (use-package rainbow-delimiters
   :ensure t :defer t
   :init (progn
-	  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-	  (add-hook 'scss-mode-hook #'rainbow-delimiters-mode)))
+          (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+          (add-hook 'scss-mode-hook #'rainbow-delimiters-mode)))
 
 
 (use-package uniquify
   :init(progn
-	 uniquify-buffer-name-style 'post-forward
-	 uniquify-separator ":"))
+         uniquify-buffer-name-style 'post-forward
+         uniquify-separator ":"))
 
 (use-package framemove
   :ensure t)
@@ -180,20 +180,20 @@
 (use-package popwin
   :ensure t
   :config(progn
-	   (popwin-mode 1)))
+           (popwin-mode 1)))
 
 
 (use-package auto-save-buffers-enhanced
   :ensure t
   :init(progn
-	 (auto-save-buffers-enhanced t)))
+         (auto-save-buffers-enhanced t)))
 
 
 (use-package drag-stuff
   :diminish drag-stuff-mode
   :ensure t :defer t
   :init(progn
-	 (drag-stuff-global-mode t)))
+         (drag-stuff-global-mode t)))
 
 
 (use-package expand-region
@@ -207,18 +207,18 @@
 (use-package neotree
   :ensure t :defer t
   :config(progn
-	   (defun neotree-enter-in-place ()
-	     (interactive)
-	     (neotree-enter)
-	     (neotree-show))
-	   (bind-key "<tab>" #'neotree-enter neotree-mode-map)
-	   (bind-key "e" #'neotree-enter-in-place neotree-mode-map)))
+           (defun neotree-enter-in-place ()
+             (interactive)
+             (neotree-enter)
+             (neotree-show))
+           (bind-key "<tab>" #'neotree-enter neotree-mode-map)
+           (bind-key "e" #'neotree-enter-in-place neotree-mode-map)))
 
 
 (use-package nyan-mode
   :ensure t :defer t
   :init(progn
-	 (add-hook 'prog-mode-hook #'nyan-mode)))
+         (add-hook 'prog-mode-hook #'nyan-mode)))
 
 
 (use-package multiple-cursors
@@ -229,46 +229,33 @@
 (use-package phi-search
   :ensure t :defer t
   :config (progn
-	    (bind-key "," #'phi-search-again-or-previous phi-search-default-map)
-	    (bind-key "." #'phi-search-again-or-next phi-search-default-map)))
-
-
-(use-package dired
-  :defer t
-  :init(progn
-	 (setq toggle-diredp-find-file-reuse-dir 1
-	       dired-clean-up-buffers-too nil
-	       dired-use-ls-dired t))
-  :config(progn
-	   (unbind-key "M-c" dired-mode-map)
-	   (bind-key "M-T" #'scroll-up dired-mode-map)
-	   (bind-key "M-C" #'scroll-down dired-mode-map)
-	   (bind-key "M-b" #'my-beginning-or-end-of-buffer dired-mode-map)
-	   (bind-key "M-B" #'my-end-or-beginning-of-buffer dired-mode-map)))
+            (bind-key "," #'phi-search-again-or-previous phi-search-default-map)
+            (bind-key "." #'phi-search-again-or-next phi-search-default-map)))
 
 
 (use-package dired+
-  :ensure t :defer t
+  :ensure t
   :config(progn
-	   (unbind-key "M-c" dired-mode-map)
-	   (bind-key "M-C" #'scroll-up dired-mode-map)
-	   (bind-key "M-T" #'scroll-down dired-mode-map)
-	   (bind-key "M-b" #'my-beginning-or-end-of-buffer dired-mode-map)
-	   (bind-key "M-B" #'my-end-or-beginning-of-buffer dired-mode-map)))
+           (diredp-toggle-find-file-reuse-dir t)
+           (unbind-key "M-c" dired-mode-map)
+           (bind-key "M-C" #'scroll-up dired-mode-map)
+           (bind-key "M-T" #'scroll-down dired-mode-map)
+           (bind-key "M-b" #'my-beginning-or-end-of-buffer dired-mode-map)
+           (bind-key "M-B" #'my-end-or-beginning-of-buffer dired-mode-map)))
 
 
 (use-package emmet-mode
   :ensure t :defer t
   :init(progn
-	 (add-hook 'web-mode-hook 'emmet-mode)
-	 (add-hook 'html-mode-hook 'emmet-mode)
-	 (add-hook 'jinja2-mode-hook 'emmet-mode)
-	 (add-hook 'css-mode-hook 'emmet-mode)
-	 (setq emmet-indentation 2)
-	 (setq emmet-preview-default nil)
-	 (add-hook' emmet-mode-hook(lambda()
-				     (bind-key "C-c C-w" #'emmet-wrap-with-markup emmet-mode-keymap)
-				     (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)))))
+         (add-hook 'web-mode-hook 'emmet-mode)
+         (add-hook 'html-mode-hook 'emmet-mode)
+         (add-hook 'jinja2-mode-hook 'emmet-mode)
+         (add-hook 'css-mode-hook 'emmet-mode)
+         (setq emmet-indentation 2)
+         (setq emmet-preview-default nil)
+         (add-hook' emmet-mode-hook(lambda()
+                                     (bind-key "C-c C-w" #'emmet-wrap-with-markup emmet-mode-keymap)
+                                     (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)))))
 
 (use-package jinja2-mode
   :ensure t :defer t)
@@ -277,19 +264,19 @@
 (use-package css-mode
   :ensure t :defer t
   :config(progn
-	   (bind-key "C-p" #'helm-css-scss css-mode-map)))
+           (bind-key "C-p" #'helm-css-scss css-mode-map)))
 
 (use-package scss-mode
   :ensure t :defer t
   :init(progn
-	 (setq scss-compile-at-save nil))
+         (setq scss-compile-at-save nil))
   :config(progn
-	   (bind-key "C-p" #'helm-css-scss scss-mode-map)))
+           (bind-key "C-p" #'helm-css-scss scss-mode-map)))
 
 (use-package markdown-mode
   :ensure t :defer t
   :init(progn
-	 (setq markdown-xhtml-standalone-regexp "")))
+         (setq markdown-xhtml-standalone-regexp "")))
 
 (use-package json-mode
   :ensure t :defer t)
@@ -300,104 +287,104 @@
 (use-package inf-mongo
   :ensure t :defer t
   :init(progn
-	 (setq inf-mongo-command "mongo")))
+         (setq inf-mongo-command "mongo")))
 
 (use-package imenu
   :defer t
   :init(progn
-	 (setq imenu-auto-rescan t
-	       imenup-ignore-comments-flag nil
-	       imenup-sort-ignores-case-flag nil)))
+         (setq imenu-auto-rescan t
+               imenup-ignore-comments-flag nil
+               imenup-sort-ignores-case-flag nil)))
 
 (use-package semantic
   :defer t
   :init(progn
-	 (semantic-mode 1)))
+         (semantic-mode 1)))
 
 (use-package undo-tree
   :ensure t :defer t
   :init (progn
-	  (global-undo-tree-mode)))
+          (global-undo-tree-mode)))
 
 (use-package ido
   :defer t
   :init(progn
-	 (setq ido-enable-flex-matching t
-	       ibuffer-saved-filter-groups
-	       (quote (("default"
-			("dired" (mode . dired-mode))
-			("code" (or
-				 (mode . python-mode)
-				 (mode . ruby-mode)
-				 (mode . c-mode-common-hook)
-				 (mode . clojure-mode)
-				 (mode . haskell-mode)
-				 (mode . php-mode)
-				 (mode . emacs-lisp-mode)
-				 (mode . js3-mode)
-				 (mode . coffee-mode)))
-			("mark" (or
-				 (mode . html-mode)
-				 (mode . web-mode)
-				 (mode . jinja2-mode)
-				 (mode . scss-mode)
-				 (mode . css-mode)
-				 (mode . json-mode)
-				 (mode . xml-mode)
-				 (mode . yaml-mode)
-				 (mode . markdown-mode)))
-			("files" (name . "^[^\*].*[^\*]$"))
-			("other" (name . "^\*[^Hh].*\*$"))
-			("junk" (name . "^\*[Hh]elm.*\*$"))))))
-	 (add-hook 'ibuffer-mode-hook
-		   (lambda ()
-		     (ibuffer-switch-to-saved-filter-groups "default")))))
+         (setq ido-enable-flex-matching t
+               ibuffer-saved-filter-groups
+               (quote (("default"
+                        ("dired" (mode . dired-mode))
+                        ("code" (or
+                                 (mode . python-mode)
+                                 (mode . ruby-mode)
+                                 (mode . c-mode-common-hook)
+                                 (mode . clojure-mode)
+                                 (mode . haskell-mode)
+                                 (mode . php-mode)
+                                 (mode . emacs-lisp-mode)
+                                 (mode . js3-mode)
+                                 (mode . coffee-mode)))
+                        ("mark" (or
+                                 (mode . html-mode)
+                                 (mode . web-mode)
+                                 (mode . jinja2-mode)
+                                 (mode . scss-mode)
+                                 (mode . css-mode)
+                                 (mode . json-mode)
+                                 (mode . xml-mode)
+                                 (mode . yaml-mode)
+                                 (mode . markdown-mode)))
+                        ("files" (name . "^[^\*].*[^\*]$"))
+                        ("other" (name . "^\*[^Hh].*\*$"))
+                        ("junk" (name . "^\*[Hh]elm.*\*$"))))))
+         (add-hook 'ibuffer-mode-hook
+                   (lambda ()
+                     (ibuffer-switch-to-saved-filter-groups "default")))))
 
 
 (use-package erc
   :defer t
   :init (progn
-	  '(erc-autojoin-mode t)
-	  '(erc-button-mode t)
-	  '(erc-email-userid "lemarsupu@gmail.com")
-	  '(erc-fill-mode t)
-	  '(erc-irccontrols-mode t)
-	  '(erc-list-mode t)
-	  '(erc-match-mode t)
-	  '(erc-menu-mode t)
-	  '(erc-move-to-prompt-mode t)
-	  '(erc-netsplit-mode t)
-	  '(erc-networks-mode t)
-	  '(erc-noncommands-mode t)
-	  '(erc-pcomplete-mode t)
-	  '(erc-readonly-mode t)
-	  '(erc-ring-mode t)
-	  '(erc-stamp-mode t)
-	  '(erc-track-minor-mode t)
-	  '(erc-track-mode t)))
+          '(erc-autojoin-mode t)
+          '(erc-button-mode t)
+          '(erc-email-userid "lemarsupu@gmail.com")
+          '(erc-fill-mode t)
+          '(erc-irccontrols-mode t)
+          '(erc-list-mode t)
+          '(erc-match-mode t)
+          '(erc-menu-mode t)
+          '(erc-move-to-prompt-mode t)
+          '(erc-netsplit-mode t)
+          '(erc-networks-mode t)
+          '(erc-noncommands-mode t)
+          '(erc-pcomplete-mode t)
+          '(erc-readonly-mode t)
+          '(erc-ring-mode t)
+          '(erc-stamp-mode t)
+          '(erc-track-minor-mode t)
+          '(erc-track-mode t)))
 
 
 (use-package org
   :defer t
   :init (progn
-	  (setq org-CUA-compatible nil
-		org-src-preserve-indentation t
-		org-pretty-entities t
-		org-pretty-entities-include-sub-superscripts t
-		org-startup-truncated t
-		org-replace-disputed-keys nil
-		org-confirm-babel-evaluate nil
-		org-src-fontify-natively t
-		org-src-tab-acts-natively t
-		org-babel-clojure-backend 'cider
-		org-babel-load-language
-		(quote((emacs-lisp . t)
-		       (clojure . t)
-		       (C . t)
-		       (python . t)
-		       (ruby . t)
-		       (sh . t)))
-		org-babel-python-command "python3")))
+          (setq org-CUA-compatible nil
+                org-src-preserve-indentation t
+                org-pretty-entities t
+                org-pretty-entities-include-sub-superscripts t
+                org-startup-truncated t
+                org-replace-disputed-keys nil
+                org-confirm-babel-evaluate nil
+                org-src-fontify-natively t
+                org-src-tab-acts-natively t
+                org-babel-clojure-backend 'cider
+                org-babel-load-language
+                (quote((emacs-lisp . t)
+                       (clojure . t)
+                       (C . t)
+                       (python . t)
+                       (ruby . t)
+                       (sh . t)))
+                org-babel-python-command "python3")))
 
 
 (use-package ob-mongo
@@ -408,72 +395,70 @@
   :ensure t :defer t
   :mode ("\\.py\\'" . python-mode)
   :init (progn
-	  (setq expand-region-preferred-python-mode (quote fgallina-python)
-		python-shell-interpreter "ipython3"
-		python-indent-offset 4
-		python-check-command nil)))
+          (setq expand-region-preferred-python-mode (quote fgallina-python)
+                python-shell-interpreter "ipython3"
+                python-indent-offset 4
+                python-check-command nil)))
 
 
 (use-package elpy
   :ensure t :defer t
   :init(progn
-	 (elpy-enable)
-	 (setq elpy-rpc-python-command "python3"
-	       elpy-rpc-backend "jedi"
-	       elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults))))
+         (elpy-enable)
+         (setq elpy-rpc-python-command "python3"
+               elpy-rpc-backend "jedi"
+               elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults))))
   :config(progn
-	   (bind-key "C-c C-i" #'elpy-importmagic-fixup elpy-mode-map)
-	   (bind-key "C-c i" #'elpy-importmagic-fixup elpy-mode-map)
-	   (bind-key "C-c C-n" #'elpy-goto-definition elpy-mode-map)
-	   (bind-key "C-c n" #'elpy-goto-definition elpy-mode-map)))
-
+           (bind-key "C-c C-i" #'elpy-importmagic-fixup elpy-mode-map)
+           (bind-key "C-c i" #'elpy-importmagic-fixup elpy-mode-map)
+           (bind-key "C-c C-n" #'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c n" #'elpy-goto-definition elpy-mode-map)))
 
 (use-package jedi
   :ensure t :defer t)
 
-
 (use-package pyvenv
   :ensure t :defer t
   :init(progn
-	 (setq pyvenv-virtualenvwrapper-python "/usr/bin/python3")))
+         (setq pyvenv-virtualenvwrapper-python "/usr/bin/python3")))
 
 
 ;; RUBY
 (use-package ruby-mode
   :defer t
   :config(progn
-	   (setq inf-ruby-default-implementation "pry")
-	   (bind-key "<f8>" #'inf-ruby ruby-mode-map)
-	   (bind-key "<f9>" #'robe-start ruby-mode-map)
-	   (bind-key "C-c C-c" #'ruby-send-last-sexp ruby-mode-map)))
+           (setq inf-ruby-default-implementation "pry")
+           (bind-key "<f8>" #'inf-ruby ruby-mode-map)
+           (bind-key "<f9>" #'robe-start ruby-mode-map)
+           (bind-key "C-c C-c" #'ruby-send-last-sexp ruby-mode-map)))
 
 (use-package robe
   :ensure t :defer t
   :init (progn
-	  (add-hook 'ruby-mode-hook 'robe-mode)))
+          (add-hook 'ruby-mode-hook 'robe-mode)))
 
 
 ;; JAVASCRIPT
 (use-package js3-mode
   :ensure t :defer t
   :init(progn
-	 (setq js3-auto-indent-p t
-	       js3-enter-indents-newline t
-	       js3-indent-on-enter-key t)))
+         (setq js3-auto-indent-p t
+               js3-enter-indents-newline t
+               js3-indent-on-enter-key t)))
 
 
 ;; COFFEESCRIPT
 (use-package coffee-mode
   :ensure t :defer t
   :init(progn
-	 (setq coffee-tab-width 2)))
+         (setq coffee-tab-width 2)))
 
 
 (use-package tern
   :ensure t :defer t
   :init(progn
-	 (add-hook 'js-mode-hook (lambda () (tern-mode t)))
-	 (add-hook 'coffee-mode-hook (lambda () (tern-mode t)))))
+         (add-hook 'js-mode-hook (lambda () (tern-mode t)))
+         (add-hook 'coffee-mode-hook (lambda () (tern-mode t)))))
 
 
 (use-package company-tern
@@ -498,68 +483,68 @@
 (use-package lua-mode
   :ensure t :defer t
   :init(progn
-	 (setq lua-indent-level 2
-	       lua-prefix-key "C-c"))
+         (setq lua-indent-level 2
+               lua-prefix-key "C-c"))
   :config(progn
-	   (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-	   (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))))
+           (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+           (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))))
 
 
 ;; HASKELL
 (use-package haskell-mode
   :ensure t :defer t
   :init(progn
-	 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-	 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-	 (add-hook 'haskell-mode-hook 'turn-on-hi2)
-	 (setq haskell-process-suggest-remove-import-lines t
-	       haskell-process-auto-import-loaded-modules t
-	       haskell-process-log t
-	       haskell-process-type 'cabal-repl))
+         (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+         (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+         (add-hook 'haskell-mode-hook 'turn-on-hi2)
+         (setq haskell-process-suggest-remove-import-lines t
+               haskell-process-auto-import-loaded-modules t
+               haskell-process-log t
+               haskell-process-type 'cabal-repl))
   :config(progn
-	   (bind-key "C-c '" #'haskell-move-nested-left haskell-mode-map)
-	   (bind-key "C-c ," #'haskell-move-nested-right haskell-mode-map)
-	   (bind-key "C-`" #'haskell-interactive-bring haskell-mode-map)
-	   (bind-key "C-c t" #'haskell-process-do-type haskell-mode-map)
-	   (bind-key "C-c C-t" #'haskell-process-do-type haskell-mode-map)
-	   (bind-key "C-c n" #'haskell-process-do-info haskell-mode-map)
-	   (bind-key "C-c C-n" #'haskell-process-do-info haskell-mode-map)
-	   (bind-key "C-c c" #'haskell-process-cabal haskell-mode-map)
-	   (bind-key "C-c C-c" #'haskell-process-cabal-build haskell-mode-map)
-	   (bind-key "C-c d" #'haskell-hoogle haskell-mode-map)
-	   (bind-key "C-c C-d" #'haskell-hoogle haskell-mode-map)
-	   (bind-key "C-c l" #'haskell-process-load-or-reload haskell-mode-map)
-	   (bind-key "C-c C-l" #'haskell-process-load-or-reload haskell-mode-map)
-	   (bind-key "C-c r" #'haskell-debug haskell-mode-map)
-	   (bind-key "C-c C-r" #'haskell-debug haskell-mode-map)
-	   (bind-key "C-c C-k" #'haskell-interactive-mode-clear haskell-mode-map)
-	   (bind-key [f8] #'haskell-navigate-imports haskell-mode-map)))
+           (bind-key "C-c '" #'haskell-move-nested-left haskell-mode-map)
+           (bind-key "C-c ," #'haskell-move-nested-right haskell-mode-map)
+           (bind-key "C-`" #'haskell-interactive-bring haskell-mode-map)
+           (bind-key "C-c t" #'haskell-process-do-type haskell-mode-map)
+           (bind-key "C-c C-t" #'haskell-process-do-type haskell-mode-map)
+           (bind-key "C-c n" #'haskell-process-do-info haskell-mode-map)
+           (bind-key "C-c C-n" #'haskell-process-do-info haskell-mode-map)
+           (bind-key "C-c c" #'haskell-process-cabal haskell-mode-map)
+           (bind-key "C-c C-c" #'haskell-process-cabal-build haskell-mode-map)
+           (bind-key "C-c d" #'haskell-hoogle haskell-mode-map)
+           (bind-key "C-c C-d" #'haskell-hoogle haskell-mode-map)
+           (bind-key "C-c l" #'haskell-process-load-or-reload haskell-mode-map)
+           (bind-key "C-c C-l" #'haskell-process-load-or-reload haskell-mode-map)
+           (bind-key "C-c r" #'haskell-debug haskell-mode-map)
+           (bind-key "C-c C-r" #'haskell-debug haskell-mode-map)
+           (bind-key "C-c C-k" #'haskell-interactive-mode-clear haskell-mode-map)
+           (bind-key [f8] #'haskell-navigate-imports haskell-mode-map)))
 
 
 (use-package ghc
   :ensure t :defer t
   :init (progn
-	  (autoload 'ghc-init "ghc" nil t)
-	  (autoload 'ghc-debug "ghc" nil t)
-	  (add-hook 'haskell-mode-hook (lambda () (ghc-init)))))
+          (autoload 'ghc-init "ghc" nil t)
+          (autoload 'ghc-debug "ghc" nil t)
+          (add-hook 'haskell-mode-hook (lambda () (ghc-init)))))
 
 
 ;;C C++
 (use-package c-mode-common-hook
   :defer t
   :init(progn
-	 (setq-default c-basic-offset 4))
+         (setq-default c-basic-offset 4))
   :config(progn(
-		(unbind-key "C-c C-d" c-mode-common-map)
-		(unbind-key "C-c d" c-mode-common-map)
-		(unbind-key "M-q" c-mode-common-map))))
+                (unbind-key "C-c C-d" c-mode-common-map)
+                (unbind-key "C-c d" c-mode-common-map)
+                (unbind-key "M-q" c-mode-common-map))))
 
 
 (use-package irony
   :ensure t :defer t
   :config(progn
-	 (add-hook 'c++-mode-hook 'irony-mode)
-	 (add-hook 'c-mode-hook 'irony-mode)))
+           (add-hook 'c++-mode-hook 'irony-mode)
+           (add-hook 'c-mode-hook 'irony-mode)))
 
 
 (use-package company-irony
@@ -569,10 +554,10 @@
 
 ;;PHP ;; deactive irony mode c mode hook to make it work for some obscure reason
 (use-package php-mode
- :ensure t :defer t)
+  :ensure t :defer t)
 
 (use-package php-extras
- :ensure t :defer t)
+  :ensure t :defer t)
 
 
 
@@ -615,19 +600,19 @@
   (defun on-blur--refresh ()
     "Runs on-blur-hook if emacs has lost focus."
     (let* ((active-window (x-window-property
-			   "_NET_ACTIVE_WINDOW" nil "WINDOW" 0 nil t))
-	   (active-window-id (if (numberp active-window)
-				 active-window
-			       (string-to-number
-				(format "%x00%x"
-					(car active-window)
-					(cdr active-window)) 16)))
-	   (emacs-window-id (string-to-number
-			     (frame-parameter nil 'outer-window-id))))
+                           "_NET_ACTIVE_WINDOW" nil "WINDOW" 0 nil t))
+           (active-window-id (if (numberp active-window)
+                                 active-window
+                               (string-to-number
+                                (format "%x00%x"
+                                        (car active-window)
+                                        (cdr active-window)) 16)))
+           (emacs-window-id (string-to-number
+                             (frame-parameter nil 'outer-window-id))))
       (when (and
-	     (= emacs-window-id on-blur--saved-window-id)
-	     (not (= active-window-id on-blur--saved-window-id)))
-	(run-hooks 'on-blur-hook))
+             (= emacs-window-id on-blur--saved-window-id)
+             (not (= active-window-id on-blur--saved-window-id)))
+        (run-hooks 'on-blur-hook))
       (setq on-blur--saved-window-id active-window-id)
       (run-with-timer 1 nil 'on-blur--refresh)))
   (add-hook 'on-blur-hook #'(lambda () (save-some-buffers t)))
@@ -637,43 +622,43 @@
 (defun xah-run-current-file ()
   (interactive)
   (let* (
-	 (ξsuffix-map
-	  ;; (‹extension› . ‹shell program name›)
-	  `(
-	    ("php" . "php")
-	    ("pl" . "perl")
-	    ("py" . "python3")
-	    ("py3" . ,(if (string-equal system-type "windows-nt") "c:/Python32/python.exe" "python3"))
-	    ("rb" . "ruby")
-	    ("js" . "node") ; node.js
-	    ("sh" . "bash")
-	    ("clj" . "java -cp /home/xah/apps/clojure-1.6.0/clojure-1.6.0.jar clojure.main")
-	    ("ml" . "ocaml")
-	    ("vbs" . "cscript")
-	    ("tex" . "pdflatex")
-	    ("latex" . "pdflatex")
-	    ("java" . "javac")
-	    ;; ("pov" . "/usr/local/bin/povray +R2 +A0.1 +J1.2 +Am2 +Q9 +H480 +W640")
-	    ))
-	 (ξfname (buffer-file-name))
-	 (ξfSuffix (file-name-extension ξfname))
-	 (ξprog-name (cdr (assoc ξfSuffix ξsuffix-map)))
-	 (ξcmd-str (concat ξprog-name " \""   ξfname "\"")))
+         (ξsuffix-map
+          ;; (‹extension› . ‹shell program name›)
+          `(
+            ("php" . "php")
+            ("pl" . "perl")
+            ("py" . "python3")
+            ("py3" . ,(if (string-equal system-type "windows-nt") "c:/Python32/python.exe" "python3"))
+            ("rb" . "ruby")
+            ("js" . "node") ; node.js
+            ("sh" . "bash")
+            ("clj" . "java -cp /home/xah/apps/clojure-1.6.0/clojure-1.6.0.jar clojure.main")
+            ("ml" . "ocaml")
+            ("vbs" . "cscript")
+            ("tex" . "pdflatex")
+            ("latex" . "pdflatex")
+            ("java" . "javac")
+            ;; ("pov" . "/usr/local/bin/povray +R2 +A0.1 +J1.2 +Am2 +Q9 +H480 +W640")
+            ))
+         (ξfname (buffer-file-name))
+         (ξfSuffix (file-name-extension ξfname))
+         (ξprog-name (cdr (assoc ξfSuffix ξsuffix-map)))
+         (ξcmd-str (concat ξprog-name " \""   ξfname "\"")))
     (when (buffer-modified-p)
       (when (y-or-n-p "Buffer modified. Do you want to save first?")
-	(save-buffer)))
+        (save-buffer)))
     (cond
      ((string-equal ξfSuffix "el") (load ξfname))
      ((string-equal ξfSuffix "java")
       (progn
-	(shell-command ξcmd-str "*xah-run-current-file output*" )
-	(shell-command
-	 (format "java %s" (file-name-sans-extension (file-name-nondirectory ξfname))))))
+        (shell-command ξcmd-str "*xah-run-current-file output*" )
+        (shell-command
+         (format "java %s" (file-name-sans-extension (file-name-nondirectory ξfname))))))
      (t (if ξprog-name
-	    (progn
-	      (message "Running…")
-	      (shell-command ξcmd-str "*xah-run-current-file output*" ))
-	  (message "No recognized program file suffix for this file."))))))
+            (progn
+              (message "Running…")
+              (shell-command ξcmd-str "*xah-run-current-file output*" ))
+          (message "No recognized program file suffix for this file."))))))
 
 
 ;; shell buffer
@@ -682,18 +667,18 @@
 (defun shell-dwim (&optional create)
   (interactive "P")
   (let ((next-shell-buffer) (buffer)
-	(shell-buf-list (identity ;;used to be reverse                                                                         
-			 (sort
-			  (my-filter-shell (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
-			  #'(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
+        (shell-buf-list (identity ;;used to be reverse                                                                         
+                         (sort
+                          (my-filter-shell (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
+                          #'(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
     (setq next-shell-buffer
-	  (if (string-match "^\\*shell\\*" (buffer-name buffer))
-	      (get-buffer (cadr (member (buffer-name) (mapcar (function buffer-name) (append shell-buf-list shell-buf-list)))))
-	    nil))
+          (if (string-match "^\\*shell\\*" (buffer-name buffer))
+              (get-buffer (cadr (member (buffer-name) (mapcar (function buffer-name) (append shell-buf-list shell-buf-list)))))
+            nil))
     (setq buffer
-	  (if create
-	      (generate-new-buffer-name "*shell*")
-	    next-shell-buffer))
+          (if create
+              (generate-new-buffer-name "*shell*")
+            next-shell-buffer))
     (shell buffer)))
 
 
@@ -759,11 +744,11 @@
   (interactive)
   (if current-prefix-arg
       (progn ; not using kill-region because we don't want to include previous kill
-	(kill-new (buffer-string))
-	(delete-region (point-min) (point-max)))
+        (kill-new (buffer-string))
+        (delete-region (point-min) (point-max)))
     (progn (if (use-region-p)
-	       (kill-region (region-beginning) (region-end) t)
-	     (kill-region (line-beginning-position) (line-beginning-position 2))))))
+               (kill-region (region-beginning) (region-end) t)
+             (kill-region (line-beginning-position) (line-beginning-position 2))))))
 
 (defun my-copy-line-or-region (&optional arg)
   "Copy current line, or current text selection."
@@ -779,15 +764,15 @@
     (kill-ring-save
      (save-excursion
        (let ((pt (point)))
-	 (when (= pt (point))
-	   (call-interactively 'move-beginning-of-line)))
+         (when (= pt (point))
+           (call-interactively 'move-beginning-of-line)))
        (when (not (bolp))
-	 (beginning-of-line))
+         (beginning-of-line))
        (point))
      (save-excursion
        (let ((pt (point)))
-	 (when (= pt (point))
-	   (call-interactively 'move-end-of-line)))
+         (when (= pt (point))
+           (call-interactively 'move-end-of-line)))
        (re-search-forward "\\=\n" nil t) ;; Include newline
        (point)))))
   (deactivate-mark))
@@ -795,27 +780,27 @@
 (defun join-line-or-lines-in-region ()
   (interactive)
   (cond ((region-active-p)
-	 (let ((min (line-number-at-pos (region-beginning))))
-	   (goto-char (region-end))
-	   (while (> (line-number-at-pos) min)
-	     (join-line))))
-	(t (call-interactively 'join-line))))
+         (let ((min (line-number-at-pos (region-beginning))))
+           (goto-char (region-end))
+           (while (> (line-number-at-pos) min)
+             (join-line))))
+        (t (call-interactively 'join-line))))
 
 (defun duplicate-current-line-or-region (arg)
   (interactive "p")
   (let (beg end (origin (point)))
     (if (and (region-active-p) (> (point) (mark)))
-	(exchange-point-and-mark))
+        (exchange-point-and-mark))
     (setq beg (line-beginning-position))
     (if (region-active-p)
-	(exchange-point-and-mark))
+        (exchange-point-and-mark))
     (setq end (line-end-position))
     (let ((region (buffer-substring-no-properties beg end)))
       (dotimes (i arg)
-	(goto-char end)
-	(newline)
-	(insert region)
-	(setq end (point)))
+        (goto-char end)
+        (newline)
+        (insert region)
+        (setq end (point)))
       (goto-char (+ origin (* (length region) arg) arg)))))
 
 (defun push-mark-no-activate ()
@@ -830,42 +815,42 @@
 (defun my-forward-block (&optional number)
   (interactive "p")
   (if (and number
-	   (> 0 number))
+           (> 0 number))
       (ergoemacs-backward-block (- 0 number))
     (if (search-forward-regexp "\n[[:blank:]\n]*\n+" nil "NOERROR" number)
-	(progn (backward-char))
+        (progn (backward-char))
       (progn (goto-char (point-max))))))
 
 (defun my-backward-block (&optional number)
   (interactive "p")
   (if (and number
-	   (> 0 number))
+           (> 0 number))
       (ergoemacs-forward-block (- 0 number))
     (if (search-backward-regexp "\n[\t\n ]*\n+" nil "NOERROR" number)
-	(progn
-	  (skip-chars-backward "\n\t ")
-	  (forward-char 1))
+        (progn
+          (skip-chars-backward "\n\t ")
+          (forward-char 1))
       (progn (goto-char (point-min))))))
 
 (defun my-beginning-of-line-or-block (&optional n)
   (interactive "p")
   (let ((n (if (null n) 1 n)))
     (if (equal n 1)
-	(if (or (equal (point) (line-beginning-position))
-		(equal last-command this-command))
-	    (my-backward-block n)
-	  (beginning-of-line)
-	  (back-to-indentation))
+        (if (or (equal (point) (line-beginning-position))
+                (equal last-command this-command))
+            (my-backward-block n)
+          (beginning-of-line)
+          (back-to-indentation))
       (my-backward-block n))))
 
 (defun my-end-of-line-or-block (&optional n)
   (interactive "p")
   (let ((n (if (null n) 1 n)))
     (if (equal n 1)
-	(if (or (equal (point) (line-end-position))
-		(equal last-command this-command))
-	    (my-forward-block)
-	  (end-of-line))
+        (if (or (equal (point) (line-end-position))
+                (equal last-command this-command))
+            (my-forward-block)
+          (end-of-line))
       (progn (my-forward-block n)))))
 
 (defun my-select-current-line ()
@@ -877,11 +862,11 @@
   (interactive)
   (let (p1)
     (if (re-search-backward "\n[ \t]*\n" nil "move")
-	(progn (re-search-forward "\n[ \t]*\n")
-	       (setq p1 (point)))
+        (progn (re-search-forward "\n[ \t]*\n")
+               (setq p1 (point)))
       (setq p1 (point)))
     (if (re-search-forward "\n[ \t]*\n" nil "move")
-	(re-search-backward "\n[ \t]*\n"))
+        (re-search-backward "\n[ \t]*\n"))
     (set-mark p1)))
 
 (defun my-kill-line-backward (arg)
@@ -1143,38 +1128,38 @@
   :ensure t
   :diminish region-bindings-mode
   :config(progn
-	   (region-bindings-mode-enable)
-	   (bind-key "h" #'mc/mark-previous-like-this region-bindings-mode-map)
-	   (bind-key "n" #'mc/mark-next-like-this region-bindings-mode-map)
-	   (bind-key "H" #'mc/skip-to-previous-like-this region-bindings-mode-map)
-	   (bind-key "N" #'mc/skip-to-next-like-this region-bindings-mode-map)
-	   (bind-key "c" #'mc/unmark-previous-like-this region-bindings-mode-map)
-	   (bind-key "u" #'universal-argument region-bindings-mode-map)
-	   (bind-key "t" #'mc/unmark-next-like-this region-bindings-mode-map)
-	   (bind-key "a" #'mc/mark-all-like-this region-bindings-mode-map)
-	   (bind-key "m" #'mc/mark-more-like-this-extended region-bindings-mode-map)
-	   (bind-key "r" #'mc/edit-lines region-bindings-mode-map)
-	   (bind-key "l" #'mc/edit-beginnings-of-lines region-bindings-mode-map)
-	   (bind-key "/" #'mc/edit-ends-of-lines region-bindings-mode-map)
-	   (bind-key "f" #'mc/mark-all-in-region-regexp region-bindings-mode-map)
-	   (bind-key "m" #'mc/mark-sgml-tag-pair region-bindings-mode-map)
-	   (bind-key "." #'phi-search region-bindings-mode-map)
-	   (bind-key "," #'phi-search-backward region-bindings-mode-map)
-	   (bind-key "e" #'backward-delete-char region-bindings-mode-map)
-	   (bind-key "g" #'keyboard-escape-quit region-bindings-mode-map)
-	   (bind-key "C-g" #'keyboard-escape-quit region-bindings-mode-map)
-	   (bind-key "-" #'comment-dwim region-bindings-mode-map)
-	   (bind-key "q" #'kill-region region-bindings-mode-map)
-	   (bind-key "j" #'kill-ring-save region-bindings-mode-map)
-	   (bind-key "k" #'yank region-bindings-mode-map)
-	   (bind-key "x" #'kill-rectangle region-bindings-mode-map)
-	   (bind-key "b" #'replace-rectangle region-bindings-mode-map)
-	   (bind-key "D" #'duplicate-current-line-or-region region-bindings-mode-map)
-	   (bind-key "d" #'join-line-or-lines-in-region region-bindings-mode-map)
-	   (bind-key "i" #'join-line-or-lines-in-region region-bindings-mode-map)
-	   (bind-key "9" #'sp-splice-sexp region-bindings-mode-map)
-	   (bind-key "o" #'exchange-point-and-mark region-bindings-mode-map)
-	   (bind-key "M-o" #'exchange-point-and-mark region-bindings-mode-map)))
+           (region-bindings-mode-enable)
+           (bind-key "h" #'mc/mark-previous-like-this region-bindings-mode-map)
+           (bind-key "n" #'mc/mark-next-like-this region-bindings-mode-map)
+           (bind-key "H" #'mc/skip-to-previous-like-this region-bindings-mode-map)
+           (bind-key "N" #'mc/skip-to-next-like-this region-bindings-mode-map)
+           (bind-key "c" #'mc/unmark-previous-like-this region-bindings-mode-map)
+           (bind-key "u" #'universal-argument region-bindings-mode-map)
+           (bind-key "t" #'mc/unmark-next-like-this region-bindings-mode-map)
+           (bind-key "a" #'mc/mark-all-like-this region-bindings-mode-map)
+           (bind-key "m" #'mc/mark-more-like-this-extended region-bindings-mode-map)
+           (bind-key "r" #'mc/edit-lines region-bindings-mode-map)
+           (bind-key "l" #'mc/edit-beginnings-of-lines region-bindings-mode-map)
+           (bind-key "/" #'mc/edit-ends-of-lines region-bindings-mode-map)
+           (bind-key "f" #'mc/mark-all-in-region-regexp region-bindings-mode-map)
+           (bind-key "m" #'mc/mark-sgml-tag-pair region-bindings-mode-map)
+           (bind-key "." #'phi-search region-bindings-mode-map)
+           (bind-key "," #'phi-search-backward region-bindings-mode-map)
+           (bind-key "e" #'backward-delete-char region-bindings-mode-map)
+           (bind-key "g" #'keyboard-escape-quit region-bindings-mode-map)
+           (bind-key "C-g" #'keyboard-escape-quit region-bindings-mode-map)
+           (bind-key "-" #'comment-dwim region-bindings-mode-map)
+           (bind-key "q" #'kill-region region-bindings-mode-map)
+           (bind-key "j" #'kill-ring-save region-bindings-mode-map)
+           (bind-key "k" #'yank region-bindings-mode-map)
+           (bind-key "x" #'kill-rectangle region-bindings-mode-map)
+           (bind-key "b" #'replace-rectangle region-bindings-mode-map)
+           (bind-key "D" #'duplicate-current-line-or-region region-bindings-mode-map)
+           (bind-key "d" #'join-line-or-lines-in-region region-bindings-mode-map)
+           (bind-key "i" #'join-line-or-lines-in-region region-bindings-mode-map)
+           (bind-key "9" #'sp-splice-sexp region-bindings-mode-map)
+           (bind-key "o" #'exchange-point-and-mark region-bindings-mode-map)
+           (bind-key "M-o" #'exchange-point-and-mark region-bindings-mode-map)))
 
 
 (custom-set-variables
@@ -1200,8 +1185,8 @@
  '(delete-selection-mode 1)
  '(exec-path
    (append exec-path
-	   (quote
-	    ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
+           (quote
+            ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
  '(package-selected-packages
    (quote
     (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
