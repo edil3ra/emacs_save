@@ -4,6 +4,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -377,13 +378,14 @@
                 org-src-fontify-natively t
                 org-src-tab-acts-natively t
                 org-babel-clojure-backend 'cider
-                org-babel-load-language
-                (quote((emacs-lisp . t)
-                       (clojure . t)
-                       (C . t)
-                       (python . t)
-                       (ruby . t)
-                       (sh . t)))
+                org-babel-load-languages
+                  (quote
+                   ((ruby . t)
+                    (clojure . t)
+                    (sh . t)
+                    (python . t)
+                    (emacs-lisp . t)))
+                org-confirm-babel-evaluate nil
                 org-babel-python-command "python3")))
 
 
