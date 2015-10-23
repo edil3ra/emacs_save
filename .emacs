@@ -2,6 +2,7 @@
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -40,6 +41,12 @@
 		helm-boring-buffer-regexp-list
 		(quote
 		 ("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf" "\\*.*\\*")))
+	  (setq helm-c-source-swoop-match-functions
+		'(helm-mm-exact-match
+		  helm-mm-match
+		  ;;helm-fuzzy-match
+		  ;;helm-mm-3-migemo-match
+		  ))
 	  (helm-mode))
   :config
   (progn
@@ -65,7 +72,15 @@
 
 
 (use-package helm-swoop
-  :ensure t :defer t)
+  :ensure t :defer t
+  :init (progn
+	  (setq helm-c-source-swoop-search-functions
+		'(helm-mm-exact-search
+		  helm-mm-search
+		  helm-candidates-in-buffer-search-default-fn
+		  ;;helm-fuzzy-search
+		  ;;helm-mm-3-migemo-search
+		  ))))
 
 (use-package helm-projectile
   :ensure t :defer t)
@@ -94,14 +109,19 @@
 	    (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
 	    (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
             (bind-key "C-c C-l" #'company-show-location company-active-map)
-            (bind-key "C-c l" #'company-show-location company-active-map)))
+            (bind-key "C-c l" #'company-show-location company-active-map)
+	    (bind-key "C-i" #'yas-expand company-active-map)))
 
 (use-package company-quickhelp
   :ensure t :defer t)
 
-(use-package magit
-  :ensure t :defer t)
+(use-package eldoc
+  :ensure t :defer t
+  :config (progn
+	    (add-hook 'prog-mode-hook 'eldoc-mode)))
 
+;;(use-package magit
+;; :ensure t :defer t)
 
 (use-package projectile
   :ensure t :defer t
@@ -118,10 +138,11 @@
   :ensure t :defer t
   :diminish yas-minor-mode
   :init(progn
-	 (yas-global-mode 0)
-  	   (unbind-key "<tab>" yas-minor-mode-map)
-	   (unbind-key "C-SPC" yas-minor-mode-map)
-	   (bind-key "C-i" #'yas-expand yas-minor-mode-map)))
+	 (yas-global-mode 1)
+	 (define-key yas-minor-mode-map [(tab)] nil)
+	 ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
+	 (define-key yas-minor-mode-map (kbd "<tab>") nil)
+	 (bind-key "C--" #'yas-expand yas-minor-mode-map)))
 
 
 (use-package molokai-theme
@@ -181,10 +202,6 @@
 (use-package goto-chg
   :ensure t :defer t)
 
-(use-package smartscan
-  :ensure t :defer t
-  :init (progn
-	  (smartscan-mode 1)))
 
 
 (use-package neotree
@@ -262,14 +279,12 @@
   :config(progn
 	   (bind-key "C-p" #'helm-css-scss css-mode-map)))
 
-
 (use-package scss-mode
   :ensure t :defer t
   :init(progn
 	 (setq scss-compile-at-save nil))
   :config(progn
 	   (bind-key "C-p" #'helm-css-scss scss-mode-map)))
-
 
 (use-package markdown-mode
   :ensure t :defer t
@@ -390,7 +405,7 @@
 
 ;; PYTHON
 (use-package python
-  :defer t :ensure t
+  :ensure t :defer t
   :mode ("\\.py\\'" . python-mode)
   :init (progn
 	  (setq expand-region-preferred-python-mode (quote fgallina-python)
@@ -411,7 +426,6 @@
 	   (bind-key "C-c i" #'elpy-importmagic-fixup elpy-mode-map)
 	   (bind-key "C-c C-n" #'elpy-goto-definition elpy-mode-map)
 	   (bind-key "C-c n" #'elpy-goto-definition elpy-mode-map)))
-
 
 
 (use-package jedi
@@ -490,11 +504,6 @@
 	   (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
 	   (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))))
 
-;; PHP
-(use-package php-mode
-  :ensure t :defer t
-  :mode ("\\.php\\'" . php-mode))
-
 
 ;; HASKELL
 (use-package haskell-mode
@@ -548,7 +557,7 @@
 
 (use-package irony
   :ensure t :defer t
-  :init(progn
+  :config(progn
 	 (add-hook 'c++-mode-hook 'irony-mode)
 	 (add-hook 'c-mode-hook 'irony-mode)))
 
@@ -556,6 +565,15 @@
 (use-package company-irony
   :ensure t :defer t
   :init(add-to-list 'company-backends 'company-irony))
+
+
+;;PHP ;; deactive irony mode c mode hook to make it work for some obscure reason
+(use-package php-mode
+ :ensure t :defer t)
+
+(use-package php-extras
+ :ensure t :defer t)
+
 
 
 ;; STUFF
@@ -567,6 +585,8 @@
   (set-face-inverse-video-p 'vertical-border nil)
   (scroll-bar-mode -1))
 
+
+
 ;; bookmark startup
 (setq inhibit-splash-screen t)
 (bookmark-bmenu-list)
@@ -575,6 +595,9 @@
 ;; replace yes to y 
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; tab
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 ;; backup
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
@@ -619,7 +642,7 @@
 	  `(
 	    ("php" . "php")
 	    ("pl" . "perl")
-	    ("py" . "python")
+	    ("py" . "python3")
 	    ("py3" . ,(if (string-equal system-type "windows-nt") "c:/Python32/python.exe" "python3"))
 	    ("rb" . "ruby")
 	    ("js" . "node") ; node.js
@@ -908,12 +931,45 @@
       (setq i (1+ i)) (next-buffer) )))
 
 
+(defun my-indent-shift-left (start end &optional count)
+  (interactive
+   (if mark-active
+       (list (region-beginning) (region-end) current-prefix-arg)
+     (list (line-beginning-position) (line-end-position) current-prefix-arg)))
+  (if count
+      (setq count (prefix-numeric-value count))
+    (setq count python-indent-offset))
+  (when (> count 0)
+    (let ((deactivate-mark nil))
+      (save-excursion
+        (goto-char start)
+        (while (< (point) end)
+          (if (and (< (current-indentation) count)
+                   (not (looking-at "[ \t]*$")))
+              (error "Can't shift all lines enough"))
+          (forward-line))
+        (indent-rigidly start end (- count))))))
+
+
+(defun my-indent-shift-right (start end &optional count)
+  (interactive
+   (if mark-active
+       (list (region-beginning) (region-end) current-prefix-arg)
+     (list (line-beginning-position) (line-end-position) current-prefix-arg)))
+  (let ((deactivate-mark nil))
+    (setq count (if count (prefix-numeric-value count)
+                  python-indent-offset))
+    (indent-rigidly start end count)))
+
+
 
 ;; KEYBOARD
 ;; MARK COMMAND, COMPLETE, YAS, TAB
 (bind-key "M-SPC" 'set-mark-command)
 (bind-key "C-SPC" 'company-complete)
-(bind-key "<tab>" 'indent-for-tab-command)
+(bind-key "TAB" 'indent-for-tab-command)
+(bind-key "<backtab>" 'my-indent-shift-left)
+
 (bind-key* "C-a" 'mark-whole-buffer)
 (bind-key* "<M-return>" 'smart-ret)
 (bind-key* "<S-return>" 'smart-ret-reverse)
@@ -943,8 +999,7 @@
 (bind-key* "M-D" 'my-end-of-line-or-block)
 (bind-key* "M-b" 'beginning-of-buffer)
 (bind-key* "M-B" 'end-of-buffer)
-(bind-key "C--" 'smartscan-symbol-go-backward)
-(bind-key "C-\\" 'smartscan-symbol-go-forward)
+
 
 ;; SMARTPARENS
 (bind-key* "M-H" 'sp-backward-sexp)
@@ -957,7 +1012,8 @@
 (bind-key "C-S-j" 'sp-join-sexp)
 (bind-key "C-k" 'sp-backward-kill-sexp)
 (bind-key "C-S-k" 'sp-kill-sexp)
-(bind-key "C-i" 'sp-transpose-hybrid-sexp)
+(bind-key "C-c c-t" 'sp-transpose-hybrid-sexp)
+(bind-key "C-c t" 'sp-transpose-hybrid-sexp)
 
 ;; DELETE KEY
 (bind-key* "M-e" 'backward-delete-char-untabify)
