@@ -94,6 +94,7 @@
   :init (progn
           ;; (global-company-mode 1)
           (add-hook 'prog-mode-hook 'company-mode)
+          (add-hook 'js3-mode-hook 'company-mode)
           (add-hook 'html-mode-hook 'company-mode)
           (add-hook 'css-mode-hook 'company-mode)
           (add-hook 'scss-mode-hook 'company-mode)
@@ -130,7 +131,7 @@
          (setq projectile-completion-system 'default
                projectile-enable-caching t
                projectile-completion-system 'helm
-               projectile-switch-project-actian 'helm-projectile
+               projectile-switch-project-actian 'helm-projectile-find-file
                projectile-use-native-indexing t)
          (projectile-global-mode)))
 
@@ -202,8 +203,6 @@
 
 (use-package goto-chg
   :ensure t :defer t)
-
-
 
 (use-package neotree
   :ensure t :defer t
@@ -386,7 +385,9 @@
                     (python . t)
                     (emacs-lisp . t)))
                 org-confirm-babel-evaluate nil
-                org-babel-python-command "python3")))
+                org-babel-python-command "python3"))
+  :config (progn
+            (unbind-key "C-e" org-mode-map)))
 
 
 (use-package ob-mongo
@@ -457,14 +458,14 @@
 
 
 (use-package tern
-  :ensure t :defer t
+  :ensure t
   :init(progn
-         (add-hook 'js-mode-hook (lambda () (tern-mode t)))
+         (add-hook 'js3-mode-hook (lambda () (tern-mode t)))
          (add-hook 'coffee-mode-hook (lambda () (tern-mode t)))))
 
 
 (use-package company-tern
-  :ensure t :defer t
+  :ensure t
   :init (add-to-list 'company-backends 'company-tern))
 
 
@@ -1106,10 +1107,10 @@
 (bind-key* "M-^" 'split-3-3-0)
 
 ;; WINDOW SHRINK, WINDOW INCREASE
-(bind-key "S-<left>" 'shrink-window-horizontally)
-(bind-key "S-<right>" 'enlarge-window-horizontally)
-(bind-key "S-<down>" 'shrink-window)
-(bind-key "S-<up>" 'enlarge-window)
+(bind-key* "S-<left>" 'shrink-window-horizontally)
+(bind-key* "S-<right>" 'enlarge-window-horizontally)
+(bind-key* "S-<down>" 'shrink-window)
+(bind-key* "S-<up>" 'enlarge-window)
 
 ;; DRAG STUFF
 (bind-key "<M-up>" 'drag-stuff-up)
