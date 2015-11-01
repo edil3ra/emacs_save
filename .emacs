@@ -164,7 +164,8 @@
   :init (progn
           (smartparens-global-mode t)
           (show-smartparens-global-mode t))
-  :config (use-package smartparens-config))
+  :config (progn
+            (use-package smartparens-config)))
 
 
 (use-package rainbow-delimiters
@@ -1207,6 +1208,9 @@
  '(ring-bell-function (quote ignore) t)
  '(same-window-buffer-names (quote ("*shell*")))
  '(scroll-error-top-bottom t)
+ '(sp-highlight-pair-overlay nil)
+ '(sp-highlight-wrap-overlay nil)
+ '(sp-highlight-wrap-tag-overlay nil)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -1233,8 +1237,8 @@
 
 ;; theme and font
 (set-default-font "DejaVu Sans Mono 9")
-;; (load-theme 'grandshell)
-(load-theme 'molokai)
+(load-theme 'grandshell)
+;; (load-theme 'molokai)
 
 
 (custom-set-faces
