@@ -141,8 +141,7 @@
   :diminish yas-minor-mode
   :init(progn
          (yas-global-mode 1)
-         (define-key yas-minor-mode-map [(tab)] nil)
-         ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
+         (define-key yas-minor-mode-map (kbd "TAB") nil)
          (define-key yas-minor-mode-map (kbd "<tab>") nil)
          (bind-key "C--" #'yas-expand yas-minor-mode-map)))
 
@@ -956,8 +955,9 @@
 (bind-key "M-SPC" 'set-mark-command)
 (bind-key "C-SPC" 'company-complete)
 (bind-key "TAB" 'indent-for-tab-command)
+(bind-key "<tab>" 'indent-for-tab-command)
 (bind-key "<backtab>" 'my-indent-shift-left)
-
+(bind-key "C-i" 'yas-expand)
 (bind-key* "C-a" 'mark-whole-buffer)
 (bind-key* "<M-return>" 'smart-ret)
 (bind-key* "<S-return>" 'smart-ret-reverse)
@@ -967,9 +967,7 @@
 (bind-key "<f2>" 'neotree-toggle)
 (bind-key* "C-t" 'jump-to-mark)
 (bind-key "C-x t" 'push-mark-no-activate)
-(bind-key "C-c g" #' magit-status)
-(bind-key "C-c C-g" #' magit-tatus)
-(bind-key "C-c M-g" #' magit-dispatch-popup)
+
 ;; (define-key key-translation-map (kbd "<f8>") (kbd "<menu>"))
 
 ;; MOVE KEY
@@ -1063,6 +1061,11 @@
 (bind-key* "C-S-r" 'helm-swoop-back-to-last-point)
 (bind-key* "M-7" 'helm-multi-swoop)
 (bind-key* "M-8" 'helm-multi-swoop-all)
+
+;; MAGIT
+(bind-key "C-c g" #' magit-status)
+(bind-key "C-c C-g" #' magit-tatus)
+(bind-key "C-c M-g" #' magit-dispatch-popup)
 
 ;; SELECTION
 (bind-key "M-l" 'my-select-current-line)
