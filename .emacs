@@ -107,12 +107,19 @@
           (push 'company-robe company-backends))
   :config (progn
             (bind-key "<tab>" #'company-complete company-active-map)
+            (bind-key "C-n" #'company-select-next company-active-map)
+            (bind-key "C-h" #'company-select-previous company-active-map)
             (bind-key "M-/" #'company-show-doc-buffer company-active-map)
             (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
             (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
             (bind-key "C-c C-l" #'company-show-location company-active-map)
             (bind-key "C-c l" #'company-show-location company-active-map)
+            (bind-key "C-h" #'company-select-previous company-active-map)
+            (bind-key "C-n" #'company-select-next company-active-map)
+            (unbind-key "M-h" company-active-map)
+            (unbind-key "M-n" company-active-map)
             (bind-key "C-i" #'yas-expand company-active-map)))
+
 
 (use-package company-quickhelp
   :ensure t :defer t)
@@ -991,8 +998,8 @@
 (bind-key* "M-H" 'sp-backward-sexp)
 (bind-key* "M-N" 'sp-forward-sexp)
 (bind-key* "M-9" 'sp-splice-sexp)
-(bind-key* "M-[" 'sp-forward-slurp-sexp)
-(bind-key* "M-]" 'sp-backward-slurp-sexp)
+(bind-key* "M-[" 'sp-backward-slurp-sexp)
+(bind-key* "M-]" 'sp-forward-slurp-sexp)
 (bind-key* "M-{" 'sp-backward-barf-sexp)
 (bind-key* "M-}" 'sp-forward-barf-sexp)
 (bind-key "C-S-j" 'sp-join-sexp)
