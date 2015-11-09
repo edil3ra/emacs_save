@@ -94,7 +94,6 @@
   :init (progn
           ;; (global-company-mode 1)
           (add-hook 'prog-mode-hook 'company-mode)
-          (add-hook 'js3-mode-hook 'company-mode)
           (add-hook 'html-mode-hook 'company-mode)
           (add-hook 'css-mode-hook 'company-mode)
           (add-hook 'scss-mode-hook 'company-mode)
@@ -328,7 +327,7 @@
                                  (mode . haskell-mode)
                                  (mode . php-mode)
                                  (mode . emacs-lisp-mode)
-                                 (mode . js3-mode)
+                                 (mode . js2-mode)
                                  (mode . coffee-mode)))
                         ("mark" (or
                                  (mode . html-mode)
@@ -449,12 +448,10 @@
 
 
 ;; JAVASCRIPT
-(use-package js3-mode
+(use-package js2-mode
   :ensure t :defer t
-  :init(progn
-         (setq js3-auto-indent-p t
-               js3-enter-indents-newline t
-               js3-indent-on-enter-key t)))
+  :init (progn
+          (setq js2-basic-offset 2)))
 
 
 ;; COFFEESCRIPT
@@ -463,12 +460,16 @@
   :init(progn
          (setq coffee-tab-width 2)))
 
-
+;; TERN
 (use-package tern
   :ensure t
   :init(progn
-         (add-hook 'js3-mode-hook (lambda () (tern-mode t)))
-         (add-hook 'coffee-mode-hook (lambda () (tern-mode t)))))
+         (add-hook 'js-mode-hook (lambda () (tern-mode t)))
+         (add-hook 'coffee-mode-hook (lambda () (tern-mode t))))
+  :config(progn
+           (defun delete-tern-process ()
+             (interactive)
+             (delete-process "Tern"))))
 
 
 (use-package company-tern
@@ -1196,7 +1197,7 @@
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+    ("067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(delete-selection-mode 1)
  '(exec-path
    (append exec-path
