@@ -152,6 +152,9 @@
          (bind-key "C--" #'yas-expand yas-minor-mode-map)))
 
 
+(use-package hydra
+  :ensure t :defer t)
+
 (use-package molokai-theme
   :ensure t :defer t)
 
@@ -165,6 +168,9 @@
           (show-smartparens-global-mode t))
   :config (progn
             (use-package smartparens-config)))
+
+(use-package ace-jump-mode
+  :ensure t :defer t)
 
 
 (use-package rainbow-delimiters
@@ -478,16 +484,27 @@
 
 
 ;; CLOJURE
-(use-package cider
-  :ensure t :defer t)
-
-
 (use-package clojure-mode
   :defer t
   :config
   (defun my/clojure-mode-defaults ()
-    (bind-key "<f8>" 'cider-jack-in))
+    (bind-key "<f8>" 'cider-jack-in)
+    (bind-key "C-c d l" 'clojure-cheatsheet))
   (add-hook 'clojure-mode-hook 'my/clojure-mode-defaults))
+
+(use-package cider
+  :ensure t :defer t)
+
+(use-package clojure-cheatsheet
+  :ensure t :defer t)
+
+(use-package clj-refactor
+  :ensure t :defer t
+  :init(progn
+         (setq cljr-suppress-middleware-warnings t)
+         (add-hook 'clojure-mode-hook (lambda ()
+                                        (clj-refactor-mode 1)
+                                        (cljr-add-keybindings-with-prefix "C-c s")))))
 
 
 ;; LUA
@@ -994,6 +1011,7 @@
 (bind-key* "M-D" 'my-end-of-line-or-block)
 (bind-key* "M-b" 'beginning-of-buffer)
 (bind-key* "M-B" 'end-of-buffer)
+(bind-key "C-n" 'ace-jump-mode)
 
 
 ;; SMARTPARENS
@@ -1041,7 +1059,6 @@
 (bind-key* "M-*" 'replace-regexp)
 
 ;; NEW BUFFER, FRAME CLOSE BUFFER, COMMENT
-(bind-key "C-n" 'my-new-empty-buffer)
 (bind-key* "C-b" 'make-frame-command)
 (bind-key* "C-w" 'kill-this-buffer)
 (bind-key* "M--" 'comment-dwim)
@@ -1133,7 +1150,7 @@
 ;; LISP
 (bind-key "C-c C-c" 'eval-defun emacs-lisp-mode-map)
 (bind-key "C-c C-r" 'eval-region emacs-lisp-mode-map)
-(bind-key "C-c C-b" 'eval-buffer emacs-lisp-mode-map)
+(bind-key "C-c C-k" 'eval-buffer emacs-lisp-mode-map)
 (bind-key "C-c C-e" 'eval-last-sexp emacs-lisp-mode-map)
 (bind-key "C-c e" 'eval-last-sexp emacs-lisp-mode-map)
 (bind-key "C-c C-f" 'eval-last-sexp emacs-lisp-mode-map)
@@ -1255,3 +1272,4 @@
  '(rainbow-delimiters-depth-5-face ((t (:foreground "gold3"))))
  '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrange3"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta")))))
+
