@@ -152,6 +152,11 @@
          (bind-key "C--" #'yas-expand yas-minor-mode-map)))
 
 
+(use-package edit-server
+  :ensure t :defer t
+  :init (progn
+          (setq edit-server-new-frame nil)))
+
 (use-package hydra
   :ensure t :defer t)
 
@@ -226,6 +231,10 @@
            (bind-key "<tab>" #'neotree-enter neotree-mode-map)
            (bind-key "e" #'neotree-enter-in-place neotree-mode-map)))
 
+(use-package beacon
+  :ensure t :defer t
+  :init (progn
+          (beacon-mode)))
 
 (use-package nyan-mode
   :ensure t :defer t
@@ -316,7 +325,9 @@
 (use-package undo-tree
   :ensure t :defer t
   :init (progn
-          (global-undo-tree-mode)))
+          (global-undo-tree-mode)
+          (setq undo-tree-visualizer-timestamps t)
+          ))
 
 (use-package ido
   :defer t
@@ -1018,10 +1029,10 @@
 (bind-key* "M-H" 'sp-backward-sexp)
 (bind-key* "M-N" 'sp-forward-sexp)
 (bind-key* "M-9" 'sp-splice-sexp)
-(bind-key* "M-[" 'sp-backward-slurp-sexp)
+(bind-key* "M-[" 'sp-forward-barf-sexp)
 (bind-key* "M-]" 'sp-forward-slurp-sexp)
 (bind-key* "M-{" 'sp-backward-barf-sexp)
-(bind-key* "M-}" 'sp-forward-barf-sexp)
+(bind-key* "M-}" 'sp-backward-slurp-sexp)
 (bind-key "C-S-j" 'sp-join-sexp)
 (bind-key "C-k" 'sp-backward-kill-sexp)
 (bind-key "C-S-k" 'sp-kill-sexp)
@@ -1044,7 +1055,9 @@
 (bind-key* "M-;" 'undo-tree-undo)
 (bind-key* "M-:" 'undo-tree-redo)
 (bind-key "C-z" 'undo-tree-undo)
-(bind-key* "C-S-z" 'undo-tree-redo)
+(bind-key "M-y" 'undo-tree-redo)
+(bind-key "C-x u" 'undo-tree-visualize)
+
 
 ;; POP, SAVE, GOTO, INFO, SCALE, CAMEL, RECENTER, REPLACE
 (bind-key* "M-f" 'goto-last-change)
@@ -1058,7 +1071,7 @@
 (bind-key* "M-z" 'my-toggle-letter-case)
 (bind-key* "M-*" 'replace-regexp)
 
-;; NEW BUFFER, FRAME CLOSE BUFFER, COMMENT
+;; FRAME CLOSE BUFFER, COMMENT
 (bind-key* "C-b" 'make-frame-command)
 (bind-key* "C-w" 'kill-this-buffer)
 (bind-key* "M--" 'comment-dwim)
