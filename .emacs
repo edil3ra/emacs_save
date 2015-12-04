@@ -32,7 +32,7 @@
                 helm-M-x-requires-pattern nil
                 helm-M-x-fuzzy-match t
                 helm-ff-skip-boring-files t
-                helm-move-to-line-cycle-in-source t
+                helm-move-to-line-cycle-in-source nil
                 helm-buffers-fuzzy-matching t
                 helm-recentf-fuzzy-match t
                 helm-locate-fuzzy-match t
@@ -132,7 +132,7 @@
 :ensure t :defer t)
 
 (use-package projectile
-  :ensure t :defer t
+  :ensure t :defer t :diminish projectile-mode
   :init(progn
          (setq projectile-completion-system 'default
                projectile-enable-caching t
@@ -158,6 +158,9 @@
           (setq edit-server-new-frame nil)))
 
 (use-package hydra
+  :ensure t :defer t)
+
+(use-package simple-httpd
   :ensure t :defer t)
 
 (use-package molokai-theme
@@ -284,8 +287,12 @@
 
 (use-package css-mode
   :ensure t :defer t
+  
   :config(progn
-           (bind-key "C-p" #'helm-css-scss css-mode-map)))
+           (bind-key "C-p" #'helm-css-scss css-mode-map)
+))
+
+
 
 (use-package scss-mode
   :ensure t :defer t
@@ -467,8 +474,10 @@
 ;; JAVASCRIPT
 (use-package js2-mode
   :ensure t :defer t
+  :mode ("\\.js\\'" . js2-mode)
   :init (progn
-          (setq js2-basic-offset 2)))
+          (setq js2-basic-offset 4)
+          ))
 
 
 ;; COFFEESCRIPT
@@ -484,6 +493,7 @@
          (add-hook 'js-mode-hook (lambda () (tern-mode t)))
          (add-hook 'coffee-mode-hook (lambda () (tern-mode t))))
   :config(progn
+           (unbind-key "C-c C-c" tern-mode-keymap)
            (defun delete-tern-process ()
              (interactive)
              (delete-process "Tern"))))
@@ -492,6 +502,19 @@
 (use-package company-tern
   :ensure t
   :init (add-to-list 'company-backends 'company-tern))
+
+;; SKEWER
+(use-package skewer-mode
+  :ensure t :defer t
+  :init(progn
+         (add-hook 'js2-mode-hook 'skewer-mode)
+         (add-hook 'css-mode-hook 'skewer-css-mode)
+         (add-hook 'html-mode-hook 'skewer-html-mode))
+  :config(progn
+           (bind-key "C-c C-c" #'skewer-eval-defun skewer-mode-map)
+           (add-hook 'skewer-css-mode-hook (lambda ()
+                                             (bind-key "C-c C-c" #'skewer-css-eval-current-rule skewer-css-mode-map)
+                                             (bind-key "C-c C-r" #'skewer-css-clear-all skewer-css-mode-map)))))
 
 
 ;; CLOJURE
@@ -517,6 +540,13 @@
                                         (clj-refactor-mode 1)
                                         (cljr-add-keybindings-with-prefix "C-c s")))))
 
+
+
+;; COMMON LISP
+(use-package slime
+  :ensure t :defer t
+  :init (progn
+          (setq inferior-lisp-program "sbcl")))
 
 ;; LUA
 (use-package lua-mode
@@ -1004,7 +1034,6 @@
 (bind-key "<f2>" 'neotree-toggle)
 (bind-key* "C-t" 'jump-to-mark)
 (bind-key "C-x t" 'push-mark-no-activate)
-
 ;; (define-key key-translation-map (kbd "<f8>") (kbd "<menu>"))
 
 ;; MOVE KEY
@@ -1055,7 +1084,7 @@
 (bind-key* "M-;" 'undo-tree-undo)
 (bind-key* "M-:" 'undo-tree-redo)
 (bind-key "C-z" 'undo-tree-undo)
-(bind-key "M-y" 'undo-tree-redo)
+(bind-key "C-S-z" 'undo-tree-redo)
 (bind-key "C-x u" 'undo-tree-visualize)
 
 
@@ -1088,7 +1117,7 @@
 (bind-key* "<f12>" 'toggle-frame-fullscreen) 
 (bind-key* "C-o" 'helm-find-files)
 (bind-key "C-p" 'helm-semantic-or-imenu)
-(bind-key "C-y" 'helm-show-kill-ring)
+(bind-key* "C-y" 'helm-show-kill-ring)
 (bind-key "C-f" 'helm-projectile-switch-to-buffer)
 (bind-key "C-S-f" 'helm-locate)
 (bind-key "C-h a" 'helm-apropos)
@@ -1233,6 +1262,7 @@
    (append exec-path
            (quote
             ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
+ '(js2-highlight-level 3)
  '(package-selected-packages
    (quote
     (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
@@ -1278,6 +1308,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(js2-error ((t nil)))
+ '(js2-warning ((t nil)))
+ '(js2-warnings ((t nil)))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "royal blue"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "firebrick"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "forest green"))))
@@ -1285,4 +1318,3 @@
  '(rainbow-delimiters-depth-5-face ((t (:foreground "gold3"))))
  '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrange3"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta")))))
-
