@@ -108,7 +108,6 @@
             (bind-key "<tab>" #'company-complete company-active-map)
             (bind-key "C-n" #'company-select-next company-active-map)
             (bind-key "C-h" #'company-select-previous company-active-map)
-            (bind-key "M-/" #'company-show-doc-buffer company-active-map)
             (bind-key "C-c C-d" #'company-show-doc-buffer company-active-map)
             (bind-key "C-c d" #'company-show-doc-buffer company-active-map)
             (bind-key "C-c C-l" #'company-show-location company-active-map)
@@ -134,11 +133,11 @@
 (use-package projectile
   :ensure t :defer t :diminish projectile-mode
   :init(progn
-         (setq projectile-completion-system 'default
-               projectile-enable-caching t
+         (setq projectile-enable-caching t
                projectile-completion-system 'helm
-               projectile-switch-project-actian 'helm-projectile-find-file
+               ;; projectile-switch-project-action 'helm-projectile-find-file
                projectile-use-native-indexing t)
+         (helm-projectile-on)
          (projectile-global-mode)))
 
 
@@ -151,23 +150,35 @@
          (define-key yas-minor-mode-map (kbd "<tab>") nil)
          (bind-key "C--" #'yas-expand yas-minor-mode-map)))
 
+(use-package hydra
+  :ensure t :defer t)
 
 (use-package edit-server
   :ensure t :defer t
   :init (progn
           (setq edit-server-new-frame nil)))
 
-(use-package hydra
-  :ensure t :defer t)
 
 (use-package simple-httpd
   :ensure t :defer t)
+
+(use-package elscreen
+  :ensure t :defer t
+  :init (progn
+          (setq elscreen-display-screen-number t
+                elscreen-display-tab nil)
+          (elscreen-start)))
+
 
 (use-package molokai-theme
   :ensure t :defer t)
 
 (use-package grandshell-theme
   :ensure t :defer t)
+
+(use-package alpha
+  :ensure t)
+
 
 (use-package smartparens
   :ensure t :defer t
@@ -179,7 +190,6 @@
 
 (use-package ace-jump-mode
   :ensure t :defer t)
-
 
 (use-package rainbow-delimiters
   :ensure t :defer t
@@ -209,6 +219,12 @@
   :ensure t
   :init(progn
          (auto-save-buffers-enhanced t)))
+
+(use-package recentf-mode
+  :defer t :diminish recentf-mode
+  :init(progn
+         (recentf-mode t)))
+
 
 
 (use-package drag-stuff
@@ -1017,7 +1033,7 @@
 
 
 
-;; KEYBOARD
+;; GENERAL KEYBINDING
 ;; MARK COMMAND, COMPLETE, YAS, TAB
 (bind-key "M-SPC" 'set-mark-command)
 (bind-key "C-SPC" 'company-complete)
@@ -1049,8 +1065,8 @@
 (bind-key* "M-R" 'my-forward-block)
 (bind-key* "M-d" 'my-beginning-of-line-or-block)
 (bind-key* "M-D" 'my-end-of-line-or-block)
-(bind-key* "M-b" 'beginning-of-buffer)
-(bind-key* "M-B" 'end-of-buffer)
+(bind-key "M-b" 'beginning-of-buffer)
+(bind-key "M-B" 'end-of-buffer)
 (bind-key "C-n" 'ace-jump-mode)
 
 
@@ -1083,7 +1099,7 @@
 (bind-key* "M-k" 'yank)
 (bind-key* "M-;" 'undo-tree-undo)
 (bind-key* "M-:" 'undo-tree-redo)
-(bind-key "C-z" 'undo-tree-undo)
+(bind-key* "C-z" 'undo-tree-undo)
 (bind-key "C-S-z" 'undo-tree-redo)
 (bind-key "C-x u" 'undo-tree-visualize)
 
@@ -1121,7 +1137,7 @@
 (bind-key "C-f" 'helm-projectile-switch-to-buffer)
 (bind-key "C-S-f" 'helm-locate)
 (bind-key "C-h a" 'helm-apropos)
-(global-set-key (kbd "M-o") 'helm-projectile-find-file)
+(global-set-key (kbd "M-o") 'projectile-find-file)
 (global-set-key (kbd "C-e") 'helm-buffers-list)
 
 ;; HELM SWOOP
@@ -1132,7 +1148,7 @@
 
 ;; MAGIT
 (bind-key "C-c g" #' magit-status)
-(bind-key "C-c C-g" #' magit-tatus)
+(bind-key "C-c C-g" #' magit-status)
 (bind-key "C-c M-g" #' magit-dispatch-popup)
 
 ;; SELECTION
@@ -1198,6 +1214,352 @@
 (bind-key "C-c C-f" 'eval-last-sexp emacs-lisp-mode-map)
 
 
+
+;; HYDRA KEYBINDING
+(defhydra hydra-elscreen (:color red :hint nil)
+"
+  _c_: create  _n_: next      _k_: kill   _e_: helm
+  _C_: clone   _h_: previous  _K_: killB  _d_: dired
+  _a_: toggle  _t_: goto                  _l_: list
+"  
+  ("a" elscreen-toggle)
+  ("c" elscreen-create)
+  ("C" elscreen-clone)
+  ("k" elscreen-kill)
+  ("K" elscreen-kill-screen-and-buffers)
+  ("n" elscreen-next)
+  ("h" elscreen-previous)
+  ("t" elscreen-goto)
+  ("e" helm-elscreen)
+  ("d" elscreen-dired)
+  ("l" elscreen-display-screen-name-list)
+  ("g" nil)
+  ("q" nil)
+  ("1" (elscreen-goto 0))
+  ("2" (elscreen-goto 1))
+  ("3" (elscreen-goto 2))
+  ("4" (elscreen-goto 3))
+  ("5" (elscreen-goto 4)))
+
+
+
+(defhydra hydra-yasnippet (:color red :hint nil)
+  "
+  Modes:    Load/Visit:    Actions:
+  ╭──────────────────────────────────╯
+ _o_lobal  _d_irectory    _i_nsert
+ _m_inor   _f_ile         _t_ryout
+ _e_xtra   _l_ist         _n_ew
+         _a_ll
+"
+  ("d" yas-load-directory)
+  ("e" yas-activate-extra-mode)
+  ("i" yas-insert-snippet)
+  ("f" yas-visit-snippet-file :color blue)
+  ("n" yas-new-snippet)
+  ("t" yas-tryout-snippet)
+  ("l" yas-describe-tables)
+  ("o" yas/global-mode)
+  ("m" yas/minor-mode)
+  ("a" yas-reload-all)
+  ("g" nil :color blue))
+
+
+
+(defhydra hydra-project (:color blue :hint nil)
+  "
+    Files             Search          Buffer             Do         │ Projectile │
+  ╭─────────────────────────────────────────────────────────────────┴────────────╯
+    [_f_] file          [_a_] ag          [_e_] switch         [_g_] magit
+    [_o_] file dwim     [_A_] grep        [_v_] show all       [_p_] project
+    [_r_] recent file   [_s_] occur       [_V_] ibuffer        [_i_] info
+    [_d_] dir           [_S_] replace     [_K_] kill all
+    [_l_] other         [_t_] find tag
+    [_u_] test file     [_T_] make tags
+    [_h_] root         
+                                                                        ╭────────┐
+    Other Window      Run             Cache              Do             │ Fixmee │
+  ╭──────────────────────────────────────────────────╯ ╭────────────────┴────────╯
+    [_F_] file          [_U_] test        [_kc_] clear         [_x_] TODO & FIXME
+    [_O_] dwim          [_m_] compile     [_kk_] add current   [_X_] toggle
+    [_D_] dir           [_c_] shell       [_ks_] cleanup
+    [_L_] other         [_C_] command     [_kd_] remove
+    [_E_] buffer
+  --------------------------------------------------------------------------------
+  "
+  ("<tab>" hydra-master/body "back")
+  ("<ESC>" nil "quit")
+  ("a"   projectile-ag)
+  ("A"   projectile-grep)
+  ("b"   projectile-switch-to-buffer)
+  ("e"   helm-projectile-switch-to-buffer)
+  ("E"   projectile-switch-to-buffer-other-window)
+  ("c"   projectile-run-async-shell-command-in-root)
+  ("C"   projectile-run-command-in-root)
+  ("d"   helm-projectile-find-dir)
+  ("D"   projectile-find-dir-other-window)
+  ("f"   helm-projectile-find-file)
+  ("F"   projectile-find-file-other-window)
+  ("g"   projectile-vc)
+  ("h"   projectile-dired)
+  ("i"   projectile-project-info)
+  ("kc"  projectile-invalidate-cache)
+  ("kd"  projectile-remove-known-project)
+  ("kk"  projectile-cache-current-file)
+  ("K"   projectile-kill-buffers)
+  ("ks"  projectile-cleanup-known-projects)
+  ("o"   helm-projectile-find-file-dwim)
+  ("O"   projectile-find-file-dwim-other-window)
+  ("m"   projectile-compile-project)
+  ("l"   helm-projectile-find-other-file)
+  ("L"   projectile-find-other-file-other-window)
+  ("p"   helm-projectile)
+  ("r"   helm-projectile-recentf)
+  ("s"   projectile-multi-occur)
+  ("S"   projectile-replace)
+  ("t"   projectile-find-tag)
+  ("T"   projectile-regenerate-tags)
+  ("u"   projectile-find-test-file)
+  ("U"   projectile-test-project)
+  ("v"   projectile-display-buffer)
+  ("V"   projectile-ibuffer)
+  ("X"   fixmee-mode)
+  ("x"   fixmee-view-listing)
+  ("g" nil "quit" :color blue))
+
+
+
+
+(defhydra hydra-navigate (:color red :hint nil)
+  "
+_n_: forward-char       _r_: forward-word       _t_: next-line      _s_: forward sentence   _p_: forward paragraph  
+_h_: backward-char      _g_: backward-word      _c_: previous-line  _S_: backward sentence  _P_: backward paragraph 
+^ ^                     _d_: beginning-of-line  _T_: forward page   _[_: backward-sexp      _]_: forward-sexp
+^ ^                     _D_: end-of-line        _C_: backward page  _-_: previous buffer    _\\_: next buffer
+
+_b_ beginning of buffer _B_ end of buffer _m_: set mark _/_: jump to mark
+_h_: helm mini _B_: buffer list
+"
+  ("n" forward-char)
+  ("h" backward-char)
+  ("r" forward-word)
+  ("g" backward-word)
+  ("t" next-line)
+  ("c" previous-line)
+  ("T" scroll-up-command)
+  ("C" scroll-down-command)
+  ("s" forward-sentence)
+  ("S" backward-sentence)
+  ("p" forward-paragraph)
+  ("P" backward-paragraph)
+  ("-" my-next-user-buffer)
+  ("\\" my-previous-user-buffer)
+  ("e" helm-mini :color blue)
+  ("m" org-mark-ring-push)
+  ("/" org-mark-ring-goto :color blue)
+  ("B" helm-buffers-list)
+  ("b" beginning-of-buffer)
+  ("B" end-of-buffer)
+  ("d" beginning-of-line)
+  ("D" end-of-line)
+  ("[" backward-sexp)
+  ("]" forward-sexp)
+  ("g" nil :color blue))
+
+
+
+
+(defhydra hydra-adjust (:color red :hint nil)
+  "
+      Zoom                Transparency          
+  ╭────────────────────────────────────────────╯
+      [_s_] increase       [_t_] inscrese
+      [_n_] decrease       [_h_] decrease
+      [_l_] reset          [_r_] 100 [_c_] 30
+"
+  ("s" text-scale-increase)
+  ("n" text-scale-decrease)
+  ("l" text-scale-adjust 0)
+  ("t" (transparency-increase))
+  ("h" (transparency-decrease ))
+  ("r" (transparency-set-value 100 ))
+  ("c" (transparency-set-value 30 ))
+  ("1" (transparency-set-value 10 ))
+  ("2" (transparency-set-value 20 ))
+  ("3" (transparency-set-value 30 ))
+  ("4" (transparency-set-value 40 ))
+  ("5" (transparency-set-value 50 ))
+  ("6" (transparency-set-value 60 ))
+  ("7" (transparency-set-value 70 ))
+  ("8" (transparency-set-value 80 ))
+  ("9" (transparency-set-value 90 ))
+  ("g" nil :color blue))
+
+
+
+(defhydra hydra-transpose (:color pink :hint nil)
+  "
+      Transpose                                Org
+  ╭───────────────────────────────────────────────────────────────╯
+      [_t_] characters       [_s_] sentences       [_o_] word
+      [_w_] words            [_p_] paragraphs      [_e_] elements
+      [_l_] line             [_z_] cancel          [_u_] table
+"
+  ("t" transpose-chars)
+  ("w" transpose-words)
+  ("l" transpose-lines)
+  ("s" transpose-sentences)
+  ("p" transpose-paragraphs)
+  ("o" org-transpose-words)
+  ("e" org-transpose-elements)
+  ("u" org-table-transpose-table-at-point)
+  ("z" undo-tree-undo)
+  ("y" undo-tree-redo)
+  ("g" nil :color blue))
+
+
+(defun ora-ex-point-mark ()
+  (interactive)
+  (if rectangle-mark-mode
+      (exchange-point-and-mark)
+    (let ((mk (mark)))
+      (rectangle-mark-mode 1)
+      (goto-char mk))))
+
+(defhydra hydra-rectangle (:hint nil
+                           :body-pre (rectangle-mark-mode 1)
+                           :color pink
+                           :post (deactivate-mark))
+  "
+  ^_c_^     _d_elete    _j_copy   
+_h_   _n_   _o_k        _k_paste     
+  ^_t_^     _s_tring    _q_kill    
+^^^^        _e_xchange  _u_ndo     
+^^^^        ^ ^         _r_reset
+"
+  ("h" backward-char nil)
+  ("n" forward-char nil)
+  ("c" previous-line nil)
+  ("t" next-line nil)
+  ("e" ora-ex-point-mark nil)
+  ("j" copy-rectangle-as-kill nil)
+  ("d" delete-rectangle nil)
+  ("r" (if (region-active-p)
+           (deactivate-mark)
+         (rectangle-mark-mode 1)) nil)
+  ("k" yank-rectangle nil)
+  ("u" undo nil)
+  ("s" string-rectangle nil)
+  ("q" kill-rectangle nil)
+  ("o" nil :color blue)
+  ("g" nil :color blue ))
+
+
+(defhydra hydra-major (:color blue :hint nil)
+  "
+    [_t_] text  [_d_] diff    [_l_] prog     [_o_] org
+    [_h_] html  [_c_] css     [_s_] scss     [_j_] jinja
+    [_J_] js    [_p_] python  [_C_] clojure  [_r_] ruby  [_e_] elisp
+    [_n_] json  [_m_] md 
+"  
+  ("t" text-mode)
+  ("d" diff-mode)
+  ("l" prog-mode)
+  ("o" org-mode)
+  ("h" html-mode)
+  ("c" css-mode)
+  ("s" scss-mode)
+  ("j" jinja2-mode)
+  ("J" js2-mode)
+  ("p" python-mode)
+  ("C" clojure-mode)
+  ("r" ruby-mode)
+  ("e" emacs-lisp-mode)
+  ("n" json-mode)
+  ("m" markdown-mode)
+  ("g" nil))
+
+
+(defhydra hydra-minor (:color red :hint nil)
+  "
+    [_f_] fill  [_v_] visual  [_l_] line  [_t_] typo [_n_] nyan [_s_] save
+"  
+  ("f" auto-fill-mode)
+  ("v" visual-line-mode)
+  ("t" typo-mode)
+  ("l" line-number-mode)
+  ("n" nyan-mode)
+  ("s" auto-save-buffers-enhanced-toggle-activity)
+  ("g" nil))
+
+
+
+(defhydra hydra-apropos (:color blue :hint nil)
+  "Apropos"
+  ("a" helm-apropos "apropos")
+  ("c" apropos-command "cmd")
+  ("d" apropos-documentation "doc")
+  ("e" apropos-value "val")
+  ("l" apropos-library "lib")
+  ("o" apropos-user-option "option")
+  ("u" apropos-user-option "option")
+  ("v" apropos-variable "var")
+  ("i" info-apropos "info")
+  ("t" tags-apropos "tags")
+  ("z" hydra-customize-apropos/body "customize"))
+
+
+
+(defhydra hydra-outline (:color pink :hint nil)
+  "
+    ^Hide^             ^Show^           ^Move^
+  ╭──────────────────────────────────────────────────────────────────╯
+    [_q_] sublevels     [_a_] all         [_u_] up
+    [_t_] body          [_e_] entry       [_c_] next visible
+    [_o_] other         [_i_] children    [_t_] previous visible
+    [_c_] entry         [_k_] branches    [_n_] forward same level
+    [_l_] leaves        [_s_] subtree     [_h_] backward same level
+    [_d_] subtree
+"
+  ("q" hide-sublevels)    ; Hide everything but the top-level headings
+  ("t" hide-body)         ; Hide everything but headings (all body lines)
+  ("o" hide-other)        ; Hide other branches
+  ("c" hide-entry)        ; Hide this entry's body
+  ("l" hide-leaves)       ; Hide body lines in this entry and sub-entries
+  ("d" hide-subtree)      ; Hide everything in this entry and sub-entries
+  ("a" show-all)          ; Show (expand) everything
+  ("e" show-entry)        ; Show this heading's body
+  ("i" show-children)     ; Show this heading's immediate child sub-headings
+  ("k" show-branches)     ; Show all sub-headings under this heading
+  ("s" show-subtree)      ; Show (expand) everything in this heading & below
+  ("u" outline-up-heading)                ; Up
+  ("c" outline-next-visible-heading)      ; Next
+  ("t" outline-previous-visible-heading)  ; Previous
+  ("n" outline-forward-same-level)        ; Forward - same level
+  ("h" outline-backward-same-level)       ; Backward - same level
+  ("g" nil ))
+
+
+
+
+(bind-key* "C-v" 'hydra-elscreen/body)
+(bind-key "C-x -" 'hydra-yasnippet/body)
+(bind-key "C-x p" 'hydra-project/body)
+(bind-key "C-x s" 'hydra-navigate/body)
+(bind-key "C-x =" 'hydra-adjust/body)
+(bind-key "C-x t" 'hydra-transpose/body)
+(bind-key "C-x r" 'hydra-rectangle/body)
+(bind-key "C-x a" 'hydra-apropos/body)
+(bind-key "C-x M" 'hydra-major/body)
+(bind-key "C-x m" 'hydra-minor/body)
+
+(add-hook 'outline-mode-hook (lambda() (bind-key "C-x x" #'hydra-outline/body outline-mode-map)))
+
+
+
+
+
+;; REGION KEYBINDING
 (use-package region-bindings-mode
   :ensure t
   :diminish region-bindings-mode
@@ -1225,7 +1587,7 @@
            (bind-key "-" #'comment-dwim region-bindings-mode-map)
            (bind-key "q" #'kill-region region-bindings-mode-map)
            (bind-key "j" #'kill-ring-save region-bindings-mode-map)
-           (bind-key "k" #'yank region-bindings-mode-map)
+           ;; (bind-key "k" #'yank region-bindings-mode-map)
            (bind-key "x" #'kill-rectangle region-bindings-mode-map)
            (bind-key "b" #'replace-rectangle region-bindings-mode-map)
            (bind-key "d" #'duplicate-current-line-or-region region-bindings-mode-map)
