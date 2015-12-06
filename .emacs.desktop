@@ -1,0 +1,41 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Mon Dec  7 00:27:38 2015
+;; Desktop file format version 206
+;; Emacs version 24.4.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22116 50282 996768 304000) (desktop . "206") "vince@vince" nil nil ((((font-backend xft x) (font . "-unknown-DejaVu Sans Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1") (font-parameter . "DejaVu Sans Mono 9") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (foreground-color . "gray") (background-color . "black") (mouse-color . "black") (border-color . "#222") (screen-gamma) (line-spacing) (left-fringe . 10) (right-fringe . 11) (scroll-bar-foreground) (scroll-bar-background . "grey75") (menu-bar-lines . 0) (tool-bar-lines . 0) (title) (wait-for-wm . t) (fullscreen . fullboth) (tool-bar-position . top) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (alpha) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#acfb5a") (sticky) (environment) (frameset--id . "D087-E35E-A459-1394") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . ":0") (explicit-name) (maximized) (visibility . t) (height . 77) (width . 271) (left . 0) (top . 0)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 5) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 56) (min-pixel-width . 70) (min-pixel-height-ignore . 42) (min-pixel-width-ignore . 35) (min-pixel-height-safe . 14) (min-pixel-width-safe . 14)) leaf (pixel-width . 1920) (pixel-height . 1066) (total-width . 274) (total-height . 76) (normal-height . 1.0) (normal-width . 1.0) (buffer ".emacs" (selected . t) (hscroll . 0) (fringes 10 11 nil) (margins nil) (scroll-bars 0 0 nil nil) (vscroll . 0) (dedicated) (point . 3036) (start . 1040))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("~/.emacs" "~/Code/js/phaser/tutorial/asteroid/static/js/src/app.js" "~/.emacs.d/bookmarks" "/opt/emacs-24.4/lisp/loaddefs.el" "~/Code/js/phaser/tutorial/shoot/static/js/src/game.js" "~/Code/python/algorithm/array/main.py" "~/.emacs.d/elpa/js2-refactor-20151029.507/js2-refactor-autoloads.el" "~/.emacs.d/elpa/smartscan-20131230.739/smartscan-autoloads.el" "~/.emacs.d/elpa/noctilux-theme-20150723.747/noctilux-theme-autoloads.el" "~/.emacs.d/elpa/monokai-theme-20151022.703/monokai-theme-autoloads.el" "~/.emacs.d/elpa/gotham-theme-20151117.158/gotham-theme-autoloads.el" "~/.emacs.d/elpa/zenburn-theme-20151101.1158/zenburn-theme-autoloads.el" "~/.emacs.d/elpa/beacon-20151205.1003/beacon-autoloads.el" "~/.emacs.d/elpa/haskell-mode-20151206.225/haskell-mode-autoloads.el" "~/.emacs.d/elpa/magit-20151206.326/magit-autoloads.el" "~/.emacs.d/elpa/multiple-cursors-20151205.1225/multiple-cursors-autoloads.el" "~/.emacs.d/elpa/slime-20151206.200/slime-autoloads.el" "~/Code/elisp/tutorial/buffer_test.el" "~/.emacs.d/.mc-lists.el" "~/Code/elisp/tutorial/introduction.el"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/vince/.emacs"
+  ".emacs"
+  'emacs-lisp-mode
+  '(override-global-mode helm-mode company-mode eldoc-mode projectile-mode yas-minor-mode smartparens-mode drag-stuff-mode beacon-mode rainbow-delimiters-mode)
+  3036
+  '(3419 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "Documents"
+  'dired-mode
+  '(override-global-mode helm-mode projectile-mode yas-minor-mode drag-stuff-mode beacon-mode)
+  430
+  '(nil nil)
+  t
+  '("/home/vince/Documents/")
+  nil)
+

@@ -1,9 +1,0 @@
-;; Object phaser/
-;; SEMANTICDB Tags save file
-(semanticdb-project-database-file "phaser/"
-  :tables
-  (list
-)
-  :file "!home!ubuntu!Code!js!phaser!semantic.cache"
-  :semantic-tag-version "2.0"
-  :semanticdb-version "2.2")
