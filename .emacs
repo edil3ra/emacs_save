@@ -99,8 +99,8 @@
           (add-hook 'scss-mode-hook 'company-mode)
           (setq company-tooltip-limit 20
                 company-idle-delay 0.1
-                company-echo-delay 0   
-                company-show-numbers t  
+                company-echo-delay 0
+                company-show-numbers t
                 company-minimum-prefix-length 1)
           (company-quickhelp-mode 1)
           (push 'company-robe company-backends))
@@ -140,7 +140,6 @@
          (helm-projectile-on)
          (projectile-global-mode)))
 
-
 (use-package yasnippet
   :ensure t :defer t
   :diminish yas-minor-mode
@@ -169,16 +168,8 @@
                 elscreen-display-tab nil)
           (elscreen-start)))
 
-
-(use-package molokai-theme
-  :ensure t :defer t)
-
-(use-package grandshell-theme
-  :ensure t :defer t)
-
 (use-package alpha
   :ensure t)
-
 
 (use-package smartparens
   :ensure t :defer t
@@ -197,7 +188,6 @@
           (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
           (add-hook 'scss-mode-hook #'rainbow-delimiters-mode)))
 
-
 (use-package uniquify
   :init(progn
          uniquify-buffer-name-style 'post-forward
@@ -214,6 +204,8 @@
   :config(progn
            (popwin-mode 1)))
 
+(use-package smartscan
+  :ensure t)
 
 (use-package auto-save-buffers-enhanced
   :ensure t
@@ -225,14 +217,11 @@
   :init(progn
          (recentf-mode t)))
 
-
-
 (use-package drag-stuff
   :diminish drag-stuff-mode
   :ensure t :defer t
   :init(progn
          (drag-stuff-global-mode t)))
-
 
 (use-package expand-region
   :ensure t :defer t)
@@ -256,32 +245,28 @@
           (beacon-mode)))
 
 (use-package nyan-mode
-  :ensure t :defer t
-  :init(progn
-         (add-hook 'prog-mode-hook #'nyan-mode)))
-
+ :ensure t
+ :init(progn
+        (add-hook 'prog-mode-hook #'nyan-mode)))
 
 (use-package multiple-cursors
-  :ensure t :defer t
+  :ensure t
   :diminish multiple-cursors-mode)
 
-
 (use-package phi-search
-  :ensure t :defer t
-  :config (progn
-            (bind-key "," #'phi-search-again-or-previous phi-search-default-map)
-            (bind-key "." #'phi-search-again-or-next phi-search-default-map)))
-
+  :ensure t)
 
 (use-package dired+
-  :ensure t
+  :ensure t :defer t
+  :init (progn
+          (diredp-toggle-find-file-reuse-dir t))
   :config(progn
-           (diredp-toggle-find-file-reuse-dir t)
            (unbind-key "M-c" dired-mode-map)
-           (bind-key "M-C" #'scroll-up dired-mode-map)
-           (bind-key "M-T" #'scroll-down dired-mode-map)
-           (bind-key "M-b" #'my-beginning-or-end-of-buffer dired-mode-map)
-           (bind-key "M-B" #'my-end-or-beginning-of-buffer dired-mode-map)))
+           (bind-key "M-C" #'scroll-down-command dired-mode-map)
+           (bind-key "M-T" #'scroll-up-command dired-mode-map)
+           (bind-key "M-b" #'beginning-of-buffer dired-mode-map)
+           (bind-key "M-B" #'end-of-buffer dired-mode-map)))
+
 
 
 (use-package emmet-mode
@@ -300,15 +285,10 @@
 (use-package jinja2-mode
   :ensure t :defer t)
 
-
 (use-package css-mode
   :ensure t :defer t
-  
   :config(progn
-           (bind-key "C-p" #'helm-css-scss css-mode-map)
-))
-
-
+           (bind-key "C-p" #'helm-css-scss css-mode-map)))
 
 (use-package scss-mode
   :ensure t :defer t
@@ -349,8 +329,20 @@
   :ensure t :defer t
   :init (progn
           (global-undo-tree-mode)
-          (setq undo-tree-visualizer-timestamps t)
-          ))
+          (setq undo-tree-visualizer-timestamps t)))
+
+;; THEMES
+
+(use-package grandshell-theme
+  :ensure t :defer t)
+(use-package zenburn-theme
+  :ensure t :defer t)
+(use-package gotham-theme
+  :ensure t :defer t)
+(use-package monokai-theme
+  :ensure t :defer t)
+(use-package noctilux-theme
+  :ensure t :defer t)
 
 (use-package ido
   :defer t
@@ -662,7 +654,7 @@
 (bookmark-bmenu-list)
 (switch-to-buffer "*Bookmark List*")
 
-;; replace yes to y 
+;; replace yes to y
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; tab
@@ -752,7 +744,7 @@
 (defun shell-dwim (&optional create)
   (interactive "P")
   (let ((next-shell-buffer) (buffer)
-        (shell-buf-list (identity ;;used to be reverse                                                                         
+        (shell-buf-list (identity ;;used to be reverse
                          (sort
                           (my-filter-shell (lambda (x) (string-match "^\\*shell\\*" (buffer-name x))) (buffer-list))
                           #'(lambda (a b) (string< (buffer-name a) (buffer-name b)))))))
@@ -787,7 +779,7 @@
   (delete-other-windows)
   (command-execute 'split-window-vertically)
   (command-execute 'split-window-horizontally)
-  (enlarge-window 20))
+  (enlarge-window 28))
 
 (defun split-6-3-1 ()
   (interactive)
@@ -796,7 +788,7 @@
   (command-execute 'split-window-horizontally)
   (command-execute 'split-window-horizontally)
   (command-execute 'balance-windows)
-  (enlarge-window 20))
+  (enlarge-window 28))
 
 (defun split-6-3-3 ()
   (interactive)
@@ -809,7 +801,7 @@
   (command-execute 'split-window-horizontally)
   (command-execute 'balance-windows)
   (windmove-up)
-  (enlarge-window 20))
+  (enlarge-window 28))
 
 (defun smart-ret()
   (interactive)
@@ -824,7 +816,6 @@
   (indent-for-tab-command))
 
 
-;; there is a bug with multiple-cursors and ergoemacs-cut-line-or-region 
 (defun my-cut-line-or-region ()
   (interactive)
   (if current-prefix-arg
@@ -940,7 +931,7 @@
 
 (defun my-select-current-line ()
   (interactive)
-  (end-of-line) 
+  (end-of-line)
   (set-mark (line-beginning-position)))
 
 (defun my-select-current-block ()
@@ -1034,7 +1025,7 @@
 
 
 ;; GENERAL KEYBINDING
-;; MARK COMMAND, COMPLETE, YAS, TAB
+;; MARK COMMAND, COMPLETE, YAS, TAB, SAVE
 (bind-key "M-SPC" 'set-mark-command)
 (bind-key "C-SPC" 'company-complete)
 (bind-key "TAB" 'indent-for-tab-command)
@@ -1045,11 +1036,13 @@
 (bind-key* "<M-return>" 'smart-ret)
 (bind-key* "<S-return>" 'smart-ret-reverse)
 (bind-key "<escape>" 'keyboard-espace-quit)
-(bind-key "M-m" 'emmet-expand-line)
+(bind-key "M-m" 'emmet-etxpand-line)
 (bind-key "C-x j" 'dired-jump)
 (bind-key "<f2>" 'neotree-toggle)
-(bind-key* "C-t" 'jump-to-mark)
 (bind-key "C-x t" 'push-mark-no-activate)
+(bind-key "C-x s" 'save-some-buffers)
+(bind-key "C-x C-s" 'save-buffer)
+
 ;; (define-key key-translation-map (kbd "<f8>") (kbd "<menu>"))
 
 ;; MOVE KEY
@@ -1130,7 +1123,7 @@
 (bind-key* "<f5>" 'xah-run-current-file)
 (bind-key* "<f6>" 'helm-recentf)
 (bind-key* "<f7>" 'helm-bookmarks)
-(bind-key* "<f12>" 'toggle-frame-fullscreen) 
+(bind-key* "<f12>" 'toggle-frame-fullscreen)
 (bind-key* "C-o" 'helm-find-files)
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key* "C-y" 'helm-show-kill-ring)
@@ -1164,7 +1157,6 @@
 (bind-key* "M-\"" 'point-to-register)
 (bind-key* "C-S-e" 'ibuffer)
 
-;; MULTIPLE CURSORS
 (bind-key "C-d" 'duplicate-current-line-or-region)
 (bind-key "C-j" 'join-line-or-lines-in-region)
 (unbind-key "M-<down-mouse-1>")
@@ -1216,41 +1208,87 @@
 
 
 ;; HYDRA KEYBINDING
+(defhydra hydra-window (:hint nil)
+   "
+    ^Movement^      ^Split^             ^Switch^        ^Resize^
+  ╭──────────────────────────────────────────────────────────────────────╯
+    [_h_] ←         [_r_] vertical      [_a_] ←         [_H_] X←
+    [_t_] ↓         [_g_] horizontal    [_o_] ↓         [_T_] X↓
+    [_c_] ↑         [_z_] undo          [_,_] ↑         [_C_] X↑
+    [_n_] →         [_y_] reset         [_e_] →         [_N_] X→
+    [_F_] follow    [_d_] delete        [_f_] buffer
+    ^ ^             [_l_] other         [_b_] find
+"
+   ("h" windmove-left)
+   ("t" windmove-down)
+   ("c" windmove-up)
+   ("n" windmove-right)
+   ("F" follow-mode)
+   ("r" split-window-right)
+   ("g" split-window-below)
+   ("z" (progn
+          (winner-undo)
+          (setq this-command 'winner-undo)))
+   ("y" winner-redo)
+   ("d" delete-window)
+   ("l" delete-other-windows)
+   ("a" buf-move-left)
+   ("o" buf-move-down)
+   ("," buf-move-up)
+   ("e" buf-move-right)
+   ("H" shrink-window-horizontally)
+   ("C" shrink-window)
+   ("T" enlarge-window)
+   ("N" enlarge-window-horizontally)
+   ("b" helm-mini)
+   ("f" helm-find-files)
+   ("1" split-3-2-1)
+   ("2" split-3-3-0)
+   ("3" split-6-3-1)
+   ("4" split-6-3-3)
+   ("q" nil))
+
+
+
+
 (defhydra hydra-elscreen (:color red :hint nil)
 "
-  _c_: create  _n_: next      _k_: kill   _e_: helm
-  _C_: clone   _h_: previous  _K_: killB  _d_: dired
-  _a_: toggle  _t_: goto                  _l_: list
-"  
+  [_c_] create    [_n_] next        [_k_] kill     [_e_] helm     [_i_] show-tab
+  [_C_] clone     [_h_] previous    [_K_] killB    [_d_] dired    [_b_] show-buf
+  [_a_] toggle    [_t_] goto        [_s_] swap     [_l_] list
+"
   ("a" elscreen-toggle)
   ("c" elscreen-create)
   ("C" elscreen-clone)
   ("k" elscreen-kill)
   ("K" elscreen-kill-screen-and-buffers)
+  ("s" elscreen-swap)
   ("n" elscreen-next)
   ("h" elscreen-previous)
   ("t" elscreen-goto)
   ("e" helm-elscreen)
   ("d" elscreen-dired)
+  ("i" elscreen-toggle-display-tab)
+  ("b" elscreen-toggle-display-screen-number)
   ("l" elscreen-display-screen-name-list)
-  ("g" nil)
-  ("q" nil)
   ("1" (elscreen-goto 0))
   ("2" (elscreen-goto 1))
   ("3" (elscreen-goto 2))
   ("4" (elscreen-goto 3))
-  ("5" (elscreen-goto 4)))
+  ("5" (elscreen-goto 4))
+  ("g" keyboard-quit)
+  ("q" nil :color blue))
 
 
 
-(defhydra hydra-yasnippet (:color red :hint nil)
+(defhydra hydra-yasnippet (:color amaranth :hint nil)
   "
-  Modes:    Load/Visit:    Actions:
-  ╭──────────────────────────────────╯
- _o_lobal  _d_irectory    _i_nsert
- _m_inor   _f_ile         _t_ryout
- _e_xtra   _l_ist         _n_ew
-         _a_ll
+      Modes:    Load/Visit:   Actions:
+  ╭────────────────────────────────────╯
+     _o_lobal  _d_irectory   _i_nsert
+     _m_inor   _f_ile        _t_ryout
+     _e_xtra   _l_ist        _n_ew
+     _a_ll
 "
   ("d" yas-load-directory)
   ("e" yas-activate-extra-mode)
@@ -1262,11 +1300,12 @@
   ("o" yas/global-mode)
   ("m" yas/minor-mode)
   ("a" yas-reload-all)
-  ("g" nil :color blue))
+  ("g" keyboard-quit)
+  ("q" nil :color blue))
 
 
 
-(defhydra hydra-project (:color blue :hint nil)
+(defhydra hydra-project (:color teal :hint nil)
   "
     Files             Search          Buffer             Do         │ Projectile │
   ╭─────────────────────────────────────────────────────────────────┴────────────╯
@@ -1276,7 +1315,7 @@
     [_d_] dir           [_S_] replace     [_K_] kill all
     [_l_] other         [_t_] find tag
     [_u_] test file     [_T_] make tags
-    [_h_] root         
+    [_h_] root
                                                                         ╭────────┐
     Other Window      Run             Cache              Do             │ Fixmee │
   ╭──────────────────────────────────────────────────╯ ╭────────────────┴────────╯
@@ -1285,7 +1324,6 @@
     [_D_] dir           [_c_] shell       [_ks_] cleanup
     [_L_] other         [_C_] command     [_kd_] remove
     [_E_] buffer
-  --------------------------------------------------------------------------------
   "
   ("<tab>" hydra-master/body "back")
   ("<ESC>" nil "quit")
@@ -1325,53 +1363,86 @@
   ("V"   projectile-ibuffer)
   ("X"   fixmee-mode)
   ("x"   fixmee-view-listing)
-  ("g" nil "quit" :color blue))
+  ("q"   nil :color blue))
 
 
 
 
-(defhydra hydra-navigate (:color red :hint nil)
+(defhydra hydra-navigate (:color pink :hint nil)
   "
-_n_: forward-char       _r_: forward-word       _t_: next-line      _s_: forward sentence   _p_: forward paragraph  
-_h_: backward-char      _g_: backward-word      _c_: previous-line  _S_: backward sentence  _P_: backward paragraph 
-^ ^                     _d_: beginning-of-line  _T_: forward page   _[_: backward-sexp      _]_: forward-sexp
-^ ^                     _D_: end-of-line        _C_: backward page  _-_: previous buffer    _\\_: next buffer
-
-_b_ beginning of buffer _B_ end of buffer _m_: set mark _/_: jump to mark
-_h_: helm mini _B_: buffer list
+^Align^              ^Sort^                    ^replace^           ^Search^
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+[_aa_] align         [_ol_] lines              [_e_] regexp        [_\'_] previous
+[_ac_] current       [_op_] paragraphs         [_E_] string        [_,_]  next
+[_ae_] entire        [_oP_] Pages        
+[_ah_] highlight     [_of_] fields
+[_an_] new           [_on_] numerics
+[_ar_] regex         [_oc_] columns
+[_au_] unhilight     [_or_] regex
+ ^  ^                [_oR_] reverse
 "
   ("n" forward-char)
   ("h" backward-char)
   ("r" forward-word)
+  ("R" my-forward-block)
   ("g" backward-word)
+  ("g" my-backward-block)
+  ("l" my-select-current-line)
+  ("L" my-select-current-block)
   ("t" next-line)
   ("c" previous-line)
   ("T" scroll-up-command)
   ("C" scroll-down-command)
-  ("s" forward-sentence)
-  ("S" backward-sentence)
   ("p" forward-paragraph)
   ("P" backward-paragraph)
   ("-" my-next-user-buffer)
   ("\\" my-previous-user-buffer)
-  ("e" helm-mini :color blue)
   ("m" org-mark-ring-push)
   ("/" org-mark-ring-goto :color blue)
-  ("B" helm-buffers-list)
   ("b" beginning-of-buffer)
   ("B" end-of-buffer)
   ("d" beginning-of-line)
   ("D" end-of-line)
   ("[" backward-sexp)
   ("]" forward-sexp)
-  ("g" nil :color blue))
+
+  ("a a" align)
+  ("a c" align-current)
+  ("a e" align-entire)
+  ("a h" align-highlight-rule)
+  ("a n" align-newline-and-indent)
+  ("a r" align-regexp)
+  ("a u" align-unhighlight-rule)
+
+  ("o l" sort-lines)
+  ("o p" sort-paragraphs)
+  ("o P" sort-pages)
+  ("o f" sort-fields)
+  ("o n" sort-numeric-fields)
+  ("o c" sort-columns)
+  ("o r" sort-regexp-fields)
+  ("o R" reverse-region)
+
+  ("e" replace-regexp)
+  ("E" replace-string)
+
+  ("\'" smartscan-symbol-go-backward)
+  ("," smartscan-symbol-go-forward)
+
+  ("x" exchange-point-and-mark)
+  ("w" delete-trailing-whitespace)
+  ("s" er/expand-region)
+  ("." hydra-repeat)
+  ("q" nil :color blue)
+
+  ("g" keyboard-quit))
 
 
 
 
 (defhydra hydra-adjust (:color red :hint nil)
   "
-      Zoom                Transparency          
+      Zoom                Transparency
   ╭────────────────────────────────────────────╯
       [_s_] increase       [_t_] inscrese
       [_n_] decrease       [_h_] decrease
@@ -1393,29 +1464,40 @@ _h_: helm mini _B_: buffer list
   ("7" (transparency-set-value 70 ))
   ("8" (transparency-set-value 80 ))
   ("9" (transparency-set-value 90 ))
-  ("g" nil :color blue))
+  ("q" nil :color blue)
+  ("g" keyboard-quit))
+
+
 
 
 
 (defhydra hydra-transpose (:color pink :hint nil)
   "
-      Transpose                                Org
-  ╭───────────────────────────────────────────────────────────────╯
-      [_t_] characters       [_s_] sentences       [_o_] word
-      [_w_] words            [_p_] paragraphs      [_e_] elements
-      [_l_] line             [_z_] cancel          [_u_] table
+         Drag         Transpose                            Org
+╭──────────────────────────────────────────────────────────────────────────╯
+        ^_c_^         [_s_] characters  [_-_] sentences    [_o_] word
+        ^^↑^^         [_w_] words       [_p_] paragraphs   [_e_] elements
+    _h_ ←   → _n_     [_l_] line                         [_u_] table
+        ^^↓^^        ╭─────────────────────┐
+        ^_t_^         [_z_] cancel   [_y_ redo]
 "
-  ("t" transpose-chars)
+  ("c" drag-stuff-up)
+  ("h" drag-stuff-left)
+  ("n" drag-stuff-right)
+  ("t" drag-stuff-down)
+
+  ("s" transpose-chars)
   ("w" transpose-words)
   ("l" transpose-lines)
-  ("s" transpose-sentences)
+  ("-" transpose-sentences)
   ("p" transpose-paragraphs)
   ("o" org-transpose-words)
   ("e" org-transpose-elements)
   ("u" org-table-transpose-table-at-point)
   ("z" undo-tree-undo)
   ("y" undo-tree-redo)
-  ("g" nil :color blue))
+  ("q" nil :color blue)
+  ("g" keyboard-quit))
 
 
 (defun ora-ex-point-mark ()
@@ -1427,41 +1509,100 @@ _h_: helm mini _B_: buffer list
       (goto-char mk))))
 
 (defhydra hydra-rectangle (:hint nil
-                           :body-pre (rectangle-mark-mode 1)
-                           :color pink
-                           :post (deactivate-mark))
+                                 :body-pre (rectangle-mark-mode 1)
+                                 :color pink
+                                 :post (deactivate-mark))
   "
-  ^_c_^     _d_elete    _j_copy   
-_h_   _n_   _o_k        _k_paste     
-  ^_t_^     _s_tring    _q_kill    
-^^^^        _e_xchange  _u_ndo     
-^^^^        ^ ^         _r_reset
+        ^_c_^
+        ^^↑^^        [_e_] delete      [_j_] copy     [_r_] reset
+    _h_ ←   → _n_    [_s_] tring       [_k_] paste    [_z_] undo
+        ^^↓^^        [_x_] xchange     [_d_] kill     [_y_] redo
+        ^_t_^
 "
   ("h" backward-char nil)
   ("n" forward-char nil)
   ("c" previous-line nil)
   ("t" next-line nil)
-  ("e" ora-ex-point-mark nil)
+  ("e" delete-rectangle nil)
+  ("s" string-rectangle nil)
+  ("x" ora-ex-point-mark nil)
   ("j" copy-rectangle-as-kill nil)
-  ("d" delete-rectangle nil)
+  ("k" yank-rectangle nil)
+  ("d" kill-rectangle nil)
   ("r" (if (region-active-p)
            (deactivate-mark)
          (rectangle-mark-mode 1)) nil)
-  ("k" yank-rectangle nil)
-  ("u" undo nil)
-  ("s" string-rectangle nil)
-  ("q" kill-rectangle nil)
-  ("o" nil :color blue)
-  ("g" nil :color blue ))
+  ("z" undo-tree-undo)
+  ("y" undo-tree-redo)
+  ("q" nil)
+  ("g" keyboard-quit))
 
 
-(defhydra hydra-major (:color blue :hint nil)
+
+
+
+(defun my-mc/mark-previous-like-this (x)
+  (interactive "p")
+  (if (use-region-p)
+      (mc/mark-previous-like-this 1)
+    (progn
+      (er/expand-region 1)
+      (mc/mark-previous-like-this 1))))
+
+
+(defun my-mc/mark-next-like-this (x)
+  (interactive "p")
+  (if (use-region-p)
+      (mc/mark-next-like-this 1)
+    (progn
+      (er/expand-region 1)
+      (mc/mark-next-like-this 1))))
+
+(defun my-mc/quit-all () (progn () (mc/keyboard-quit) nil))
+
+
+(defhydra hydra-multiple-cursors (:hint nil :color pink)
+  "
+     ^Up^            ^Down^          ^Multiple^    ^Other^       ^Search^
+╭──────────────────────────────────────────────────────────────────────────────╯
+    [_h_] Next      [_n_] Next      [_r_] Line    [_a_] All     [_._] Next
+    [_H_] Skip      [_N_] Skip      [_l_] Begin   [_d_] Regex   [_,_] Previous
+    [_c_] Unmark    [_t_] Unmark    [_/_] End     [_j_] Copy    [_k_] Paste
+     ^ ^             ^ ^             ^ ^          [_e_] del
+"
+  ("h" my-mc/mark-previous-like-this)
+  ("H" mc/skip-to-previous-like-this)
+  ("t" mc/unmark-previous-like-this)
+  ("n" my-mc/mark-next-like-this)
+  ("N" mc/skip-to-next-like-this)
+  ("c" mc/unmark-next-like-this)
+  ("r" mc/edit-lines)
+  ("l" mc/edit-beginnings-of-lines)
+  ("/" mc/edit-ends-of-lines)
+  ("a" mc/mark-all-like-this)
+  ("d" mc/mark-all-in-region-regexp)
+  ("e" backward-delete-char-untabify)
+  ("." phi-search)
+  ("," phi-search-backward)
+  ("j" copy-rectangle-as-kill)
+  ("k" yank-rectangle)
+  ("s" er/expand-region)
+  ("z" undo-tree-undo)
+  ("y" undo-tree-redo)
+  ("q" nil :color blue)
+  ("o" my-mc/quit-all :color blue)
+  ("g" mc/keyboard-quit))
+
+
+
+
+(defhydra hydra-major (:color teal :hint nil)
   "
     [_t_] text  [_d_] diff    [_l_] prog     [_o_] org
     [_h_] html  [_c_] css     [_s_] scss     [_j_] jinja
     [_J_] js    [_p_] python  [_C_] clojure  [_r_] ruby  [_e_] elisp
-    [_n_] json  [_m_] md 
-"  
+    [_n_] json  [_m_] md
+"
   ("t" text-mode)
   ("d" diff-mode)
   ("l" prog-mode)
@@ -1477,24 +1618,32 @@ _h_   _n_   _o_k        _k_paste
   ("e" emacs-lisp-mode)
   ("n" json-mode)
   ("m" markdown-mode)
-  ("g" nil))
+  ("q" nil :color blue)
+  ("g" keyboard-quit))
 
 
-(defhydra hydra-minor (:color red :hint nil)
+
+(defhydra hydra-minor (:color amaranth :hint nil)
   "
-    [_f_] fill  [_v_] visual  [_l_] line  [_t_] typo [_n_] nyan [_s_] save
-"  
+    [_a_] abbrev    [_d_] debug  [_f_] fill  [_l_] line    [_n_] nyan
+    [_r_] truncate  [_s_] save   [_t_] typo  [_v_] visual  [_w_] white
+"
+  ("a" abbrev-mode)
+  ("d" toggle-debug-on-error)
   ("f" auto-fill-mode)
-  ("v" visual-line-mode)
-  ("t" typo-mode)
   ("l" line-number-mode)
   ("n" nyan-mode)
+  ("r" toggle-truncate-lines)
   ("s" auto-save-buffers-enhanced-toggle-activity)
+  ("t" typo-mode)
+  ("w" whitespace-mode)
+  ("v" visual-line-mode)
+  ("q" nil :color blue)
   ("g" nil))
 
 
 
-(defhydra hydra-apropos (:color blue :hint nil)
+(defhydra hydra-apropos (:color teal :hint nil)
   "Apropos"
   ("a" helm-apropos "apropos")
   ("c" apropos-command "cmd")
@@ -1506,8 +1655,59 @@ _h_   _n_   _o_k        _k_paste
   ("v" apropos-variable "var")
   ("i" info-apropos "info")
   ("t" tags-apropos "tags")
-  ("z" hydra-customize-apropos/body "customize"))
+  ("z" hydra-customize-apropos/body "customize")
+  ("q" nil :color blue)
+  ("g" keyboard-quit))
 
+
+
+
+(defhydra hydra-theme (:color red)
+  ("g" (load-theme 'grandshell) "grandshell")
+  ("t" (load-theme 'gotham) "gotham")
+  ("l" (load-theme 'leuven) "leuven")
+  ("m" (load-theme 'monokai) "monokai")
+  ("n" (load-theme 'noctilux) "noctilux")
+  ("q" nil :color blue))
+
+
+
+
+(defhydra hydra-helm (:color teal :hint nil)
+  "
+[_x_]  M-x    [_y_] ring      [_b_] mini     [_f_] find     [_s_] grep
+[_i_] imenu   [_hm_] find     [_h/_] locate  [_l_] occur    [_a_] apropos
+[_hhg_] gnus  [_hhi_] info    [_hhr_] emacs  [_cr_] resume  [_m_] mark
+[_r_] regex   [_p_] register  [_t_] top      [_cs_] surf    [_g_] google
+[_cc_] color  [_:_] eldoc     [_,_] calcul   [_ci_] input   [_cm_] hist
+"
+  ("x" helm-M-x)
+  ("y" helm-show-kill-ring)
+  ("b" helm-mini)
+  ("f" helm-find-files)
+  ("s" helm-ff-run-grep)
+  ("i" helm-semantic-or-imenu)
+  ("hm" helm-find)
+  ("h/" helm-locate)
+  ("l" helm-occur)
+  ("a" helm-apropos)
+  ("hhg" helm-info-gnus)
+  ("hhi" helm-info-at-point)
+  ("hhr" helm-info-emacs)
+  ("cr" helm-resume)
+  ("m" helm-all-mark-rings)
+  ("r" helm-regexp)
+  ("p" helm-register)
+  ("t" helm-top)
+  ("cs" helm-surfraw)
+  ("g" helm-google-suggest)
+  ("cc" helm-colors)
+  (":" helm-eval-expression-with-eldoc)
+  ("," helm-calcul-expression)
+  ("ci" helm-comint-input-ring)
+  ("cm" helm-minibuffer-history)
+  ("g" keyboard-quit)
+  ("q" nil :color blue))
 
 
 (defhydra hydra-outline (:color pink :hint nil)
@@ -1515,16 +1715,16 @@ _h_   _n_   _o_k        _k_paste
     ^Hide^             ^Show^           ^Move^
   ╭──────────────────────────────────────────────────────────────────╯
     [_q_] sublevels     [_a_] all         [_u_] up
-    [_t_] body          [_e_] entry       [_c_] next visible
-    [_o_] other         [_i_] children    [_t_] previous visible
-    [_c_] entry         [_k_] branches    [_n_] forward same level
+    [_t_] body          [_e_] entry       [_c_] previous visible
+    [_o_] other         [_i_] children    [_t_] next visible
+    [_r_] entry         [_k_] branches    [_n_] forward same level
     [_l_] leaves        [_s_] subtree     [_h_] backward same level
     [_d_] subtree
 "
   ("q" hide-sublevels)    ; Hide everything but the top-level headings
   ("t" hide-body)         ; Hide everything but headings (all body lines)
   ("o" hide-other)        ; Hide other branches
-  ("c" hide-entry)        ; Hide this entry's body
+  ("r" hide-entry)        ; Hide this entry's body
   ("l" hide-leaves)       ; Hide body lines in this entry and sub-entries
   ("d" hide-subtree)      ; Hide everything in this entry and sub-entries
   ("a" show-all)          ; Show (expand) everything
@@ -1533,16 +1733,58 @@ _h_   _n_   _o_k        _k_paste
   ("k" show-branches)     ; Show all sub-headings under this heading
   ("s" show-subtree)      ; Show (expand) everything in this heading & below
   ("u" outline-up-heading)                ; Up
-  ("c" outline-next-visible-heading)      ; Next
-  ("t" outline-previous-visible-heading)  ; Previous
+  ("c" outline-previous-visible-heading)      ; Next
+  ("t" outline-next-visible-heading)  ; Previous
   ("n" outline-forward-same-level)        ; Forward - same level
   ("h" outline-backward-same-level)       ; Backward - same level
-  ("g" nil ))
+  ("z" undo-tree-undo)
+  ("y" undo-tree-redo)
+  ("g" keyboard-quit)
+  ("q" nil :color blue))
 
 
 
 
+(defhydra hydra-markdown (:color pink :hint nil)
+  "
+Formatting        C-c C-s    _s_: bold          _e_: italic     _b_: blockquote   _p_: pre-formatted    _u_: code
+Headings          C-c C-t    _h_: automatic     _1_: h1         _2_: h2           _3_: h3               _4_: h4
+Lists             C-c C-x    _m_: insert item
+Demote/Promote    C-c C-x    _l_: promote       _r_: demote     _c_: move up      _t_: move down
+Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote     _W_: wiki-link      _R_: reference
+"
+  ("s" markdown-insert-bold)
+  ("e" markdown-insert-italic)
+  ("b" markdown-insert-blockquote :color blue)
+  ("p" markdown-insert-pre :color blue)
+  ("u" markdown-insert-code)
+  ("h" markdown-insert-header-dwim)
+  ("1" markdown-insert-header-atx-1)
+  ("2" markdown-insert-header-atx-2)
+  ("3" markdown-insert-header-atx-3)
+  ("4" markdown-insert-header-atx-4)
+  ("m" markdown-insert-list-item)
+  ("l" markdown-promote)
+  ("r" markdown-demote)
+  ("c" markdown-move-down)
+  ("t" markdown-move-up)
+  ("L" markdown-insert-link :color blue)
+  ("U" markdown-insert-uri :color blue)
+  ("F" markdown-insert-footnote :color blue)
+  ("W" markdown-insert-wiki-link :color blue)
+  ("R" markdown-insert-reference-link-dwim :color blue)
+  ("z" undo-tree-undo)
+  ("y" undo-tree-redo)
+  ("g" keyboard-quit)
+  ("q" nil :color blue))
+
+
+
+
+(bind-key "C-x o" 'hydra-window/body)
 (bind-key* "C-v" 'hydra-elscreen/body)
+(bind-key "C-t" 'hydra-multiple-cursors/body)
+
 (bind-key "C-x -" 'hydra-yasnippet/body)
 (bind-key "C-x p" 'hydra-project/body)
 (bind-key "C-x s" 'hydra-navigate/body)
@@ -1552,51 +1794,53 @@ _h_   _n_   _o_k        _k_paste
 (bind-key "C-x a" 'hydra-apropos/body)
 (bind-key "C-x M" 'hydra-major/body)
 (bind-key "C-x m" 'hydra-minor/body)
+(bind-key "C-x v" 'hydra-theme/body)
+(bind-key "C-x h" 'hydra-helm/body)
 
 (add-hook 'outline-mode-hook (lambda() (bind-key "C-x x" #'hydra-outline/body outline-mode-map)))
+(add-hook 'markdown-mode-hook (lambda() (bind-key "C-x x" #'hydra-markdown/body markdown-mode-map)))
 
 
 
 
 
-;; REGION KEYBINDING
-(use-package region-bindings-mode
-  :ensure t
-  :diminish region-bindings-mode
-  :config(progn
-           (region-bindings-mode-enable)
-           (bind-key "h" #'mc/mark-previous-like-this region-bindings-mode-map)
-           (bind-key "n" #'mc/mark-next-like-this region-bindings-mode-map)
-           (bind-key "H" #'mc/skip-to-previous-like-this region-bindings-mode-map)
-           (bind-key "N" #'mc/skip-to-next-like-this region-bindings-mode-map)
-           (bind-key "u" #'universal-argument region-bindings-mode-map)
-           (bind-key "c" #'mc/unmark-next-like-this region-bindings-mode-map)
-           (bind-key "t" #'mc/unmark-previous-like-this region-bindings-mode-map)
-           (bind-key "a" #'mc/mark-all-like-this region-bindings-mode-map)
-           (bind-key "m" #'mc/mark-more-like-this-extended region-bindings-mode-map)
-           (bind-key "r" #'mc/edit-lines region-bindings-mode-map)
-           (bind-key "l" #'mc/edit-beginnings-of-lines region-bindings-mode-map)
-           (bind-key "/" #'mc/edit-ends-of-lines region-bindings-mode-map)
-           (bind-key "f" #'mc/mark-all-in-region-regexp region-bindings-mode-map)
-           (bind-key "m" #'mc/mark-sgml-tag-pair region-bindings-mode-map)
-           (bind-key "." #'phi-search region-bindings-mode-map)
-           (bind-key "," #'phi-search-backward region-bindings-mode-map)
-           (bind-key "e" #'backward-delete-char region-bindings-mode-map)
-           (bind-key "g" #'keyboard-escape-quit region-bindings-mode-map)
-           (bind-key "C-g" #'keyboard-escape-quit region-bindings-mode-map)
-           (bind-key "-" #'comment-dwim region-bindings-mode-map)
-           (bind-key "q" #'kill-region region-bindings-mode-map)
-           (bind-key "j" #'kill-ring-save region-bindings-mode-map)
-           ;; (bind-key "k" #'yank region-bindings-mode-map)
-           (bind-key "x" #'kill-rectangle region-bindings-mode-map)
-           (bind-key "b" #'replace-rectangle region-bindings-mode-map)
-           (bind-key "d" #'duplicate-current-line-or-region region-bindings-mode-map)
-           (bind-key "j" #'join-line-or-lines-in-region region-bindings-mode-map)
-           (bind-key "9" #'sp-splice-sexp region-bindings-mode-map)
-           (bind-key "o" #'exchange-point-and-mark region-bindings-mode-map)
-           (bind-key "y" #'search-forward-regexp region-bindings-mode-map)
-           (bind-key "p" #'replace-regexp region-bindings-mode-map)
-           (bind-key "M-o" #'exchange-point-and-mark region-bindings-mode-map)))
+;; ;; REGION KEYBINDING
+;; (use-package region-bindings-mode
+;;   :ensure t
+;;   :diminish region-bindings-mode
+;;   :config(progn
+;;            (region-bindings-mode-enable)
+;;            (bind-key "h" #'mc/mark-previous-like-this region-bindings-mode-map)
+;;            (bind-key "n" #'mc/mark-next-like-this region-bindings-mode-map)
+;;            (bind-key "H" #'mc/skip-to-previous-like-this region-bindings-mode-map)
+;;            (bind-key "N" #'mc/skip-to-next-like-this region-bindings-mode-map)
+;;            (bind-key "u" #'universal-argument region-bindings-mode-map)
+;;            (bind-key "c" #'mc/unmark-next-like-this region-bindings-mode-map)
+;;            (bind-key "t" #'mc/unmark-previous-like-this region-bindings-mode-map)
+;;            (bind-key "a" #'mc/mark-all-like-this region-bindings-mode-map)
+;;            (bind-key "m" #'mc/mark-more-like-this-extended region-bindings-mode-map)
+;;            (bind-key "r" #'mc/edit-lines region-bindings-mode-map)
+;;            (bind-key "l" #'mc/edit-beginnings-of-lines region-bindings-mode-map)
+;;            (bind-key "/" #'mc/edit-ends-of-lines region-bindings-mode-map)
+;;            (bind-key "f" #'mc/mark-all-in-region-regexp region-bindings-mode-map)
+;;            (bind-key "." #'phi-search region-bindings-mode-map)
+;;            (bind-key "," #'phi-search-backward region-bindings-mode-map)
+;;            (bind-key "e" #'backward-delete-char region-bindings-mode-map)
+;;            (bind-key "g" #'keyboard-escape-quit region-bindings-mode-map)
+;;            (bind-key "C-g" #'keyboard-escape-quit region-bindings-mode-map)
+;;            (bind-key "-" #'comment-dwim region-bindings-mode-map)
+;;            (bind-key "q" #'kill-region region-bindings-mode-map)
+;;            (bind-key "j" #'kill-ring-save region-bindings-mode-map)
+;;            (bind-key "k" #'yank region-bindings-mode-map)
+;;            (bind-key "x" #'kill-rectangle region-bindings-mode-map)
+;;            (bind-key "b" #'replace-rectangle region-bindings-mode-map)
+;;            (bind-key "d" #'duplicate-current-line-or-region region-bindings-mode-map)
+;;            (bind-key "j" #'join-line-or-lines-in-region region-bindings-mode-map)
+;;            (bind-key "9" #'sp-splice-sexp region-bindings-mode-map)
+;;            (bind-key "o" #'exchange-point-and-mark region-bindings-mode-map)
+;;            (bind-key "y" #'search-forward-regexp region-bindings-mode-map)
+;;            (bind-key "p" #'replace-regexp region-bindings-mode-map)
+;;            (bind-key "M-o" #'exchange-point-and-mark region-bindings-mode-map)))
 
 
 (custom-set-variables
@@ -1618,7 +1862,7 @@ _h_   _n_   _o_k        _k_paste
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+    ("0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(delete-selection-mode 1)
  '(exec-path
    (append exec-path
@@ -1627,7 +1871,7 @@ _h_   _n_   _o_k        _k_paste
  '(js2-highlight-level 3)
  '(package-selected-packages
    (quote
-    (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js3-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff dired+ company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
+    (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(prefer-coding-system (quote utf-8))
  '(ring-bell-function (quote ignore) t)
  '(same-window-buffer-names (quote ("*shell*")))
