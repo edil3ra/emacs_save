@@ -78,10 +78,8 @@
           (setq helm-c-source-swoop-search-functions
                 '(helm-mm-exact-search
                   helm-mm-search
-                  helm-candidates-in-buffer-search-default-fn
-                  ;;helm-fuzzy-search
-                  ;;helm-mm-3-migemo-search
-                  ))))
+                  helm-candidates-in-buffer-search-default-fn)
+                  helm-swoop-pre-input-function (lambda () ""))))
 
 (use-package helm-projectile
   :ensure t :defer t)
@@ -484,8 +482,7 @@
   :ensure t :defer t
   :mode ("\\.js\\'" . js2-mode)
   :init (progn
-          (setq js2-basic-offset 4)
-          ))
+          (setq js2-basic-offset 4)))
 
 
 ;; COFFEESCRIPT
@@ -507,6 +504,52 @@
              (delete-process "Tern"))))
 
 
+;; JS2-REFACTOR
+(defhydra hydra-js2-refactor (:hint nil)
+  "
+ ^Function^          ^Variables^       ^Contract^          ^Struct^          ^Misc^
+ ╭───────────────────────────────────────────────────────────────────────────────────────╯
+ [_ef_] extract f    [_ev_] extract    [_cu_] contract f   [_ti_] ternary    [_lt_] log  
+ [_em_] extract m    [_iv_] inline     [_eu_] expand f     [_uw_] unwrap     [_sl_] slurp
+ [_ip_] extract ip   [_rv_] rename     [_ca_] contract a   [_ig_] inject g   [_ba_] barf
+ [_lp_] extract lp   [_vt_] var-this   [_ea_] expand a     [_wi_] wrap b       
+ [_ao_] args-obj     [_sv_] split      [_co_] contract o
+  ^ ^                ^ ^               [_eo_] contract o
+"
+  ("ef" js2r-extract-function)
+  ("em" js2r-extract-method)
+  ("ip" js2r-introduce-parameter)
+  ("lp" js2r-localize-parameter)
+  ("ao" js2r-arguments-to-object)
+  ("ev" js2r-extract-var)
+  ("iv" js2r-inline-var)
+  ("rv" js2r-rename-var)
+  ("vt" js2r-var-to-this)
+  ("sv" js2r-split-var-declaration)
+  ("cu" js2r-contract-function)
+  ("eu" js2r-expand-function)
+  ("ca" js2r-contract-array)
+  ("ea" js2r-expand-array)
+  ("co" js2r-contract-object)
+  ("eo" js2r-expand-object)
+  ("ti" js2r-ternary-to-if)
+  ("uw" js2r-unwrap)
+  ("ig" js2r-inject-global-in-iife)
+  ("wi" js2r-wrap-buffer-in-iife)
+  ("lt" js2r-log-this)
+  ("sl" js2r-forward-slurp)
+  ("ba" js2r-forwaqrd-barf)
+  ("q" nil))
+
+(use-package js2-refactor
+  :ensure t :defer
+  :init(progn
+         (add-hook 'js2-mode-hook #'js2-refactor-mode))
+  :config(progn
+           (bind-key "C-c r" 'hydra-js2-refactor/body js2-refactor-mode-map)))
+
+
+
 (use-package company-tern
   :ensure t
   :init (add-to-list 'company-backends 'company-tern))
@@ -515,14 +558,18 @@
 (use-package skewer-mode
   :ensure t :defer t
   :init(progn
-         (add-hook 'js2-mode-hook 'skewer-mode)
+         ;; (add-hook 'js2-mode-hook 'skewer-mode)
          (add-hook 'css-mode-hook 'skewer-css-mode)
          (add-hook 'html-mode-hook 'skewer-html-mode))
   :config(progn
            (bind-key "C-c C-c" #'skewer-eval-defun skewer-mode-map)
+           (bind-key "C-c c" #'skewer-eval-defun skewer-mode-map)
+           (bind-key "C-c C-k" #'skewer-load-buffer skewer-mode-map)
+           (bind-key "C-c k" #'skewer-load-buffer skewer-mode-map)
            (add-hook 'skewer-css-mode-hook (lambda ()
                                              (bind-key "C-c C-c" #'skewer-css-eval-current-rule skewer-css-mode-map)
                                              (bind-key "C-c C-r" #'skewer-css-clear-all skewer-css-mode-map)))))
+
 
 
 ;; CLOJURE
@@ -649,14 +696,13 @@
 
 
 
-;; bookmark startup
-(setq inhibit-splash-screen t)
-(bookmark-bmenu-list)
-(switch-to-buffer "*Bookmark List*")
+;; ;; bookmark startup
+;; (setq inhibit-splash-screen t)
+;; (bookmark-bmenu-list)
+;; (switch-to-buffer "*Bookmark List*")
 
 ;; replace yes to y
 (fset 'yes-or-no-p 'y-or-n-p)
-
 ;; tab
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -666,34 +712,23 @@
 ;; insert ret if last line
 (setq next-line-add-newlines t)
 
-;; scrath message
+;; scratch message
 (setq initial-scratch-message nil)
+(setq initial-major-mode 'org-mode)
 
-;; save on lost focus to change when i switch window
-(when
-    (and (featurep 'x) window-system)
-  (defvar on-blur--saved-window-id 0 "Last known focused window.")
-  (defvar on-blur--timer nil "Timer refreshing known focused window.")
-  (defun on-blur--refresh ()
-    "Runs on-blur-hook if emacs has lost focus."
-    (let* ((active-window (x-window-property
-                           "_NET_ACTIVE_WINDOW" nil "WINDOW" 0 nil t))
-           (active-window-id (if (numberp active-window)
-                                 active-window
-                               (string-to-number
-                                (format "%x00%x"
-                                        (car active-window)
-                                        (cdr active-window)) 16)))
-           (emacs-window-id (string-to-number
-                             (frame-parameter nil 'outer-window-id))))
-      (when (and
-             (= emacs-window-id on-blur--saved-window-id)
-             (not (= active-window-id on-blur--saved-window-id)))
-        (run-hooks 'on-blur-hook))
-      (setq on-blur--saved-window-id active-window-id)
-      (run-with-timer 1 nil 'on-blur--refresh)))
-  (add-hook 'on-blur-hook #'(lambda () (save-some-buffers t)))
-  (on-blur--refresh))
+;; desktop mode
+(desktop-save-mode)
+
+;; save on focus out
+(defun my-save-out-hook ()
+    (interactive)
+    (save-some-buffers t))
+(add-hook 'focus-out-hook 'my-save-out-hook)
+
+;; save all no prompt
+(defun my-save-all  ()
+    (interactive)
+    (save-some-buffers t))
 
 
 (defun xah-run-current-file ()
@@ -763,6 +798,10 @@
   (interactive)
   (switch-to-buffer "*Shell Command Output*"))
 
+(defun scratch-buffer ()
+  (interactive)
+  (switch-to-buffer "scratch*"))
+
 (defun python-buffer ()
   (interactive)
   (switch-to-buffer "*Python*"))
@@ -779,7 +818,7 @@
   (delete-other-windows)
   (command-execute 'split-window-vertically)
   (command-execute 'split-window-horizontally)
-  (enlarge-window 28))
+  (enlarge-window 18))
 
 (defun split-6-3-1 ()
   (interactive)
@@ -788,7 +827,7 @@
   (command-execute 'split-window-horizontally)
   (command-execute 'split-window-horizontally)
   (command-execute 'balance-windows)
-  (enlarge-window 28))
+  (enlarge-window 18))
 
 (defun split-6-3-3 ()
   (interactive)
@@ -801,7 +840,7 @@
   (command-execute 'split-window-horizontally)
   (command-execute 'balance-windows)
   (windmove-up)
-  (enlarge-window 28))
+  (enlarge-window 18))
 
 (defun smart-ret()
   (interactive)
@@ -1036,7 +1075,7 @@
 (bind-key* "<M-return>" 'smart-ret)
 (bind-key* "<S-return>" 'smart-ret-reverse)
 (bind-key "<escape>" 'keyboard-espace-quit)
-(bind-key "M-m" 'emmet-etxpand-line)
+(bind-key "M-m" 'emmet-expand-line)
 (bind-key "C-x j" 'dired-jump)
 (bind-key "<f2>" 'neotree-toggle)
 (bind-key "C-x t" 'push-mark-no-activate)
@@ -1097,10 +1136,9 @@
 (bind-key "C-x u" 'undo-tree-visualize)
 
 
-;; POP, SAVE, GOTO, INFO, SCALE, CAMEL, RECENTER, REPLACE
+;; POP, GOTO, INFO, SCALE, CAMEL, RECENTER, REPLACE
 (bind-key* "M-f" 'goto-last-change)
 (bind-key* "M-F" 'goto-last-change-reverse)
-(bind-key* "C-s" 'save-buffer)
 (bind-key* "C-S-s" 'ido-write-file)
 (bind-key* "C-l" 'goto-line)
 (bind-key* "C-/" 'helm-info-at-point)
@@ -1119,7 +1157,8 @@
 (bind-key* "M-A" 'shell-command)
 (bind-key* "M-C-A" 'eval-expression)
 (bind-key* "M-1" 'shell-dwim)
-(bind-key* "<f1>" 'shell-buffer)
+(bind-key* "S-<f1>" 'shell-buffer)
+(bind-key* "<f1>" 'scratch-buffer)
 (bind-key* "<f5>" 'xah-run-current-file)
 (bind-key* "<f6>" 'helm-recentf)
 (bind-key* "<f7>" 'helm-bookmarks)
@@ -1406,22 +1445,22 @@
   ("[" backward-sexp)
   ("]" forward-sexp)
 
-  ("a a" align)
-  ("a c" align-current)
-  ("a e" align-entire)
-  ("a h" align-highlight-rule)
-  ("a n" align-newline-and-indent)
-  ("a r" align-regexp)
-  ("a u" align-unhighlight-rule)
+  ("aa" align)
+  ("ac" align-current)
+  ("ae" align-entire)
+  ("ah" align-highlight-rule)
+  ("an" align-newline-and-indent)
+  ("ar" align-regexp)
+  ("au" align-unhighlight-rule)
 
-  ("o l" sort-lines)
-  ("o p" sort-paragraphs)
-  ("o P" sort-pages)
-  ("o f" sort-fields)
-  ("o n" sort-numeric-fields)
-  ("o c" sort-columns)
-  ("o r" sort-regexp-fields)
-  ("o R" reverse-region)
+  ("ol" sort-lines)
+  ("op" sort-paragraphs)
+  ("oP" sort-pages)
+  ("of" sort-fields)
+  ("on" sort-numeric-fields)
+  ("oc" sort-columns)
+  ("or" sort-regexp-fields)
+  ("oR" reverse-region)
 
   ("e" replace-regexp)
   ("E" replace-string)
@@ -1627,6 +1666,7 @@
   "
     [_a_] abbrev    [_d_] debug  [_f_] fill  [_l_] line    [_n_] nyan
     [_r_] truncate  [_s_] save   [_t_] typo  [_v_] visual  [_w_] white
+    [_e_] desktop
 "
   ("a" abbrev-mode)
   ("d" toggle-debug-on-error)
@@ -1638,6 +1678,7 @@
   ("t" typo-mode)
   ("w" whitespace-mode)
   ("v" visual-line-mode)
+  ("e" desktop-save-mode)
   ("q" nil :color blue)
   ("g" nil))
 
@@ -1660,6 +1701,13 @@
   ("g" keyboard-quit))
 
 
+
+(defhydra hydra-desktop (:color blue)
+  ("c" desktop-clear "clear")
+  ("s" desktop-save "save")
+  ("r" desktop-revert "revert")
+  ("d" desktop-change-dir "dir")
+  ("t" desktop-save-mode "toggle mode"))
 
 
 (defhydra hydra-theme (:color red)
@@ -1782,12 +1830,12 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 
 
 (bind-key "C-x o" 'hydra-window/body)
-(bind-key* "C-v" 'hydra-elscreen/body)
+(bind-key "C-x e" 'hydra-elscreen/body)
 (bind-key "C-t" 'hydra-multiple-cursors/body)
+(bind-key "C-s" 'hydra-navigate/body)
 
 (bind-key "C-x -" 'hydra-yasnippet/body)
 (bind-key "C-x p" 'hydra-project/body)
-(bind-key "C-x s" 'hydra-navigate/body)
 (bind-key "C-x =" 'hydra-adjust/body)
 (bind-key "C-x t" 'hydra-transpose/body)
 (bind-key "C-x r" 'hydra-rectangle/body)
@@ -1796,6 +1844,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 (bind-key "C-x m" 'hydra-minor/body)
 (bind-key "C-x v" 'hydra-theme/body)
 (bind-key "C-x h" 'hydra-helm/body)
+(bind-key "C-x d" 'hydra-desktop/body)
 
 (add-hook 'outline-mode-hook (lambda() (bind-key "C-x x" #'hydra-outline/body outline-mode-map)))
 (add-hook 'markdown-mode-hook (lambda() (bind-key "C-x x" #'hydra-markdown/body markdown-mode-map)))
