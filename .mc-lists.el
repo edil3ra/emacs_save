@@ -37,7 +37,9 @@
         my-kill-line-backward
         my-select-current-block
         my-select-current-line
+        my-toggle-letter-case
         org-cycle
+        org-delete-char
         org-self-insert-command
         phi-search-backward
         sgml-slash
@@ -48,14 +50,20 @@
       '(
         beginning-of-buffer
         end-of-buffer
+        er/mark-inside-pairs
+        helm-find-files
         hydra-multiple-cursors/body
         hydra-multiple-cursors/lambda-h
         hydra-multiple-cursors/lambda-q-and-exit
+        hydra-multiple-cursors/mc-hide-unmatched-lines-mode
         hydra-multiple-cursors/mc/edit-beginnings-of-lines
         hydra-multiple-cursors/mc/edit-ends-of-lines
+        hydra-multiple-cursors/mc/edit-ends-of-lines-and-exit
         hydra-multiple-cursors/mc/edit-lines
+        hydra-multiple-cursors/mc/edit-lines-and-exit
         hydra-multiple-cursors/mc/mark-all-in-region-regexp
         hydra-multiple-cursors/mc/mark-all-like-this
+        hydra-multiple-cursors/mc/mark-all-like-this-and-exit
         hydra-multiple-cursors/mc/mark-next-like-this
         hydra-multiple-cursors/mc/mark-previous-like-this
         hydra-multiple-cursors/mc/mark-previous-like-this
@@ -69,6 +77,10 @@
         hydra-multiple-cursors/nil
         hydra-multiple-cursors/phi-search
         hydra-multiple-cursors/phi-search-backward
+        hydra-multiple-cursors/vr/mc-mark
+        hydra-multiple-cursors/vr/mc-mark-and-exit
         magit-status
         mc/mark-all-in-region-regexpmy-toggle-letter-case
+        mouse-set-region
+        my-save-all
         ))
