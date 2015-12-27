@@ -1,0 +1,128 @@
+ls
+cat foo.txt 
+echo "Sed enim ut sem viverra aliquet eget sit amet tellus cras adipiscing enim eu turpis. Sed risus ultricies tristique nulla aliquet enim tortor, at auctor urna nunc id cursus metus?" > foo.txt
+cat foo.txt
+node main.js
+node main.js
+gulp
+pandoc
+pandoc
+ls
+open
+open test.html
+open test.org
+xdg-open test.html
+xdg-open test.html
+ls
+xdg-open test.html
+ls
+l
+ls
+xdg-open test.html
+git clone https://github.com/yyr/yasnippets-orgmode.git
+ls
+for file in *.yasnippet; do    mv -- "$file" "${file%%.old}"done
+ssh-keygen -t rsa
+git config
+git --global
+which git --global
+cin rosgic --global --edit
+git config --global --edit
+ssh-agent -s
+ls
+ssh -T git@github.com
+ssh -T git@github.com
+ls
+ll
+chmod 700 id_rsa.pub 
+ssh -T git@github.com
+Permission denied (publickey).ssh -vT git@github.com
+ls
+ll
+cd ..
+chmod 700 ~/.ssh && chmod 600 ~/.ssh/*
+ls
+cd .ssh
+ls
+ll
+ssh -vT git@github.com
+sudo ssh -vT git@github.com
+ls
+ll
+chmod 664 *
+ssh -vT git@github.com
+ssh -vT git@github.com
+eval "$(ssh-agent -s)"
+ssh-T git@github.com
+ssh -T git@github.com
+ssh -vT git@github.com
+sudo su
+ssh -vT git@github.com
+eval "$(ssh-agent -s)"
+sbcl
+which sbcl
+cd /usr/bin/sbcl
+cd /usr/bin
+ls
+find / --name sbcl
+find / -name sbcl
+sudo find / --name sbcl
+sudo find / -name sbcl
+cd /usr/lib/sbcl
+ls
+cd site-systems/
+ls
+find / -name quicklisp
+sudo find / -name quicklisp
+
+cd ~/Downloads/
+sbcl
+sbcl --load quicklisp.lisp 
+which sbcl
+http --download https://github.com/shihyu/Regular_Expressions/blob/master/Oreilly.Mastering.Regular.Expressions.3rd.Aug.2006.pdf
+etags
+etags
+ls
+ctags -e learn.org
+ctag
+ctags
+sudo apt-get install ctags
+etags learn.org
+ctgas -e learn.org
+touch hello.py
+echo "from math import cos" > test.py
+echo "print(cos(10))" >> test.py
+etags test.py
+ls
+cat TAGS 
+ls
+cd usefull/
+ls
+cd ..
+ls
+mkdir org-related
+mv learn.org  org-related/
+ls
+cd org-related/
+http --download https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf
+git add .
+git commit -m "big update"
+git push
+git push
+ipython
+python  qr_1666aIj.py 
+python algorithm_analys.py
+python algorithm_analys.py
+python algorithm_analys.py
+python algorithm_analys.py
+python algorithm_analys.py
+python algorithm_analys.py
+ls
+xdg-open Coding\ Math\ -\ Episode\ 10\ -\ Advanced\ Acceleration-4UPiT5lDYe8.mp4  &
+Coding Math - Episode 13 - Friction-ueqi8boYS5k.mp4
+Coding Math - Episode 6 - Vectors, Part I-DfGOw8_ZaBA.mp4
+Coding Math - Episode 6 - Vectors, Part I-DfGOw8_ZaBA.mp4
+xdg-open Coding Math - Episode 6 - Vectors, Part I-DfGOw8_ZaBA.mp4
+sh
+ls
+ls
