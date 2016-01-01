@@ -96,6 +96,7 @@
 (use-package helm-css-scss
   :ensure t :defer t)
 
+
 (use-package company
   :ensure t
   :init (progn
@@ -177,7 +178,8 @@
 (use-package tramp
   :defer t
   :init (progn
-          (setq tramp-default-method "ssh")))
+          (setq tramp-default-method "ssh"
+                password-cache-expiry nil)))
 
 (use-package simple-httpd
   :ensure t :defer t)
@@ -190,10 +192,16 @@
   :init (progn
           (setq quickrun-focus-p nil)))
 
+
 (use-package eshell
-  :init (add-hook 'eshell-mode-hook (lambda ()
-                                      (bind-key "<tab>" 'completion-at-point eshell-mode-map)
-                                      (bind-key "TAB" 'completion-at-point eshell-mode-map))))
+  :init (progn
+          (add-hook 'eshell-mode-hook (lambda ()
+                                        (bind-key "M-d" 'eshell-bol eshell-mode-map)
+                                        (bind-key "M-q" 'eshell-kill-input eshell-mode-map)
+                                        (bind-key "M-H" 'eshell-previous-prompt eshell-mode-map)
+                                        (bind-key "M-N" 'eshell-next-prompt eshell-mode-map)
+                                        (bind-key "<tab>" 'completion-at-point eshell-mode-map)
+                                        (bind-key "TAB" 'completion-at-point eshell-mode-map)))))
 
 (use-package comment-dwim-2
   :ensure t :defer t)
@@ -987,7 +995,7 @@ change what is evaluated to the statement on the current line."
               (buffer-name (get-buffer (cadr (member (buffer-name) (mapcar (function buffer-name) (append eshell-buf-list eshell-buf-list))))))
             "*eshell*"))
     (if create
-        (setq eshel-buffer-name (eshell "new"))
+        (setq eshell-buffer-name (eshell "new"))
       (eshell))))
 
 
@@ -1335,7 +1343,7 @@ change what is evaluated to the statement on the current line."
   (delete-other-windows)
   (split-window-vertically)
   (windmove-down)
-  (setq eshel-buffer-name "*eshell*")
+  (setq eshell-buffer-name "*eshell*")
   (eshell-dwim)
   (split-window-horizontally)
   (windmove-right)
@@ -1347,13 +1355,13 @@ change what is evaluated to the statement on the current line."
   (my-previous-user-buffer)
   (windmove-left)
   (balance-windows)
-  (enlarge-window 18))
+  (enlarge-window 19))
 
 
 (defun split-2-2-eshell ()
   (interactive)
   (delete-other-windows)
-  (setq eshel-buffer-name "*eshell*")
+  (setq eshell-buffer-name "*eshell*")
   (eshell-dwim)
   (split-window-vertically)
   (windmove-down)
@@ -1386,14 +1394,14 @@ change what is evaluated to the statement on the current line."
   (windmove-left)
   (windmove-left)
   (balance-windows)
-  (enlarge-window 18))
+  (enlarge-window 19))
 
 (defun split-3-3 ()
   (interactive)
   (delete-other-windows)
   (split-window-vertically)
   (windmove-down)
-  (setq eshel-buffer-name "*eshell*")
+  (setq eshell-buffer-name "*eshell*")
   (eshell-dwim)
   (split-window-horizontally)
   (windmove-right)
@@ -1413,7 +1421,7 @@ change what is evaluated to the statement on the current line."
   (windmove-left)
   (windmove-left)
   (balance-windows)
-  (enlarge-window 18))
+  (enlarge-window 19))
 
 (defun split-3-3-3 ()
   (interactive)
@@ -1489,9 +1497,7 @@ change what is evaluated to the statement on the current line."
 (bind-key "M-T" 'scroll-up-command)
 (bind-key "M-G" 'my-backward-block)
 (bind-key "M-R" 'my-forward-block)
-;; (bind-key* "C-M-g" 'beginning-of-defun)
-;; (bind-key* "C-M-r" 'end-of-defun)
-(bind-key* "M-d" 'my-beginning-of-line-or-block)
+(bind-key "M-d" 'my-beginning-of-line-or-block)
 (bind-key* "M-D" 'end-of-line)
 (bind-key* "C-M-d" 'sp-beginning-of-sexp)
 (bind-key* "C-M-S-d" 'sp-end-of-sexp)
@@ -1513,8 +1519,8 @@ change what is evaluated to the statement on the current line."
 (bind-key "C-M-h" 'smartscan-symbol-go-backward)
 (bind-key "C-M-n" 'smartscan-symbol-go-forward)
 (bind-key "C-M-c" 'occur)
-(bind-key* "M-H" 'sp-backward-sexp)
-(bind-key* "M-N" 'sp-forward-sexp)
+(bind-key "M-H" 'sp-backward-sexp)
+(bind-key "M-N" 'sp-forward-sexp)
 (bind-key* "M-9" 'sp-splice-sexp)
 (bind-key* "M-[" 'sp-forward-barf-sexp)
 (bind-key* "M-]" 'sp-forward-slurp-sexp)
@@ -1536,7 +1542,7 @@ change what is evaluated to the statement on the current line."
 (bind-key* "M-y" 'undo-tree-redo)
 
 ;; COPY, CUT, PASTE, REDO, UNDO ,DUPLICATE, JOIN
-(bind-key* "M-q" 'my-cut-line-or-region)
+(bind-key "M-q" 'my-cut-line-or-region)
 (bind-key "M-Q" 'append-next-kill)
 (bind-key* "M-j" 'my-copy-line-or-region)
 (bind-key* "M-J" 'sp-backward-copy-sexp)
@@ -1571,6 +1577,7 @@ change what is evaluated to the statement on the current line."
 ;; COMMAND, SHELL, RUN, EMMET
 (bind-key* "M-a" 'helm-M-x)
 (bind-key* "M-A" 'shell-command)
+(bind-key* "C-M-a" 'shell-command-on-region)
 (bind-key* "M-C-A" 'eval-expression)
 (bind-key* "M-1" 'eshell-dwim)
 (bind-key* "M-!" 'shell-dwim)
@@ -1610,6 +1617,7 @@ change what is evaluated to the statement on the current line."
 
 ;; HELM SWOOP
 (bind-key "C-r" 'helm-swoop)
+(bind-key "C-M-r" 'helm-multi-swoop-current-mode)
 (bind-key "C-S-r" 'helm-swoop-back-to-last-point)
 (bind-key "C-8" 'helm-multi-swoop-current-mode)
 (bind-key "M-7" 'helm-multi-swoop)
@@ -1626,7 +1634,7 @@ change what is evaluated to the statement on the current line."
 (bind-key "C-M-l" 'er/mark-defun)
 (bind-key* "M-s" 'er/expand-region)
 (bind-key* "M-S" 'er/mark-inside-pairs)
-(bind-key* "C-M-S" 'er/mark-inside-quotes)
+(bind-key* "C-M-S" 'er/mark-symbol)
 
 
 ;; BUFFER SWITCHING ERROR ELSCREEN
@@ -2514,3 +2522,4 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrange3"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta")))))
 
+(put 'erase-buffer 'disabled nil)
