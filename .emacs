@@ -406,11 +406,9 @@
 
 (use-package ggtags
   :ensure t :defer t
-  :init (progn
+  :config (progn
           (unbind-key "M-n" ggtags-navigation-mode-map )
-          (unbind-key "M-p" ggtags-navigation-mode-map )
-          )
-  )
+          (unbind-key "M-p" ggtags-navigation-mode-map )))
 
 (use-package flycheck
   :ensure t :defer t)
