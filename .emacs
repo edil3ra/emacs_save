@@ -93,9 +93,9 @@
                   helm-candidates-in-buffer-search-default-fn)
                 helm-swoop-pre-input-function (lambda () ""))))
 
+
 (use-package helm-css-scss
   :ensure t :defer t)
-
 
 (use-package company
   :ensure t
@@ -291,6 +291,7 @@
 
 (use-package beacon
   :ensure t :defer t
+  :diminish beacon-mode
   :init (progn
           (beacon-mode)))
 
@@ -401,6 +402,18 @@
   :defer t
   :init(progn
          (semantic-mode 1)))
+
+
+(use-package ggtags
+  :ensure t :defer t
+  :init (progn
+          (unbind-key "M-n" ggtags-navigation-mode-map )
+          (unbind-key "M-p" ggtags-navigation-mode-map )
+          )
+  )
+
+(use-package flycheck
+  :ensure t :defer t)
 
 (use-package undo-tree
   :ensure t :defer t
@@ -872,11 +885,17 @@ change what is evaluated to the statement on the current line."
 
 (use-package php-mode
   :ensure t
-  :config(progn
-           (unbind-key "C-d" php-mode-map)))
+  :init (progn
+          (add-hook 'php-mode-hook
+                    (lambda ()
+                      (ggtags-mode 1)
+                      (flycheck-mode 1))))
+  :config (progn
+           (unbind-key "C-d" php-mode-map)
+           (unbind-key "M-q" php-mode-map)
+           (unbind-key "C-." php-mode-map)
+           ))
 
-(use-package php+-mode
-  :ensure t :defer t)
 
 (use-package php-extras
   :ensure t :defer t)
@@ -2097,6 +2116,8 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("\'" mc-hide-unmatched-lines-mode))
 
 
+
+
 (defhydra hydra-register (:hint nil :color pink)
   "
     ^Bookmark^   ^Store^                           ^Jump^
@@ -2159,6 +2180,65 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
 
 
 
+(defhydra hydra-ggtags (:color teal :hint nil)
+  "
+ ^Find^                           ^Other^         ^Options^
+╭─────────────────────────────────────────────────────────╯
+  [_d_] definition  [_e_] dwin    [_-_] repl      v search
+  [_f_] file        [_o_] reg     [_z_] def       l navigation
+  [_s_] symbol      [_i_] query   [_/_] update    m option
+  [_r_] reference   [_'_] prev
+  [_c_] continue[   [_,_] next
+"
+  
+  ("d" ggtags-find-definition)
+  ("f" ggtags-find-file)
+  ("s" ggtags-find-other-symbol)
+  ("r" ggtags-find-reference)
+  ("c" ggtags-find-tag-continue)
+  ("e" ggtags-find-tag-dwim)
+  ("o" ggtags-find-tag-regexp)
+  ("g" ggtags-grep)
+  ("i" ggtags-idutils-query)
+  ("," ggtags-next-mark)
+  ("'" ggtags-prev-mark)
+  ("-" ggtags-query-replace)
+  ("z" ggtags-show-definition)
+  ("/" ggtags-update-tags)
+
+  ("vv" ggtags-view-search-history)
+  ("va" ggtags-view-search-history-action)
+  ("vk" ggtags-view-search-history-kill)
+  ("vl" ggtags-view-search-history-mode)
+  ("vn" ggtags-view-search-history-next)
+  ("vh" ggtags-view-search-history-prev)
+  ("vu" ggtags-view-search-history-update)
+  ("vh" ggtags-view-tag-history)
+  ("v." ggtags-view-tag-history-mode)
+
+  ("ln" ggtags-navigation-isearch-forward)
+  ("ll" ggtags-navigation-last-error)
+  ("l." ggtags-navigation-mode)
+  ("lt" ggtags-navigation-next-file)
+  ("lc" ggtags-navigation-previous-file)
+  ("ls" ggtags-navigation-start-file)
+  ("lv" ggtags-navigation-visible-mode)
+
+  ("mb" ggtags-browse-file-as-hypertext)
+  ("mc" ggtags-create-tags)
+  ("md" ggtags-delete-tags)
+  ("me" ggtags-explain-tags)
+  ("mk" ggtags-kill-file-buffers)
+  ("mw" ggtags-kill-window)
+  ("mr" ggtags-reload)
+  ("ms" ggtags-save-project-settings)
+  ("me" ggtags-save-to-register)
+  ("ml" ggtags-toggle-project-read-only)
+  ("q" nil :color blue)
+
+
+  )
+
 (defhydra hydra-major (:color teal :hint nil)
   "
     [_t_] text  [_d_] diff    [_l_] prog     [_o_] org
@@ -2191,7 +2271,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   "
     [_a_] abbrev    [_d_] debu   [_l_] line     [_n_] nyan     [_wb_] sub
     [_r_] truncate  [_s_] save   [_t_] typo     [_v_] visual   [_ws_] sup
-    [_e_] desktop   [_k_] skewer [_f_] flyspell [_c_] flymake  [_C-t_] case
+    [_e_] desktop   [_k_] skewer [_f_] flyspell [_c_] flycheck  [_C-t_] case
      ^ ^             ^ ^         [_p_] fly-prog
 "
   ("a" abbrev-mode)
@@ -2207,7 +2287,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("k" skewer-mode)
   ("f" flyspell-mode)
   ("p" flyspell-prog-mode)
-  ("c" flymake-mode)
+  ("c" flycheck-mode)
   ("wb" subword-mode)
   ("ws" superword-mode)
   ("C-t" my-toogle-case)
@@ -2411,6 +2491,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 (bind-key "C-x e" 'hydra-elscreen/body)
 (bind-key "C-t" 'hydra-multiple-cursors/body)
 (bind-key "C-s" 'hydra-navigate/body)
+(bind-key "C-." 'hydra-ggtags/body)
 
 (bind-key "C-x -" 'hydra-yasnippet/body)
 (bind-key "C-x p" 'hydra-project/body)
@@ -2452,7 +2533,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(column-number-mode t)
  '(company-backends
    (quote
-    (company-ac-php-backend company-irony company-tern company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-oddmuse company-files company-dabbrev)))
+    (company-irony company-tern company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-oddmuse company-gtags company-files company-dabbrev)))
  '(company-idle-delay 0.1)
  '(company-minimum-prefix-length 1)
  '(company-quickhelp-mode t)
