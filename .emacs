@@ -279,15 +279,50 @@
 (use-package goto-chg
   :ensure t :defer t)
 
+(use-package window-number
+  :ensure t)
+
 (use-package neotree
   :ensure t :defer t
+  :init (progn
+          (setq neo-window-fixed-size t
+                neo-window-width 30))
   :config(progn
            (defun neotree-enter-in-place ()
              (interactive)
              (neotree-enter)
              (neotree-show))
+           (defun neotree-window-1 ()
+             (interactive)
+             (window-number-select 2))
+           (defun neotree-window-2 ()
+             (interactive)
+             (window-number-select 3))
+           (defun neotree-window-3 ()
+             (interactive)
+             (window-number-select 4))
+
+           
            (bind-key "<tab>" #'neotree-enter neotree-mode-map)
-           (bind-key "e" #'neotree-enter-in-place neotree-mode-map)))
+           (bind-key "e" #'neotree-enter neotree-mode-map)
+           (bind-key "o" #'neotree-enter-in-place neotree-mode-map)
+           (bind-key "r" #'neotree-rename-node neotree-mode-map)
+           (bind-key "d" #'neotree-delete-node neotree-mode-map)
+           (bind-key "c" #'neotree-create-node neotree-mode-map)
+           (bind-key "." #'neotree-hidden-file-toggle neotree-mode-map)
+           (bind-key "m" #'neotree-dir neotree-mode-map)
+           (bind-key "h" #'neotree-select-previous-sibling-node neotree-mode-map)
+           (bind-key "n" #'neotree-select-next-sibling-node neotree-mode-map)
+           (bind-key "c" #'neotree-previous-line neotree-mode-map)
+           (bind-key "t" #'neotree-next-line neotree-mode-map)
+           (bind-key "'" #'neotree-enter-horizontal-split neotree-mode-map)
+           (bind-key "," #'neotree-enter-vertical-split neotree-mode-map)
+           (bind-key "j" #'neotree-copy-node neotree-mode-map)
+           (bind-key "u" #'neotree-select-up-node neotree-mode-map)
+           (bind-key "i" #'neotree-select-down-node neotree-mode-map)
+           (bind-key "s" #'neotree-change-root neotree-mode-map)
+           (bind-key "1" #'neotree-window-1 neotree-mode-map)
+           ))
 
 (use-package beacon
   :ensure t :defer t
@@ -1601,6 +1636,8 @@ change what is evaluated to the statement on the current line."
 (bind-key* "S-<f1>" 'shell-buffer)
 (bind-key* "<f1>" 'scratch-buffer)
 (bind-key "<f2>" 'neotree-toggle)
+(bind-key "M-0" 'neotree-show)
+(bind-key "M-)" 'balance-windows)
 (bind-key* "<f4>" 'quickrun)
 (bind-key* "S-<f5>" 'compile)
 (bind-key* "<f5>" 'recompile)
