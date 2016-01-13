@@ -46,7 +46,7 @@
                 helm-persistent-help-string nil
                 helm-boring-buffer-regexp-list
                 (quote
-                 ("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf" "\\*.*\\*")))
+                 ("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf" "\\*.*\\*" "\\*magit")))
           (setq helm-c-source-swoop-match-functions
                 '(helm-mm-exact-match
                   helm-mm-match
@@ -85,17 +85,20 @@
 
 
 (use-package helm-swoop
-  :ensure t :defer t
+  :ensure t
   :init (progn
           (setq helm-c-source-swoop-search-functions
                 '(helm-mm-exact-search
                   helm-mm-search
                   helm-candidates-in-buffer-search-default-fn)
-                helm-swoop-pre-input-function (lambda () ""))))
+                helm-swoop-pre-input-function (lambda () "")))
+  :config (progn
+            (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-map)
+            (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-swoop-edit-map)))
+
 
 (use-package helm-css-scss
   :ensure t :defer t)
-
 
 (use-package company
   :ensure t
@@ -144,7 +147,8 @@
          (setq projectile-enable-caching t
                projectile-completion-system 'helm
                projectile-switch-project-action 'helm-projectile-find-file
-               projectile-use-native-indexing t)
+               ;; projectile-use-native-indexing t)
+               projectile-use-native-indexing nil)
          (helm-projectile-on)
          (projectile-global-mode)))
 
@@ -195,11 +199,18 @@
 
 (use-package eshell
   :init (progn
+          (defun eshell/clear ()
+            (let ((inhibit-read-only t))
+              (erase-buffer)
+              (eshell-send-input)))
           (add-hook 'eshell-mode-hook (lambda ()
                                         (bind-key "M-d" 'eshell-bol eshell-mode-map)
                                         (bind-key "M-q" 'eshell-kill-input eshell-mode-map)
                                         (bind-key "M-H" 'eshell-previous-prompt eshell-mode-map)
                                         (bind-key "M-N" 'eshell-next-prompt eshell-mode-map)
+                                        (bind-key "C-l" 'eshell/clear eshell-mode-map)
+                                        (bind-key "<up>" 'eshell-previous-input eshell-mode-map)
+                                        (bind-key "<down>" 'eshell-next-input eshell-mode-map)
                                         (bind-key "<tab>" 'completion-at-point eshell-mode-map)
                                         (bind-key "TAB" 'completion-at-point eshell-mode-map)))))
 
@@ -279,18 +290,53 @@
 (use-package goto-chg
   :ensure t :defer t)
 
+(use-package window-number
+  :ensure t)
+
 (use-package neotree
   :ensure t :defer t
+  :init (progn
+          (setq neo-window-fixed-size t
+                neo-window-width 30))
   :config(progn
            (defun neotree-enter-in-place ()
              (interactive)
              (neotree-enter)
              (neotree-show))
+           (defun neotree-window-1 ()
+             (interactive)
+             (window-number-select 2))
+           (defun neotree-window-2 ()
+             (interactive)
+             (window-number-select 3))
+           (defun neotree-window-3 ()
+             (interactive)
+             (window-number-select 4))
+
+           
            (bind-key "<tab>" #'neotree-enter neotree-mode-map)
-           (bind-key "e" #'neotree-enter-in-place neotree-mode-map)))
+           (bind-key "e" #'neotree-enter neotree-mode-map)
+           (bind-key "o" #'neotree-enter-in-place neotree-mode-map)
+           (bind-key "r" #'neotree-rename-node neotree-mode-map)
+           (bind-key "d" #'neotree-delete-node neotree-mode-map)
+           (bind-key "c" #'neotree-create-node neotree-mode-map)
+           (bind-key "." #'neotree-hidden-file-toggle neotree-mode-map)
+           (bind-key "m" #'neotree-dir neotree-mode-map)
+           (bind-key "h" #'neotree-select-previous-sibling-node neotree-mode-map)
+           (bind-key "n" #'neotree-select-next-sibling-node neotree-mode-map)
+           (bind-key "c" #'neotree-previous-line neotree-mode-map)
+           (bind-key "t" #'neotree-next-line neotree-mode-map)
+           (bind-key "'" #'neotree-enter-horizontal-split neotree-mode-map)
+           (bind-key "," #'neotree-enter-vertical-split neotree-mode-map)
+           (bind-key "j" #'neotree-copy-node neotree-mode-map)
+           (bind-key "u" #'neotree-select-up-node neotree-mode-map)
+           (bind-key "i" #'neotree-select-down-node neotree-mode-map)
+           (bind-key "s" #'neotree-change-root neotree-mode-map)
+           (bind-key "1" #'neotree-window-1 neotree-mode-map)))
 
 (use-package beacon
   :ensure t :defer t
+  :diminish beacon-mode
   :init (progn
           (beacon-mode)))
 
@@ -301,12 +347,16 @@
 
 
 (use-package visual-regexp
-  :ensure t)
+  :ensure t
+  :config (progn
+          (bind-key "C-c ." 'hide-lines-show-all  vr/minibuffer-regexp-keymap )))
 
 
 (use-package multiple-cursors
   :ensure t
-  :diminish multiple-cursors-mode)
+  :diminish multiple-cursors-mode
+  :config (progn
+          (bind-key "C--" 'mc-hide-unmatched-lines-mode mc/keymap)))
 
 (use-package phi-search
   :ensure t)
@@ -401,6 +451,16 @@
   :defer t
   :init(progn
          (semantic-mode 1)))
+
+
+(use-package ggtags
+  :ensure t :defer t
+  :config (progn
+          (unbind-key "M-n" ggtags-navigation-mode-map )
+          (unbind-key "M-p" ggtags-navigation-mode-map )))
+
+(use-package flycheck
+  :ensure t :defer t)
 
 (use-package undo-tree
   :ensure t :defer t
@@ -522,7 +582,13 @@
           (setq expand-region-preferred-python-mode (quote fgallina-python)
                 python-shell-interpreter "ipython3"
                 python-indent-offset 4
-                python-check-command nil)))
+                python-check-command nil)
+          (add-hook 'python-mode-hook (lambda()
+                                        (flycheck-mode 1))))
+  :config (progn
+            (bind-key "C-c C-r" 'python-shell-send-region python-mode-map)
+            (bind-key "C-c C-c" 'python-shell-send-defun python-mode-map)
+            (bind-key "C-c C-k" 'python-shell-send-buffer python-mode-map)))
 
 
 (use-package elpy
@@ -533,10 +599,23 @@
                elpy-rpc-backend "jedi"
                elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults))))
   :config(progn
-           (bind-key "C-c C-i" #'elpy-importmagic-fixup elpy-mode-map)
-           (bind-key "C-c i" #'elpy-importmagic-fixup elpy-mode-map)
-           (bind-key "C-c C-n" #'elpy-goto-definition elpy-mode-map)
-           (bind-key "C-c n" #'elpy-goto-definition elpy-mode-map)))
+           (bind-key "C-c C-n" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c n" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c C-i" 'elpy-importmagic-add-import elpy-mode-map)
+           (bind-key "C-c i " 'elpy-importmagic-add-import elpy-mode-map)
+           (bind-key "C-c C-m" 'elpy-importmagic-add-import elpy-mode-map)
+           (bind-key "C-c m" 'elpy-importmagic-add-import elpy-mode-map)
+           (bind-key "C-c C-b" 'elpy-importmagic-fixup elpy-mode-map)
+           (bind-key "C-c b" 'elpy-importmagic-fixup elpy-mode-map)
+           (bind-key "C-c C-t" 'elpy-test elpy-mode-map)
+           (bind-key "C-c t" 'elpy-test elpy-mode-map)
+           (bind-key "C-c C-n" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c n" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c C-s" 'elpy-rgrep-symbol elpy-mode-map)
+           (bind-key "C-c s" 'elpy-rgrep-symbol elpy-mode-map)
+           (bind-key "C-c r" 'elpy-refactor elpy-mode-map)
+           (unbind-key "C-c C-r" elpy-mode-map)
+           (unbind-key "C-c C-l" elpy-mode-map)))
 
 (use-package jedi
   :ensure t :defer t)
@@ -551,7 +630,6 @@
 (use-package ruby-mode
   :defer t
   :config(progn
-           (setq inf-ruby-default-implementation "pry")
            (bind-key "<f8>" #'inf-ruby ruby-mode-map)
            (bind-key "<f9>" #'robe-start ruby-mode-map)
            (bind-key "C-c C-c" #'ruby-send-last-sexp ruby-mode-map)))
@@ -872,11 +950,17 @@ change what is evaluated to the statement on the current line."
 
 (use-package php-mode
   :ensure t
-  :config(progn
-           (unbind-key "C-d" php-mode-map)))
+  :init (progn
+          (add-hook 'php-mode-hook
+                    (lambda ()
+                      (ggtags-mode 1)
+                      (flycheck-mode 1))))
+  :config (progn
+           (unbind-key "C-d" php-mode-map)
+           (unbind-key "M-q" php-mode-map)
+           (unbind-key "C-." php-mode-map)
+           ))
 
-(use-package php+-mode
-  :ensure t :defer t)
 
 (use-package php-extras
   :ensure t :defer t)
@@ -920,6 +1004,8 @@ change what is evaluated to the statement on the current line."
 ;; desktop mode
 (desktop-save-mode)
 
+;; search regex
+(setq case-fold-search nil)
 
 ;; save on focus out
 (defun my-save-out-hook ()
@@ -974,13 +1060,15 @@ change what is evaluated to the statement on the current line."
     (bind-key "<f6>" (lambda ()
                        (interactive)
                        (run-in-eshell last-executed-code)))
-    (save-buffer current)
-    (switch-to-buffer-other-window (get-buffer shell-name))
+    (my-save-all)
+    (when (not (string-equal (buffer-name (current-buffer)) shell-name))
+      (switch-to-buffer-other-window (get-buffer shell-name)))
     (end-of-buffer)
     (eshell-kill-input)
     (insert code)
     (eshell-send-input)
-    (switch-to-buffer-other-window current)))
+    (when (not (string-equal (buffer-name (current-buffer)) shell-name))
+      (switch-to-buffer-other-window current))))
 
 
 
@@ -998,6 +1086,13 @@ change what is evaluated to the statement on the current line."
         (setq eshell-buffer-name (eshell "new"))
       (eshell))))
 
+
+(defun my-dirname-buffer ()
+  (interactive)
+  (let ((dirname (file-name-directory (buffer-file-name))))
+    (progn
+      (message dirname)
+      (kill-new dirname))))
 
 
 (defun my-open-with (arg)
@@ -1484,6 +1579,7 @@ change what is evaluated to the statement on the current line."
 (unbind-key "M-<down-mouse-1>")
 (bind-key* "M-<mouse-1>" 'mc/add-cursor-on-click)
 
+
 ;; (define-key key-translation-map (kbd "<f8>") (kbd "<menu>"))
 
 ;; MOVE KEY
@@ -1562,7 +1658,7 @@ change what is evaluated to the statement on the current line."
 (bind-key* "M-f" 'goto-last-change)
 (bind-key* "M-F" 'goto-last-change-reverse)
 (bind-key* "C-S-s" 'ido-write-file)
-(bind-key* "C-l" 'goto-line)
+(bind-key "C-l" 'goto-line)
 (bind-key* "C-=" 'text-scale-increase)
 (bind-key* "C-+" 'text-scale-decrease)
 (bind-key* "M-z" 'my-toggle-letter-case)
@@ -1584,6 +1680,8 @@ change what is evaluated to the statement on the current line."
 (bind-key* "S-<f1>" 'shell-buffer)
 (bind-key* "<f1>" 'scratch-buffer)
 (bind-key "<f2>" 'neotree-toggle)
+(bind-key "M-0" 'neotree-show)
+(bind-key "M-)" 'balance-windows)
 (bind-key* "<f4>" 'quickrun)
 (bind-key* "S-<f5>" 'compile)
 (bind-key* "<f5>" 'recompile)
@@ -1619,9 +1717,9 @@ change what is evaluated to the statement on the current line."
 (bind-key "C-r" 'helm-swoop)
 (bind-key "C-M-r" 'helm-multi-swoop-current-mode)
 (bind-key "C-S-r" 'helm-swoop-back-to-last-point)
-(bind-key "C-8" 'helm-multi-swoop-current-mode)
-(bind-key "M-7" 'helm-multi-swoop)
+(bind-key "M-8" 'helm-multi-swoop)
 (bind-key "M-*" 'helm-multi-swoop-all)
+(bind-key "M-7" 'helm-multi-swoop-current-mode)
 
 ;; MAGIT
 (bind-key "C-c g" #' magit-status)
@@ -1641,6 +1739,8 @@ change what is evaluated to the statement on the current line."
 (bind-key* "C-S-e" 'ibuffer)
 (bind-key* "M-'" 'my-previous-user-buffer)
 (bind-key* "M-," 'my-next-user-buffer)
+(bind-key* "C-M-'" 'elscreen-previous)
+(bind-key* "C-M-," 'elscreen-next)
 (bind-key* "M-\"" 'elscreen-previous)
 (bind-key* "M-<" 'elscreen-next)
 (bind-key* "C-'" 'previous-error)
@@ -1936,6 +2036,7 @@ change what is evaluated to the statement on the current line."
   ("z" undo-tree-undo)
   ("y" undo-tree-redo)
   ("SPC" set-mark-command)
+  ("C-\'" mc-hide-unmatched-lines-mode)
   ("q" nil :color blue))
 
 
@@ -2094,7 +2195,12 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("y" undo-tree-redo)
   ("q" nil :color blue)
   ("g" mc/keyboard-quit)
-  ("\'" mc-hide-unmatched-lines-mode))
+  ("\'" mc-hide-unmatched-lines-mode)
+  ("-" mc-hide-unmatched-lines-mode)
+  ("C-\'" mc-hide-unmatched-lines-mode)
+  ("C--" mc-hide-unmatched-lines-mode))
+
+
 
 
 (defhydra hydra-register (:hint nil :color pink)
@@ -2159,6 +2265,62 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
 
 
 
+(defhydra hydra-ggtags (:color teal :hint nil)
+  "
+ ^Find^                           ^Other^         ^Options^
+╭─────────────────────────────────────────────────────────╯
+  [_d_] definition  [_e_] dwin    [_-_] repl      v search
+  [_f_] file        [_o_] reg     [_z_] def       l navigation
+  [_s_] symbol      [_i_] query   [_/_] update    m option
+  [_r_] reference   [_'_] prev
+  [_c_] continue[   [_,_] next
+"
+  
+  ("d" ggtags-find-definition)
+  ("f" ggtags-find-file)
+  ("s" ggtags-find-other-symbol)
+  ("r" ggtags-find-reference)
+  ("c" ggtags-find-tag-continue)
+  ("e" ggtags-find-tag-dwim)
+  ("o" ggtags-find-tag-regexp)
+  ("g" ggtags-grep)
+  ("i" ggtags-idutils-query)
+  ("," ggtags-next-mark)
+  ("'" ggtags-prev-mark)
+  ("-" ggtags-query-replace)
+  ("z" ggtags-show-definition)
+  ("/" ggtags-update-tags)
+
+  ("vv" ggtags-view-search-history)
+  ("va" ggtags-view-search-history-action)
+  ("vk" ggtags-view-search-history-kill)
+  ("vl" ggtags-view-search-history-mode)
+  ("vn" ggtags-view-search-history-next)
+  ("vh" ggtags-view-search-history-prev)
+  ("vu" ggtags-view-search-history-update)
+  ("vh" ggtags-view-tag-history)
+  ("v." ggtags-view-tag-history-mode)
+
+  ("ln" ggtags-navigation-isearch-forward)
+  ("ll" ggtags-navigation-last-error)
+  ("l." ggtags-navigation-mode)
+  ("lt" ggtags-navigation-next-file)
+  ("lc" ggtags-navigation-previous-file)
+  ("ls" ggtags-navigation-start-file)
+  ("lv" ggtags-navigation-visible-mode)
+
+  ("mb" ggtags-browse-file-as-hypertext)
+  ("mc" ggtags-create-tags)
+  ("md" ggtags-delete-tags)
+  ("me" ggtags-explain-tags)
+  ("mk" ggtags-kill-file-buffers)
+  ("mw" ggtags-kill-window)
+  ("mr" ggtags-reload)
+  ("ms" ggtags-save-project-settings)
+  ("me" ggtags-save-to-register)
+  ("ml" ggtags-toggle-project-read-only)
+  ("q" nil :color blue))
+
 (defhydra hydra-major (:color teal :hint nil)
   "
     [_t_] text  [_d_] diff    [_l_] prog     [_o_] org
@@ -2191,7 +2353,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   "
     [_a_] abbrev    [_d_] debu   [_l_] line     [_n_] nyan     [_wb_] sub
     [_r_] truncate  [_s_] save   [_t_] typo     [_v_] visual   [_ws_] sup
-    [_e_] desktop   [_k_] skewer [_f_] flyspell [_c_] flymake  [_C-t_] case
+    [_e_] desktop   [_k_] skewer [_f_] flyspell [_c_] flycheck  [_C-t_] case
      ^ ^             ^ ^         [_p_] fly-prog
 "
   ("a" abbrev-mode)
@@ -2207,7 +2369,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("k" skewer-mode)
   ("f" flyspell-mode)
   ("p" flyspell-prog-mode)
-  ("c" flymake-mode)
+  ("c" flycheck-mode)
   ("wb" subword-mode)
   ("ws" superword-mode)
   ("C-t" my-toogle-case)
@@ -2218,10 +2380,11 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
 
 (defhydra hydra-execute (:color blue :hint nil)
   "
-    [_o_] open    [_e_] execute   
+[_o_] open  [_e_] execute  [_w_] dirname
 "
   ("o" my-open-with)
   ("e" my-sudo)
+  ("w" my-dirname-buffer)
   ("q" nil :color blue)
   ("g" nil))
 
@@ -2411,6 +2574,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 (bind-key "C-x e" 'hydra-elscreen/body)
 (bind-key "C-t" 'hydra-multiple-cursors/body)
 (bind-key "C-s" 'hydra-navigate/body)
+(bind-key "C-." 'hydra-ggtags/body)
 
 (bind-key "C-x -" 'hydra-yasnippet/body)
 (bind-key "C-x p" 'hydra-project/body)
@@ -2452,7 +2616,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(column-number-mode t)
  '(company-backends
    (quote
-    (company-ac-php-backend company-irony company-tern company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-oddmuse company-files company-dabbrev)))
+    (company-irony company-tern company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-oddmuse company-gtags company-files company-dabbrev)))
  '(company-idle-delay 0.1)
  '(company-minimum-prefix-length 1)
  '(company-quickhelp-mode t)
@@ -2522,4 +2686,3 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrange3"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta")))))
 
-(put 'erase-buffer 'disabled nil)
