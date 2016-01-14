@@ -2327,14 +2327,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("ms" ggtags-save-project-settings)
   ("me" ggtags-save-to-register)
   ("ml" ggtags-toggle-project-read-only)
-<<<<<<< HEAD
   ("q" nil :color blue))
-=======
-  ("q" nil :color blue)
-
-
-  )
->>>>>>> 03190df344c708746c16eca2bd2ae9e21b147895
 
 (defhydra hydra-major (:color teal :hint nil)
   "
