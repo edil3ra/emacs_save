@@ -26,6 +26,7 @@
         keyboard-escape-quit
         keyboard-quit
         kill-region
+        kill-visual-line
         mc/mark-all-in-region
         mc/mark-all-in-region-regexp
         my-backward-block
@@ -49,14 +50,18 @@
 (setq mc/cmds-to-run-once
       '(
         beginning-of-buffer
+        company-complete
         end-of-buffer
         er/mark-inside-pairs
         helm-find-files
+        helm-show-kill-ring
+        hydra--digit-argument
         hydra-multiple-cursors/body
         hydra-multiple-cursors/lambda-h
         hydra-multiple-cursors/lambda-q-and-exit
         hydra-multiple-cursors/mc-hide-unmatched-lines-mode
         hydra-multiple-cursors/mc/edit-beginnings-of-lines
+        hydra-multiple-cursors/mc/edit-beginnings-of-lines-and-exit
         hydra-multiple-cursors/mc/edit-ends-of-lines
         hydra-multiple-cursors/mc/edit-ends-of-lines-and-exit
         hydra-multiple-cursors/mc/edit-lines
@@ -64,6 +69,7 @@
         hydra-multiple-cursors/mc/mark-all-in-region-regexp
         hydra-multiple-cursors/mc/mark-all-like-this
         hydra-multiple-cursors/mc/mark-all-like-this-and-exit
+        hydra-multiple-cursors/mc/mark-all-like-this-dwim-and-exit
         hydra-multiple-cursors/mc/mark-next-like-this
         hydra-multiple-cursors/mc/mark-previous-like-this
         hydra-multiple-cursors/mc/mark-previous-like-this
@@ -79,8 +85,11 @@
         hydra-multiple-cursors/phi-search-backward
         hydra-multiple-cursors/vr/mc-mark
         hydra-multiple-cursors/vr/mc-mark-and-exit
+        hydra-navigate/vr/mc-mark-and-exit
         magit-status
         mc/mark-all-in-region-regexpmy-toggle-letter-case
         mouse-set-region
         my-save-all
+        previous-error
+        sp-remove-active-pair-overlay
         ))
