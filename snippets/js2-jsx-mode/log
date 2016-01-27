@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : console2.log
+# --
+console.log($0)
