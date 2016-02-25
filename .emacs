@@ -319,7 +319,7 @@
            (bind-key "o" #'neotree-enter-in-place neotree-mode-map)
            (bind-key "r" #'neotree-rename-node neotree-mode-map)
            (bind-key "d" #'neotree-delete-node neotree-mode-map)
-           (bind-key "c" #'neotree-create-node neotree-mode-map)
+           (bind-key "a" #'neotree-create-node neotree-mode-map)
            (bind-key "." #'neotree-hidden-file-toggle neotree-mode-map)
            (bind-key "m" #'neotree-dir neotree-mode-map)
            (bind-key "h" #'neotree-select-previous-sibling-node neotree-mode-map)
@@ -412,7 +412,9 @@
           ))
 
 (use-package jinja2-mode
-  :ensure t :defer t)
+  :ensure t :defer t
+  :init (progn
+          (add-to-list 'auto-mode-alist '("\\.html\\'" . jinja2-mode))))
 
 (use-package css-mode
   :ensure t :defer t
@@ -543,6 +545,12 @@
           '(erc-track-mode t)))
 
 
+(use-package org-mime
+  :ensure t :defer t
+  
+
+  )
+
 (use-package org
   :init (progn
           (setq org-CUA-compatible nil
@@ -566,11 +574,9 @@
                   (emacs-lisp . t)))
                 org-confirm-babel-evaluate nil
                 org-plantuml-jar-path  (expand-file-name "~/.emacs.d/elpa/org-20160118/scripts/plantuml.jar")
-                org-babel-python-command "python3")
-          )
+                org-babel-python-command "python3"))
   :config (progn
-            (add-hook 'org-mode-hook (lambda ()
-                                       (visual-line-mode)))
+            (add-hook 'org-mode-hook (lambda () (visual-line-mode)))
             (unbind-key "C-e" org-mode-map)
             (unbind-key "C-j" org-mode-map)))
 
@@ -581,17 +587,16 @@
 (use-package ob-mongo
   :ensure t :defer t)
 
+
 ;; PYTHON
 (use-package python
-  :ensure t :defer t
+  :ensure t
   :mode ("\\.py\\'" . python-mode)
   :init (progn
           (setq expand-region-preferred-python-mode (quote fgallina-python)
                 python-shell-interpreter "ipython3"
                 python-indent-offset 4
-                python-check-command nil)
-          (add-hook 'python-mode-hook (lambda()
-                                        (flycheck-mode 1))))
+                python-check-command nil))
   :config (progn
             (bind-key "C-c C-r" 'python-shell-send-region python-mode-map)
             (bind-key "C-c C-c" 'python-shell-send-defun python-mode-map)
@@ -601,9 +606,14 @@
 (use-package elpy
   :ensure t :defer t
   :init(progn
+         (defun my/python-refactoring ()
+           (interactive)
+           (save-buffer)
+           (elpy-refactor))
          (elpy-enable)
          (setq elpy-rpc-python-command "python3"
                elpy-rpc-backend "jedi"
+               elpy-flymake-show-error nil
                elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults))))
   :config(progn
            (bind-key "C-c C-n" 'elpy-goto-definition elpy-mode-map)
@@ -620,7 +630,7 @@
            (bind-key "C-c n" 'elpy-goto-definition elpy-mode-map)
            (bind-key "C-c C-s" 'elpy-rgrep-symbol elpy-mode-map)
            (bind-key "C-c s" 'elpy-rgrep-symbol elpy-mode-map)
-           (bind-key "C-c r" 'elpy-refactor elpy-mode-map)
+           (bind-key "C-c r" 'my/python-refactoring elpy-mode-map)
            (unbind-key "C-c C-r" elpy-mode-map)
            (unbind-key "C-c C-l" elpy-mode-map)))
 
@@ -884,13 +894,13 @@ change what is evaluated to the statement on the current line."
 
 
 
-(use-package clojure-cheatsheet
-  :ensure t :defer t)
-
 (use-package clj-refactor
   :ensure t
   :init(progn
-         (setq cljr-suppress-middleware-warnings t)
+         (setq cljr-suppress-middleware-warnings t
+               cljr-auto-clean-ns nil
+               cljr-auto-sort-ns nil
+               cljr-auto-eval-ns-form nil)
          (add-hook 'clojure-mode-hook (lambda ()
                                         (clj-refactor-mode 1)
                                         (cljr-add-keybindings-with-prefix "C-c r")))))
@@ -920,31 +930,40 @@ change what is evaluated to the statement on the current line."
 (use-package haskell-mode
   :ensure t :defer t
   :init(progn
+         (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+           (setenv "PATH" (concat my-cabal-path path-separator (getenv "PATH")))
+           (add-to-list 'exec-path my-cabal-path))
+         
          (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
          (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
          (add-hook 'haskell-mode-hook 'turn-on-hi2)
-         (setq haskell-process-suggest-remove-import-lines t
-               haskell-process-auto-import-loaded-modules t
-               haskell-process-log t
-               haskell-process-type 'cabal-repl))
+
+         (custom-set-variables
+          '(haskell-process-suggest-remove-import-lines t)
+          '(haskell-process-auto-import-loaded-modules t)
+          '(haskell-process-log t)
+          ;; '(haskell-process-type 'cabal-repl)
+          '(haskell-tags-on-save t)))
+         
   :config(progn
-           (bind-key "C-c '" #'haskell-move-nested-left haskell-mode-map)
-           (bind-key "C-c ," #'haskell-move-nested-right haskell-mode-map)
-           (bind-key "C-`" #'haskell-interactive-bring haskell-mode-map)
-           (bind-key "C-c t" #'haskell-process-do-type haskell-mode-map)
-           (bind-key "C-c C-t" #'haskell-process-do-type haskell-mode-map)
-           (bind-key "C-c n" #'haskell-process-do-info haskell-mode-map)
-           (bind-key "C-c C-n" #'haskell-process-do-info haskell-mode-map)
-           (bind-key "C-c c" #'haskell-process-cabal haskell-mode-map)
-           (bind-key "C-c C-c" #'haskell-process-cabal-build haskell-mode-map)
-           (bind-key "C-c d" #'haskell-hoogle haskell-mode-map)
-           (bind-key "C-c C-d" #'haskell-hoogle haskell-mode-map)
-           (bind-key "C-c l" #'haskell-process-load-or-reload haskell-mode-map)
-           (bind-key "C-c C-l" #'haskell-process-load-or-reload haskell-mode-map)
-           (bind-key "C-c r" #'haskell-debug haskell-mode-map)
-           (bind-key "C-c C-r" #'haskell-debug haskell-mode-map)
-           (bind-key "C-c C-k" #'haskell-interactive-mode-clear haskell-mode-map)
-           (bind-key [f8] #'haskell-navigate-imports haskell-mode-map)))
+           (eval-after-load 'haskell-mode '(progn
+                                             (bind-key "C-c C-l" 'haskell-process-load-or-reload haskell-mode-map)
+                                             (bind-key "C-c C-z" 'haskell-interactive-switch haskell-mode-map)
+                                             (bind-key "C-c C-t" 'haskell-process-do-type haskell-mode-map)
+                                             (bind-key "C-c C-i" 'haskell-process-do-info haskell-mode-map)
+                                             (bind-key "C-c C-c" 'haskell-process-cabal-build haskell-mode-map)
+                                             (bind-key "C-c C-o" 'haskell-compile haskell-mode-map)
+                                             (bind-key "C-c b" 'haskell-process-cabal haskell-mode-map)
+                                             (unbind-key "M-c" haskell-mode-map)
+                                             (unbind-key "M-t" haskell-mode-map)))
+           (eval-after-load 'haskell-cabal-mode '(progn
+                                              (bind-key "C-c C-z" 'haskell-interactive-switch haskell-cabal-mode-map)
+                                              (bind-key "C-c C-c" 'haskell-process-cabal-build haskell-cabal-mode-map)
+                                              (bind-key "C-c C-o" 'haskell-compile haskell-cabal-mode-map)
+                                              (bind-key "C-c b" 'haskell-process-cabal haskell-cabal-mode-map)
+                                              (unbind-key "M-c" haskell-cabal-mode-map)
+                                              (unbind-key "M-t" haskell-cabal-mode-map)))))           
+
 
 (use-package ghc
   :ensure t :defer t
@@ -953,6 +972,13 @@ change what is evaluated to the statement on the current line."
           (autoload 'ghc-debug "ghc" nil t)
           (add-hook 'haskell-mode-hook (lambda () (ghc-init)))))
 
+
+
+(use-package company-ghc
+  :ensure t
+  :init (add-to-list 'company-backends 'company-ghc))
+  
+
 ;; C C++
 (use-package c-mode-common-hook
   :defer t
@@ -960,7 +986,6 @@ change what is evaluated to the statement on the current line."
          (setq-default c-basic-offset 4))
   :config(progn(
                 (unbind-key "C-c C-d" c-mode-common-map)
-                (unbind-key "C-c d" c-mode-common-map)
                 (unbind-key "M-q" c-mode-common-map))))
 
 (use-package irony
@@ -971,6 +996,42 @@ change what is evaluated to the statement on the current line."
   :init (add-to-list 'company-backends 'company-irony))          
 
 
+
+;; GO
+(use-package go-mode
+  :ensure t :defer t
+  :init (progn
+          (setenv "GOROOT" "/opt/go")
+          (setenv "GOPATH" "/home/vince/Code/go")
+          (add-hook 'go-mode-hook
+                    (lambda ()
+                      (flycheck-mode 1))))
+  :config (progn
+            (bind-key "C-c C-a" 'go-goto-imports go-mode-map)            
+            (bind-key "C-c C-o" 'go-import-add go-mode-map)            
+            (bind-key "C-c C-e" 'go-remove-unused-imports go-mode-map)
+            (bind-key "C-c C-'" 'go-goto-function go-mode-map)
+            (bind-key "C-c C-," 'go-goto-arguments go-mode-map)
+            (bind-key "C-c C-." 'go-goto-function-name go-mode-map)
+            (bind-key "C-c C-p" 'go-goto-return-values go-mode-map)
+            (bind-key "C-c C-d" 'godef-describe go-mode-map)
+            (bind-key "C-c C-l" 'godef-jump go-mode-map)
+            (bind-key "C-c C-/" 'godef-jump-other-window go-mode-map)
+            (bind-key "C-c C--" 'godoc-at-point go-mode-map)
+            (bind-key "C-c C-\\" 'godoc go-mode-map)
+            (bind-key "C-c C-f" 'gofmt go-mode-map)))
+
+(use-package company-go
+  :ensure t
+  :init(add-to-list 'company-backends 'company-go))
+
+(use-package go-eldoc
+  :ensure t :defer t
+  :init (progn
+          (add-hook 'go-mode-hook 'go-eldoc-setup)))
+
+
+;; PHP
 (use-package php-mode
   :ensure t :defer t
   :init (progn
@@ -985,6 +1046,9 @@ change what is evaluated to the statement on the current line."
 
 (use-package php-extras
   :ensure t :defer t)
+
+
+
 
 
 ;; STUFF
@@ -1004,9 +1068,10 @@ change what is evaluated to the statement on the current line."
       scroll-preserve-screen-position 1)
 
 
+(fringe-mode 0) ;; turn off left and right fringe cols
+(fset 'yes-or-no-p 'y-or-n-p);; replace yes to y
+(setq confirm-nonexistent-file-or-buffer nil)
 
-;; replace yes to y
-(fset 'yes-or-no-p 'y-or-n-p)
 ;; tab
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -1089,9 +1154,8 @@ change what is evaluated to the statement on the current line."
     (eshell-kill-input)
     (insert code)
     (eshell-send-input)
-    (when (not (string-equal (buffer-name (current-buffer)) shell-name))
+    (when (not (string-equal (buffer-name current) shell-name))
       (switch-to-buffer-other-window current))))
-
 
 
 (defun eshell-dwim (&optional create)
@@ -1607,7 +1671,8 @@ change what is evaluated to the statement on the current line."
 (bind-key "C-SPC" 'company-complete)
 (bind-key "TAB" 'indent-for-tab-command)
 (bind-key "<backtab>" 'my-indent-shift-left)
-(bind-key "M--" 'yas-expand)
+(bind-key "M--" 'hippie-expand)
+(bind-key "M-\\" 'dabbrev)
 (bind-key* "C-a" 'mark-whole-buffer)
 (bind-key "<M-return>" 'smart-ret)
 (bind-key "<S-return>" 'smart-ret-reverse)
@@ -1638,12 +1703,13 @@ change what is evaluated to the statement on the current line."
 (bind-key* "M-D" 'end-of-line)
 (bind-key "M-b" 'beginning-of-buffer)
 (bind-key "M-B" 'end-of-buffer)
-(bind-key* "M-v" 'sp-next-sexp)
-(bind-key* "M-w" 'sp-previous-sexp)
+(bind-key* "C-M-v" 'sp-next-sexp)
+(bind-key* "C-M-w" 'sp-previous-sexp)
+(bind-key* "M-v" 'sp-end-of-sexp)
+(bind-key* "M-w" 'sp-beginning-of-sexp)
+
 (bind-key* "M-V" 'sp-down-sexp)
 (bind-key* "M-W" 'sp-backward-down-sexp)
-(bind-key* "C-M-v" 'sp-end-of-sexp)
-(bind-key* "C-M-w" 'sp-beginning-of-sexp)
 (bind-key* "C-M-S-v" 'sp-beginning-of-next-sexp)
 (bind-key* "C-M-S-w" 'sp-beginning-of-previous-sexp)
 (bind-key* "C-S-w" 'sp-up-sexp)
@@ -1653,7 +1719,6 @@ change what is evaluated to the statement on the current line."
 (bind-key "C-n" 'ace-jump-mode)
 (bind-key* "C-M-h" 'elscreen-previous)
 (bind-key* "C-M-n" 'elscreen-next)
-
 
 (bind-key "C-M-c" 'occur)
 (bind-key "M-H" 'sp-backward-sexp)
@@ -1689,7 +1754,7 @@ change what is evaluated to the statement on the current line."
 (bind-key "M-K" 'yank-pop)
 (bind-key* "M-;" 'undo-tree-undo)
 (bind-key* "M-:" 'undo-tree-redo)
-(bind-key "C-z" 'undo-tree-undo)
+(bind-key* "C-z" 'undo-tree-undo)
 (bind-key "C-S-z" 'undo-tree-redo)
 (bind-key "C-x u" 'undo-tree-visualize)
 (bind-key "C-d" 'duplicate-current-line-or-region)
@@ -1721,12 +1786,12 @@ change what is evaluated to the statement on the current line."
 (bind-key* "M-!" 'shell-dwim)
 (bind-key* "S-<f1>" 'shell-buffer)
 (bind-key* "<f1>" 'scratch-buffer)
-(bind-key "<f2>" 'neotree-toggle)
-(bind-key "M-0" 'neotree-show)
+(bind-key "M-/" 'neotree-toggle)
+(bind-key "M-=" 'neotree-show)
 (bind-key "M-)" 'balance-windows)
 (bind-key* "<f4>" 'quickrun)
-(bind-key* "S-<f5>" 'compile)
-(bind-key* "<f5>" 'recompile)
+(bind-key "S-<f5>" 'compile)
+(bind-key "<f5>" 'recompile)
 (bind-key "S-<f6>" 'run-in-eshell)
 (bind-key* "<f7>" 'helm-bookmarks)
 (bind-key* "<f9>" 'calc)
@@ -1764,7 +1829,6 @@ change what is evaluated to the statement on the current line."
 
 ;; MAGIT
 (bind-key "C-x g" 'magit-status)
-(bind-key "C-x C-g" 'magit-dispatch-popup)
 
 ;; SELECTION
 (bind-key "M-l" 'my-select-current-line)
@@ -1887,7 +1951,7 @@ change what is evaluated to the statement on the current line."
   ("n" elscreen-next)
   ("h" elscreen-previous)
   ("t" elscreen-goto)
-  ("e" helm-elscreen)
+  ("e" helm-elscreen :color blue)
   ("j" elscreen-dired)
   ("i" elscreen-toggle-display-tab)
   ("b" elscreen-toggle-display-screen-number)
@@ -2120,10 +2184,10 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
        ^^^_t_^^^            [_z_] cancel   [_y_ redo]
 "
   ("c" drag-stuff-up)
-  ("h" drag-stuff-left)
-  ("n" drag-stuff-right)
-  ("N" transpose-sexps)
-  ("H" (transpose-sexps -1))
+  ("h" (transpose-sexps -1))
+  ("n" transpose-sexps)
+  ("H" drag-stuff-left)
+  ("N" drag-stuff-right)
   ("t" drag-stuff-down)
   ("s" transpose-chars)
   ("S" (transpose-chars -1))
@@ -2159,7 +2223,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
                                  :post (deactivate-mark))
   "
         ^_c_^
-        ^^↑^^        [_e_] delete      [_j_] copy     [_r_] reset
+        ^^↑^^        [_e_] delete      [_j_] copy     [_r_] reset   [_l_] mark
     _h_ ←   → _n_    [_s_] tring       [_k_] paste    [_z_] undo
         ^^↓^^        [_x_] xchange     [_d_] kill     [_y_] redo
         ^_t_^    
@@ -2173,6 +2237,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("x" ora-ex-point-mark nil)
   ("j" copy-rectangle-as-kill nil)
   ("k" yank-rectangle nil)
+  ("l" vr/mc-mark)
   ("d" kill-rectangle nil)
   ("r" (if (region-active-p)
            (deactivate-mark)
@@ -2555,6 +2620,8 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
   ("2" markdown-insert-header-atx-2)
   ("3" markdown-insert-header-atx-3)
   ("4" markdown-insert-header-atx-4)
+  ("5" markdown-insert-header-atx-5)
+  ("6" markdown-insert-header-atx-6)
   ("m" markdown-insert-list-item)
   ("l" markdown-promote)
   ("r" markdown-demote)
@@ -2622,7 +2689,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 (bind-key "C-x p" 'hydra-project/body)
 (bind-key "C-x =" 'hydra-adjust/body)
 (bind-key "C-x t" 'hydra-transpose/body)
-(bind-key "C-x r" 'hydra-rectangle/body)
+(bind-key* "C-x r" 'hydra-rectangle/body)
 (bind-key "C-x l" 'hydra-register/body)
 (bind-key "C-x k" 'hydra-macro/body)
 (bind-key "C-x K" 'kmacro-end-macro)
@@ -2658,7 +2725,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(column-number-mode t)
  '(company-backends
    (quote
-    (company-irony company-tern company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-oddmuse company-gtags company-files company-dabbrev)))
+    (company-irony company-tern company-bbdb company-go company-nxml company-css company-ghc company-eclim company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-oddmuse company-gtags company-files company-dabbrev)))
  '(company-idle-delay 0.1)
  '(company-minimum-prefix-length 1)
  '(company-quickhelp-mode t)
@@ -2671,14 +2738,23 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
    (quote
     ("68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(delete-selection-mode 1)
+ '(elpy-rpc-python-command "python3")
  '(exec-path
    (append exec-path
            (quote
             ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t)
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-tags-on-save t)
+ '(org-babel-python-command "python3")
  '(package-selected-packages
    (quote
     (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(prefer-coding-system (quote utf-8))
+ '(python-check-command nil)
+ '(python-shell-interpreter "ipython3")
+ '(pyvenv-virtualenvwrapper-python "/usr/bin/python3")
  '(ring-bell-function (quote ignore) t)
  '(same-window-buffer-names (quote ("*shell*")))
  '(scroll-error-top-bottom t)
