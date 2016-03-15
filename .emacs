@@ -2,7 +2,7 @@
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
 
 (unless (package-installed-p 'use-package)
@@ -109,6 +109,7 @@
           (add-hook 'css-mode-hook 'company-mode)
           (add-hook 'scss-mode-hook 'company-mode)
           (setq company-tooltip-limit 20
+                company-tooltip-minimum-width 40
                 company-idle-delay 0.1
                 company-echo-delay 0
                 company-show-numbers t
@@ -132,6 +133,16 @@
 
 (use-package company-quickhelp
   :ensure t :defer t)
+
+(use-package ycmd
+  :ensure t :defer t
+  :init (progn
+          (set-variable 'ycmd-server-command '("python" "/opt/ycmd/ycmd"))))
+
+(use-package company-ycmd
+  :ensure t :defer t
+  :init (progn
+          (company-ycmd-setup)))
 
 (use-package eldoc
   :ensure t :defer t
@@ -303,36 +314,32 @@
              (interactive)
              (neotree-enter)
              (neotree-show))
-           (defun neotree-window-1 ()
+           (defun neotree-enter-quit ()
              (interactive)
-             (window-number-select 2))
-           (defun neotree-window-2 ()
-             (interactive)
-             (window-number-select 3))
-           (defun neotree-window-3 ()
-             (interactive)
-             (window-number-select 4))
-
+             (neotree-enter)
+             (neotree-hide))
            
-           (bind-key "<tab>" #'neotree-enter neotree-mode-map)
-           (bind-key "e" #'neotree-enter neotree-mode-map)
-           (bind-key "o" #'neotree-enter-in-place neotree-mode-map)
-           (bind-key "r" #'neotree-rename-node neotree-mode-map)
-           (bind-key "d" #'neotree-delete-node neotree-mode-map)
-           (bind-key "a" #'neotree-create-node neotree-mode-map)
-           (bind-key "." #'neotree-hidden-file-toggle neotree-mode-map)
-           (bind-key "m" #'neotree-dir neotree-mode-map)
-           (bind-key "h" #'neotree-select-previous-sibling-node neotree-mode-map)
-           (bind-key "n" #'neotree-select-next-sibling-node neotree-mode-map)
-           (bind-key "c" #'neotree-previous-line neotree-mode-map)
-           (bind-key "t" #'neotree-next-line neotree-mode-map)
-           (bind-key "'" #'neotree-enter-horizontal-split neotree-mode-map)
-           (bind-key "," #'neotree-enter-vertical-split neotree-mode-map)
-           (bind-key "j" #'neotree-copy-node neotree-mode-map)
-           (bind-key "u" #'neotree-select-up-node neotree-mode-map)
-           (bind-key "i" #'neotree-select-down-node neotree-mode-map)
-           (bind-key "s" #'neotree-change-root neotree-mode-map)
-           (bind-key "1" #'neotree-window-1 neotree-mode-map)))
+           
+           (bind-key "<tab>" 'neotree-enter neotree-mode-map)
+           (bind-key "RET" 'neotree-enter-quit neotree-mode-map)
+           (bind-key "e" 'neotree-enter neotree-mode-map)
+           (bind-key "o" 'neotree-enter-in-place neotree-mode-map)
+           (bind-key "r" 'neotree-rename-node neotree-mode-map)
+           (bind-key "d" 'neotree-delete-node neotree-mode-map)
+           (bind-key "a" 'neotree-create-node neotree-mode-map)
+           (bind-key "." 'neotree-hidden-file-toggle neotree-mode-map)
+           (bind-key "m" 'neotree-dir neotree-mode-map)
+           (bind-key "h" 'neotree-select-previous-sibling-node neotree-mode-map)
+           (bind-key "n" 'neotree-select-next-sibling-node neotree-mode-map)
+           (bind-key "c" 'neotree-previous-line neotree-mode-map)
+           (bind-key "t" 'neotree-next-line neotree-mode-map)
+           (bind-key "'" 'neotree-enter-horizontal-split neotree-mode-map)
+           (bind-key "," 'neotree-enter-vertical-split neotree-mode-map)
+           (bind-key "j" 'neotree-copy-node neotree-mode-map)
+           (bind-key "u" 'neotree-select-up-node neotree-mode-map)
+           (bind-key "i" 'neotree-select-down-node neotree-mode-map)
+           (bind-key "s" 'neotree-change-root neotree-mode-map)
+           (bind-key "1" 'neotree-window-1 neotree-mode-map)))
 
 (use-package beacon
   :ensure t :defer t
@@ -439,6 +446,9 @@
 (use-package yaml-mode
   :ensure t :defer t)
 
+(use-package toml-mode
+  :ensure t :defer t)
+
 (use-package inf-mongo
   :ensure t :defer t
   :init(progn
@@ -477,14 +487,15 @@
 ;; THEMES
 (use-package grandshell-theme
   :ensure t :defer t)
-(use-package zenburn-theme
-  :ensure t :defer t)
-(use-package gotham-theme
-  :ensure t :defer t)
 (use-package monokai-theme
   :ensure t :defer t)
-(use-package noctilux-theme
+(use-package cyberpunk-theme
   :ensure t :defer t)
+(use-package assemblage-theme
+  :ensure t :defer t)
+(use-package toxi-theme
+  :ensure t :defer t)
+
 
 (use-package ido
   :defer t
@@ -503,6 +514,8 @@
                                  (mode . emacs-lisp-mode)
                                  (mode . js2-mode)
                                  (mode . js2-jsx-mode)
+                                 (mode . rust-mode)
+                                 (mode . go-mode)
                                  (mode . coffee-mode)))
                         ("mark" (or
                                  (mode . html-mode)
@@ -546,10 +559,7 @@
 
 
 (use-package org-mime
-  :ensure t :defer t
-  
-
-  )
+  :ensure t :defer t)
 
 (use-package org
   :init (progn
@@ -596,6 +606,7 @@
           (setq expand-region-preferred-python-mode (quote fgallina-python)
                 python-shell-interpreter "ipython3"
                 python-indent-offset 4
+                pyvenv-virtualenvwrapper-python "/usr/bin/python3"
                 python-check-command nil))
   :config (progn
             (bind-key "C-c C-r" 'python-shell-send-region python-mode-map)
@@ -616,18 +627,18 @@
                elpy-flymake-show-error nil
                elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults))))
   :config(progn
-           (bind-key "C-c C-n" 'elpy-goto-definition elpy-mode-map)
-           (bind-key "C-c n" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c C-a" 'elpy-format-code elpy-mode-map)
+           (bind-key "C-c a" 'elpy-format-code elpy-mode-map)
+           (bind-key "C-c C-e" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c e" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c C-o" 'elpy-goto-definition-other-window elpy-mode-map)
+           (bind-key "C-c o" 'elpy-goto-definition-other-window elpy-mode-map)
            (bind-key "C-c C-i" 'elpy-importmagic-add-import elpy-mode-map)
            (bind-key "C-c i " 'elpy-importmagic-add-import elpy-mode-map)
-           (bind-key "C-c C-m" 'elpy-importmagic-add-import elpy-mode-map)
-           (bind-key "C-c m" 'elpy-importmagic-add-import elpy-mode-map)
-           (bind-key "C-c C-b" 'elpy-importmagic-fixup elpy-mode-map)
-           (bind-key "C-c b" 'elpy-importmagic-fixup elpy-mode-map)
+           (bind-key "C-c C-m" 'elpy-importmagic-fixup elpy-mode-map)
+           (bind-key "C-c m" 'elpy-importmagic-fixup elpy-mode-map)
            (bind-key "C-c C-t" 'elpy-test elpy-mode-map)
            (bind-key "C-c t" 'elpy-test elpy-mode-map)
-           (bind-key "C-c C-n" 'elpy-goto-definition elpy-mode-map)
-           (bind-key "C-c n" 'elpy-goto-definition elpy-mode-map)
            (bind-key "C-c C-s" 'elpy-rgrep-symbol elpy-mode-map)
            (bind-key "C-c s" 'elpy-rgrep-symbol elpy-mode-map)
            (bind-key "C-c r" 'my/python-refactoring elpy-mode-map)
@@ -878,6 +889,7 @@ change what is evaluated to the statement on the current line."
   :config
   (defun my/clojure-mode-defaults ()
     (bind-key "<f8>" 'cider-jack-in)
+    (bind-key "S-<f8>" 'cider-jack-in-clojurescript)
     (bind-key "C-c d l" 'clojure-cheatsheet))
   (add-hook 'clojure-mode-hook 'my/clojure-mode-defaults))
 
@@ -941,6 +953,8 @@ change what is evaluated to the statement on the current line."
          (custom-set-variables
           '(haskell-process-suggest-remove-import-lines t)
           '(haskell-process-auto-import-loaded-modules t)
+          '(haskell-process-auto-import-loaded-modules t)
+          '(haskell-process-log t)
           '(haskell-process-log t)
           ;; '(haskell-process-type 'cabal-repl)
           '(haskell-tags-on-save t)))
@@ -983,10 +997,13 @@ change what is evaluated to the statement on the current line."
 (use-package c-mode-common-hook
   :defer t
   :init(progn
-         (setq-default c-basic-offset 4))
-  :config(progn(
-                (unbind-key "C-c C-d" c-mode-common-map)
-                (unbind-key "M-q" c-mode-common-map))))
+         (setq-default c-basic-offset 4)
+         (add-hook 'c-mode-hook
+                   (lambda ()
+                     (unbind-key "C-d" c-mode-map)
+                     (flycheck-mode 1))))
+  :config(progn
+           (unbind-key "C-c C-d" c-mode-common-map)))
 
 (use-package irony
   :ensure t :defer t)
@@ -999,12 +1016,14 @@ change what is evaluated to the statement on the current line."
 
 ;; GO
 (use-package go-mode
-  :ensure t :defer t
+  :ensure t
   :init (progn
           (setenv "GOROOT" "/opt/go")
-          (setenv "GOPATH" "/home/vince/Code/go")
+          (setenv "GOPATH" "/home/vince/.go")
+          (setq gofmt-command "goimports")
           (add-hook 'go-mode-hook
                     (lambda ()
+                      (add-hook 'before-save-hook 'gofmt-before-save)
                       (flycheck-mode 1))))
   :config (progn
             (bind-key "C-c C-a" 'go-goto-imports go-mode-map)            
@@ -1022,13 +1041,51 @@ change what is evaluated to the statement on the current line."
             (bind-key "C-c C-f" 'gofmt go-mode-map)))
 
 (use-package company-go
-  :ensure t
+  :ensure t :defer t
   :init(add-to-list 'company-backends 'company-go))
 
 (use-package go-eldoc
-  :ensure t :defer t
+  :ensure t
   :init (progn
           (add-hook 'go-mode-hook 'go-eldoc-setup)))
+
+
+;; RUST
+(use-package rust-mode
+  :ensure t :defer t
+  :init (progn
+          (add-hook 'rust-mode-hook 'racer-mode)
+          ;; (add-hook 'rust-mode-hook 'ycmd-mode)
+          (add-hook 'rust-mode-hook (lambda () (flycheck-mode 1)))
+          (add-hook 'racer-mode-hook 'eldoc-mode)
+          (add-hook 'racer-mode-hook 'cargo-minor-mode)
+          (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
+  :config (progn
+            (bind-key "C-c C-." 'racer-find-definition rust-mode-map)
+            (bind-key "C-c C-d" 'cargo-process-doc rust-mode-map)
+            (bind-key "C-c C-r" 'cargo-process-run rust-mode-map)
+            (bind-key "C-c C-n" 'cargo-process-new rust-mode-map)
+            (bind-key "C-c C-t" 'cargo-process-test rust-mode-map)
+            (bind-key "C-c C-b" 'cargo-process-build rust-mode-map)
+            (bind-key "C-c C-l" 'cargo-process-clean rust-mode-map)
+            (bind-key "C-c C-e" 'cargo-process-bench rust-mode-map)
+            (bind-key "C-c C-u" 'cargo-process-update rust-mode-map)
+            (bind-key "C-c C-c" 'cargo-process-repeat rust-mode-map)
+            (bind-key "C-c C-s" 'cargo-process-search rust-mode-map)
+            (bind-key "C-c C-T" 'cargo-process-current-test rust-mode-map)
+            (bind-key "C-c C-o" 'cargo-process-current-file-tests rust-mode-map)))
+
+(use-package racer
+  :ensure t :defer t)
+
+(use-package company-racer
+  :ensure t :defer t)
+
+(use-package cargo
+  :ensure t :defer t)
+
+(use-package flycheck-rust
+  :ensure t :defer t)
 
 
 ;; PHP
@@ -1046,8 +1103,6 @@ change what is evaluated to the statement on the current line."
 
 (use-package php-extras
   :ensure t :defer t)
-
-
 
 
 
@@ -1095,10 +1150,10 @@ change what is evaluated to the statement on the current line."
 (setq case-fold-search nil)
 
 ;; save on focus out
-(defun my-save-out-hook ()
-  (interactive)
-  (save-some-buffers t))
-(add-hook 'focus-out-hook 'my-save-out-hook)
+;; (defun my-save-out-hook ()
+;;   (interactive)
+;;   (save-some-buffers t))
+;; (add-hook 'focus-out-hook 'my-save-out-hook)
 
 ;; save all no prompt
 (defun my-save-all ()
@@ -1136,7 +1191,6 @@ change what is evaluated to the statement on the current line."
     (shell buffer)))
 
 
-
 (defun run-in-eshell (code)
   (interactive "M")
   (setq last-executed-code code)
@@ -1144,10 +1198,6 @@ change what is evaluated to the statement on the current line."
         (shell-name "*eshell*"))
     (when (not (get-buffer shell-name ))
       (eshell))
-    (bind-key "<f6>" (lambda ()
-                       (interactive)
-                       (run-in-eshell last-executed-code)))
-    (my-save-all)
     (when (not (string-equal (buffer-name (current-buffer)) shell-name))
       (switch-to-buffer-other-window (get-buffer shell-name)))
     (end-of-buffer)
@@ -1156,6 +1206,14 @@ change what is evaluated to the statement on the current line."
     (eshell-send-input)
     (when (not (string-equal (buffer-name current) shell-name))
       (switch-to-buffer-other-window current))))
+
+
+(defun re-run-in-eshell (&optional hello)
+  (interactive "P")
+  (save-buffer)
+  (run-in-eshell last-executed-code))
+
+
 
 
 (defun eshell-dwim (&optional create)
@@ -1680,7 +1738,8 @@ change what is evaluated to the statement on the current line."
 (bind-key "M-m" 'emmet-expand-line)
 (bind-key "C-c w" 'emmet-wrap-with-markup)
 (bind-key "C-c C-w" 'emmet-wrap-with-markup)
-(bind-key "C-x s" 'my-save-all)
+;; (bind-key "C-x s" 'my-save-all)
+(bind-key "C-s" 'my-save-all)
 (bind-key "C-x C-s" 'save-buffer)
 (unbind-key "M-<down-mouse-1>")
 (bind-key* "M-<mouse-1>" 'mc/add-cursor-on-click)
@@ -1793,10 +1852,13 @@ change what is evaluated to the statement on the current line."
 (bind-key "S-<f5>" 'compile)
 (bind-key "<f5>" 'recompile)
 (bind-key "S-<f6>" 'run-in-eshell)
+(bind-key "<f6>" 're-run-in-eshell)
 (bind-key* "<f7>" 'helm-bookmarks)
+(bind-key* "S-<f9>" 'quick-calc)
 (bind-key* "<f9>" 'calc)
 (bind-key* "<f12>" 'toggle-frame-fullscreen)
 (bind-key* "C-o" 'helm-find-files)
+(bind-key* "C-S-o" 'helm-recentf)
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key* "C-y" 'helm-show-kill-ring)
 (bind-key "C-f" 'helm-projectile-grep)
@@ -1842,14 +1904,14 @@ change what is evaluated to the statement on the current line."
 
 ;; BUFFER SWITCHING ERROR ELSCREEN
 (bind-key* "C-S-e" 'ibuffer)
-(bind-key* "M-'" 'my-previous-user-buffer)
-(bind-key* "M-," 'my-next-user-buffer)
 (bind-key* "C-M-'" 'previous-error)
 (bind-key* "C-M-," 'next-error)
 (bind-key* "M-\"" 'previous-error)
 (bind-key* "M-<" 'next-error)
-(bind-key* "C-'" 'smartscan-symbol-go-backward)
-(bind-key* "C-," 'smartscan-symbol-go-forward)
+(bind-key* "C-'" 'my-previous-user-buffer)
+(bind-key* "C-," 'my-next-user-buffer)
+(bind-key* "M-'" 'smartscan-symbol-go-backward)
+(bind-key* "M-," 'smartscan-symbol-go-forward)
 
 
 ;; WINDOW MOVE
@@ -2579,22 +2641,22 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
     [_l_] leaves        [_s_] subtree     [_h_] backward same level
     [_d_] subtree
 "
-  ("q" hide-sublevels)    ; Hide everything but the top-level headings
-  ("t" hide-body)         ; Hide everything but headings (all body lines)
-  ("o" hide-other)        ; Hide other branches
-  ("r" hide-entry)        ; Hide this entry's body
-  ("l" hide-leaves)       ; Hide body lines in this entry and sub-entries
-  ("d" hide-subtree)      ; Hide everything in this entry and sub-entries
-  ("a" show-all)          ; Show (expand) everything
-  ("e" show-entry)        ; Show this heading's body
-  ("i" show-children)     ; Show this heading's immediate child sub-headings
-  ("k" show-branches)     ; Show all sub-headings under this heading
-  ("s" show-subtree)      ; Show (expand) everything in this heading & below
-  ("u" outline-up-heading)                ; Up
-  ("c" outline-previous-visible-heading)      ; Next
-  ("t" outline-next-visible-heading)  ; Previous
-  ("n" outline-forward-same-level)        ; Forward - same level
-  ("h" outline-backward-same-level)       ; Backward - same level
+  ("q" hide-sublevels)
+  ("t" hide-body)
+  ("o" hide-other)
+  ("r" hide-entry)
+  ("l" hide-leaves)
+  ("d" hide-subtree)
+  ("a" show-all)
+  ("e" show-entry)
+  ("i" show-children)
+  ("k" show-branches)
+  ("s" show-subtree)
+  ("u" outline-up-heading)
+  ("c" outline-previous-visible-heading)
+  ("t" outline-next-visible-heading)
+  ("n" outline-forward-same-level)
+  ("h" outline-backward-same-level)
   ("z" undo-tree-undo)
   ("y" undo-tree-redo)
   ("g" keyboard-quit)
@@ -2682,7 +2744,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 (bind-key "C-x o" 'hydra-window/body)
 (bind-key "C-x e" 'hydra-elscreen/body)
 (bind-key "C-t" 'hydra-multiple-cursors/body)
-(bind-key "C-s" 'hydra-navigate/body)
+(bind-key "C-x s" 'hydra-navigate/body)
 (bind-key "C-." 'hydra-ggtags/body)
 
 (bind-key "C-x -" 'hydra-yasnippet/body)
@@ -2725,36 +2787,22 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(column-number-mode t)
  '(company-backends
    (quote
-    (company-irony company-tern company-bbdb company-go company-nxml company-css company-ghc company-eclim company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-oddmuse company-gtags company-files company-dabbrev)))
- '(company-idle-delay 0.1)
- '(company-minimum-prefix-length 1)
- '(company-quickhelp-mode t)
- '(company-show-numbers t)
- '(company-tooltip-limit 20)
- '(company-tooltip-minimum-width 40)
+    (company-irony company-tern company-bbdb company-go company-rust company-ycmd company-nxml company-css company-ghc company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-gtags company-files)))
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+    ("34e7163479ef3669943b3b9b1fabe639d6e0a0453e0de79cea2c52cb520d3bc4" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "71ecffba18621354a1be303687f33b84788e13f40141580fa81e7840752d31bf" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(delete-selection-mode 1)
- '(elpy-rpc-python-command "python3")
  '(exec-path
    (append exec-path
            (quote
             ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
- '(haskell-process-auto-import-loaded-modules t)
- '(haskell-process-log t)
- '(haskell-process-suggest-remove-import-lines t)
- '(haskell-tags-on-save t)
  '(org-babel-python-command "python3")
  '(package-selected-packages
    (quote
     (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(prefer-coding-system (quote utf-8))
- '(python-check-command nil)
- '(python-shell-interpreter "ipython3")
- '(pyvenv-virtualenvwrapper-python "/usr/bin/python3")
  '(ring-bell-function (quote ignore) t)
  '(same-window-buffer-names (quote ("*shell*")))
  '(scroll-error-top-bottom t)
@@ -2784,8 +2832,8 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 
 ;; theme and font
 (set-default-font "DejaVu Sans Mono 9")
-(load-theme 'grandshell)
-;; (load-theme 'molokai)
+;; (load-theme 'grandshell)
+(load-theme 'cyberpunk)
 
 
 (custom-set-faces
