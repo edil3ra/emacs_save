@@ -5,11 +5,19 @@
       '(
         backward-delete-char
         beginning-of-visual-line
+        c-electric-brace
+        c-electric-colon
+        c-electric-lt-gt
+        c-electric-paren
+        c-electric-semi&comma
+        c-indent-line-or-region
         cljr-slash
         emmet-expand-line
         end-of-visual-line
         helm-M-x
         hydra--negative-argument
+        hydra-ggtags/body
+        hydra-ggtags/nil
         hydra-multiple-cursors/backward-delete-char-untabify
         hydra-multiple-cursors/copy-rectangle-as-kill
         hydra-multiple-cursors/er/expand-region
@@ -44,7 +52,17 @@
         org-self-insert-command
         phi-search-backward
         sgml-slash
+        sp-backward-kill-sexp
+        sp-backward-sexp
+        sp-beginning-of-previous-sexp
+        sp-beginning-of-sexp
+        sp-down-sexp
+        sp-forward-sexp
+        sp-forward-slurp-sexp
+        sp-next-sexp
+        sp-remove-active-pair-overlay
         sp-splice-sexp
+        yas-expand
         ))
 
 (setq mc/cmds-to-run-once
@@ -54,8 +72,11 @@
         end-of-buffer
         er/mark-inside-pairs
         helm-find-files
+        helm-multi-swoop
         helm-show-kill-ring
+        helm-swoop--edit-complete
         hydra--digit-argument
+        hydra-js2-refactor/js2r-rename-var
         hydra-multiple-cursors/body
         hydra-multiple-cursors/lambda-h
         hydra-multiple-cursors/lambda-q-and-exit
@@ -89,7 +110,7 @@
         magit-status
         mc/mark-all-in-region-regexpmy-toggle-letter-case
         mouse-set-region
+        mouse-set-secondary
         my-save-all
         previous-error
-        sp-remove-active-pair-overlay
         ))

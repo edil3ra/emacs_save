@@ -94,8 +94,14 @@
                 helm-swoop-pre-input-function (lambda () "")))
   :config (progn
             (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-map)
-            (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-swoop-edit-map)))
+            (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-edit-map)
+            (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-edit-map)
+            ;; (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-swoop-edit-map)
+            ;; (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-multi-swoop-edit-map)
+            ))
 
+(use-package helm-ag
+  :ensure t :defer t)
 
 (use-package helm-css-scss
   :ensure t :defer t)
@@ -207,6 +213,11 @@
   :init (progn
           (setq quickrun-focus-p nil)))
 
+(use-package shell
+  :defer t
+  :init(progn
+         (bind-key "<up>" 'comint-previous-input shell-mode-map)
+         (bind-key "<down>" 'comint-next-input shell-mode-map)))
 
 (use-package eshell
   :init (progn
@@ -254,6 +265,8 @@
          uniquify-buffer-name-style 'post-forward
          uniquify-separator ":"))
 
+(use-package bookmark+
+  :ensure t :defer t)
 
 (use-package elscreen
   :ensure t :defer t
@@ -261,6 +274,7 @@
           (setq elscreen-display-screen-number t
                 elscreen-display-tab nil)
           (elscreen-start)))
+
 
 (use-package framemove
   :ensure t :defer t)
@@ -318,8 +332,6 @@
              (interactive)
              (neotree-enter)
              (neotree-hide))
-           
-           
            (bind-key "<tab>" 'neotree-enter neotree-mode-map)
            (bind-key "RET" 'neotree-enter-quit neotree-mode-map)
            (bind-key "e" 'neotree-enter neotree-mode-map)
@@ -356,7 +368,7 @@
 (use-package visual-regexp
   :ensure t
   :config (progn
-          (bind-key "C-c ." 'hide-lines-show-all  vr/minibuffer-regexp-keymap )))
+          (bind-key "C-c ." 'hide-lines-show-all  vr/minibuffer-keymap )))
 
 
 (use-package multiple-cursors
@@ -365,38 +377,62 @@
   :config (progn
           (bind-key "C--" 'mc-hide-unmatched-lines-mode mc/keymap)))
 
-(use-package phi-search
-  :ensure t)
+(use-package phi-search :ensure t)
 
 
 (use-package dired+
   :ensure t
   :init (progn
+          (defun my-dired-create-file (file)
+            (interactive
+             (list (read-file-name "Create file: " (dired-current-directory))))
+            (let* ((expanded (expand-file-name file))
+                   (try expanded)
+                   (dir (directory-file-name (file-name-directory expanded)))
+                   new)
+              (if (file-exists-p expanded)
+                  (error "Cannot create file %s: file exists" expanded))
+              ;; Find the topmost nonexistent parent dir (variable `new')
+              (while (and try (not (file-exists-p try)) (not (equal new try)))
+                (setq new try
+                      try (directory-file-name (file-name-directory try))))
+              (when (not (file-exists-p dir))
+                (make-directory dir t))
+              (write-region "" nil expanded t)
+              (when new
+                (dired-add-file new)
+                (dired-move-to-filename))
+              (revert-buffer)))
           (add-hook 'dired-mode-hook 'auto-revert-mode)
-          (diredp-toggle-find-file-reuse-dir t)
-          (defun dired-dotfiles-toggle ()
-            "Show/hide dot-files"
-            (interactive)
-            (when (equal major-mode 'dired-mode)
-              (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p) ; if currently showing
-                  (progn 
-                    (set (make-local-variable 'dired-dotfiles-show-p) nil)
-                    (message "h")
-                    (dired-mark-files-regexp "^\\\.")
-                    (dired-do-kill-lines))
-                (progn (revert-buffer) ; otherwise just revert to re-show
-                       (set (make-local-variable 'dired-dotfiles-show-p) t))))))
+          (diredp-toggle-find-file-reuse-dir t))
   :config (progn
-            (bind-key "." 'dired-dotfiles-toggle dired-mode-map)
+            (bind-key "a" 'dired-toggle-marks dired-mode-map)
+            (bind-key "t" 'my-dired-create-file dired-mode-map)
             (bind-key "M-c" 'diredp-previous-line dired-mode-map)
             (bind-key "M-C" 'scroll-down-command dired-mode-map)
             (bind-key "M-T" 'scroll-up-command dired-mode-map)
             (bind-key "M-b" 'beginning-of-buffer dired-mode-map)
-            (bind-key "M-B" 'end-of-buffer dired-mode-map)))
+            (bind-key "M-B" 'end-of-buffer dired-mode-map)
+            (bind-key "l" 'dired-hide-details-mode dired-mode-map)
+            (bind-key "<tab>" 'dired-subtree-toggle dired-mode-map)
+            (bind-key "<backtab>" 'dired-subtree-cycle dired-mode-map)
+            (bind-key "M-G" 'dired-subtree-beginning dired-mode-map)
+            (bind-key "M-R" 'dired-subtree-end dired-mode-map)
+            (bind-key "c j" 'dired-ranger-copy dired-mode-map)
+            (bind-key "c k" 'dired-ranger-paste dired-mode-map)
+            (bind-key "c x" 'dired-ranger-move dired-mode-map)
+            (bind-key "C-w" 'kill-this-buffer dired-mode-map)
+            (define-key dired-mode-map (kbd ".") dired-filter-map)))
+            
+
+(use-package dired-subtree :ensure t :defer t)
+(use-package dired-filter :ensure t :defer t)
+(use-package dired-ranger :ensure t :defer t)
+
 
 
 (use-package emmet-mode
-  :ensure t :defer t
+  :ensure t
   :init(progn
          (add-hook 'web-mode-hook 'emmet-mode)
          (add-hook 'html-mode-hook 'emmet-mode)
@@ -409,31 +445,36 @@
                                       (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)))))
 
 
+;; WEB BEAUTY
+(use-package web-beautify
+  :ensure t :defer t)
+
 (use-package web-mode
   :defer t
   :init (progn
           (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
           (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))
-          ;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-          ))
+          (add-to-list 'auto-mode-alist '("\\.html\\.twig\\'" . web-mode))))
+
 
 (use-package jinja2-mode
-  :ensure t :defer t
-  :init (progn
-          (add-to-list 'auto-mode-alist '("\\.html\\'" . jinja2-mode))))
+  :ensure t :defer t)
+
 
 (use-package css-mode
-  :ensure t :defer t
+  :defer t
   :config(progn
-           (bind-key "C-p" #'helm-css-scss css-mode-map)))
+           (bind-key "C-p" 'helm-css-scss css-mode-map)
+           (bind-key "C-c C-b" 'web-beautify-css css-mode-map)))
+
+
 
 (use-package scss-mode
   :ensure t :defer t
   :init(progn
          (setq scss-compile-at-save nil))
   :config(progn
-           (bind-key "C-p" #'helm-css-scss scss-mode-map)))
+           (bind-key "C-p" 'helm-css-scss scss-mode-map)))
 
 (use-package markdown-mode
   :ensure t :defer t
@@ -448,6 +489,7 @@
 
 (use-package toml-mode
   :ensure t :defer t)
+  
 
 (use-package inf-mongo
   :ensure t :defer t
@@ -474,7 +516,9 @@
           (unbind-key "M-p" ggtags-navigation-mode-map )))
 
 (use-package flycheck
-  :ensure t :defer t)
+  :ensure t :defer t
+  :init (progn
+          (setq flycheck-check-syntax-automatically '(mode-enabled save))))
 
 (use-package undo-tree
   :diminish undo-tree-mode
@@ -558,10 +602,28 @@
           '(erc-track-mode t)))
 
 
+(use-package doc-view
+  :defer t
+  :init (progn
+          (with-eval-after-load 'doc-view
+            (bind-key "h" 'doc-view-previous-page doc-view-mode-map )
+            (bind-key "n" 'doc-view-next-page doc-view-mode-map )
+            (bind-key "c" 'previous-line doc-view-mode-map )
+            (bind-key "t" 'next-line doc-view-mode-map )
+            (bind-key "g" 'scroll-down-command doc-view-mode-map )
+            (bind-key "r" 'scroll-up-command doc-view-mode-map )
+            (bind-key "b" 'doc-view-first-page doc-view-mode-map )
+            (bind-key "B" 'doc-view-last-page doc-view-mode-map )
+            (bind-key "l" 'doc-view-goto-page doc-view-mode-map )
+            (bind-key "/" 'doc-view-shrink doc-view-mode-map )
+            (bind-key "=" 'doc-view-enlarge doc-view-mode-map ))))
+
+
 (use-package org-mime
   :ensure t :defer t)
 
 (use-package org
+  :defer t
   :init (progn
           (setq org-CUA-compatible nil
                 org-src-preserve-indentation t
@@ -632,6 +694,7 @@
            (bind-key "C-c C-e" 'elpy-goto-definition elpy-mode-map)
            (bind-key "C-c e" 'elpy-goto-definition elpy-mode-map)
            (bind-key "C-c C-o" 'elpy-goto-definition-other-window elpy-mode-map)
+           (bind-key "C-c C-." 'elpy-goto-definition elpy-mode-map)
            (bind-key "C-c o" 'elpy-goto-definition-other-window elpy-mode-map)
            (bind-key "C-c C-i" 'elpy-importmagic-add-import elpy-mode-map)
            (bind-key "C-c i " 'elpy-importmagic-add-import elpy-mode-map)
@@ -640,7 +703,6 @@
            (bind-key "C-c C-t" 'elpy-test elpy-mode-map)
            (bind-key "C-c t" 'elpy-test elpy-mode-map)
            (bind-key "C-c C-s" 'elpy-rgrep-symbol elpy-mode-map)
-           (bind-key "C-c s" 'elpy-rgrep-symbol elpy-mode-map)
            (bind-key "C-c r" 'my/python-refactoring elpy-mode-map)
            (unbind-key "C-c C-r" elpy-mode-map)
            (unbind-key "C-c C-l" elpy-mode-map)))
@@ -651,40 +713,67 @@
 (use-package pyvenv
   :ensure t :defer t
   :init(progn
+         (setenv "WORKON_HOME" "/home/vince/Envs")
          (setq pyvenv-virtualenvwrapper-python "/usr/bin/python3")))
 
 
 ;; RUBY
-(use-package ruby-mode
-  :defer t
-  :config(progn
-           (bind-key "<f8>" #'inf-ruby ruby-mode-map)
-           (bind-key "<f9>" #'robe-start ruby-mode-map)
-           (bind-key "C-c C-c" #'ruby-send-last-sexp ruby-mode-map)))
+(use-package inf-ruby :defer t :ensure t)
 
+
+;; ROBE
 (use-package robe
   :ensure t :defer t
+  :config (progn
+            (unbind-key "C-c C-k" robe-mode-map)
+            (bind-key "C-c C-." 'robe-jump robe-mode-map)
+            (bind-key "C-c C-," 'robe-ask robe-mode-map)))
+
+(use-package ruby-mode
+  :defer t
   :init (progn
-          (add-hook 'ruby-mode-hook 'robe-mode)))
+          (add-hook 'ruby-mode-hook 'robe-mode)
+          (add-hook 'ruby-mode-hook
+                    (lambda ()
+                      (flycheck-mode 1)
+                      (set (make-local-variable 'company-backends) '((company-dabbrev-code company-robe))))))
+  :config(progn
+           (bind-key "<f8>" 'inf-ruby ruby-mode-map)
+           (bind-key "<f9>" 'robe-start ruby-mode-map)
+           (bind-key "C-c C-c" 'ruby-send-block ruby-mode-map)
+           (bind-key "C-c C-b" 'ruby-send-last-sexp ruby-mode-map)
+           (bind-key "C-c C-k" 'ruby-send-buffer ruby-mode-map)
+           (bind-key "C-c C-z" 'run-ruby ruby-mode-map)))
+
 
 
 ;; JAVASCRIPT
 (use-package js2-mode
-  :ensure t :defer t
+  :ensure t
   :mode ("\\.js\\'" . js2-jsx-mode)
   :init (progn
-          (setq js2-basic-offset 4
-                js2-highlight-level 3
-                js2-strict-missing-semi-warning))
+          (setq js2-basic-indent 2
+                js2-basic-offset 2
+                js2-highlight-level 2
+                js2-auto-indent-p t
+                ;; js2-bounce-indent-p t
+                js2-indent-on-enter-key t
+                js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$")
+                js2-mode-show-parse-errors nil
+                js2-mode-show-strict-warnings nil
+                flycheck-eslintrc "~/.eslintrc")
+          (add-hook 'js-mode-hook
+                    (lambda ()
+                      (flycheck-mode 1)
+                      (tern-mode 1)
+                      (set (make-local-variable 'company-backends) '((company-tern))))))
   :config (progn
-            (bind-key "<f8>" 'nodejs-repl js2-mode-map)))
+            (bind-key "<f8>" 'nodejs-repl js2-mode-map)
+            (bind-key "C-c C-b" 'web-beautify-js js2-mode-map)
+            (bind-key "C-c C-i" 'import-js-fix)
+            (bind-key "C-c i" 'import-js-goto)
+            (bind-key "C-c C-u" 'import-js-import)))
 
-
-;; COFFEESCRIPT
-(use-package coffee-mode
-  :ensure t :defer t
-  :init(progn
-         (setq coffee-tab-width 2)))
 
 ;; TERN
 (use-package tern
@@ -692,16 +781,33 @@
   :init(progn
          (defun delete-tern-process ()
            (interactive)
-           (delete-process "Tern"))
+           (if (get-process "Tern") (delete-process (get-process "Tern")))
+           (if (get-process "Tern<1>") (delete-process (get-process "Tern<1>")))
+           (if (get-process "Tern<2>") (delete-process (get-process "Tern<2>")))
+           (if (get-process "Tern<3>") (delete-process (get-process "Tern<3>"))))
          (defun tern-reset ()
            (interactive)
-           (delete-process "Tern")
+           (if (get-process "Tern") (delete-process (get-process "Tern")))
+           (if (get-process "Tern<1>") (delete-process (get-process "Tern<1>")))
+           (if (get-process "Tern<2>") (delete-process (get-process "Tern<2>")))
+           (if (get-process "Tern<3>") (delete-process (get-process "Tern<3>")))
            (tern-mode-disable)
            (tern-mode-enable)))
-         (add-hook 'js-mode-hook (lambda () (tern-mode t))))
   :config(progn
            (unbind-key "C-c C-c" tern-mode-keymap)
-           (bind-key "C-c C-l" 'tern-reset tern-mode-keymap))
+           (bind-key "C-c C-l" 'delete-tern-process tern-mode-keymap)
+           (bind-key "C-c C-," 'tern-find-definition tern-mode-keymap)
+           (bind-key "C-c C-\'" 'tern-pop-find-definition tern-mode-keymap)
+           (bind-key "C-c C-\." 'tern-find-definition-by-name tern-mode-keymap)
+           (bind-key "C-c C-t" 'tern-get-type tern-mode-keymap)
+           (bind-key "C-c C-d" 'tern-get-docs tern-mode-keymap)))
+  
+
+(use-package company-tern :ensure t)
+
+
+(use-package import-js
+  :ensure t :defer t)
 
 
 ;; JS2-REFACTOR
@@ -749,26 +855,11 @@
            (bind-key "C-c r" 'hydra-js2-refactor/body js2-refactor-mode-map)))
 
 
-
-(use-package company-tern
-  :ensure t
-  :init (add-to-list 'company-backends 'company-tern))
-
-;; SKEWER
-(use-package skewer-mode
+;; COFFEESCRIPT
+(use-package coffee-mode
   :ensure t :defer t
   :init(progn
-         ;; (add-hook 'js2-mode-hook 'skewer-mode)
-         (add-hook 'css-mode-hook 'skewer-css-mode)
-         (add-hook 'html-mode-hook 'skewer-html-mode))
-  :config(progn
-           (bind-key "C-c C-c" #'skewer-eval-defun skewer-mode-map)
-           (bind-key "C-c c" #'skewer-eval-defun skewer-mode-map)
-           (bind-key "C-c C-k" #'skewer-load-buffer skewer-mode-map)
-           (bind-key "C-c k" #'skewer-load-buffer skewer-mode-map)
-           (add-hook 'skewer-css-mode-hook (lambda ()
-                                             (bind-key "C-c C-c" #'skewer-css-eval-current-rule skewer-css-mode-map)
-                                             (bind-key "C-c C-r" #'skewer-css-clear-all skewer-css-mode-map)))))
+         (setq coffee-tab-width 2)))
 
 
 ;; NODE
@@ -882,6 +973,19 @@ change what is evaluated to the statement on the current line."
                                        (bind-key "C-c C-k" 'nodejs-repl-eval-buffer js2-mode-map)))))
 
 
+;; ELISP
+(use-package emacs-lisp-mode
+  :defer t
+  :init (progn
+          (add-hook 'emacs-lisp-mode-hook
+                    (lambda ()
+                      (set (make-local-variable 'company-backends) '((company-elisp company-dabbrev-code)))))
+          (bind-key "C-c C-c" 'eval-defun emacs-lisp-mode-map)
+          (bind-key "C-c C-r" 'eval-region emacs-lisp-mode-map)
+          (bind-key "C-c C-k" 'eval-buffer emacs-lisp-mode-map)
+          (bind-key "C-c C-e" 'eval-last-sexp emacs-lisp-mode-map)
+          (bind-key "C-c e" 'eval-last-sexp emacs-lisp-mode-map)
+          (bind-key "C-c C-f" 'eval-last-sexp emacs-lisp-mode-map)))
 
 ;; CLOJURE
 (use-package clojure-mode
@@ -905,9 +1009,8 @@ change what is evaluated to the statement on the current line."
             (bind-key "C-c C-k" 'my/cider-load-buffer cider-mode-map)))
 
 
-
 (use-package clj-refactor
-  :ensure t
+  :ensure t :defer t
   :init(progn
          (setq cljr-suppress-middleware-warnings t
                cljr-auto-clean-ns nil
@@ -916,7 +1019,6 @@ change what is evaluated to the statement on the current line."
          (add-hook 'clojure-mode-hook (lambda ()
                                         (clj-refactor-mode 1)
                                         (cljr-add-keybindings-with-prefix "C-c r")))))
-
 
 ;; COMMON LISP
 (use-package slime
@@ -927,96 +1029,116 @@ change what is evaluated to the statement on the current line."
   :config (progn
             (bind-key "<f8>" 'slime slime-mode-map)))
 
+
 ;; LUA
+(use-package company-lua :ensure t)
 (use-package lua-mode
   :ensure t :defer t
   :init(progn
          (setq lua-indent-level 2
-               lua-prefix-key "C-c"))
+               lua-prefix-key "C-c")
+         (add-hook 'lua-mode-hook
+                   (lambda ()
+                     (set (make-local-variable 'company-backends) '((company-lua company-dabbrev-code)))))
+         (bind-key "C-c C-c" 'lua-send-buffer lua-mode-map)
+         (bind-key "C-c C-d" 'lua-search-documentation lua-mode-map)
+         (bind-key "C-c C-k" 'lua-send-defun lua-mode-map)
+         (bind-key "C-c C-r" 'lua-send-region lua-mode-map))
   :config(progn
            (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
            (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))))
 
 
-;; HASKELL
+
+
+;; HASKELL BUGGY AS HELL ON MY MACHINE
 (use-package haskell-mode
   :ensure t :defer t
-  :init(progn
-         (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
-           (setenv "PATH" (concat my-cabal-path path-separator (getenv "PATH")))
-           (add-to-list 'exec-path my-cabal-path))
-         
-         (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-         (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-         (add-hook 'haskell-mode-hook 'turn-on-hi2)
-
-         (custom-set-variables
-          '(haskell-process-suggest-remove-import-lines t)
-          '(haskell-process-auto-import-loaded-modules t)
-          '(haskell-process-auto-import-loaded-modules t)
-          '(haskell-process-log t)
-          '(haskell-process-log t)
-          ;; '(haskell-process-type 'cabal-repl)
-          '(haskell-tags-on-save t)))
-         
-  :config(progn
-           (eval-after-load 'haskell-mode '(progn
-                                             (bind-key "C-c C-l" 'haskell-process-load-or-reload haskell-mode-map)
-                                             (bind-key "C-c C-z" 'haskell-interactive-switch haskell-mode-map)
-                                             (bind-key "C-c C-t" 'haskell-process-do-type haskell-mode-map)
-                                             (bind-key "C-c C-i" 'haskell-process-do-info haskell-mode-map)
-                                             (bind-key "C-c C-c" 'haskell-process-cabal-build haskell-mode-map)
-                                             (bind-key "C-c C-o" 'haskell-compile haskell-mode-map)
-                                             (bind-key "C-c b" 'haskell-process-cabal haskell-mode-map)
-                                             (unbind-key "M-c" haskell-mode-map)
-                                             (unbind-key "M-t" haskell-mode-map)))
-           (eval-after-load 'haskell-cabal-mode '(progn
-                                              (bind-key "C-c C-z" 'haskell-interactive-switch haskell-cabal-mode-map)
-                                              (bind-key "C-c C-c" 'haskell-process-cabal-build haskell-cabal-mode-map)
-                                              (bind-key "C-c C-o" 'haskell-compile haskell-cabal-mode-map)
-                                              (bind-key "C-c b" 'haskell-process-cabal haskell-cabal-mode-map)
-                                              (unbind-key "M-c" haskell-cabal-mode-map)
-                                              (unbind-key "M-t" haskell-cabal-mode-map)))))           
-
-
-(use-package ghc
-  :ensure t :defer t
   :init (progn
-          (autoload 'ghc-init "ghc" nil t)
-          (autoload 'ghc-debug "ghc" nil t)
-          (add-hook 'haskell-mode-hook (lambda () (ghc-init)))))
+          (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+            (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
+            (add-to-list 'exec-path my-cabal-path)))
+  :config (progn
+            (defvar ghc-insert-key nil) ;; ghc init rebind a lot of usefull key
+            (bind-key "C-c C-c" 'haskell-process-load-or-reload haskell-mode-map)
+            (bind-key "C-c C-l" 'haskell-process-cabal-build haskell-mode-map)
+            (bind-key "C-c C-z" 'haskell-interactive-bring haskell-mode-map)
+            (bind-key "C-c C-t" 'haskell-process-do-type haskell-mode-map)
+            (bind-key "C-c C-i" 'haskell-process-do-info haskell-mode-map)
+            (bind-key "C-c C--" 'haskell-interactive-mode-clear haskell-mode-map)
+            (bind-key "C-c c" 'haskell-process-cabal haskell-mode-map)
+            (add-hook 'haskell-mode-hook (lambda ()
+                                           (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+                                           (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+                                           (ghc-init)
+                                           (flymake-mode)))))
 
-
-
-(use-package company-ghc
-  :ensure t
-  :init (add-to-list 'company-backends 'company-ghc))
+(use-package company-ghc :ensure t)
+(use-package ghc :ensure t :defer t)
   
+
+;; SHELL SH
+(use-package company-shell :ensure t)
+(use-package sh-mode
+  :init (progn
+          (add-hook 'sh-mode-hook
+                    (lambda ()
+                      (company-quickhelp-mode -1)
+                      (set (make-local-variable 'company-backends) '((company-dabbrev-code company-shell)))))))
+
+
 
 ;; C C++
 (use-package c-mode-common-hook
-  :defer t
   :init(progn
-         (setq-default c-basic-offset 4)
+         (setq-default c-basic-offset 4 c-default-style "linux")
+         (setq-default tab-width 4 indent-tabs-mode t)
+         (setq irony-supported-major-modes '(c++-mode c-mode objc-mode php-mode))
          (add-hook 'c-mode-hook
                    (lambda ()
+                     (irony-mode 1)
+                     (irony-eldoc 1)
+                     (flycheck-mode 1)
+                     (flycheck-irony-setup)
+                     (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers)))  
+                     (bind-key "C-c C-." 'semantic-ia-fast-jump c-mode-map)
                      (unbind-key "C-d" c-mode-map)
-                     (flycheck-mode 1))))
-  :config(progn
-           (unbind-key "C-c C-d" c-mode-common-map)))
+                     (unbind-key "C-c C-d" c-mode-map))
+                   )
+         (add-hook 'c++-mode-hook
+                   (lambda ()
+                     (setq flycheck-gcc-language-standard "c++11")
+                     (irony-mode 1)
+                     (irony-eldoc 1)
+                     (flycheck-mode 1)
+                     (flycheck-irony-setup)
+                     (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers)))  
+                     (bind-key "C-c C-." 'semantic-ia-fast-jump c++-mode-map)
+                     (unbind-key "C-d" c++-mode-map)
+                     (unbind-key "C-c C-d" c++-mode-map)))))
+
 
 (use-package irony
-  :ensure t :defer t)
+  :ensure t :defer t
+  :init (progn
+          (custom-set-variables '(irony-additional-clang-options '("-std=c++11")))))
 
 (use-package company-irony
-  :ensure t :defer t
-  :init (add-to-list 'company-backends 'company-irony))          
+  :ensure t :defer t)
 
+(use-package irony-eldoc
+  :ensure t :defer t)
+
+(use-package company-irony-c-headers
+  :ensure t :defer t)
+
+(use-package flycheck-irony
+  :ensure t :defer t)
 
 
 ;; GO
 (use-package go-mode
-  :ensure t
+  :ensure t :defer t
   :init (progn
           (setenv "GOROOT" "/opt/go")
           (setenv "GOPATH" "/home/vince/.go")
@@ -1041,8 +1163,8 @@ change what is evaluated to the statement on the current line."
             (bind-key "C-c C-f" 'gofmt go-mode-map)))
 
 (use-package company-go
-  :ensure t :defer t
-  :init(add-to-list 'company-backends 'company-go))
+  :ensure t :defer t)
+
 
 (use-package go-eldoc
   :ensure t
@@ -1089,20 +1211,29 @@ change what is evaluated to the statement on the current line."
 
 
 ;; PHP
+(use-package ac-php
+  :ensure t :defer t)
+
 (use-package php-mode
   :ensure t :defer t
   :init (progn
           (add-hook 'php-mode-hook
                     (lambda ()
+                      (require 'ac-php-company)
+                      (bind-key "C-c ." 'ac-php-remake-tags-all php-mode-map)
+                      (bind-key "C-c C-." 'ac-php-remake-tags php-mode-map)
+                      ;; (set (make-local-variable 'company-backends) '((company-dabbrev-code company-ac-php-backend)))
+                      (set (make-local-variable 'company-backends) '((company-ac-php-backend)))
                       (ggtags-mode 1)
                       (flycheck-mode 1))))
   :config (progn
-           (unbind-key "C-d" php-mode-map)
-           (unbind-key "M-q" php-mode-map)
-           (unbind-key "C-." php-mode-map)))
+			(unbind-key "C-d" php-mode-map)
+			(unbind-key "M-q" php-mode-map)
+			(unbind-key "C-." php-mode-map)))
 
 (use-package php-extras
   :ensure t :defer t)
+
 
 
 
@@ -1143,6 +1274,10 @@ change what is evaluated to the statement on the current line."
 ;; replace dabbrev by hippie-expand
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
+;; save
+ (setq auto-save-default nil
+       auto-save-interval 0)
+
 ;; desktop mode
 (desktop-save-mode)
 
@@ -1150,10 +1285,10 @@ change what is evaluated to the statement on the current line."
 (setq case-fold-search nil)
 
 ;; save on focus out
-;; (defun my-save-out-hook ()
-;;   (interactive)
-;;   (save-some-buffers t))
-;; (add-hook 'focus-out-hook 'my-save-out-hook)
+(defun my-save-out-hook ()
+  (interactive)
+  (save-some-buffers t))
+(add-hook 'focus-out-hook 'my-save-out-hook)
 
 ;; save all no prompt
 (defun my-save-all ()
@@ -1208,11 +1343,10 @@ change what is evaluated to the statement on the current line."
       (switch-to-buffer-other-window current))))
 
 
-(defun re-run-in-eshell (&optional hello)
+(defun re-run-in-eshell (&optional dt)
   (interactive "P")
   (save-buffer)
   (run-in-eshell last-executed-code))
-
 
 
 
@@ -1250,6 +1384,53 @@ change what is evaluated to the statement on the current line."
                     " "
                     (shell-quote-argument buffer-file-name)))))
 
+(defun xah-open-file-at-cursor ()
+  "Open the file path under cursor.
+If there is text selection, uses the text selection for path.
+If the path starts with “http://”, open the URL in browser.
+Input path can be {relative, full path, URL}.
+Path may have a trailing “:‹n›” that indicates line number. If so, jump to that line number.
+If path does not have a file extension, automatically try with “.el” for elisp files.
+This command is similar to `find-file-at-point' but without prompting for confirmation.
+
+URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
+  (interactive)
+  (let ((ξpath (if (use-region-p)
+                   (buffer-substring-no-properties (region-beginning) (region-end))
+                 (let (p0 p1 p2)
+                   (setq p0 (point))
+                   ;; chars that are likely to be delimiters of full path, e.g. space, tabs, brakets.
+                   (skip-chars-backward "^  \"\t\n`'|()[]{}<>〔〕“”〈〉《》【】〖〗«»‹›·。\\`")
+                   (setq p1 (point))
+                   (goto-char p0)
+                   (skip-chars-forward "^  \"\t\n`'|()[]{}<>〔〕“”〈〉《》【】〖〗«»‹›·。\\'")
+                   (setq p2 (point))
+                   (goto-char p0)
+                   (buffer-substring-no-properties p1 p2)))))
+    (if (string-match-p "\\`https?://" ξpath)
+        (browse-url ξpath)
+      (progn ; not starting “http://”
+        (if (string-match "^\\`\\(.+?\\):\\([0-9]+\\)\\'" ξpath)
+            (progn
+              (let (
+                    (ξfpath (match-string 1 ξpath))
+                    (ξline-num (string-to-number (match-string 2 ξpath))))
+                (if (file-exists-p ξfpath)
+                    (progn
+                      (find-file ξfpath)
+                      (goto-char 1)
+                      (forward-line (1- ξline-num)))
+                  (progn
+                    (when (y-or-n-p (format "file doesn't exist: 「%s」. Create?" ξfpath))
+                      (find-file ξfpath))))))
+          (progn
+            (if (file-exists-p ξpath)
+                (find-file ξpath)
+              (if (file-exists-p (concat ξpath ".el"))
+                  (find-file (concat ξpath ".el"))
+                (when (y-or-n-p (format "file doesn't exist: 「%s」. Create?" ξpath))
+                  (find-file ξpath ))))))))))
+
 
 
 (defun my-sudo ()
@@ -1279,6 +1460,10 @@ change what is evaluated to the statement on the current line."
 (defun scratch-buffer ()
   (interactive)
   (switch-to-buffer "*scratch*"))
+
+(defun shell-command-buffer ()
+  (interactive)
+  (switch-to-buffer "*Shell Command Output*"))
 
 (defun python-buffer ()
   (interactive)
@@ -1470,15 +1655,41 @@ change what is evaluated to the statement on the current line."
   (interactive)
   (previous-buffer)
   (let ((i 0))
-    (while (and (string-equal "*" (substring (buffer-name) 0 1)) (< i 20))
+    (while (and (or
+                 (string-equal "*" (substring (buffer-name) 0 1))
+                 (string-equal "dired-mode" (message "%s" major-mode)))
+                (< i 20))
       (setq i (1+ i)) (previous-buffer) )))
 
 (defun my-next-user-buffer ()
   (interactive)
   (next-buffer)
   (let ((i 0))
-    (while (and (string-equal "*" (substring (buffer-name) 0 1)) (< i 20))
+    (while (and (or
+                 (string-equal "*" (substring (buffer-name) 0 1))
+                 (string-equal "dired-mode" (message "%s" major-mode)))
+                (< i 20))
       (setq i (1+ i)) (next-buffer) )))
+
+
+(defun my-previous-user-dired-buffer ()
+  (interactive)
+  (previous-buffer)
+  (let ((i 0))
+    (while (and
+            (not (string-equal "dired-mode" (message "%s" major-mode)))
+            (< i 20))
+      (setq i (1+ i)) (previous-buffer))))
+
+(defun my-next-user-dired-buffer ()
+  (interactive)
+  (next-buffer)
+  (let ((i 0))
+    (while (and
+            (not (string-equal "dired-mode" (message "%s" major-mode)))
+            (< i 20))
+      (setq i (1+ i)) (next-buffer))))
+
 
 
 (defun my-indent-shift-left (start end &optional count)
@@ -1488,7 +1699,7 @@ change what is evaluated to the statement on the current line."
      (list (line-beginning-position) (line-end-position) current-prefix-arg)))
   (if count
       (setq count (prefix-numeric-value count))
-    (setq count python-indent-offset))
+    (setq count 2))
   (when (> count 0)
     (let ((deactivate-mark nil))
       (save-excursion
@@ -1508,7 +1719,7 @@ change what is evaluated to the statement on the current line."
      (list (line-beginning-position) (line-end-position) current-prefix-arg)))
   (let ((deactivate-mark nil))
     (setq count (if count (prefix-numeric-value count)
-                  python-indent-offset))
+                  2))
     (indent-rigidly start end count)))
 
 
@@ -1573,10 +1784,8 @@ change what is evaluated to the statement on the current line."
   (delete-other-windows)
   (split-window-horizontally)
   (windmove-right)
-  (my-previous-user-buffer)
   (split-window-horizontally)
   (windmove-right)
-  (my-previous-user-buffer)
   (windmove-left)
   (windmove-left)
   (balance-windows))
@@ -1591,7 +1800,6 @@ change what is evaluated to the statement on the current line."
   (windmove-up)
   (split-window-horizontally)
   (windmove-right)
-  (my-previous-user-buffer)
   (windmove-left))
 
 (defun split-2-2 ()
@@ -1608,7 +1816,6 @@ change what is evaluated to the statement on the current line."
   (windmove-up)
   (split-window-horizontally)
   (windmove-right)
-  (my-previous-user-buffer)
   (windmove-left)
   (balance-windows)
   (enlarge-window 19))
@@ -1630,6 +1837,25 @@ change what is evaluated to the statement on the current line."
   (split-window-horizontally)
   (windmove-right)
   (eshell 4)
+  (windmove-left)
+  (balance-windows))
+
+
+(defun split-2-2-shell ()
+  (interactive)
+  (delete-other-windows)
+  (shell 1)
+  (split-window-vertically)
+  (windmove-down)
+  (shell 2)
+  (split-window-horizontally)
+  (windmove-right)
+  (shell 3)
+  (windmove-left)
+  (windmove-up)
+  (split-window-horizontally)
+  (windmove-right)
+  (shell 4)
   (windmove-left)
   (balance-windows))
 
@@ -1670,55 +1896,13 @@ change what is evaluated to the statement on the current line."
   (windmove-up)
   (split-window-horizontally)
   (windmove-right)
-  (my-previous-user-buffer)
   (split-window-horizontally)
   (windmove-right)
-  (my-previous-user-buffer)
   (windmove-left)
   (windmove-left)
   (balance-windows)
   (enlarge-window 19))
 
-(defun split-3-3-3 ()
-  (interactive)
-  (delete-other-windows)
-  (split-window-vertically)
-  (windmove-down)
-  (my-previous-user-buffer)
-  (split-window-vertically)
-  (windmove-down)
-  (my-next-user-buffer)
-  (windmove-up)
-  (windmove-up)
-  (split-window-horizontally)
-  (windmove-right)
-  (my-next-user-buffer)
-  (split-window-horizontally)
-  (windmove-right)
-  (my-next-user-buffer)
-  (windmove-left)
-  (windmove-left)
-  (windmove-down)
-  (split-window-horizontally)
-  (windmove-right)
-  (my-next-user-buffer)
-  (split-window-horizontally)
-  (windmove-right)
-  (my-next-user-buffer)
-  (windmove-left)
-  (windmove-left)
-  (windmove-down)
-  (split-window-horizontally)
-  (windmove-right)
-  (my-next-user-buffer)
-  (split-window-horizontally)
-  (windmove-right)
-  (my-next-user-buffer)
-  (windmove-left)
-  (windmove-left)
-  (windmove-up)
-  (windmove-up)
-  (balance-windows))
 
 
 
@@ -1727,7 +1911,8 @@ change what is evaluated to the statement on the current line."
 ;; MARK COMMAND, COMPLETE, YAS, TAB, SAVE
 (bind-key "M-SPC" 'set-mark-command)
 (bind-key "C-SPC" 'company-complete)
-(bind-key "TAB" 'indent-for-tab-command)
+(bind-key "M-C--" 'my-indent-shift-left)
+(bind-key "M-C-\\" 'my-indent-shift-right)
 (bind-key "<backtab>" 'my-indent-shift-left)
 (bind-key "M--" 'hippie-expand)
 (bind-key "M-\\" 'dabbrev)
@@ -1775,7 +1960,7 @@ change what is evaluated to the statement on the current line."
 (bind-key* "C-S-v" 'sp-backward-up-sexp)
 (bind-key "M-Z" 'scroll-other-window)
 (bind-key "C-M-Z" 'scroll-other-window-down)
-(bind-key "C-n" 'ace-jump-mode)
+(bind-key "C-\\" 'xah-open-file-at-cursor)
 (bind-key* "C-M-h" 'elscreen-previous)
 (bind-key* "C-M-n" 'elscreen-next)
 
@@ -1831,7 +2016,7 @@ change what is evaluated to the statement on the current line."
 
 ;; FRAME CLOSE BUFFER, COMMENT
 (bind-key* "C-b" 'make-frame-command)
-(bind-key* "C-w" 'my-kill-buffer)
+(bind-key "C-w" 'my-kill-buffer)
 (bind-key* "C-S-w" 'my-kill-all-dired-buffers)
 (bind-key* "M-;" 'comment-dwim-2)
 (bind-key* "M-:" 'comment-box)
@@ -1839,30 +2024,32 @@ change what is evaluated to the statement on the current line."
 ;; COMMAND, SHELL, RUN, EMMET
 (bind-key* "M-a" 'helm-M-x)
 (bind-key* "M-A" 'shell-command)
-(bind-key* "M-C-a" 'eval-expression)
-(bind-key* "M-C-S-a" 'shell-command-on-region)
+(bind-key* "M-C-a" 'shell-command-on-region)
+(bind-key* "M-C-S-a" 'eval-expression)
 (bind-key* "M-1" 'eshell-dwim)
 (bind-key* "M-!" 'shell-dwim)
 (bind-key* "S-<f1>" 'shell-buffer)
 (bind-key* "<f1>" 'scratch-buffer)
+(bind-key* "<f2>" 'shell-command-buffer)
 (bind-key "M-/" 'neotree-toggle)
 (bind-key "M-=" 'neotree-show)
 (bind-key "M-)" 'balance-windows)
-(bind-key* "<f4>" 'quickrun)
+(bind-key* "<f4>" 'kmacro-end-or-call-macro-repeat)
 (bind-key "S-<f5>" 'compile)
 (bind-key "<f5>" 'recompile)
 (bind-key "S-<f6>" 'run-in-eshell)
 (bind-key "<f6>" 're-run-in-eshell)
 (bind-key* "<f7>" 'helm-bookmarks)
-(bind-key* "S-<f9>" 'quick-calc)
-(bind-key* "<f9>" 'calc)
+(bind-key "S-<f9>" 'quick-calc)
+(bind-key "<f9>" 'calc)
 (bind-key* "<f12>" 'toggle-frame-fullscreen)
 (bind-key* "C-o" 'helm-find-files)
 (bind-key* "C-S-o" 'helm-recentf)
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key* "C-y" 'helm-show-kill-ring)
-(bind-key "C-f" 'helm-projectile-grep)
+(bind-key "C-f" 'helm-projectile-ag)
 (bind-key "C-h a" 'helm-apropos)
+(bind-key "C-h o" 'helm-man-woman)
 (global-set-key (kbd "M-o") 'projectile-find-file)
 (global-set-key (kbd "C-e") 'helm-buffers-list)
 
@@ -1871,6 +2058,8 @@ change what is evaluated to the statement on the current line."
 (bind-key "C-x C-j" 'find-name-dired)
 (bind-key "C-x J" 'find-grep-dired)
 (bind-key "C-x C-J" 'find-lisp-find-dired)
+(bind-key "C-x M-j" 'locate)
+(bind-key "C-x M-J" 'locate-with-filter)
 
 ;; UNWRAP
 (bind-key "C-c ("  'wrap-with-parens)
@@ -1885,9 +2074,9 @@ change what is evaluated to the statement on the current line."
 (bind-key "C-r" 'helm-swoop)
 (bind-key "C-M-r" 'helm-multi-swoop-current-mode)
 (bind-key "C-S-r" 'helm-swoop-back-to-last-point)
-(bind-key "M-*" 'helm-multi-swoop)
-(bind-key "M-8" 'helm-multi-swoop-all)
-(bind-key "M-7" 'helm-multi-swoop-current-mode)
+(bind-key "M-7" 'helm-multi-swoop)
+(bind-key "M-*" 'helm-multi-swoop-all)
+(bind-key "M-8" 'helm-multi-swoop-current-mode)
 
 ;; MAGIT
 (bind-key "C-x g" 'magit-status)
@@ -1902,17 +2091,19 @@ change what is evaluated to the statement on the current line."
 (bind-key* "C-S-M-s" 'er/mark-inner-tag)
 
 
-;; BUFFER SWITCHING ERROR ELSCREEN
+;; BUFFER SWITCHING ERROR
 (bind-key* "C-S-e" 'ibuffer)
-(bind-key* "C-M-'" 'previous-error)
-(bind-key* "C-M-," 'next-error)
-(bind-key* "M-\"" 'previous-error)
-(bind-key* "M-<" 'next-error)
-(bind-key* "C-'" 'my-previous-user-buffer)
-(bind-key* "C-," 'my-next-user-buffer)
-(bind-key* "M-'" 'smartscan-symbol-go-backward)
-(bind-key* "M-," 'smartscan-symbol-go-forward)
+(bind-key* "M-'" 'my-previous-user-buffer)
+(bind-key* "M-," 'my-next-user-buffer)
+(bind-key* "M-\"" 'my-previous-user-dired-buffer)
+(bind-key* "M-<" 'my-next-user-dired-buffer)
+(bind-key* "C-M-'" 'my-previous-user-dired-buffer)
+(bind-key* "C-M-," 'my-next-user-dired-buffer)
 
+(bind-key* "C-'" 'smartscan-symbol-go-backward)
+(bind-key* "C-," 'smartscan-symbol-go-forward)
+(bind-key* "C-\"" 'previous-error)
+(bind-key* "C-<" 'next-error)
 
 ;; WINDOW MOVE
 (bind-key* "C-S-h" 'windmove-left)
@@ -1933,18 +2124,6 @@ change what is evaluated to the statement on the current line."
 (bind-key* "M-$" 'split-window-right)
 (bind-key* "M-@" 'balance-windows)
 
-;; ELSCREEN MOVE
-(bind-key* "C-x C-S-h" 'elscreen-previous)
-(bind-key* "C-x C-S-n" 'elscreen-next)
-
-
-;; LISP
-(bind-key "C-c C-c" 'eval-defun emacs-lisp-mode-map)
-(bind-key "C-c C-r" 'eval-region emacs-lisp-mode-map)
-(bind-key "C-c C-k" 'eval-buffer emacs-lisp-mode-map)
-(bind-key "C-c C-e" 'eval-last-sexp emacs-lisp-mode-map)
-(bind-key "C-c e" 'eval-last-sexp emacs-lisp-mode-map)
-(bind-key "C-c C-f" 'eval-last-sexp emacs-lisp-mode-map)
 
 
 
@@ -2097,7 +2276,7 @@ change what is evaluated to the statement on the current line."
   ("m"   projectile-compile-project)
   ("l"   helm-projectile-find-other-file)
   ("L"   projectile-find-other-file-other-window)
-  ("p"   helm-projectile)
+  ("p"   helm-projectile-switch-project)
   ("r"   helm-projectile-recentf)
   ("s"   projectile-multi-occur)
   ("S"   projectile-replace)
@@ -2110,7 +2289,6 @@ change what is evaluated to the statement on the current line."
   ("X"   fixmee-mode)
   ("x"   fixmee-view-listing)
   ("q"   nil :color blue))
-
 
 
 (defhydra hydra-navigate (:color pink :hint nil)
@@ -2176,7 +2354,7 @@ change what is evaluated to the statement on the current line."
   ("pa" multi-occur-in-matching-buffers :color blue)
   ("pp" projectile-multi-occur :color blue)
   ("ph" helm-occur :color blue)
-  ("pt" helm-multi-occur-buffer-list :color blue)
+  ("pt" multi-occur-in-matching-buffers :color blue)
   ("\'" smartscan-symbol-go-backward)
   ("," smartscan-symbol-go-forward)
   (";g" grep :color blue)
@@ -2198,6 +2376,7 @@ change what is evaluated to the statement on the current line."
   ("x" exchange-point-and-mark)
   ("w" delete-trailing-whitespace)
   ("s" er/expand-region)
+  ("!" shell-command-on-region)
   ("u" universal-argument)
   ("z" undo-tree-undo)
   ("y" undo-tree-redo)
@@ -2371,24 +2550,21 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
 
 
 
-(defhydra hydra-register (:hint nil :color pink)
+(defhydra hydra-bookmark (:hint nil :color blue)
   "
-    ^Bookmark^   ^Store^                           ^Jump^
+     ^all^         ^file^       ^desktop^    ^url^  
 ╭─────────────────────────────────────────────────────╯
-    [_m_ set]    [_n_] number    [_+_] increment   [_e_] jump
-    [_l_ list]   [_s_] copy      [_w_] window
-    [_o_ jump]   [_SPC_] point   [_i_] insert
+     [_a_] jump    [_o_] jump   [_e_] jump   [_u_] jump
+     [_d_] delete  [_._] set    [_._] set    [_p_] set
 "
-  ("l" bookmark-bmenu-list)
-  ("m" bookmark-set)
-  ("o" bookmark-jump :blue)
-  ("n" number-to-register)
-  ("s" copy-to-register)
-  ("SPC" point-to-register)
-  ("+" increment-register)
-  ("i" insert-register)
-  ("w" window-configuration-to-register)
-  ("e" helm-register :color blue)
+  ("a" helm-bookmarks)
+  ("d" bookmark-delete)
+  ("o" bmkp-autofile-jump)
+  ("," bmkp-autofile-set)
+  ("e" bmkp-desktop-jump)
+  ("." bmkp-set-desktop-bookmark)
+  ("u" bmkp-url-jump)
+  ("p" bmkp-url-target-set)
   ("q" nil :color blue))
 
 
@@ -2396,32 +2572,33 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
                              (when defining-kbd-macro
                                  (kmacro-end-macro 1)))
   "
-  ^Create-Cycle^   ^Basic^           ^Insert^        ^Save^         ^Edit^
-╭─────────────────────────────────────────────────────────────────────────╯
-     ^_c_^           [_e_] execute    [_i_] insert    [_b_] name      [_'_] previous
-     ^^↑^^           [_d_] delete     [_l_] set       [_k_] key       [_,_] last
- _h_ ←   → _n_       [_o_] edit       [_a_] add       [_x_] register  [_._] loosage   
-     ^^↓^^           [_r_] region     [_f_] format    [_B_] defun
-     ^_t_^           [_m_] step
-    ^^   ^^          [_s_] swap
+  ^^Create-Cycle^^   ^Basic^            ^   ^       ^Insert^        ^Save^           ^Edit^
+╭───────────────────────────────────────────────────────────────────────────────────╯
+     ^_c_^           [_a_] defun      [_m_] step    [_i_] insert    [_b_] name       [_'_] previous
+     ^^↑^^           [_o_] edit       [_s_] swap    [_s_] set       [_k_] key        [_,_] last
+ _h_ ←   → _n_       [_e_] execute    [_v_] view    [_r_] add       [_x_] register   [_._] loosage
+     ^^↓^^           [_d_] delete     ^   ^         [_f_] format                        
+     ^_t_^           [_r_] region                                    
+    ^^   ^^                
 "
   ("h" kmacro-start-macro :color blue)
   ("n" kmacro-end-or-call-macro-repeat)
+  ("N" kmacro-end-or-call-macro-repeat :color blue)
   ("c" kmacro-cycle-ring-previous)
   ("t" kmacro-cycle-ring-next)
+  ("a" insert-kbd-macro)
   ("r" apply-macro-to-region-lines)
   ("d" kmacro-delete-ring-head)
-  ("e" kmacro-end-or-call-macro-repeat)
+  ("e" helm-execute-kmacro)
   ("o" kmacro-edit-macro-repeat)
   ("m" kmacro-step-edit-macro)
   ("s" kmacro-swap-ring)
   ("i" kmacro-insert-counter)
   ("l" kmacro-set-counter)
-  ("a" kmacro-add-counter)
+  ("r" kmacro-add-counter)
   ("f" kmacro-set-format)
   ("b" kmacro-name-last-macro)
   ("k" kmacro-bind-to-key)
-  ("B" insert-kbd-macro)
   ("x" kmacro-to-register)
   ("'" kmacro-edit-macro)
   ("," edit-kbd-macro)
@@ -2429,6 +2606,8 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("u" universal-argument)
   ("z" undo-tree-undo)
   ("y" undo-tree-redo)
+  ("v" kmacro-view-macro)
+  ("V" kmacro-view-ring-2nd-repeat)
   ("q" nil :color blue))
 
 
@@ -2458,7 +2637,6 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("-" ggtags-query-replace)
   ("z" ggtags-show-definition)
   ("/" ggtags-update-tags)
-
   ("vv" ggtags-view-search-history)
   ("va" ggtags-view-search-history-action)
   ("vk" ggtags-view-search-history-kill)
@@ -2468,7 +2646,6 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("vu" ggtags-view-search-history-update)
   ("vh" ggtags-view-tag-history)
   ("v." ggtags-view-tag-history-mode)
-
   ("ln" ggtags-navigation-isearch-forward)
   ("ll" ggtags-navigation-last-error)
   ("l." ggtags-navigation-mode)
@@ -2476,7 +2653,6 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("lc" ggtags-navigation-previous-file)
   ("ls" ggtags-navigation-start-file)
   ("lv" ggtags-navigation-visible-mode)
-
   ("mb" ggtags-browse-file-as-hypertext)
   ("mc" ggtags-create-tags)
   ("md" ggtags-delete-tags)
@@ -2522,7 +2698,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   "
     [_a_] abbrev    [_d_] debu   [_l_] line     [_n_] nyan     [_wb_] sub
     [_r_] truncate  [_s_] save   [_t_] typo     [_v_] visual   [_ws_] sup
-    [_e_] desktop   [_k_] skewer [_f_] flyspell [_c_] flycheck  [_C-t_] case
+    [_e_] desktop                [_f_] flyspell [_c_] flycheck  [_C-t_] case
      ^ ^             ^ ^         [_p_] fly-prog
 "
   ("a" abbrev-mode)
@@ -2535,7 +2711,6 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("t" typo-mode)
   ("v" visual-line-mode)
   ("e" desktop-save-mode)
-  ("k" skewer-mode)
   ("f" flyspell-mode)
   ("p" flyspell-prog-mode)
   ("c" flycheck-mode)
@@ -2558,15 +2733,14 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("g" nil))
 
 
-(defhydra hydra-apropos (:color teal :hint nil)
-  "Apropos"
+(defhydra hydra-apropos (:color teal)
   ("a" helm-apropos "apropos")
+  ("w" helm-man-woman "man")
   ("c" apropos-command "cmd")
   ("d" apropos-documentation "doc")
   ("e" apropos-value "val")
   ("l" apropos-library "lib")
   ("o" apropos-user-option "option")
-  ("u" apropos-user-option "option")
   ("v" apropos-variable "var")
   ("i" info-apropos "info")
   ("t" tags-apropos "tags")
@@ -2701,58 +2875,19 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 
 
 
-(defhydra hydra-org-pandoc (:color blue :hint nil)
-  ("as" org-pandoc-export-to-asciidoc "asciidoc")
-  ("bea" org-pandoc-export-to-beamer "beamer")
-  ("bep" org-pandoc-export-to-beamer-pdf "beamer-pdf")
-  ("cm" org-pandoc-export-to-commonmark "commonmark")
-  ("co" org-pandoc-export-to-context "context")
-  ("do" org-pandoc-export-to-docbook "docbook")
-  ("dx" org-pandoc-export-to-docx "docx")
-  ("dz" org-pandoc-export-to-dzslides "dzslides")
-  ("ep" org-pandoc-export-to-epub "epub")
-  ("e3" org-pandoc-export-to-epub3 "epub3")
-  ("fb" org-pandoc-export-to-fb2 "fb2")
-  ("h" org-pandoc-export-to-html5 "html5")
-  ("i" org-pandoc-export-to-icml "icml")
-  ("j" org-pandoc-export-to-json "json")
-  ("la" org-pandoc-export-to-latex "latex")
-  ("lp" org-pandoc-export-to-latex-pdf "late-pdf")
-  ("mn" org-pandoc-export-to-man "man")
-  ("md" org-pandoc-export-to-markdown "md")
-  ("mg" org-pandoc-export-to-markdown_github "mg")
-  ("ms" org-pandoc-export-to-markdown_strict "ms")
-  ("w" org-pandoc-export-to-mediawiki "mediawiki")
-  ("n" org-pandoc-export-to-native "native")
-  ("od" org-pandoc-export-to-odt "odt")
-  ("op" org-pandoc-export-to-opml "opml")
-  ("om" org-pandoc-export-to-opendocument "opendocument")
-  ("or" org-pandoc-export-to-org "org")
-  ("p" org-pandoc-export-to-plain "plain")
-  ("re" org-pandoc-export-to-revealjs "revealjs")
-  ("rs" org-pandoc-export-to-rst "rst")
-  ("rt" org-pandoc-export-to-revealjs "revealjs")
-  ("s5" org-pandoc-export-to-s5 "s5")
-  ("sl" org-pandoc-export-to-slideous "slideous")
-  ("si" org-pandoc-export-to-slidy "slidy")
-  ("ti" org-pandoc-export-to-texinfo "texinfo")
-  ("tx" org-pandoc-export-to-textile "textile"))
-
-
-
 
 (bind-key "C-x o" 'hydra-window/body)
 (bind-key "C-x e" 'hydra-elscreen/body)
 (bind-key "C-t" 'hydra-multiple-cursors/body)
-(bind-key "C-x s" 'hydra-navigate/body)
-(bind-key "C-." 'hydra-ggtags/body)
-
+(bind-key "C-n" 'hydra-navigate/body)
+(bind-key "C-." 'hydra-execute/body)
+(bind-key "C-x ." 'hydra-ggtags/body)
 (bind-key "C-x -" 'hydra-yasnippet/body)
 (bind-key "C-x p" 'hydra-project/body)
 (bind-key "C-x =" 'hydra-adjust/body)
 (bind-key "C-x t" 'hydra-transpose/body)
 (bind-key* "C-x r" 'hydra-rectangle/body)
-(bind-key "C-x l" 'hydra-register/body)
+(bind-key "C-x d" 'hydra-bookmark/body)
 (bind-key "C-x k" 'hydra-macro/body)
 (bind-key "C-x K" 'kmacro-end-macro)
 (bind-key "C-x a" 'hydra-apropos/body)
@@ -2760,11 +2895,10 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 (bind-key "C-x m" 'hydra-minor/body)
 (bind-key "C-x v" 'hydra-theme/body)
 (bind-key "C-x h" 'hydra-helm/body)
-(bind-key "C-x d" 'hydra-desktop/body)
-(bind-key "C-x ." 'hydra-execute/body)
+(bind-key "C-x l" 'hydra-desktop/body)
+
 
 (add-hook 'outline-mode-hook (lambda() (bind-key "C-x x" #'hydra-outline/body outline-mode-map)))
-(add-hook 'org-mode-hook (lambda() (bind-key "C-x /" #'hydra-org-pandoc/body org-mode-map)))
 (add-hook 'markdown-mode-hook (lambda() (bind-key "C-x x" #'hydra-markdown/body markdown-mode-map)))
 (add-hook 'pdf-view-mode-hook  (lambda() (bind-key "C-x x" #'hydra-pdftools/body pdf-view-mode-map)))
 
@@ -2780,24 +2914,30 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(ansi-color-names-vector
    ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(auto-compression-mode nil)
- '(auto-save-default nil)
- '(auto-save-interval 0)
  '(blink-cursor-mode nil)
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(browse-url-browser-function (quote browse-url-chromium))
  '(column-number-mode t)
  '(company-backends
    (quote
-    (company-irony company-tern company-bbdb company-go company-rust company-ycmd company-nxml company-css company-ghc company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf company-gtags company-files)))
+    (company-tern company-go company-ycmd company-c-headers company-robe company-css company-ghc company-semantic company-xcode company-cmake company-dabbrev-code company-capf company-gtags company-files)))
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
     ("34e7163479ef3669943b3b9b1fabe639d6e0a0453e0de79cea2c52cb520d3bc4" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "71ecffba18621354a1be303687f33b84788e13f40141580fa81e7840752d31bf" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(delete-selection-mode 1)
+ '(elscreen-default-buffer-initial-major-mode (quote lisp-interaction-mode))
+ '(elscreen-default-buffer-initial-message nil)
  '(exec-path
    (append exec-path
            (quote
             ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
+ '(inf-ruby-default-implementation "ruby")
+ '(initial-buffer-choice "*scratch*")
+ '(initial-major-mode (quote org-mode))
+ '(initial-scratch-message nil)
+ '(irony-additional-clang-options (quote ("-std=c++11")))
  '(org-babel-python-command "python3")
  '(package-selected-packages
    (quote
@@ -2841,9 +2981,9 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(js2-error ((t nil)))
- '(js2-warning ((t nil)))
- '(js2-warnings ((t nil)))
+ ;; '(js2-error ((t nil)))
+ ;; '(js2-warning ((t nil)))
+ ;; '(js2-warnings ((t nil)))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "royal blue"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "firebrick"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "forest green"))))

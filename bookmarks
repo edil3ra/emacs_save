@@ -2,24 +2,63 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("python"
- (filename . "~/Code/python/")
- (front-context-string . "algorithm\n  drwx")
- (rear-context-string . "96 Oct  1 18:24 ")
- (position . 219))
-(".emacs"
- (filename . "~/.emacs")
- (front-context-string . "(require 'packag")
- (rear-context-string)
- (position . 1))
-("all.org"
- (filename . "~/Documents/all.org")
- (front-context-string . "** Password\n   -")
- (rear-context-string)
- (position . 1))
-("Code"
- (filename . "~/Code/")
- (front-context-string . "algorithm\n  drwx")
- (rear-context-string . "96 Sep 15 23:03 ")
- (position . 213))
+(#1=(#("liex" 0 4
+      (bmkp-full-record #1#))
+    (buffer-name . "liex")
+    (visits . 0)
+    (time . #2=(22285 16340 565057 719000))
+    (created . #2#)
+    (position . 582)
+    (filename . "   - no file -")
+    (desktop-file . "/home/vince/Envs/liex/liex/.emacs.desktop")
+    (handler . bmkp-jump-desktop))
+#1=(#("https://stackoverflow.com" 0 25
+      (bmkp-full-record #1#))
+    (filename . "   - no file -")
+    (location . "https://stackoverflow.com")
+    (handler . bmkp-jump-url-browse))
+#1=(#("https://www.google.be" 0 21
+      (bmkp-full-record #1#))
+    (filename . "   - no file -")
+    (location . "https://www.google.be")
+    (handler . bmkp-jump-url-browse))
+#1=(#("https://github.com/edil3ra/" 0 27
+      (bmkp-full-record #1#))
+    (time 22281 46002 361668 724000)
+    (visits . 0)
+    (filename . "   - no file -")
+    (location . "https://github.com/edil3ra/")
+    (handler . bmkp-jump-url-browse))
+#1=(#("bmkp-desktop-read" 0 17
+      (bmkp-full-record #1#))
+    (buffer-name . "*scratch*")
+    (visits . 4)
+    (time 22285 16574 835825 949000)
+    (created 22281 42317 528720 453000)
+    (position . 124)
+    (filename . "   - no file -")
+    (desktop-file . "/home/vince/.emacs.desktop")
+    (handler . bmkp-jump-desktop))
+#1=(#(".emacs" 0 6
+      (bmkp-full-record #1#))
+    (time 22282 19804 831904 380000)
+    (visits . 0)
+    (filename . "~/.emacs")
+    (front-context-string . "(require 'packag")
+    (rear-context-string)
+    (position . 1))
+#1=(#("all.org" 0 7
+      (bmkp-full-record #1#))
+    (time 22312 40787 376922 960000)
+    (visits . 2)
+    (filename . "~/Documents/all.org")
+    (front-context-string . "** Password\n   -")
+    (rear-context-string)
+    (position . 1))
+#1=(#("Code" 0 4
+      (bmkp-full-record #1#))
+    (filename . "~/Code/")
+    (front-context-string . "algorithm\n  drwx")
+    (rear-context-string . "96 Sep 15 23:03 ")
+    (position . 213))
 )
