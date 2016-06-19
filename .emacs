@@ -557,7 +557,7 @@
 (use-package cyberpunk-theme :ensure t :defer t)
 (use-package assemblage-theme :ensure t :defer t)
 (use-package toxi-theme :ensure t :defer t)
-(use-package leuven-theme :ensure t :defer t)
+;; (use-package leuven-theme :ensure t :defer t)
 
 
 (use-package ido
