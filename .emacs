@@ -506,8 +506,15 @@
   :init(progn
          (setq markdown-xhtml-standalone-regexp "")))
 
+
 (use-package json-mode
-  :ensure t :defer t)
+  :ensure t :defer t
+  :init(progn
+         (add-hook 'json-mode-hook (lambda ()
+                                     (make-local-variable 'js-indent-level)
+                                     (setq js-indent-level 2)
+                                     (flycheck-mode -1)
+                                     (tern-mode -1)))))
 
 (use-package yaml-mode
   :ensure t :defer t)
@@ -556,8 +563,7 @@
 (use-package monokai-theme :ensure t :defer t)
 (use-package cyberpunk-theme :ensure t :defer t)
 (use-package assemblage-theme :ensure t :defer t)
-(use-package toxi-theme :ensure t :defer t)
-;; (use-package leuven-theme :ensure t :defer t)
+(use-package color-theme-sanityinc-tomorrow :ensure t :defer t)
 
 
 (use-package ido
@@ -990,6 +996,8 @@ change what is evaluated to the statement on the current line."
 ;; TYPESCRIPT
 (use-package typescript-mode
   :ensure t :defer t
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode ))
   :init (progn
           (add-hook 'typescript-mode-hook
                     (lambda ()
@@ -1347,6 +1355,11 @@ change what is evaluated to the statement on the current line."
 ;; save
  (setq auto-save-default nil
        auto-save-interval 0)
+
+;; kill process no prompt
+(setq kill-buffer-query-functions
+  (remq 'process-kill-buffer-query-function
+         kill-buffer-query-functions))
 
 ;; desktop mode
 (desktop-save-mode)
@@ -1869,7 +1882,21 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
   (windmove-left)
   (balance-windows))
 
+
 (defun split-2-1 ()
+  (interactive)
+  (delete-other-windows)
+  (split-window-vertically)
+  (enlarge-window 18)
+  (windmove-down)
+  (shell-dwim)
+  (windmove-up)
+  (split-window-horizontally)
+  (windmove-right)
+  (windmove-left))
+
+
+(defun split-2-1-eshell ()
   (interactive)
   (delete-other-windows)
   (split-window-vertically)
@@ -1881,16 +1908,17 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
   (windmove-right)
   (windmove-left))
 
+
 (defun split-2-2 ()
   (interactive)
   (delete-other-windows)
   (split-window-vertically)
   (windmove-down)
   (setq eshell-buffer-name "*eshell*")
-  (eshell-dwim)
+  (shell-dwim)
   (split-window-horizontally)
   (windmove-right)
-  (eshell 2)
+  (shell-dwim)
   (windmove-left)
   (windmove-up)
   (split-window-horizontally)
@@ -2105,8 +2133,8 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key* "M-A" 'shell-command)
 (bind-key* "M-C-a" 'shell-command-on-region)
 (bind-key* "M-C-S-a" 'eval-expression)
-(bind-key* "M-1" 'eshell-dwim)
-(bind-key* "M-!" 'shell-dwim)
+(bind-key* "M-1" 'shell-dwim)
+(bind-key* "M-!" 'eshell-dwim)
 (bind-key* "S-<f1>" 'shell-buffer)
 (bind-key* "<f1>" 'scratch-buffer)
 (bind-key* "<f2>" 'shell-command-buffer)
@@ -3049,12 +3077,11 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 ;; theme and font
 (set-default-font "DejaVu Sans Mono 9")
 
-(load-theme 'grandshell)
+;; (load-theme 'grandshell)
 ;; (load-theme 'monokai)
 ;; (load-theme 'cyberpunk)
 ;; (load-theme 'assemblage)
-;; (load-theme 'toxi)
-;; (load-theme 'leuven)
+(load-theme 'sanityinc-tomorrow-night)
 
 
 
