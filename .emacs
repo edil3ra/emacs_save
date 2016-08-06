@@ -54,7 +54,7 @@
                   ;;helm-mm-3-migemo-match
                   ))
           (defadvice helm-display-mode-line (after undisplay-header activate)
-            (setq header-line-format ))
+            (setq header-line-format 1 ))
           (helm-mode))
   :config
   (progn
@@ -424,6 +424,7 @@
             (bind-key "<backtab>" 'dired-subtree-cycle dired-mode-map)
             (bind-key "M-G" 'dired-subtree-beginning dired-mode-map)
             (bind-key "M-R" 'dired-subtree-end dired-mode-map)
+            
             (bind-key "c j" 'dired-ranger-copy dired-mode-map)
             (bind-key "c k" 'dired-ranger-paste dired-mode-map)
             (bind-key "c x" 'dired-ranger-move dired-mode-map)
@@ -716,10 +717,13 @@
   :config(progn
            (bind-key "C-c C-a" 'elpy-format-code elpy-mode-map)
            (bind-key "C-c a" 'elpy-format-code elpy-mode-map)
-           (bind-key "C-c C-e" 'elpy-goto-definition elpy-mode-map)
-           (bind-key "C-c e" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c C-f" 'elpy-format-code elpy-mode-map)
+           (bind-key "C-c f" 'elpy-format-code elpy-mode-map)
            (bind-key "C-c C-o" 'elpy-goto-definition-other-window elpy-mode-map)
+           (bind-key "C-c e" 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c C-e" 'elpy-goto-definition elpy-mode-map)
            (bind-key "C-c C-." 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c C-," 'elpy-goto-definition elpy-mode-map)
            (bind-key "C-c o" 'elpy-goto-definition-other-window elpy-mode-map)
            (bind-key "C-c C-i" 'elpy-importmagic-add-import elpy-mode-map)
            (bind-key "C-c i " 'elpy-importmagic-add-import elpy-mode-map)
@@ -1115,6 +1119,7 @@ change what is evaluated to the statement on the current line."
             (bind-key "<f8>" 'alchemist-iex-run alchemist-mode-map)
             (bind-key "<f9>" 'alchemist-iex-project-run alchemist-mode-map)
             (bind-key "C-c C-c" 'alchemist-iex-send-last-sexp alchemist-mode-map)
+            (bind-key "C-x C-e" 'alchemist-iex-send-last-sexp alchemist-mode-map)
             (bind-key "C-c C-r" 'alchemist-iex-send-region alchemist-mode-map)
             (bind-key "C-c C-k" 'alchemist-iex-compile-this-buffer alchemist-mode-map)
             (bind-key "C-c C-l" 'alchemist-iex-reload-module alchemist-mode-map)
@@ -1123,31 +1128,64 @@ change what is evaluated to the statement on the current line."
 
 
 
-;; HASKELL BUGGY AS HELL ON MY MACHINE
-(use-package haskell-mode
-  :ensure t :defer t
-  :init (progn
-          (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
-            (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
-            (add-to-list 'exec-path my-cabal-path)))
-  :config (progn
-            (defvar ghc-insert-key nil) ;; ghc init rebind a lot of usefull key
-            (bind-key "C-c C-c" 'haskell-process-load-or-reload haskell-mode-map)
-            (bind-key "C-c C-l" 'haskell-process-cabal-build haskell-mode-map)
-            (bind-key "C-c C-z" 'haskell-interactive-bring haskell-mode-map)
-            (bind-key "C-c C-t" 'haskell-process-do-type haskell-mode-map)
-            (bind-key "C-c C-i" 'haskell-process-do-info haskell-mode-map)
-            (bind-key "C-c C--" 'haskell-interactive-mode-clear haskell-mode-map)
-            (bind-key "C-c c" 'haskell-process-cabal haskell-mode-map)
-            (add-hook 'haskell-mode-hook (lambda ()
-                                           (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-                                           (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-                                           (ghc-init)
-                                           (flymake-mode)))))
+;; HASKELL COMPLETLY BUGGY because of ghc (I am missing something here)
+;; cabal update
+;; cabal install happy hasktags stylish-haskell present ghc-mod hlint hoogle structured-haskell-mode hindent
+;; http://tim.dysinger.net/posts/2014-02-18-haskell-with-emacs.html
 
-(use-package company-ghc :ensure t)
-(use-package ghc :ensure t :defer t)
-  
+(use-package hindent
+  :ensure t :defer t)
+
+(use-package flycheck-haskell
+  :ensure t :defer t)
+
+(use-package ghc
+  :ensure t :defer t)
+
+(use-package company-ghc
+  :ensure t :defer)
+
+(use-package haskell-mode
+  :ensure t
+  :init (progn
+          (setq haskell-process-type 'cabal-repl)
+          (add-hook 'haskell-mode-hook 'hindent-mode)
+          (autoload 'ghc-init "ghc" nil t)
+          (autoload 'ghc-debug "ghc" nil t)
+          (setq  company-ghc-show-info t)
+          (add-hook 'haskell-mode-hook (lambda ()
+                                         (ghc-init)
+                                         (flycheck-mode)
+                                         (company-ghc-scan-modules)
+                                         (set (make-local-variable 'company-backends) '((company-ghc))))))
+  :config (progn
+            (add-hook 'haskell-mode-hook (lambda ()
+                                           (bind-key "C-c C-f" 'hindent-reformat-region haskell-mode-map)
+                                           (bind-key "C-c C-i" 'haskell-navigate-imports haskell-mode-map)
+                                           (bind-key "C-c i" 'haskell-navigate-imports haskell-mode-map)
+                                           (bind-key "C-c s" 'haskell-mode-stylish-buffer haskell-mode-map)
+                                           (bind-key "C-c C-," 'haskell-mode-jump-to-def haskell-mode-map)
+                                           (bind-key "C-c ," 'haskell-mode-jump-to-def haskell-mode-map)
+                                           (bind-key "C-c C-l" 'haskell-process-load-or-reload haskell-mode-map)
+                                           (bind-key "C-c C-z" 'haskell-interactive-switch haskell-mode-map)
+                                           (bind-key "C-c C-n C-t" 'haskell-process-do-type haskell-mode-map)
+                                           (bind-key "C-c C-n C-i" 'haskell-process-do-info haskell-mode-map)
+                                           (bind-key "C-c C-n C-c" 'haskell-process-cabal-build haskell-mode-map)
+                                           (bind-key "C-c C-n c" 'haskell-process-cabal haskell-mode-map)
+                                           (bind-key "C-c C-o " 'haskell-compile haskell-mode-map)
+                                           (bind-key "C-c C-l" 'company-ghc-scan-modules haskell-mode-map)
+                                           ;; (bind-key "C-c C-z" 'haskell-interactive-switch haskell-interactive-mode-map)
+                                           ;; (bind-key "C-c C-l" 'haskell-interactive-mode-clear haskell-interactive-mode-map)
+                                           ;; (bind-key "C-c C-k" 'haskell-process-cabal-build haskell-interactive-mode-map)
+                                           ;; (bind-key "C-c k" 'haskell-process-cabal haskell-interactive-mode-map)
+                                           (bind-key "C-\"" 'ghc-goto-previous-error haskell-mode-map)
+                                           (bind-key "C-<" 'ghc-goto-next-error haskell-mode-map)
+                                           (unbind-key "M-t" haskell-mode-map)))))
+
+
+
+
+
 
 ;; SHELL SH
 (use-package company-shell :ensure t)
@@ -1282,38 +1320,38 @@ change what is evaluated to the statement on the current line."
   :ensure t :defer t)
 
 
-;; PHP
-(use-package ac-php :ensure t)
-(use-package php-mode
-  :ensure t
-  :init (progn
-          (add-hook 'php-mode-hook
-                    (lambda ()
-                      (auto-complete-mode 1)
-                      (ggtags-mode 1)
-                      (flycheck-mode 1)
-                      (add-hook 'before-save-hook
-                                (lambda ()
-                                  (when (eq major-mode 'php-mode)
-                                        (ac-php-remake-tags)))))))
-  :config (progn
-            (bind-key "C-SPC" 'ac-complete-php php-mode-map)
-            (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
-            (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
-            (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
-            (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
-            (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
-            (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
-            (bind-key "C-n" 'ac-next ac-complete-mode-map)
-            (bind-key "C-h" 'ac-previous ac-complete-mode-map)
-            (bind-key "C-c C-d" 'ac-quick-help ac-complete-mode-map)
-			(unbind-key "C-d" php-mode-map)
-			(unbind-key "M-q" php-mode-map)
-			(unbind-key "C-." php-mode-map)))
+;;  PHP
+;; (use-package ac-php :ensure t)
+;; (use-package php-mode
+;;   :ensure t
+;;   :init (progn
+;;           (add-hook 'php-mode-hook
+;;                     (lambda ()
+;;                       (auto-complete-mode 1)
+;;                       (ggtags-mode 1)
+;;                       (flycheck-mode 1)
+;;                       (add-hook 'before-save-hook
+;;                                 (lambda ()
+;;                                   (when (eq major-mode 'php-mode)
+;;                                         (ac-php-remake-tags)))))))
+;;   :config (progn
+;;             (bind-key "C-SPC" 'ac-complete-php php-mode-map)
+;;             (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
+;;             (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
+;;             (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
+;;             (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
+;;             (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
+;;             (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
+;;             (bind-key "C-n" 'ac-next ac-complete-mode-map)
+;;             (bind-key "C-h" 'ac-previous ac-complete-mode-map)
+;;             (bind-key "C-c C-d" 'ac-quick-help ac-complete-mode-map)
+;; 			(unbind-key "C-d" php-mode-map)
+;; 			(unbind-key "M-q" php-mode-map)
+;; 			(unbind-key "C-." php-mode-map)))
 
 
-(use-package php-extras
-  :ensure t :defer t)
+;; (use-package php-extras
+;;   :ensure t :defer t)
 
 ;; STUFF
 ;; remove window decoration
@@ -2021,7 +2059,9 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "M-C-\\" 'my-indent-shift-right)
 (bind-key "<backtab>" 'my-indent-shift-left)
 (bind-key "M--" 'hippie-expand)
-(bind-key "M-\\" 'dabbrev)
+;; (bind-key "M-\\" 'dabbrev)
+(bind-key "M-\\" 'flycheck-mode)
+(bind-key "C-M-\\" 'global-flycheck-mode)
 (bind-key* "C-a" 'mark-whole-buffer)
 (bind-key "<M-return>" 'smart-ret)
 (bind-key "<S-return>" 'smart-ret-reverse)
@@ -3027,7 +3067,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(column-number-mode t)
  '(company-backends
    (quote
-    (company-tern company-go company-ycmd company-c-headers company-robe company-css company-ghc company-semantic company-xcode company-cmake company-dabbrev-code company-capf company-gtags company-files)))
+    (company-tern company-go company-ycmd company-c-headers company-robe company-css company-semantic company-xcode company-cmake company-dabbrev-code company-capf company-gtags company-files)))
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes nil)
  '(custom-safe-themes
@@ -3043,9 +3083,12 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(initial-scratch-message nil)
  '(irony-additional-clang-options (quote ("-std=c++11")))
  '(org-babel-python-command "python3")
+ ;; '(package-selected-packages
+ ;;   (quote
+ ;;    (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(package-selected-packages
    (quote
-    (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
+    (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(prefer-coding-system (quote utf-8))
  '(ring-bell-function (quote ignore) t)
  '(same-window-buffer-names (quote ("*shell*")))
