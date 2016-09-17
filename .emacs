@@ -54,7 +54,7 @@
                   ;;helm-mm-3-migemo-match
                   ))
           (defadvice helm-display-mode-line (after undisplay-header activate)
-            (setq header-line-format 1 ))
+            (setq header-line-format nil ))
           (helm-mode))
   :config
   (progn
@@ -1053,13 +1053,19 @@ change what is evaluated to the statement on the current line."
   (add-hook 'clojure-mode-hook 'my/clojure-mode-defaults))
 
 
+;; company is bugy ...........
 (use-package cider
-  :ensure t :defer t
+  :ensure t 
   :init (progn
           (defun my/cider-load-buffer (&optional BUFFER)
             (interactive)
             (save-buffer)
-            (cider-load-buffer BUFFER)))
+            (cider-load-buffer BUFFER))
+          ;; (add-hook 'cider-mode-hook #'company-mode)
+          (add-hook 'cider-mode-hook
+                    (lambda ()
+                      (set (make-local-variable 'company-backends) '(company-capf))))
+          )
   :config (progn
             (bind-key "C-c C-k" 'my/cider-load-buffer cider-mode-map)))
 
@@ -1139,48 +1145,50 @@ change what is evaluated to the statement on the current line."
 (use-package flycheck-haskell
   :ensure t :defer t)
 
-(use-package ghc
-  :ensure t :defer t)
+;; (use-package ghc
+;;   :ensure t :defer t)
 
-(use-package company-ghc
-  :ensure t :defer)
+;; (use-package company-ghc
+;;   :ensure t :defer)
 
-(use-package haskell-mode
-  :ensure t
-  :init (progn
-          (setq haskell-process-type 'cabal-repl)
-          (add-hook 'haskell-mode-hook 'hindent-mode)
-          (autoload 'ghc-init "ghc" nil t)
-          (autoload 'ghc-debug "ghc" nil t)
-          (setq  company-ghc-show-info t)
-          (add-hook 'haskell-mode-hook (lambda ()
-                                         (ghc-init)
-                                         (flycheck-mode)
-                                         (company-ghc-scan-modules)
-                                         (set (make-local-variable 'company-backends) '((company-ghc))))))
-  :config (progn
-            (add-hook 'haskell-mode-hook (lambda ()
-                                           (bind-key "C-c C-f" 'hindent-reformat-region haskell-mode-map)
-                                           (bind-key "C-c C-i" 'haskell-navigate-imports haskell-mode-map)
-                                           (bind-key "C-c i" 'haskell-navigate-imports haskell-mode-map)
-                                           (bind-key "C-c s" 'haskell-mode-stylish-buffer haskell-mode-map)
-                                           (bind-key "C-c C-," 'haskell-mode-jump-to-def haskell-mode-map)
-                                           (bind-key "C-c ," 'haskell-mode-jump-to-def haskell-mode-map)
-                                           (bind-key "C-c C-l" 'haskell-process-load-or-reload haskell-mode-map)
-                                           (bind-key "C-c C-z" 'haskell-interactive-switch haskell-mode-map)
-                                           (bind-key "C-c C-n C-t" 'haskell-process-do-type haskell-mode-map)
-                                           (bind-key "C-c C-n C-i" 'haskell-process-do-info haskell-mode-map)
-                                           (bind-key "C-c C-n C-c" 'haskell-process-cabal-build haskell-mode-map)
-                                           (bind-key "C-c C-n c" 'haskell-process-cabal haskell-mode-map)
-                                           (bind-key "C-c C-o " 'haskell-compile haskell-mode-map)
-                                           (bind-key "C-c C-l" 'company-ghc-scan-modules haskell-mode-map)
-                                           ;; (bind-key "C-c C-z" 'haskell-interactive-switch haskell-interactive-mode-map)
-                                           ;; (bind-key "C-c C-l" 'haskell-interactive-mode-clear haskell-interactive-mode-map)
-                                           ;; (bind-key "C-c C-k" 'haskell-process-cabal-build haskell-interactive-mode-map)
-                                           ;; (bind-key "C-c k" 'haskell-process-cabal haskell-interactive-mode-map)
-                                           (bind-key "C-\"" 'ghc-goto-previous-error haskell-mode-map)
-                                           (bind-key "C-<" 'ghc-goto-next-error haskell-mode-map)
-                                           (unbind-key "M-t" haskell-mode-map)))))
+;; (use-package haskell-mode
+;;   :ensure t
+;;   :init (progn
+;;           (setq haskell-process-type 'cabal-repl)
+;;           (add-hook 'haskell-mode-hook 'hindent-mode)
+;;           (autoload 'ghc-init "ghc" nil t)
+;;           (autoload 'ghc-debug "ghc" nil t)
+;;           (setq  company-ghc-show-info t)
+;;           (add-hook 'haskell-mode-hook (lambda ()
+;;                                          (ghc-init)
+;;                                          (flycheck-mode)
+;;                                          (company-ghc-scan-modules)
+;;                                          (set (make-local-variable 'company-backends) '((company-ghc))))))
+;;   :config (progn
+;;             (add-hook 'haskell-mode-hook (lambda ()
+;;                                            (bind-key "C-c C-f" 'hindent-reformat-region haskell-mode-map)
+;;                                            (bind-key "C-c C-i" 'haskell-navigate-imports haskell-mode-map)
+;;                                            (bind-key "C-c i" 'haskell-navigate-imports haskell-mode-map)
+;;                                            (bind-key "C-c s" 'haskell-mode-stylish-buffer haskell-mode-map)
+;;                                            (bind-key "C-c C-," 'haskell-mode-jump-to-def haskell-mode-map)
+;;                                            (bind-key "C-c ," 'haskell-mode-jump-to-def haskell-mode-map)
+;;                                            (bind-key "C-c C-l" 'haskell-process-load-or-reload haskell-mode-map)
+;;                                            (bind-key "C-c C-z" 'haskell-interactive-switch haskell-mode-map)
+;;                                            (bind-key "C-c C-n C-t" 'haskell-process-do-type haskell-mode-map)
+;;                                            (bind-key "C-c C-n C-i" 'haskell-process-do-info haskell-mode-map)
+;;                                            (bind-key "C-c C-n C-c" 'haskell-process-cabal-build haskell-mode-map)
+;;                                            (bind-key "C-c C-n c" 'haskell-process-cabal haskell-mode-map)
+;;                                            (bind-key "C-c C-o " 'haskell-compile haskell-mode-map)
+;;                                            (bind-key "C-c C-l" 'company-ghc-scan-modules haskell-mode-map)
+;;                                            ;; (bind-key "C-c C-z" 'haskell-interactive-switch haskell-interactive-mode-map)
+;;                                            ;; (bind-key "C-c C-l" 'haskell-interactive-mode-clear haskell-interactive-mode-map)
+;;                                            ;; (bind-key "C-c C-k" 'haskell-process-cabal-build haskell-interactive-mode-map)
+;;                                            ;; (bind-key "C-c k" 'haskell-process-cabal haskell-interactive-mode-map)
+;;                                            (bind-key "C-\"" 'ghc-goto-previous-error haskell-mode-map)
+;;                                            (bind-key "C-<" 'ghc-goto-next-error haskell-mode-map)
+;;                                            (unbind-key "M-t" haskell-mode-map)))))
+
+
 
 
 
@@ -1282,16 +1290,53 @@ change what is evaluated to the statement on the current line."
           (add-hook 'go-mode-hook 'go-eldoc-setup)))
 
 
+;; ;; RUST
+;; (use-package rust-mode
+;;   :ensure t :defer t
+;;   :init (progn
+;;           (add-hook 'rust-mode-hook 'racer-mode)
+;;           ;; (add-hook 'rust-mode-hook 'ycmd-mode)
+;;           (add-hook 'rust-mode-hook (lambda () (flycheck-mode 1)))
+;;           (add-hook 'racer-mode-hook 'eldoc-mode)
+;;           (add-hook 'racer-mode-hook 'cargo-minor-mode)
+;;           (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
+;;           ;; (add-hook 'racer-mode-hook)
+;;           (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers)))  
+;;           )
+;;   :config (progn
+;;             (bind-key "C-c C-." 'racer-find-definition rust-mode-map)
+;;             (bind-key "C-c C-d" 'cargo-process-doc rust-mode-map)
+;;             (bind-key "C-c C-r" 'cargo-process-run rust-mode-map)
+;;             (bind-key "C-c C-n" 'cargo-process-new rust-mode-map)
+;;             (bind-key "C-c C-t" 'cargo-process-test rust-mode-map)
+;;             (bind-key "C-c C-b" 'cargo-process-build rust-mode-map)
+;;             (bind-key "C-c C-l" 'cargo-process-clean rust-mode-map)
+;;             (bind-key "C-c C-e" 'cargo-process-bench rust-mode-map)
+;;             (bind-key "C-c C-u" 'cargo-process-update rust-mode-map)
+;;             (bind-key "C-c C-c" 'cargo-process-repeat rust-mode-map)
+;;             (bind-key "C-c C-s" 'cargo-process-search rust-mode-map)
+;;             (bind-key "C-c C-T" 'cargo-process-current-test rust-mode-map)
+;;             (bind-key "C-c C-o" 'cargo-process-current-file-tests rust-mode-map)))
+
+
 ;; RUST
 (use-package rust-mode
   :ensure t :defer t
   :init (progn
-          (add-hook 'rust-mode-hook 'racer-mode)
+          ;; (add-hook 'rust-mode-hook 'racer-mode)
           ;; (add-hook 'rust-mode-hook 'ycmd-mode)
-          (add-hook 'rust-mode-hook (lambda () (flycheck-mode 1)))
+          ;; (add-hook 'rust-mode-hook (lambda () (flycheck-mode 1)))
+          ;; (add-hook 'racer-mode-hook 'eldoc-mode)
+          ;; (add-hook 'racer-mode-hook 'cargo-minor-mode)
+          (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
+          (add-hook 'rust-mode-hook (lambda ()
+                                      (flycheck-mode 1)
+                                      (racer-mode)
+                                      (set (make-local-variable 'company-backends) '((company-racer)))))
           (add-hook 'racer-mode-hook 'eldoc-mode)
           (add-hook 'racer-mode-hook 'cargo-minor-mode)
-          (add-hook 'flycheck-mode-hook 'flycheck-rust-setup))
+          
+          )
   :config (progn
             (bind-key "C-c C-." 'racer-find-definition rust-mode-map)
             (bind-key "C-c C-d" 'cargo-process-doc rust-mode-map)
@@ -3067,7 +3112,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(column-number-mode t)
  '(company-backends
    (quote
-    (company-tern company-go company-ycmd company-c-headers company-robe company-css company-semantic company-xcode company-cmake company-dabbrev-code company-capf company-gtags company-files)))
+    (company-tern company-go company-ycmd company-racer company-c-headers company-robe company-css company-semantic company-xcode company-cmake company-dabbrev-code company-capf company-gtags company-files)))
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes nil)
  '(custom-safe-themes
