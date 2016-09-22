@@ -776,11 +776,19 @@
 
 
 
+
 ;; JAVASCRIPT
 (use-package js2-mode
   :ensure t
   :mode ("\\.js\\'" . js2-jsx-mode)
   :init (progn
+          (defun my/js2-toggle-indent ()
+            (interactive)
+            (setq js-indent-level (if (= js-indent-level 2) 4 2))
+            (setq js2-indent-level (if (= js-indent-level 2) 4 2))
+            (setq js2-basic-offset (if (= js-indent-level 2) 4 2))
+            (message "js-indent-level, js2-indent-level, and js2-basic-offset set to %d"
+                     js2-basic-offset))
           (setq js2-basic-indent 2
                 js2-basic-offset 2
                 js2-highlight-level 2
@@ -801,7 +809,8 @@
             (bind-key "C-c C-b" 'web-beautify-js js2-mode-map)
             (bind-key "C-c C-i" 'import-js-fix)
             (bind-key "C-c i" 'import-js-goto)
-            (bind-key "C-c C-u" 'import-js-import)))
+            (bind-key "C-c C-u" 'import-js-import)
+            (bind-key "C-c C-/" 'my/js2-toggle-indent)))
 
 
 ;; TERN
@@ -1365,34 +1374,34 @@ change what is evaluated to the statement on the current line."
   :ensure t :defer t)
 
 
-;;  PHP
-;; (use-package ac-php :ensure t)
-;; (use-package php-mode
-;;   :ensure t
-;;   :init (progn
-;;           (add-hook 'php-mode-hook
-;;                     (lambda ()
-;;                       (auto-complete-mode 1)
-;;                       (ggtags-mode 1)
-;;                       (flycheck-mode 1)
-;;                       (add-hook 'before-save-hook
-;;                                 (lambda ()
-;;                                   (when (eq major-mode 'php-mode)
-;;                                         (ac-php-remake-tags)))))))
-;;   :config (progn
-;;             (bind-key "C-SPC" 'ac-complete-php php-mode-map)
-;;             (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
-;;             (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
-;;             (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
-;;             (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
-;;             (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
-;;             (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
-;;             (bind-key "C-n" 'ac-next ac-complete-mode-map)
-;;             (bind-key "C-h" 'ac-previous ac-complete-mode-map)
-;;             (bind-key "C-c C-d" 'ac-quick-help ac-complete-mode-map)
-;; 			(unbind-key "C-d" php-mode-map)
-;; 			(unbind-key "M-q" php-mode-map)
-;; 			(unbind-key "C-." php-mode-map)))
+ PHP
+(use-package ac-php :ensure t)
+(use-package php-mode
+  :ensure t
+  :init (progn
+          (add-hook 'php-mode-hook
+                    (lambda ()
+                      (auto-complete-mode 1)
+                      (ggtags-mode 1)
+                      (flycheck-mode 1)
+                      (add-hook 'before-save-hook
+                                (lambda ()
+                                  (when (eq major-mode 'php-mode)
+                                        (ac-php-remake-tags)))))))
+  :config (progn
+            (bind-key "C-SPC" 'ac-complete-php php-mode-map)
+            (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
+            (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
+            (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
+            (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
+            (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
+            (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
+            (bind-key "C-n" 'ac-next ac-complete-mode-map)
+            (bind-key "C-h" 'ac-previous ac-complete-mode-map)
+            (bind-key "C-c C-d" 'ac-quick-help ac-complete-mode-map)
+			(unbind-key "C-d" php-mode-map)
+			(unbind-key "M-q" php-mode-map)
+			(unbind-key "C-." php-mode-map)))
 
 
 ;; (use-package php-extras
