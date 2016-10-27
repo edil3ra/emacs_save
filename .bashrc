@@ -126,10 +126,6 @@ export WORKON_HOME=$HOME/Envs
 # source virtualenvwrapper.sh
 
 
-# DART
-export PATH=$PATH:/opt/dart-sdk/bin
-alias dartium='cd /opt/dartium && ./chrome --user-data-dir=/tmp/dartium'
-
 
 # GO
 export GOROOT=/opt/go
