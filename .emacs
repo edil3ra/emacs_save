@@ -424,10 +424,9 @@
             (bind-key "<backtab>" 'dired-subtree-cycle dired-mode-map)
             (bind-key "M-G" 'dired-subtree-beginning dired-mode-map)
             (bind-key "M-R" 'dired-subtree-end dired-mode-map)
-            
-            (bind-key "c j" 'dired-ranger-copy dired-mode-map)
-            (bind-key "c k" 'dired-ranger-paste dired-mode-map)
-            (bind-key "c x" 'dired-ranger-move dired-mode-map)
+            (bind-key "1" 'dired-ranger-copy dired-mode-map)
+            (bind-key "2" 'dired-ranger-paste dired-mode-map)
+            (bind-key "3" 'dired-ranger-move dired-mode-map)
             (bind-key "C-w" 'kill-this-buffer dired-mode-map)
             (define-key dired-mode-map (kbd ".") dired-filter-map)))
             
@@ -1856,6 +1855,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
             (< i 20))
       (setq i (1+ i)) (previous-buffer))))
 
+
 (defun my-next-user-dired-buffer ()
   (interactive)
   (next-buffer)
@@ -1893,8 +1893,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
        (list (region-beginning) (region-end) current-prefix-arg)
      (list (line-beginning-position) (line-end-position) current-prefix-arg)))
   (let ((deactivate-mark nil))
-    (setq count (if count (prefix-numeric-value count)
-                  2))
+    (setq count (if count (prefix-numeric-value count) 2))
     (indent-rigidly start end count)))
 
 
