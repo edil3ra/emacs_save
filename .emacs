@@ -162,6 +162,9 @@
 (use-package magit
   :ensure t :defer t)
 
+(use-package helm-projectile
+  :ensure t :defer t)
+
 (use-package projectile
   :ensure t :defer t :diminish projectile-mode
   :init(progn
@@ -169,7 +172,8 @@
                projectile-completion-system 'helm
                projectile-switch-project-action 'helm-projectile-find-file
                ;; projectile-use-native-indexing t)
-               projectile-use-native-indexing nil)
+               projectile-use-native-indexing nil
+               projectile-mode-line "Projectile")
          (helm-projectile-on)
          (projectile-global-mode)))
 
@@ -424,9 +428,15 @@
             (bind-key "<backtab>" 'dired-subtree-cycle dired-mode-map)
             (bind-key "M-G" 'dired-subtree-beginning dired-mode-map)
             (bind-key "M-R" 'dired-subtree-end dired-mode-map)
+            
+            ;; (bind-key "c j" 'dired-ranger-copy dired-mode-map)
+            ;; (bind-key "c k" 'dired-ranger-paste dired-mode-map)
+            ;; (bind-key "c x" 'dired-ranger-move dired-mode-map)
+
             (bind-key "1" 'dired-ranger-copy dired-mode-map)
             (bind-key "2" 'dired-ranger-paste dired-mode-map)
             (bind-key "3" 'dired-ranger-move dired-mode-map)
+            
             (bind-key "C-w" 'kill-this-buffer dired-mode-map)
             (define-key dired-mode-map (kbd ".") dired-filter-map)))
             
@@ -1061,7 +1071,6 @@ change what is evaluated to the statement on the current line."
   (add-hook 'clojure-mode-hook 'my/clojure-mode-defaults))
 
 
-;; company is bugy ...........
 (use-package cider
   :ensure t 
   :init (progn
@@ -1072,8 +1081,7 @@ change what is evaluated to the statement on the current line."
           ;; (add-hook 'cider-mode-hook #'company-mode)
           (add-hook 'cider-mode-hook
                     (lambda ()
-                      (set (make-local-variable 'company-backends) '(company-capf))))
-          )
+                      (set (make-local-variable 'company-backends) '(company-capf)))))
   :config (progn
             (bind-key "C-c C-k" 'my/cider-load-buffer cider-mode-map)))
 
@@ -1373,20 +1381,48 @@ change what is evaluated to the statement on the current line."
   :ensure t :defer t)
 
 
- PHP
-(use-package ac-php :ensure t)
-(use-package php-mode
+;; ;; PHP
+;; (use-package ac-php :ensure t)
+;; (use-package php-mode
+;;   :ensure t
+;;   :init (progn
+;;           (add-hook 'php-mode-hook
+;;                     (lambda ()
+;;                       (auto-complete-mode 1)
+;;                       (ggtags-mode 1)
+;;                       (flycheck-mode 1)
+;;                       (add-hook 'before-save-hook
+;;                                 (lambda ()
+;;                                   (when (eq major-mode 'php-mode)
+;;                                         (ac-php-remake-tags)))))))
+;;   :config (progn
+;;             (bind-key "C-SPC" 'ac-complete-php php-mode-map)
+;;             (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
+;;             (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
+;;             (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
+;;             (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
+;;             (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
+;;             (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
+;;             (bind-key "C-n" 'ac-next ac-complete-mode-map)
+;;             (bind-key "C-h" 'ac-previous ac-complete-mode-map)
+;;             (bind-key "C-c C-d" 'ac-quick-help ac-complete-mode-map)
+;; 			(unbind-key "C-d" php-mode-map)
+;; 			(unbind-key "M-q" php-mode-map)
+;; 			(unbind-key "C-." php-mode-map)
+;;             ))
+
+;; PHP
+(use-package company-php
   :ensure t
   :init (progn
           (add-hook 'php-mode-hook
                     (lambda ()
-                      (auto-complete-mode 1)
-                      (ggtags-mode 1)
+                      (set (make-local-variable 'company-backends) '((company-ac-php-backend)))
                       (flycheck-mode 1)
                       (add-hook 'before-save-hook
                                 (lambda ()
                                   (when (eq major-mode 'php-mode)
-                                        (ac-php-remake-tags)))))))
+                                    (ac-php-remake-tags)))))))
   :config (progn
             (bind-key "C-SPC" 'ac-complete-php php-mode-map)
             (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
@@ -1401,6 +1437,9 @@ change what is evaluated to the statement on the current line."
 			(unbind-key "C-d" php-mode-map)
 			(unbind-key "M-q" php-mode-map)
 			(unbind-key "C-." php-mode-map)))
+
+
+
 
 
 ;; (use-package php-extras
@@ -1855,7 +1894,6 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
             (< i 20))
       (setq i (1+ i)) (previous-buffer))))
 
-
 (defun my-next-user-dired-buffer ()
   (interactive)
   (next-buffer)
@@ -1893,7 +1931,8 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
        (list (region-beginning) (region-end) current-prefix-arg)
      (list (line-beginning-position) (line-end-position) current-prefix-arg)))
   (let ((deactivate-mark nil))
-    (setq count (if count (prefix-numeric-value count) 2))
+    (setq count (if count (prefix-numeric-value count)
+                  2))
     (indent-rigidly start end count)))
 
 
@@ -2248,6 +2287,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key* "C-y" 'helm-show-kill-ring)
 (bind-key "C-f" 'helm-projectile-ag)
+(bind-key "C-F" 'helm-ag)
 (bind-key "C-h a" 'helm-apropos)
 (bind-key "C-h o" 'helm-man-woman)
 (global-set-key (kbd "M-o") 'projectile-find-file)
@@ -3125,7 +3165,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("cf28bfffbf8726a31989e662986065b5319670902ac1af0e63fb8e773c119488" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "f64c9f8b4241b680b186f4620afb9c82fa2a76cf4498a7431f90db59bb1892eb" "34e7163479ef3669943b3b9b1fabe639d6e0a0453e0de79cea2c52cb520d3bc4" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "71ecffba18621354a1be303687f33b84788e13f40141580fa81e7840752d31bf" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+    ("38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "cf28bfffbf8726a31989e662986065b5319670902ac1af0e63fb8e773c119488" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "f64c9f8b4241b680b186f4620afb9c82fa2a76cf4498a7431f90db59bb1892eb" "34e7163479ef3669943b3b9b1fabe639d6e0a0453e0de79cea2c52cb520d3bc4" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "71ecffba18621354a1be303687f33b84788e13f40141580fa81e7840752d31bf" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(delete-selection-mode 1)
  '(exec-path
    (append exec-path
@@ -3135,15 +3175,13 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(initial-major-mode (quote org-mode))
  '(initial-scratch-message nil)
  '(irony-additional-clang-options (quote ("-std=c++11")))
+ '(js-indent-level 2)
  '(org-babel-python-command "python3")
- ;; '(package-selected-packages
- ;;   (quote
- ;;    (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info php-mode nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-ghc helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi company-ghc coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(package-selected-packages
    (quote
-    (unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
+    (company-php unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(prefer-coding-system (quote utf-8))
- '(ring-bell-function (quote ignore) t)
+ '(ring-bell-function (quote ignore))
  '(same-window-buffer-names (quote ("*shell*")))
  '(scroll-error-top-bottom t)
  '(vc-annotate-background nil)
@@ -3171,13 +3209,13 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 ;; (setq debug-on-error t)
 
 ;; theme and font
-(set-default-font "DejaVu Sans Mono 9")
+;; (set-default-font "DejaVu Sans Mono 9")
 
 ;; (load-theme 'grandshell)
 ;; (load-theme 'monokai)
-;; (load-theme 'cyberpunk)
-;; (load-theme 'assemblage)
-(load-theme 'sanityinc-tomorrow-night)
+(load-theme 'cyberpunk)
+;;(load-theme 'assemblage)
+;; (load-theme 'sanityinc-tomorrow-night)
 
 
 
