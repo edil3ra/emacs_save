@@ -1306,44 +1306,10 @@ change what is evaluated to the statement on the current line."
           (add-hook 'go-mode-hook 'go-eldoc-setup)))
 
 
-;; ;; RUST
-;; (use-package rust-mode
-;;   :ensure t :defer t
-;;   :init (progn
-;;           (add-hook 'rust-mode-hook 'racer-mode)
-;;           ;; (add-hook 'rust-mode-hook 'ycmd-mode)
-;;           (add-hook 'rust-mode-hook (lambda () (flycheck-mode 1)))
-;;           (add-hook 'racer-mode-hook 'eldoc-mode)
-;;           (add-hook 'racer-mode-hook 'cargo-minor-mode)
-;;           (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
-;;           ;; (add-hook 'racer-mode-hook)
-;;           (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers)))  
-;;           )
-;;   :config (progn
-;;             (bind-key "C-c C-." 'racer-find-definition rust-mode-map)
-;;             (bind-key "C-c C-d" 'cargo-process-doc rust-mode-map)
-;;             (bind-key "C-c C-r" 'cargo-process-run rust-mode-map)
-;;             (bind-key "C-c C-n" 'cargo-process-new rust-mode-map)
-;;             (bind-key "C-c C-t" 'cargo-process-test rust-mode-map)
-;;             (bind-key "C-c C-b" 'cargo-process-build rust-mode-map)
-;;             (bind-key "C-c C-l" 'cargo-process-clean rust-mode-map)
-;;             (bind-key "C-c C-e" 'cargo-process-bench rust-mode-map)
-;;             (bind-key "C-c C-u" 'cargo-process-update rust-mode-map)
-;;             (bind-key "C-c C-c" 'cargo-process-repeat rust-mode-map)
-;;             (bind-key "C-c C-s" 'cargo-process-search rust-mode-map)
-;;             (bind-key "C-c C-T" 'cargo-process-current-test rust-mode-map)
-;;             (bind-key "C-c C-o" 'cargo-process-current-file-tests rust-mode-map)))
-
-
 ;; RUST
 (use-package rust-mode
   :ensure t :defer t
   :init (progn
-          ;; (add-hook 'rust-mode-hook 'racer-mode)
-          ;; (add-hook 'rust-mode-hook 'ycmd-mode)
-          ;; (add-hook 'rust-mode-hook (lambda () (flycheck-mode 1)))
-          ;; (add-hook 'racer-mode-hook 'eldoc-mode)
-          ;; (add-hook 'racer-mode-hook 'cargo-minor-mode)
           (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
           (add-hook 'rust-mode-hook (lambda ()
                                       (flycheck-mode 1)
@@ -1381,37 +1347,8 @@ change what is evaluated to the statement on the current line."
   :ensure t :defer t)
 
 
-;; ;; PHP
-;; (use-package ac-php :ensure t)
-;; (use-package php-mode
-;;   :ensure t
-;;   :init (progn
-;;           (add-hook 'php-mode-hook
-;;                     (lambda ()
-;;                       (auto-complete-mode 1)
-;;                       (ggtags-mode 1)
-;;                       (flycheck-mode 1)
-;;                       (add-hook 'before-save-hook
-;;                                 (lambda ()
-;;                                   (when (eq major-mode 'php-mode)
-;;                                         (ac-php-remake-tags)))))))
-;;   :config (progn
-;;             (bind-key "C-SPC" 'ac-complete-php php-mode-map)
-;;             (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
-;;             (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
-;;             (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
-;;             (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
-;;             (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
-;;             (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
-;;             (bind-key "C-n" 'ac-next ac-complete-mode-map)
-;;             (bind-key "C-h" 'ac-previous ac-complete-mode-map)
-;;             (bind-key "C-c C-d" 'ac-quick-help ac-complete-mode-map)
-;; 			(unbind-key "C-d" php-mode-map)
-;; 			(unbind-key "M-q" php-mode-map)
-;; 			(unbind-key "C-." php-mode-map)
-;;             ))
-
 ;; PHP
+(use-package php-mode :ensure t)
 (use-package company-php
   :ensure t
   :init (progn
@@ -1431,9 +1368,6 @@ change what is evaluated to the statement on the current line."
             (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
             (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
             (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
-            (bind-key "C-n" 'ac-next ac-complete-mode-map)
-            (bind-key "C-h" 'ac-previous ac-complete-mode-map)
-            (bind-key "C-c C-d" 'ac-quick-help ac-complete-mode-map)
 			(unbind-key "C-d" php-mode-map)
 			(unbind-key "M-q" php-mode-map)
 			(unbind-key "C-." php-mode-map)))
@@ -1473,7 +1407,7 @@ change what is evaluated to the statement on the current line."
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
 ;; insert ret if last line
-(setq next-line-add-newlines t)
+(setq next-line-add-newlines nil)
 
 ;; scratch message
 (setq initial-scratch-message nil)
@@ -3179,7 +3113,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(org-babel-python-command "python3")
  '(package-selected-packages
    (quote
-    (company-php unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
+    (php-mode-map company-php unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(prefer-coding-system (quote utf-8))
  '(ring-bell-function (quote ignore))
  '(same-window-buffer-names (quote ("*shell*")))
