@@ -225,7 +225,8 @@
   :defer t
   :init(progn
          (bind-key "<up>" 'comint-previous-input shell-mode-map)
-         (bind-key "<down>" 'comint-next-input shell-mode-map)))
+         (bind-key "<down>" 'comint-next-input shell-mode-map)
+         (bind-key "C-r" 'comint-history-isearch-backward-regexp shell-mode-map)))
 
 (use-package eshell
   :init (progn
@@ -436,6 +437,7 @@
             (bind-key "1" 'dired-ranger-copy dired-mode-map)
             (bind-key "2" 'dired-ranger-paste dired-mode-map)
             (bind-key "3" 'dired-ranger-move dired-mode-map)
+            (bind-key "4" 'dired-do-delete dired-mode-map)
             
             (bind-key "C-w" 'kill-this-buffer dired-mode-map)
             (define-key dired-mode-map (kbd ".") dired-filter-map)))
@@ -755,34 +757,58 @@
          (setq pyvenv-virtualenvwrapper-python "/usr/bin/python3")))
 
 
+
+;; ;; OLD
+;; ;; RUBY
+;; (use-package inf-ruby :defer t :ensure t)
+
+
+;; ;; ROBE
+;; (use-package robe
+;;   :ensure t :defer t
+;;   :config (progn
+;;             (unbind-key "C-c C-k" robe-mode-map)
+;;             (bind-key "C-c C-." 'robe-jump robe-mode-map)
+;;             (bind-key "C-c C-," 'robe-ask robe-mode-map)))
+
+;; (use-package ruby-mode
+;;   :defer t
+;;   :init (progn
+;;           (add-hook 'ruby-mode-hook 'robe-mode)
+;;           (add-hook 'ruby-mode-hook
+;;                     (lambda ()
+;;                       (flycheck-mode 1)
+;;                       (set (make-local-variable 'company-backends) '((company-dabbrev-code company-robe))))))
+;;   :config(progn
+;;            (bind-key "<f8>" 'inf-ruby ruby-mode-map)
+;;            (bind-key "<f9>" 'robe-start ruby-mode-map)
+;;            (bind-key "C-c C-c" 'ruby-send-block ruby-mode-map)
+;;            (bind-key "C-c C-b" 'ruby-send-last-sexp ruby-mode-map)
+;;            (bind-key "C-c C-k" 'ruby-send-buffer ruby-mode-map)
+;;            (bind-key "C-c C-z" 'run-ruby ruby-mode-map)))
+
+
+
 ;; RUBY
-(use-package inf-ruby :defer t :ensure t)
+(use-package seeing-is-believing :ensure t)
+(use-package inf-ruby :ensure t :defer t)
+(use-package company-inf-ruby :ensure t :defer t)
 
-
-;; ROBE
-(use-package robe
-  :ensure t :defer t
-  :config (progn
-            (unbind-key "C-c C-k" robe-mode-map)
-            (bind-key "C-c C-." 'robe-jump robe-mode-map)
-            (bind-key "C-c C-," 'robe-ask robe-mode-map)))
 
 (use-package ruby-mode
   :defer t
   :init (progn
-          (add-hook 'ruby-mode-hook 'robe-mode)
+          (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
           (add-hook 'ruby-mode-hook
                     (lambda ()
                       (flycheck-mode 1)
-                      (set (make-local-variable 'company-backends) '((company-dabbrev-code company-robe))))))
+                      (set (make-local-variable 'company-backends) '((company-inf-ruby company-dabbrev-code ))))))
   :config(progn
            (bind-key "<f8>" 'inf-ruby ruby-mode-map)
-           (bind-key "<f9>" 'robe-start ruby-mode-map)
            (bind-key "C-c C-c" 'ruby-send-block ruby-mode-map)
            (bind-key "C-c C-b" 'ruby-send-last-sexp ruby-mode-map)
            (bind-key "C-c C-k" 'ruby-send-buffer ruby-mode-map)
            (bind-key "C-c C-z" 'run-ruby ruby-mode-map)))
-
 
 
 
@@ -1146,6 +1172,8 @@ change what is evaluated to the statement on the current line."
             (bind-key "C-c C-k" 'alchemist-iex-compile-this-buffer alchemist-mode-map)
             (bind-key "C-c C-l" 'alchemist-iex-reload-module alchemist-mode-map)
             (bind-key "C-c C-z" 'alchemist-iex-run alchemist-mode-map)
+            (bind-key "C-c C-." 'alchemist-goto-definition-at-point alchemist-mode-map)
+            (bind-key "C-c C-," 'alchemist-goto-jump-back alchemist-mode-map)
             (bind-key "C-l" 'alchemist-iex-clear-buffer alchemist-iex-mode-map)))
 
 
@@ -1160,54 +1188,6 @@ change what is evaluated to the statement on the current line."
 
 (use-package flycheck-haskell
   :ensure t :defer t)
-
-;; (use-package ghc
-;;   :ensure t :defer t)
-
-;; (use-package company-ghc
-;;   :ensure t :defer)
-
-;; (use-package haskell-mode
-;;   :ensure t
-;;   :init (progn
-;;           (setq haskell-process-type 'cabal-repl)
-;;           (add-hook 'haskell-mode-hook 'hindent-mode)
-;;           (autoload 'ghc-init "ghc" nil t)
-;;           (autoload 'ghc-debug "ghc" nil t)
-;;           (setq  company-ghc-show-info t)
-;;           (add-hook 'haskell-mode-hook (lambda ()
-;;                                          (ghc-init)
-;;                                          (flycheck-mode)
-;;                                          (company-ghc-scan-modules)
-;;                                          (set (make-local-variable 'company-backends) '((company-ghc))))))
-;;   :config (progn
-;;             (add-hook 'haskell-mode-hook (lambda ()
-;;                                            (bind-key "C-c C-f" 'hindent-reformat-region haskell-mode-map)
-;;                                            (bind-key "C-c C-i" 'haskell-navigate-imports haskell-mode-map)
-;;                                            (bind-key "C-c i" 'haskell-navigate-imports haskell-mode-map)
-;;                                            (bind-key "C-c s" 'haskell-mode-stylish-buffer haskell-mode-map)
-;;                                            (bind-key "C-c C-," 'haskell-mode-jump-to-def haskell-mode-map)
-;;                                            (bind-key "C-c ," 'haskell-mode-jump-to-def haskell-mode-map)
-;;                                            (bind-key "C-c C-l" 'haskell-process-load-or-reload haskell-mode-map)
-;;                                            (bind-key "C-c C-z" 'haskell-interactive-switch haskell-mode-map)
-;;                                            (bind-key "C-c C-n C-t" 'haskell-process-do-type haskell-mode-map)
-;;                                            (bind-key "C-c C-n C-i" 'haskell-process-do-info haskell-mode-map)
-;;                                            (bind-key "C-c C-n C-c" 'haskell-process-cabal-build haskell-mode-map)
-;;                                            (bind-key "C-c C-n c" 'haskell-process-cabal haskell-mode-map)
-;;                                            (bind-key "C-c C-o " 'haskell-compile haskell-mode-map)
-;;                                            (bind-key "C-c C-l" 'company-ghc-scan-modules haskell-mode-map)
-;;                                            ;; (bind-key "C-c C-z" 'haskell-interactive-switch haskell-interactive-mode-map)
-;;                                            ;; (bind-key "C-c C-l" 'haskell-interactive-mode-clear haskell-interactive-mode-map)
-;;                                            ;; (bind-key "C-c C-k" 'haskell-process-cabal-build haskell-interactive-mode-map)
-;;                                            ;; (bind-key "C-c k" 'haskell-process-cabal haskell-interactive-mode-map)
-;;                                            (bind-key "C-\"" 'ghc-goto-previous-error haskell-mode-map)
-;;                                            (bind-key "C-<" 'ghc-goto-next-error haskell-mode-map)
-;;                                            (unbind-key "M-t" haskell-mode-map)))))
-
-
-
-
-
 
 
 
@@ -3142,15 +3122,6 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(vc-annotate-very-old-color nil))
 ;; (setq debug-on-error t)
 
-;; theme and font
-;; (set-default-font "DejaVu Sans Mono 9")
-
-;; (load-theme 'grandshell)
-;; (load-theme 'monokai)
-(load-theme 'cyberpunk)
-;;(load-theme 'assemblage)
-;; (load-theme 'sanityinc-tomorrow-night)
-
 
 
 (custom-set-faces
@@ -3165,6 +3136,16 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(rainbow-delimiters-depth-5-face ((t (:foreground "gold3"))))
  '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrange3"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta")))))
+
+
+;; theme and font
+;; (set-default-font "DejaVu Sans Mono 9")
+
+;; (load-theme 'grandshell)
+;; (load-theme 'monokai)
+;; (load-theme 'cyberpunk)
+(load-theme 'assemblage)
+;; (load-theme 'sanityinc-tomorrow-night)
 
 
 ;; mac related 
