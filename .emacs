@@ -95,7 +95,6 @@
   :config (progn
             (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-map)
             (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-edit-map)
-            (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-edit-map)
             ;; (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-swoop-edit-map)
             ;; (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-multi-swoop-edit-map)
             ))
@@ -2214,6 +2213,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "C-x C-J" 'find-lisp-find-dired)
 (bind-key "C-x M-j" 'locate)
 (bind-key "C-x M-J" 'locate-with-filter)
+(bind-key* "C-/" 'projectile-dired)
 
 ;; UNWRAP
 (bind-key "C-c ("  'wrap-with-parens)
