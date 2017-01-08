@@ -188,6 +188,8 @@
            (define-key yas-minor-mode-map (kbd "<tab>") nil)
            (bind-key "M--" #'yas-expand yas-minor-mode-map)))
 
+(use-package yafolding :ensure t)
+
 
 (use-package hydra
   :ensure t :defer t)
@@ -223,9 +225,17 @@
 (use-package shell
   :defer t
   :init(progn
+         (defun comint-clear-buffer ()
+           (interactive)
+           (let ((comint-buffer-maximum-size 0))
+             (comint-truncate-buffer)))
          (bind-key "<up>" 'comint-previous-input shell-mode-map)
          (bind-key "<down>" 'comint-next-input shell-mode-map)
-         (bind-key "C-r" 'comint-history-isearch-backward-regexp shell-mode-map)))
+         (bind-key "C-r" 'comint-history-isearch-backward-regexp shell-mode-map)
+         (bind-key "C-S-r" 'helm-swoop shell-mode-map)
+         (bind-key "C-p" 'helm-comint-input-ring shell-mode-map)
+         (bind-key "C-y" 'helm-comint-input-ring shell-mode-map)
+         (bind-key "C-l" 'comint-clear-buffer shell-mode-map)))
 
 (use-package eshell
   :init (progn
@@ -370,9 +380,7 @@
           (beacon-mode)))
 
 (use-package nyan-mode
-  :ensure t
-  :init(progn
-         (add-hook 'prog-mode-hook #'nyan-mode)))
+  :ensure t :defer t)
 
 
 (use-package visual-regexp
@@ -757,36 +765,6 @@
 
 
 
-;; ;; OLD
-;; ;; RUBY
-;; (use-package inf-ruby :defer t :ensure t)
-
-
-;; ;; ROBE
-;; (use-package robe
-;;   :ensure t :defer t
-;;   :config (progn
-;;             (unbind-key "C-c C-k" robe-mode-map)
-;;             (bind-key "C-c C-." 'robe-jump robe-mode-map)
-;;             (bind-key "C-c C-," 'robe-ask robe-mode-map)))
-
-;; (use-package ruby-mode
-;;   :defer t
-;;   :init (progn
-;;           (add-hook 'ruby-mode-hook 'robe-mode)
-;;           (add-hook 'ruby-mode-hook
-;;                     (lambda ()
-;;                       (flycheck-mode 1)
-;;                       (set (make-local-variable 'company-backends) '((company-dabbrev-code company-robe))))))
-;;   :config(progn
-;;            (bind-key "<f8>" 'inf-ruby ruby-mode-map)
-;;            (bind-key "<f9>" 'robe-start ruby-mode-map)
-;;            (bind-key "C-c C-c" 'ruby-send-block ruby-mode-map)
-;;            (bind-key "C-c C-b" 'ruby-send-last-sexp ruby-mode-map)
-;;            (bind-key "C-c C-k" 'ruby-send-buffer ruby-mode-map)
-;;            (bind-key "C-c C-z" 'run-ruby ruby-mode-map)))
-
-
 
 ;; RUBY
 (use-package seeing-is-believing :ensure t)
@@ -1070,6 +1048,20 @@ change what is evaluated to the statement on the current line."
   :ensure t :defer t)
 
 
+
+;; ELM
+(use-package elm-mode
+  :ensure t
+  :init (progn
+          (add-hook 'elm-mode-hook
+                    (lambda()
+                      (eldoc-mode -1)
+                      (set (make-local-variable 'company-backends) '((company-elm company-dabbrev-code)))))))
+
+
+
+
+
 ;; ELISP
 (use-package emacs-lisp-mode
   :defer t
@@ -1155,6 +1147,12 @@ change what is evaluated to the statement on the current line."
 (use-package alchemist
   :ensure t
   :init(progn
+         (setq alchemist-goto-elixir-source-dir "/usr/local/lib/elixir/"
+               alchemist-goto-erlang-source-dir "/usr/local/lib/elixir/lib"
+               )
+         
+         
+         
          (add-hook 'alchemist-mode-hook
                    (lambda ()
                      (set (make-local-variable 'company-backends) '((alchemist-company)))))
@@ -1176,17 +1174,6 @@ change what is evaluated to the statement on the current line."
             (bind-key "C-l" 'alchemist-iex-clear-buffer alchemist-iex-mode-map)))
 
 
-
-;; HASKELL COMPLETLY BUGGY because of ghc (I am missing something here)
-;; cabal update
-;; cabal install happy hasktags stylish-haskell present ghc-mod hlint hoogle structured-haskell-mode hindent
-;; http://tim.dysinger.net/posts/2014-02-18-haskell-with-emacs.html
-
-(use-package hindent
-  :ensure t :defer t)
-
-(use-package flycheck-haskell
-  :ensure t :defer t)
 
 
 
@@ -2063,8 +2050,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "M-C--" 'my-indent-shift-left)
 (bind-key "M-C-\\" 'my-indent-shift-right)
 (bind-key "<backtab>" 'my-indent-shift-left)
-(bind-key "M--" 'hippie-expand)
-;; (bind-key "M-\\" 'dabbrev)
+(bind-key "C--" 'hippie-expand)
 (bind-key "M-\\" 'flycheck-mode)
 (bind-key "C-M-\\" 'global-flycheck-mode)
 (bind-key* "C-a" 'mark-whole-buffer)
@@ -2203,6 +2189,8 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "C-F" 'helm-ag)
 (bind-key "C-h a" 'helm-apropos)
 (bind-key "C-h o" 'helm-man-woman)
+(bind-key "M--" 'yafolding-toggle-element)
+(bind-key "M-_" 'yafolding-toggle-all)
 (global-set-key (kbd "M-o") 'projectile-find-file)
 (global-set-key (kbd "C-e") 'helm-buffers-list)
 
