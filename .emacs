@@ -2871,6 +2871,8 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("o" my-open-with)
   ("e" my-sudo)
   ("w" my-dirname-buffer)
+  ("r" global-auto-revert-mode)
+  ("R" auto-revert-mode)
   ("q" nil :color blue)
   ("g" nil))
 
@@ -3073,6 +3075,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
    (append exec-path
            (quote
             ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
+ '(fci-rule-color "#383838")
  '(inf-ruby-default-implementation "ruby")
  '(initial-major-mode (quote org-mode))
  '(initial-scratch-message nil)
@@ -3081,11 +3084,12 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(org-babel-python-command "python3")
  '(package-selected-packages
    (quote
-    (php-mode-map company-php unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
+    (elm-mode yafolding php-extras php-mode-map company-php unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
  '(prefer-coding-system (quote utf-8))
- '(ring-bell-function (quote ignore) t)
+ '(ring-bell-function (quote ignore))
  '(same-window-buffer-names (quote ("*shell*")))
  '(scroll-error-top-bottom t)
+ '(typescript-indent-level 4)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
