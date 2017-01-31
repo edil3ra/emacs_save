@@ -1314,30 +1314,30 @@ change what is evaluated to the statement on the current line."
 
 
 ;; PHP
-(use-package php-mode :ensure t)
-(use-package company-php
-  :ensure t
-  :init (progn
-          (add-hook 'php-mode-hook
-                    (lambda ()
-                      (set (make-local-variable 'company-backends) '((company-ac-php-backend)))
-                      (flycheck-mode 1)
-                      (add-hook 'before-save-hook
-                                (lambda ()
-                                  (when (eq major-mode 'php-mode)
-                                    (ac-php-remake-tags)))))))
-  :config (progn
-            (bind-key "C-SPC" 'ac-complete-php php-mode-map)
-            (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
-            (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
-            (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
-            (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
-            (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
-            (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
-			(unbind-key "C-d" php-mode-map)
-			(unbind-key "M-q" php-mode-map)
-			(unbind-key "C-." php-mode-map)))
-
+;;(use-package php-mode :ensure t)
+;;(use-package company-php
+;;  :ensure t
+;;  :init (progn
+;;          (add-hook 'php-mode-hook
+;;                    (lambda ()
+;;                      (set (make-local-variable 'company-backends) '((company-ac-php-backend)))
+;;                      (flycheck-mode 1)
+;;                      (add-hook 'before-save-hook
+;;                                (lambda ()
+;;                                  (when (eq major-mode 'php-mode)
+;;                                    (ac-php-remake-tags)))))))
+;;  :config (progn
+;;            (bind-key "C-SPC" 'ac-complete-php php-mode-map)
+;;            (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
+;;            (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
+;;            (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
+;;            (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
+;;            (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
+;;            (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
+;;			(unbind-key "C-d" php-mode-map)
+;;			(unbind-key "M-q" php-mode-map)
+;;			(unbind-key "C-." php-mode-map)))
+;;
 
 
 
