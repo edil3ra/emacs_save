@@ -124,8 +124,7 @@
                 company-show-numbers t
                 company-minimum-prefix-length 1
                 company-quickhelp-delay nil)
-          (company-quickhelp-mode 1)
-          )
+          (company-quickhelp-mode 1))
 
   :config (progn
             (bind-key "<tab>" #'company-complete company-active-map)
@@ -428,6 +427,7 @@
                 (dired-add-file new)
                 (dired-move-to-filename))
               (revert-buffer)))
+          
           (add-hook 'dired-mode-hook 'auto-revert-mode)
           (diredp-toggle-find-file-reuse-dir t))
   :config (progn
@@ -443,19 +443,13 @@
             (bind-key "<backtab>" 'dired-subtree-cycle dired-mode-map)
             (bind-key "M-G" 'dired-subtree-beginning dired-mode-map)
             (bind-key "M-R" 'dired-subtree-end dired-mode-map)
-            
-            ;; (bind-key "c j" 'dired-ranger-copy dired-mode-map)
-            ;; (bind-key "c k" 'dired-ranger-paste dired-mode-map)
-            ;; (bind-key "c x" 'dired-ranger-move dired-mode-map)
-
             (bind-key "1" 'dired-ranger-copy dired-mode-map)
             (bind-key "2" 'dired-ranger-paste dired-mode-map)
             (bind-key "3" 'dired-ranger-move dired-mode-map)
             (bind-key "4" 'dired-do-delete dired-mode-map)
-            
             (bind-key "C-w" 'kill-this-buffer dired-mode-map)
             (define-key dired-mode-map (kbd ".") dired-filter-map)))
-            
+  
 
 (use-package dired-subtree :ensure t :defer t)
 (use-package dired-filter :ensure t :defer t)
@@ -1068,8 +1062,6 @@ change what is evaluated to the statement on the current line."
 
 
 
-
-
 ;; ELISP
 (use-package emacs-lisp-mode
   :defer t
@@ -1156,11 +1148,7 @@ change what is evaluated to the statement on the current line."
   :ensure t
   :init(progn
          (setq alchemist-goto-elixir-source-dir "/usr/local/lib/elixir/"
-               alchemist-goto-erlang-source-dir "/usr/local/lib/elixir/lib"
-               )
-         
-         
-         
+               alchemist-goto-erlang-source-dir "/usr/local/lib/elixir/lib")
          (add-hook 'alchemist-mode-hook
                    (lambda ()
                      (set (make-local-variable 'company-backends) '((alchemist-company)))))
@@ -1180,8 +1168,6 @@ change what is evaluated to the statement on the current line."
             (bind-key "C-c C-," 'alchemist-goto-definition-at-point alchemist-mode-map)
             (bind-key "C-c C-'" 'alchemist-goto-jump-back alchemist-mode-map)
             (bind-key "C-l" 'alchemist-iex-clear-buffer alchemist-iex-mode-map)))
-
-
 
 
 
@@ -1211,8 +1197,7 @@ change what is evaluated to the statement on the current line."
                      (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers)))  
                      (bind-key "C-c C-." 'semantic-ia-fast-jump c-mode-map)
                      (unbind-key "C-d" c-mode-map)
-                     (unbind-key "C-c C-d" c-mode-map))
-                   )
+                     (unbind-key "C-c C-d" c-mode-map)))
          (add-hook 'c++-mode-hook
                    (lambda ()
                      (setq flycheck-gcc-language-standard "c++11")
@@ -2197,8 +2182,8 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "C-F" 'helm-ag)
 (bind-key "C-h a" 'helm-apropos)
 (bind-key "C-h o" 'helm-man-woman)
-(bind-key "M--" 'yafolding-toggle-element)
-(bind-key "M-_" 'yafolding-toggle-all)
+(bind-key* "M--" 'yafolding-toggle-element)
+(bind-key* "M-_" 'yafolding-toggle-all)
 (global-set-key (kbd "M-o") 'projectile-find-file)
 (global-set-key (kbd "C-e") 'helm-buffers-list)
 
