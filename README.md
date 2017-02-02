@@ -7,3 +7,6 @@ run install-package use-package
 ## javascript
     npm install -g eslint tern import-js js-beautify
     
+## python
+    pip3 install jedi rope flake8 importmagic yapf
+    
