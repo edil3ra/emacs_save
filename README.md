@@ -12,3 +12,4 @@ run install-package use-package
 ### Python
     pip3 install jedi rope flake8 importmagic yapf
     copy ./config/flake8
+
