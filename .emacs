@@ -711,10 +711,8 @@
   :mode ("\\.py\\'" . python-mode)
   :init (progn
           (setq expand-region-preferred-python-mode (quote fgallina-python)
-                python-shell-interpreter "ipython3"
-                python-indent-offset 4
-                pyvenv-virtualenvwrapper-python "/usr/bin/python3"
-                python-check-command nil))
+                python-shell-interpreter "python3"
+                python-shell-interpreter-args "--simple-prompt -i"))
   :config (progn
             (bind-key "C-c C-r" 'python-shell-send-region python-mode-map)
             (bind-key "C-c C-c" 'python-shell-send-defun python-mode-map)
@@ -722,27 +720,31 @@
 
 
 (use-package elpy
-  :ensure t :defer t
+  :ensure t
   :init(progn
          (defun my/python-refactoring ()
            (interactive)
            (save-buffer)
            (elpy-refactor))
-         (elpy-enable)
+         
+         (add-hook 'python-mode-hook
+                   (lambda ()
+                     (elpy-enable)
+                     (flycheck-mode 1)))
+         
          (setq elpy-rpc-python-command "python3"
                elpy-rpc-backend "jedi"
-               elpy-flymake-show-error nil
+               elpy-syntax-check-command "flake8"
                elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults))))
+         
   :config(progn
-           (bind-key "C-c C-a" 'elpy-format-code elpy-mode-map)
-           (bind-key "C-c a" 'elpy-format-code elpy-mode-map)
            (bind-key "C-c C-f" 'elpy-format-code elpy-mode-map)
            (bind-key "C-c f" 'elpy-format-code elpy-mode-map)
-           (bind-key "C-c C-o" 'elpy-goto-definition-other-window elpy-mode-map)
-           (bind-key "C-c e" 'elpy-goto-definition elpy-mode-map)
-           (bind-key "C-c C-e" 'elpy-goto-definition elpy-mode-map)
-           (bind-key "C-c C-." 'elpy-goto-definition elpy-mode-map)
            (bind-key "C-c C-," 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c ," 'elpy-goto-definition elpy-mode-map)
+           (bind-key "C-c C-'" 'pop-tag-mark elpy-mode-map)
+           (bind-key "C-c '" 'pop-tag-mark elpy-mode-map)
+           (bind-key "C-c C-o" 'elpy-goto-definition-other-window elpy-mode-map)
            (bind-key "C-c o" 'elpy-goto-definition-other-window elpy-mode-map)
            (bind-key "C-c C-i" 'elpy-importmagic-add-import elpy-mode-map)
            (bind-key "C-c i " 'elpy-importmagic-add-import elpy-mode-map)
@@ -752,17 +754,20 @@
            (bind-key "C-c t" 'elpy-test elpy-mode-map)
            (bind-key "C-c C-s" 'elpy-rgrep-symbol elpy-mode-map)
            (bind-key "C-c r" 'my/python-refactoring elpy-mode-map)
+           (bind-key "C-c C-r" 'my/python-refactoring elpy-mode-map)
+           (bind-key "C-c C-c" 'elpy-shell-send-current-statement elpy-mode-map)
+           (bind-key "C-x C-e" 'elpy-shell-send-current-statement elpy-mode-map)
+           
            (unbind-key "C-c C-r" elpy-mode-map)
-           (unbind-key "C-c C-l" elpy-mode-map)))
+           (unbind-key "C-c C-l" elpy-mode-map)
+           (unbind-key "C-c C-k" elpy-mode-map)
+           (unbind-key "C-c C-c" elpy-mode-map)))
 
 (use-package jedi
   :ensure t :defer t)
 
 (use-package pyvenv
-  :ensure t :defer t
-  :init(progn
-         (setenv "WORKON_HOME" "/home/vince/Envs")
-         (setq pyvenv-virtualenvwrapper-python "/usr/bin/python3")))
+  :ensure t)
 
 
 
@@ -2043,7 +2048,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "M-C--" 'my-indent-shift-left)
 (bind-key "M-C-\\" 'my-indent-shift-right)
 (bind-key "<backtab>" 'my-indent-shift-left)
-(bind-key "C--" 'hippie-expand)
+(bind-key "C--" 'yas-expand)
 (bind-key "M-\\" 'flycheck-mode)
 (bind-key "C-M-\\" 'global-flycheck-mode)
 (bind-key* "C-a" 'mark-whole-buffer)
@@ -2179,7 +2184,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key* "C-y" 'helm-show-kill-ring)
 (bind-key* "C-f" 'helm-projectile-ag)
-(bind-key "C-F" 'helm-ag)
+(bind-key* "C-F" 'helm-ag)
 (bind-key "C-h a" 'helm-apropos)
 (bind-key "C-h o" 'helm-man-woman)
 (bind-key* "M--" 'yafolding-toggle-element)
@@ -2239,6 +2244,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key* "C-," 'smartscan-symbol-go-forward)
 (bind-key* "C-\"" 'previous-error)
 (bind-key* "C-<" 'next-error)
+(bind-key* "C->" 'flycheck-list-errors)
 
 ;; WINDOW MOVE
 (bind-key* "C-S-h" 'windmove-left)
