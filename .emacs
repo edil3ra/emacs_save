@@ -185,14 +185,14 @@
 
 (use-package yasnippet
   :ensure t
-  :diminish yas-minor-1mode
+  :diminish yas-minor-mode
   :init(progn
          (yas-global-mode 1))
   :config(progn
            (setq yas-installed-snippets-dir "~/.emacs.d/snippets")
            (define-key yas-minor-mode-map (kbd "TAB") nil)
-           (define-key yas-minor-mode-map (kbd "<tab>") nil)
-           (bind-key "M--" #'yas-expand yas-minor-mode-map)))
+           (define-key yas-minor-mode-map (kbd "<tab>") nil)))
+
 
 (use-package yafolding :ensure t)
 
@@ -456,6 +456,19 @@
 (use-package dired-ranger :ensure t :defer t)
 
 
+(use-package persp-mode
+  :ensure t 
+  :init (progn
+          (setq persp-nil-name ""
+                wg-morph-on nil
+                persp-autokill-buffer-on-remove 'kill-weak)
+          (add-hook 'after-init-hook #'(lambda ()
+                                         (persp-mode 1)))))
+
+
+(use-package persp-projectile
+  :ensure t :defer t)
+
 
 (use-package emmet-mode
   :ensure t
@@ -480,6 +493,7 @@
   :init (progn
           (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
           (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+          (add-to-list 'auto-mode-alist '("\\.html\\.eex\\'" . web-mode))
           (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
           (add-to-list 'auto-mode-alist '("\\.ejs?\\'" . web-mode))))
 
@@ -579,11 +593,10 @@
 
 
 ;; THEMES
-(use-package grandshell-theme :ensure t :defer t)
-(use-package monokai-theme :ensure t :defer t)
-(use-package cyberpunk-theme :ensure t :defer t)
+(use-package leuven-theme :ensure t :defer t)
 (use-package assemblage-theme :ensure t :defer t)
-(use-package color-theme-sanityinc-tomorrow :ensure t :defer t)
+(use-package ample-theme :ensure t :defer t)
+(use-package gruber-darker-theme :ensure t :defer t)
 
 
 (use-package ido
@@ -711,8 +724,7 @@
   :mode ("\\.py\\'" . python-mode)
   :init (progn
           (setq expand-region-preferred-python-mode (quote fgallina-python)
-                python-shell-interpreter "python3"
-                python-shell-interpreter-args "--simple-prompt -i"))
+                python-shell-interpreter "python3"))
   :config (progn
             (bind-key "C-c C-r" 'python-shell-send-region python-mode-map)
             (bind-key "C-c C-c" 'python-shell-send-defun python-mode-map)
@@ -1195,25 +1207,28 @@ change what is evaluated to the statement on the current line."
          (setq irony-supported-major-modes '(c++-mode c-mode objc-mode php-mode))
          (add-hook 'c-mode-hook
                    (lambda ()
-                     (irony-mode 1)
-                     (irony-eldoc 1)
-                     (flycheck-mode 1)
-                     (flycheck-irony-setup)
-                     (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers)))  
+                     (when (not (string-equal major-mode "php-mode"))
+                       (irony-mode 1)
+                       (irony-eldoc 1)
+                       (flycheck-mode 1)
+                       (flycheck-irony-setup)
+                       (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers))))
                      (bind-key "C-c C-." 'semantic-ia-fast-jump c-mode-map)
                      (unbind-key "C-d" c-mode-map)
                      (unbind-key "C-c C-d" c-mode-map)))
          (add-hook 'c++-mode-hook
                    (lambda ()
-                     (setq flycheck-gcc-language-standard "c++11")
-                     (irony-mode 1)
-                     (irony-eldoc 1)
-                     (flycheck-mode 1)
-                     (flycheck-irony-setup)
-                     (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers)))  
+                     (when (not (string-equal major-mode "php-mode"))
+                       (setq flycheck-gcc-language-standard "c++11")
+                       (irony-mode 1)
+                       (irony-eldoc 1)
+                       (flycheck-mode 1)
+                       (flycheck-irony-setup)
+                       (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers))))
                      (bind-key "C-c C-." 'semantic-ia-fast-jump c++-mode-map)
                      (unbind-key "C-d" c++-mode-map)
-                     (unbind-key "C-c C-d" c++-mode-map)))))
+                     (unbind-key "C-c C-d" c++-mode-map))
+                   )))
 
 
 (use-package irony
@@ -1280,9 +1295,7 @@ change what is evaluated to the statement on the current line."
                                       (racer-mode)
                                       (set (make-local-variable 'company-backends) '((company-racer)))))
           (add-hook 'racer-mode-hook 'eldoc-mode)
-          (add-hook 'racer-mode-hook 'cargo-minor-mode)
-          
-          )
+          (add-hook 'racer-mode-hook 'cargo-minor-mode))
   :config (progn
             (bind-key "C-c C-." 'racer-find-definition rust-mode-map)
             (bind-key "C-c C-d" 'cargo-process-doc rust-mode-map)
@@ -1312,36 +1325,33 @@ change what is evaluated to the statement on the current line."
 
 
 ;; PHP
-;;(use-package php-mode :ensure t)
-;;(use-package company-php
-;;  :ensure t
-;;  :init (progn
-;;          (add-hook 'php-mode-hook
-;;                    (lambda ()
-;;                      (set (make-local-variable 'company-backends) '((company-ac-php-backend)))
-;;                      (flycheck-mode 1)
-;;                      (add-hook 'before-save-hook
-;;                                (lambda ()
-;;                                  (when (eq major-mode 'php-mode)
-;;                                    (ac-php-remake-tags)))))))
-;;  :config (progn
-;;            (bind-key "C-SPC" 'ac-complete-php php-mode-map)
-;;            (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
-;;            (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
-;;            (bind-key "C-c C-." 'ac-php-find-symbol-at-point php-mode-map)
-;;            (bind-key "C-c ." 'ac-php-find-symbol-at-point php-mode-map)
-;;            (bind-key "C-c C-," 'ac-php-location-stack-back php-mode-map)
-;;            (bind-key "C-c ," 'ac-php-location-stack-back php-mode-map)
-;;			(unbind-key "C-d" php-mode-map)
-;;			(unbind-key "M-q" php-mode-map)
-;;			(unbind-key "C-." php-mode-map)))
+(use-package php-mode :ensure t)
+(use-package ac-php :ensure t 
+:init (progn
+        (add-hook 'php-mode-hook
+                  (lambda ()
+                    (flycheck-mode 1)
+                    (company-mode -1)
+                    (auto-complete-mode t)
+                    (require 'ac-php)
+                    (setq company-sources  '(ac-source-php)))))
+:config (progn
+          (bind-key "C-SPC" 'ac-complete-php php-mode-map)
+          (bind-key "C-n" 'ac-next ac-complete-mode-map)
+          (bind-key "C-h" 'ac-previous ac-complete-mode-map)
+          (bind-key "C-c C-d" 'ac-help ac-complete-mode-map)
+          (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
+          (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
+          (bind-key "C-c C-," 'ac-php-find-symbol-at-point php-mode-map)
+          (bind-key "C-c C-'" 'ac-php-location-stack-back php-mode-map)
+          (bind-key "C-c C-i" 'ac-php-show-tip php-mode-map)
+          (unbind-key "C-d" php-mode-map)
+          (unbind-key "M-q" php-mode-map)
+          (unbind-key "C-." php-mode-map)))
 
 
 
 
-
-;; (use-package php-extras
-;;   :ensure t :defer t)
 
 ;; STUFF
 ;; remove window decoration
@@ -2039,6 +2049,10 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
   (enlarge-window 19))
 
 
+(defun my-goto-to-projectile-dired ()
+    (interactive)
+    (window-number-select 1))
+
 
 
 ;; GENERAL KEYBINDING
@@ -2167,8 +2181,10 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key* "S-<f1>" 'shell-buffer)
 (bind-key* "<f1>" 'scratch-buffer)
 (bind-key* "<f2>" 'shell-command-buffer)
-(bind-key "M-/" 'neotree-show)
-(bind-key "M-=" 'neotree-toggle)
+
+;; (bind-key "M-/" 'neotree-show)
+;; (bind-key "M-=" 'neotree-toggle)
+(bind-key "M-/" 'my-goto-to-projectile-dired)
 (bind-key "M-)" 'balance-windows)
 (bind-key* "<f4>" 'kmacro-end-or-call-macro-repeat)
 (bind-key "S-<f5>" 'compile)
@@ -2346,6 +2362,23 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
   ("g" keyboard-quit)
   ("q" nil :color blue))
 
+
+
+(defhydra hydra-persp (:color red :hint nil)
+  "
+  [_h_] previous  [_s_] switch       [_d_] kill     [a] add  [l] last
+  [_n_] next      [_r_] rename       [_i_] import   [o] set  [b] buffer
+"
+  ("h" persp-prev)
+  ("n" persp-next)
+  ("s" persp-switch)
+  ("r" persp-rename)
+  ("d" persp-kill)
+  ("i" persp-import)
+  ("a" persp-add-buffer)
+  ("o" persp-set-buffer)
+  ("g" keyboard-quit)
+  ("q" nil :color blue))
 
 
 (defhydra hydra-yasnippet (:color blue :hint nil)
@@ -3039,6 +3072,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 (bind-key "C-x v" 'hydra-theme/body)
 (bind-key "C-x h" 'hydra-helm/body)
 (bind-key "C-x l" 'hydra-desktop/body)
+(bind-key "C-x n" 'hydra-persp/body)
 
 
 (add-hook 'outline-mode-hook (lambda() (bind-key "C-x x" #'hydra-outline/body outline-mode-map)))
@@ -3068,7 +3102,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("cd560f7570de0dcdcf06953b3f1a25145492a54f100f9c8da3b4091b469f7f02" "b9293d120377ede424a1af1e564ba69aafa85e0e9fd19cf89b4e15f8ee42a8bb" "38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "cf28bfffbf8726a31989e662986065b5319670902ac1af0e63fb8e773c119488" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "f64c9f8b4241b680b186f4620afb9c82fa2a76cf4498a7431f90db59bb1892eb" "34e7163479ef3669943b3b9b1fabe639d6e0a0453e0de79cea2c52cb520d3bc4" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "71ecffba18621354a1be303687f33b84788e13f40141580fa81e7840752d31bf" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+    ("0537901f4422f0d5f41ff43e51e39dc17d45d254fa36ce8d8d2786457759aef9" "ed317c0a3387be628a48c4bbdb316b4fa645a414838149069210b66dd521733f" "938d8c186c4cb9ec4a8d8bc159285e0d0f07bad46edf20aa469a89d0d2a586ea" "130319ab9b4f97439d1b8fd72345ab77b43301cf29dddc88edb01e2bc3aff1e7" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" default)))
  '(delete-selection-mode 1)
  '(exec-path
    (append exec-path
@@ -3114,6 +3148,15 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 ;; (setq debug-on-error t)
 
 
+;; theme and font
+(set-default-font "DejaVu Sans Mono 9")
+
+
+;; (load-theme 'leuven)
+;; (load-theme 'assemblage)
+(load-theme 'ample)
+
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -3127,17 +3170,6 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(rainbow-delimiters-depth-5-face ((t (:foreground "gold3"))))
  '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrange3"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "magenta")))))
-
-
-;; theme and font
-(set-default-font "DejaVu Sans Mono 9")
-
-(load-theme 'grandshell)
-;; (load-theme 'monokai)
-;; (load-theme 'cyberpunk)
-;; (load-theme 'assemblage)
-;; (load-theme 'sanityinc-tomorrow-night)
-
 
 ;; mac related 
 (setq mac-option-modifier 'super)
