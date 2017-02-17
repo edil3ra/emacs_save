@@ -23,7 +23,6 @@
 
 (use-package helm
   :ensure t
-  :diminish helm-mode
   :init (progn
           (require 'helm-config)
           (bind-key "C-c h" #'helm-command-prefix)
@@ -81,12 +80,18 @@
     (bind-key "C-s" #'helm-ff-run-grep helm-find-files-map) 
     (bind-key "C-S-d" #'helm-buffer-run-kill-persistent helm-buffer-map)
     (bind-key "C-d" #'helm-buffer-run-kill-buffers helm-buffer-map)
-    (bind-key "M-SPC" #'helm-toggle-visible-mark helm-map)))
+    (bind-key "<C-return>" #'helm-ff-run-switch-other-window helm-map)))
 
 
 (use-package helm-swoop
   :ensure t
   :init (progn
+          (defun my-helm-multi-swoop-projectile ()
+            (interactive)
+            (if
+                (string-equal (projectile-project-name) "-")
+                (helm-multi-swoop-all)
+              (helm-multi-swoop-projectile)))
           (setq helm-c-source-swoop-search-functions
                 '(helm-mm-exact-search
                   helm-mm-search
@@ -95,19 +100,29 @@
   :config (progn
             (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-map)
             (bind-key "C-c C-t" 'toggle-case-fold-search helm-swoop-edit-map)
-            ;; (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-swoop-edit-map)
+            (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-swoop-edit-map)
             ;; (bind-key "C-c C-c" 'helm-swoop--edit-complete helm-multi-swoop-edit-map)
             ))
 
 (use-package helm-ag
-  :ensure t :defer t
+  :ensure t
   :init (progn
-          (setq helm-ag-insert-at-point 'symbol))
+          (defun my-helm-do-ag-project-root ()
+            (interactive)
+            (if (string-equal (projectile-project-name) "-")
+                (helm-do-ag)
+              (helm-do-ag-project-root))))
   :config(progn
-           (bind-key  "C-c C-e" 'helm-ag-edit helm-map)))
+           (bind-key "C-c C-e" 'helm-ag-edit helm-map)
+           (bind-key "C-c C-e" 'helm-ag-edit helm-do-ag-map)
+           (bind-key "C-c C-g" 'helm-ag--edit-abort helm-ag-edit-map)))
+
 
 (use-package helm-css-scss
-  :ensure t :defer t)
+  :ensure t )
+
+(use-package helm-projectile
+  :ensure t)
 
 (use-package company
   :ensure t
@@ -142,7 +157,6 @@
             (bind-key "C-i" #'yas-expand company-active-map)))
 
 
-
 (use-package company-quickhelp
   :ensure t :defer t)
 
@@ -162,30 +176,38 @@
             (add-hook 'prog-mode-hook 'eldoc-mode)))
 
 (use-package magit
-  :ensure t :defer t)
+  :ensure t :defer t
+  :init(progn
+         (setq magit-diff-use-overlays nil)))
 
-(use-package helm-projectile
-  :ensure t :defer t)
+(use-package magithub
+  :ensure t
+  :after magit
+  :config (magithub-feature-autoinject t))
+
+(use-package git-gutter
+  :ensure t)
+
+(use-package yagist
+  :ensure t)
+
 
 (use-package ag
   :ensure t :defer t)
 
 (use-package projectile
-  :ensure t :defer t :diminish projectile-mode
+  :ensure t :defer t
   :init(progn
          (setq projectile-enable-caching t
                projectile-completion-system 'helm
                projectile-switch-project-action 'helm-projectile-find-file
-               ;; projectile-use-native-indexing t)
-               projectile-use-native-indexing nil
-               projectile-mode-line "Projectile")
+               projectile-use-native-indexing nil)
          (helm-projectile-on)
-         (projectile-global-mode)))
+         (projectile-mode)))
 
 
 (use-package yasnippet
   :ensure t
-  :diminish yas-minor-mode
   :init(progn
          (yas-global-mode 1))
   :config(progn
@@ -217,8 +239,10 @@
           (setq tramp-default-method "ssh"
                 password-cache-expiry nil)))
 
-(use-package simple-httpd
+
+(use-package prodigy
   :ensure t :defer t)
+
 
 (use-package alpha
   :ensure t)
@@ -265,10 +289,9 @@
 
 
 (use-package smartparens
-  :ensure t :defer t :diminish smartparens-mode
+  :ensure t
   :init (progn
           (smartparens-global-mode t)
-          (show-smartparens-global-mode t)
           (setq sp-highlight-pair-overlay nil
                 sp-highlight-wrap-overlay nil
                 sp-highlight-wrap-tag-overlay nil))
@@ -289,17 +312,98 @@
          uniquify-buffer-name-style 'post-forward
          uniquify-separator ":"))
 
+
+(use-package desktop
+  :init (progn
+          (desktop-save-mode 1)))
+
+
+
+
+
 (use-package bookmark+
   :ensure t :defer t)
 
-(use-package elscreen
-  :ensure t :defer t
+
+(use-package eyebrowse
+  :ensure t
   :init (progn
-          (setq elscreen-display-screen-number t
-                elscreen-display-tab nil
-                elscreen-default-buffer-initial-major-mode (quote lisp-interaction-mode)
-                elscreen-default-buffer-initial-message nil)
-          (elscreen-start)))
+          (setq eyebrowse-keymap-prefix "")
+          (eyebrowse-mode t)))
+
+;; (use-package workgroups2
+;;   :ensure t
+;;   :init (progn
+;;           (setq wg-prefix-key (kbd "C-c z")
+;;                 wg-session-file "~/.emacs.d/.emacs_workgroups"))
+;;   (workgroups-mode 1))
+
+;; (use-package persp-mode
+;;   :ensure t
+;;   :init(progn
+;;          (persp-mode)))
+
+(use-package perspective
+  :ensure t
+  :init (progn
+          (defun perspectives-buffer-name-p (buffer)
+            (if (and buffer
+                     (buffer-name buffer)
+                     (not (string-prefix-p "*" (buffer-name buffer)))
+                     (not (string-suffix-p "*" (buffer-name buffer))))
+                t
+              nil))
+
+          (defun perspectives-hash-filter (current filtered parameters saving)
+            (let ((value (cdr current))
+                  (result ())
+                  (keys (hash-table-keys (cdr current))))
+              ;; for every perspective...
+              (dolist (key keys)
+                (let ((persp (gethash key value)))
+                  ;; that isn't killed...
+                  (if (not (persp-killed persp))
+                      (add-to-list
+                       'result
+                       (cons key
+                             ;; save the list of buffers
+                             (list (cons "buffers"
+                                         (list
+                                          (mapcar 'buffer-name (seq-filter 'perspectives-buffer-name-p (persp-buffers persp)))))))))))
+              ;; return a different variable name so perspectives doesn't clobber it
+              (cons 'perspectives-hash-serialized result)))
+
+          ;; serialize perspectives hash
+          (add-to-list 'frameset-filter-alist '(perspectives-hash . perspectives-hash-filter))
+          ;; don't serialize anything else
+          (add-to-list 'frameset-filter-alist '(persp-modestring . :never))
+          (add-to-list 'frameset-filter-alist '(persp-recursive . :never))
+          (add-to-list 'frameset-filter-alist '(persp-last . :never))
+          (add-to-list 'frameset-filter-alist '(persp-curr . :never))
+
+          (defun perspectives-restore-state ()
+            (dolist (frame (frame-list))
+              ;; get the serialized state off of the frame
+              (let ((state (frame-parameter frame 'perspectives-hash-serialized)))
+                (if state (progn
+                            (message "Found state, attempting restore")
+                            ;; delete it so we don't end up in a loop
+                            (set-frame-parameter frame 'perspectives-hash-serialized nil)
+                            (with-selected-frame frame
+                              (dolist (elem state)
+                                ;; recreate the perspective
+                                (with-perspective (car elem)
+                                  (dolist (buffer-name (car (cdr (assoc "buffers" (cdr elem)))))
+                                    ;; add the buffer back to the perspective
+                                    (persp-add-buffer buffer-name)
+                                    )))
+                              ))
+                  (message "No state found")))))
+          (add-hook 'desktop-after-read-hook 'perspectives-restore-state)
+          (persp-mode)))
+
+
+
 
 
 (use-package framemove
@@ -327,12 +431,11 @@
          (auto-save-buffers-enhanced nil)))
 
 (use-package recentf-mode
-  :defer t :diminish recentf-mode
+  :defer t
   :init(progn
          (recentf-mode t)))
 
 (use-package drag-stuff
-  :diminish drag-stuff-mode
   :ensure t)
 
 (use-package expand-region
@@ -379,27 +482,28 @@
            (bind-key "s" 'neotree-change-root neotree-mode-map)
            (bind-key "1" 'neotree-window-1 neotree-mode-map)))
 
-(use-package beacon
-  :ensure t :defer t
-  :diminish beacon-mode
-  :init (progn
-          (beacon-mode)))
 
-(use-package nyan-mode
-  :ensure t :defer t)
+;; eyebrowse make it bug
+(use-package beacon
+  :ensure t 
+  :init (progn
+          (setq beacon-push-mark 35
+                beacon-color "#666600")
+          ;; (beacon-mode 1)
+
+          ))
 
 
 (use-package visual-regexp
   :ensure t
   :config (progn
-          (bind-key "C-c ." 'hide-lines-show-all  vr/minibuffer-keymap )))
+            (bind-key "C-c ." 'hide-lines-show-all  vr/minibuffer-keymap )))
 
 
 (use-package multiple-cursors
   :ensure t
-  :diminish multiple-cursors-mode
   :config (progn
-          (bind-key "C--" 'mc-hide-unmatched-lines-mode mc/keymap)))
+            (bind-key "C--" 'mc-hide-unmatched-lines-mode mc/keymap)))
 
 (use-package phi-search :ensure t)
 
@@ -427,11 +531,151 @@
                 (dired-add-file new)
                 (dired-move-to-filename))
               (revert-buffer)))
+
+          (defun my-display-buffer-below (buffer alist)
+            "Doc-string."
+            (let (
+                  (window
+                   (cond
+                    ((get-buffer-window buffer (selected-frame)))
+                    ((window-in-direction 'below))
+                    (t
+                     (split-window (selected-window) nil 'below)))))
+              (window--display-buffer buffer window 'window alist display-buffer-mark-dedicated)
+              window))
+          (defun my-display-buffer-above (buffer alist)
+            "Doc-string."
+            (let (
+                  (window
+                   (cond
+                    ((get-buffer-window buffer (selected-frame)))
+                    ((window-in-direction 'above))
+                    (t
+                     (split-window (selected-window) nil 'above)))))
+              (window--display-buffer buffer window 'window alist display-buffer-mark-dedicated)
+              window))
+          (defun my-display-buffer-left (buffer alist)
+            "Doc-string."
+            (let (
+                  (window
+                   (cond
+                    ((get-buffer-window buffer (selected-frame)))
+                    ((window-in-direction 'left))
+                    (t
+                     (split-window (selected-window) nil 'left)))))
+              (window--display-buffer buffer window 'window alist display-buffer-mark-dedicated)
+              window))
+          (defun my-display-buffer-right (buffer alist)
+            "Doc-string."
+            (let (
+                  (window
+                   (cond
+                    ((get-buffer-window buffer (selected-frame)))
+                    ((window-in-direction 'right))
+                    (t
+                     (split-window (selected-window) nil 'right)))))
+              (window--display-buffer buffer window 'window alist display-buffer-mark-dedicated)
+              window))
+
+
+          (defun dired-display-above ()
+            "Doc-string."
+            (interactive)
+            (let* (
+                   (file-or-dir (dired-get-file-for-visit))
+                   (buffer (find-file-noselect file-or-dir)))
+              (if (f-directory? file-or-dir)
+                  (dired-subtree-toggle)
+                (progn 
+                  (my-display-buffer-above buffer nil)))))
+          (defun dired-display-below ()
+            "Doc-string."
+            (interactive)
+            (let* (
+                   (file-or-dir (dired-get-file-for-visit))
+                   (buffer (find-file-noselect file-or-dir)))
+              (if (f-directory? file-or-dir)
+                  (dired-subtree-toggle)
+                (progn 
+                  (my-display-buffer-below buffer nil)))))
+          (defun dired-display-left ()
+            "Doc-string."
+            (interactive)
+            (let* (
+                   (file-or-dir (dired-get-file-for-visit))
+                   (buffer (find-file-noselect file-or-dir)))
+              (if (f-directory? file-or-dir)
+                  (dired-subtree-toggle)
+                (progn 
+                  (my-display-buffer-left buffer nil)))))
+          (defun dired-display-right ()
+            "Doc-string."
+            (interactive)
+            (let* (
+                   (file-or-dir (dired-get-file-for-visit))
+                   (buffer (find-file-noselect file-or-dir)))
+              (if (f-directory? file-or-dir)
+                  (dired-subtree-toggle)
+                (progn 
+                  (my-display-buffer-right buffer nil)))))
+
+          (defun dired-display-above-go ()
+            "Doc-string."
+            (interactive)
+            (let* (
+                   (file-or-dir (dired-get-file-for-visit))
+                   (buffer (find-file-noselect file-or-dir)))
+              (if (f-directory? file-or-dir)
+                  (dired-subtree-toggle)
+                (progn 
+                  (my-display-buffer-above buffer nil)
+                  (switch-to-buffer-other-window buffer)))))
+          (defun dired-display-below-go ()
+            "Doc-string."
+            (interactive)
+            (let* (
+                   (file-or-dir (dired-get-file-for-visit))
+                   (buffer (find-file-noselect file-or-dir)))
+              (if (f-directory? file-or-dir)
+                  (dired-subtree-toggle)
+                (progn 
+                  (my-display-buffer-below buffer nil)
+                  (switch-to-buffer-other-window buffer)))))
+          (defun dired-display-left-go ()
+            "Doc-string."
+            (interactive)
+            (let* (
+                   (file-or-dir (dired-get-file-for-visit))
+                   (buffer (find-file-noselect file-or-dir)))
+              (if (f-directory? file-or-dir)
+                  (dired-subtree-toggle)
+                (progn 
+                  (my-display-buffer-left buffer nil)
+                  (switch-to-buffer-other-window buffer)))))
+          (defun dired-display-right-go ()
+            "Doc-string."
+            (interactive)
+            (let* (
+                   (file-or-dir (dired-get-file-for-visit))
+                   (buffer (find-file-noselect file-or-dir)))
+              (if (f-directory? file-or-dir)
+                  (dired-subtree-toggle)
+                (progn 
+                  (my-display-buffer-right buffer nil)
+                  (switch-to-buffer-other-window buffer)))))
+
           
           (add-hook 'dired-mode-hook 'auto-revert-mode)
-          (diredp-toggle-find-file-reuse-dir t))
+          (diredp-toggle-find-file-reuse-dir t)
+          (setq wdired-allow-to-change-permissions t))
+
   :config (progn
             (bind-key "a" 'dired-toggle-marks dired-mode-map)
+            (bind-key "o" 'dired-display-right-go dired-mode-map)
+            (bind-key "E" 'sudo-edit-current-file dired-mode-map)
+            (bind-key "<mouse-1>" 'diredp-find-file-reuse-dir-buffer dired-mode-map)
+            (bind-key "<mouse-2>" 'dired-display-right-go dired-mode-map)
+            (bind-key "C-<mouse-2>" 'dired-display-right-go dired-mode-map)
             (bind-key "t" 'my-dired-create-file dired-mode-map)
             (bind-key "M-c" 'diredp-previous-line dired-mode-map)
             (bind-key "M-C" 'scroll-down-command dired-mode-map)
@@ -448,26 +692,14 @@
             (bind-key "3" 'dired-ranger-move dired-mode-map)
             (bind-key "4" 'dired-do-delete dired-mode-map)
             (bind-key "C-w" 'kill-this-buffer dired-mode-map)
+            (bind-key "#" 'dired-open-xdg dired-mode-map)
             (define-key dired-mode-map (kbd ".") dired-filter-map)))
-  
+
 
 (use-package dired-subtree :ensure t :defer t)
 (use-package dired-filter :ensure t :defer t)
 (use-package dired-ranger :ensure t :defer t)
-
-
-(use-package persp-mode
-  :ensure t 
-  :init (progn
-          (setq persp-nil-name ""
-                wg-morph-on nil
-                persp-autokill-buffer-on-remove 'kill-weak)
-          (add-hook 'after-init-hook #'(lambda ()
-                                         (persp-mode 1)))))
-
-
-(use-package persp-projectile
-  :ensure t :defer t)
+(use-package dired-open :ensure t :defer t)
 
 
 (use-package emmet-mode
@@ -518,15 +750,11 @@
   :init(progn
          (add-to-list 'auto-mode-alist '("\\.hbs\\'" . handlebars-mode))))
 
-
-
 (use-package css-mode
   :defer t
   :config(progn
            (bind-key "C-p" 'helm-css-scss css-mode-map)
            (bind-key "C-c C-b" 'web-beautify-css css-mode-map)))
-
-
 
 (use-package scss-mode
   :ensure t :defer t
@@ -539,7 +767,6 @@
   :ensure t :defer t
   :init(progn
          (setq markdown-xhtml-standalone-regexp "")))
-
 
 (use-package json-mode
   :ensure t :defer t
@@ -562,9 +789,8 @@
 (use-package imenu
   :defer t
   :init(progn
-         (setq imenu-auto-rescan t
-               imenup-ignore-comments-flag nil
-               imenup-sort-ignores-case-flag nil)))
+         (setq imenu-auto-rescan t)))
+
 
 (use-package semantic
   :defer t
@@ -575,8 +801,8 @@
 (use-package ggtags
   :ensure t :defer t
   :config (progn
-          (unbind-key "M-n" ggtags-navigation-mode-map )
-          (unbind-key "M-p" ggtags-navigation-mode-map )))
+            (unbind-key "M-n" ggtags-navigation-mode-map )
+            (unbind-key "M-p" ggtags-navigation-mode-map )))
 
 (use-package flycheck
   :ensure t :defer t
@@ -584,7 +810,6 @@
           (setq flycheck-check-syntax-automatically '(mode-enabled save))))
 
 (use-package undo-tree
-  :diminish undo-tree-mode
   :ensure t :defer t
   :init (progn
           (global-undo-tree-mode)
@@ -637,6 +862,8 @@
                      (ibuffer-switch-to-saved-filter-groups "default")))))
 
 
+
+
 (use-package erc
   :defer t
   :init (progn
@@ -677,15 +904,12 @@
             (bind-key "=" 'doc-view-enlarge doc-view-mode-map ))))
 
 
-(use-package org-mime
-  :ensure t :defer t)
 
 (use-package org
-  :defer t
   :init (progn
           (setq org-CUA-compatible nil
                 org-src-preserve-indentation t
-                org-pretty-entities t
+                org-pretty-entities nil
                 org-pretty-entities-include-sub-superscripts t
                 org-startup-truncated t
                 org-replace-disputed-keys nil
@@ -703,28 +927,51 @@
                   (python . t)
                   (emacs-lisp . t)))
                 org-confirm-babel-evaluate nil
-                org-plantuml-jar-path  (expand-file-name "~/.emacs.d/elpa/org-20160118/scripts/plantuml.jar")
-                org-babel-python-command "python3"))
+                org-babel-python-command "python3")
+
+          (add-hook 'org-mode-hook (lambda ()
+                                     (visual-line-mode)
+                                     
+                                     )))
   :config (progn
-            (add-hook 'org-mode-hook (lambda () (visual-line-mode)))
+            (bind-key "C-c C-;" 'org-attach org-mode-map)
+            (bind-key "C-c C-a" 'org-agenda org-mode-map)
+            (bind-key "C-c a" 'org-agenda org-mode-map)
             (unbind-key "C-e" org-mode-map)
             (unbind-key "C-j" org-mode-map)))
 
 (use-package ox-pandoc
-  :ensure t :defer t)
+  :ensure t)
 
 
 (use-package ob-mongo
   :ensure t :defer t)
 
 
+(use-package delight
+  :ensure t
+  :config (progn
+            (delight '((beacon-mode nil "beacon")
+                       (helm-mode nil)
+                       (abbrev-mode nil "abbrev")
+                       (projectile-mode nil "projectile")
+                       (smartparens-mode nil "smartparens")
+                       (magit-gitflow nil "gitflow")
+                       (elpy-mode nil)
+                       (highlight-indentation-mode nil "highlight-indentation")))))
+
+(use-package irfc
+  :ensure t :defer t)
+
+
+
 ;; PYTHON
 (use-package python
   :ensure t
-  :mode ("\\.py\\'" . python-mode)
+  ;; :mode ("\\.py\\'" . python-mode)
   :init (progn
           (setq expand-region-preferred-python-mode (quote fgallina-python)
-                python-shell-interpreter "python3"))
+                python-shell-interpreter "python"))
   :config (progn
             (bind-key "C-c C-r" 'python-shell-send-region python-mode-map)
             (bind-key "C-c C-c" 'python-shell-send-defun python-mode-map)
@@ -738,17 +985,17 @@
            (interactive)
            (save-buffer)
            (elpy-refactor))
-         
+
+         (elpy-enable)
          (add-hook 'python-mode-hook
                    (lambda ()
-                     (elpy-enable)
                      (flycheck-mode 1)))
-         
-         (setq elpy-rpc-python-command "python3"
+
+         (setq elpy-rpc-python-command "python"
                elpy-rpc-backend "jedi"
                elpy-syntax-check-command "flake8"
                elpy-modules (quote(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-sane-defaults))))
-         
+  
   :config(progn
            (bind-key "C-c C-f" 'elpy-format-code elpy-mode-map)
            (bind-key "C-c f" 'elpy-format-code elpy-mode-map)
@@ -769,18 +1016,13 @@
            (bind-key "C-c C-r" 'my/python-refactoring elpy-mode-map)
            (bind-key "C-c C-c" 'elpy-shell-send-current-statement elpy-mode-map)
            (bind-key "C-x C-e" 'elpy-shell-send-current-statement elpy-mode-map)
-           
            (unbind-key "C-c C-r" elpy-mode-map)
            (unbind-key "C-c C-l" elpy-mode-map)
            (unbind-key "C-c C-k" elpy-mode-map)
            (unbind-key "C-c C-c" elpy-mode-map)))
 
-(use-package jedi
-  :ensure t :defer t)
-
-(use-package pyvenv
-  :ensure t)
-
+(use-package jedi :ensure t)
+(use-package pyvenv :ensure t)
 
 
 
@@ -788,8 +1030,6 @@
 (use-package seeing-is-believing :ensure t)
 (use-package inf-ruby :ensure t :defer t)
 (use-package company-inf-ruby :ensure t :defer t)
-
-
 (use-package ruby-mode
   :defer t
   :init (progn
@@ -828,6 +1068,7 @@
                 js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$")
                 js2-mode-show-parse-errors nil
                 js2-mode-show-strict-warnings nil
+                flycheck-temp-prefix "."
                 flycheck-eslintrc "~/.eslintrc")
           (add-hook 'js-mode-hook
                     (lambda ()
@@ -865,13 +1106,10 @@
            (bind-key "C-c C-\." 'tern-find-definition-by-name tern-mode-keymap)
            (bind-key "C-c C-t" 'tern-get-type tern-mode-keymap)
            (bind-key "C-c C-d" 'tern-get-docs tern-mode-keymap)))
-  
+
 
 (use-package company-tern :ensure t)
-
-
-(use-package import-js
-  :ensure t :defer t)
+(use-package import-js :ensure t :defer t)
 
 
 ;; JS2-REFACTOR
@@ -1184,6 +1422,7 @@ change what is evaluated to the statement on the current line."
             (bind-key "C-c C-z" 'alchemist-iex-run alchemist-mode-map)
             (bind-key "C-c C-," 'alchemist-goto-definition-at-point alchemist-mode-map)
             (bind-key "C-c C-'" 'alchemist-goto-jump-back alchemist-mode-map)
+            (bind-key "C-c C-d" 'alchemist-help-search-at-point alchemist-mode-map)
             (bind-key "C-l" 'alchemist-iex-clear-buffer alchemist-iex-mode-map)))
 
 
@@ -1198,13 +1437,40 @@ change what is evaluated to the statement on the current line."
                       (set (make-local-variable 'company-backends) '((company-dabbrev-code company-shell)))))))
 
 
+;; PHP
+(use-package php-mode :ensure t)
+(use-package ac-php :ensure t 
+  :init (progn
+          (add-hook 'php-mode-hook
+                    (lambda ()
+                      (flycheck-mode 1)
+                      (company-mode -1)
+                      (auto-complete-mode t)
+                      (require 'ac-php)
+                      (setq company-sources  '(ac-source-php)))))
+  :config (progn
+            (bind-key "C-SPC" 'ac-complete-php php-mode-map)
+            (bind-key "C-n" 'ac-next ac-complete-mode-map)
+            (bind-key "C-h" 'ac-previous ac-complete-mode-map)
+            (bind-key "C-c C-d" 'ac-help ac-complete-mode-map)
+            (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
+            (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
+            (bind-key "C-c C-," 'ac-php-find-symbol-at-point php-mode-map)
+            (bind-key "C-c C-'" 'ac-php-location-stack-back php-mode-map)
+            (bind-key "C-c C-i" 'ac-php-show-tip php-mode-map)
+            (unbind-key "C-d" php-mode-map)
+            (unbind-key "M-q" php-mode-map)
+            (unbind-key "C-." php-mode-map)))
+
+
+
 
 ;; C C++
 (use-package c-mode-common-hook
   :init(progn
          (setq-default c-basic-offset 4 c-default-style "linux")
          (setq-default tab-width 4 indent-tabs-mode t)
-         (setq irony-supported-major-modes '(c++-mode c-mode objc-mode php-mode))
+         (setq irony-supported-major-modes '(c++-mode c-mode objc-mode))
          (add-hook 'c-mode-hook
                    (lambda ()
                      (when (not (string-equal major-mode "php-mode"))
@@ -1227,8 +1493,7 @@ change what is evaluated to the statement on the current line."
                        (set (make-local-variable 'company-backends) '((company-irony company-irony-c-headers))))
                      (bind-key "C-c C-." 'semantic-ia-fast-jump c++-mode-map)
                      (unbind-key "C-d" c++-mode-map)
-                     (unbind-key "C-c C-d" c++-mode-map))
-                   )))
+                     (unbind-key "C-c C-d" c++-mode-map)))))
 
 
 (use-package irony
@@ -1324,36 +1589,8 @@ change what is evaluated to the statement on the current line."
   :ensure t :defer t)
 
 
-;; PHP
-(use-package php-mode :ensure t)
-(use-package ac-php :ensure t 
-:init (progn
-        (add-hook 'php-mode-hook
-                  (lambda ()
-                    (flycheck-mode 1)
-                    (company-mode -1)
-                    (auto-complete-mode t)
-                    (require 'ac-php)
-                    (setq company-sources  '(ac-source-php)))))
-:config (progn
-          (bind-key "C-SPC" 'ac-complete-php php-mode-map)
-          (bind-key "C-n" 'ac-next ac-complete-mode-map)
-          (bind-key "C-h" 'ac-previous ac-complete-mode-map)
-          (bind-key "C-c C-d" 'ac-help ac-complete-mode-map)
-          (bind-key "C-c s" 'ac-php-remake-tags-all php-mode-map)
-          (bind-key "C-c C-S" 'ac-php-remake-tags php-mode-map)
-          (bind-key "C-c C-," 'ac-php-find-symbol-at-point php-mode-map)
-          (bind-key "C-c C-'" 'ac-php-location-stack-back php-mode-map)
-          (bind-key "C-c C-i" 'ac-php-show-tip php-mode-map)
-          (unbind-key "C-d" php-mode-map)
-          (unbind-key "M-q" php-mode-map)
-          (unbind-key "C-." php-mode-map)))
 
-
-
-
-
-;; STUFF
+;; BASIC CONFIG
 ;; remove window decoration
 (when window-system
   (tooltip-mode -1)
@@ -1362,49 +1599,152 @@ change what is evaluated to the statement on the current line."
   (set-face-inverse-video-p 'vertical-border nil)
   (scroll-bar-mode -1))
 
-;; SCROOL
+
+
+;; ring
+(setq ring-bell-function 'ignore
+      visible-bell t)
+
+;; mini-window
+(setq resize-mini-windows t
+      max-mini-window-height 0.33)
+
+;; scrool
 (setq redisplay-dont-pause t
       scroll-margin 1
       scroll-step 1
       scroll-conservatively 10000
-      scroll-preserve-screen-position 1)
+      scroll-preserve-screen-position 1
+      scroll-error-top-bottom t)
 
-
-(fringe-mode 0) ;; turn off left and right fringe cols
-(fset 'yes-or-no-p 'y-or-n-p);; replace yes to y
-(setq confirm-nonexistent-file-or-buffer nil)
+;; mousewheel
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 2))
+      mouse-wheel-progressive-speed nil)
 
 ;; tab
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+
+;; cursor
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
+ '(blink-cursor-mode nil)
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(column-number-mode t)
+ '(company-backends
+   (quote
+    (company-tern company-go company-ycmd company-racer company-css company-semantic company-xcode company-cmake company-dabbrev-code company-capf company-gtags company-files)))
+ '(compilation-message-face (quote default))
+ '(current-language-environment "UTF-8")
+ '(custom-enabled-themes nil)
+ '(custom-safe-themes
+   (quote
+    ("938d8c186c4cb9ec4a8d8bc159285e0d0f07bad46edf20aa469a89d0d2a586ea" "28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "130319ab9b4f97439d1b8fd72345ab77b43301cf29dddc88edb01e2bc3aff1e7" "43c1a8090ed19ab3c0b1490ce412f78f157d69a29828aa977dae941b994b4147" "a75df2964b894c97f633920b95a7f1536238cc86e4f2447bfebabd95eaa326a0" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "cd560f7570de0dcdcf06953b3f1a25145492a54f100f9c8da3b4091b469f7f02" "b9293d120377ede424a1af1e564ba69aafa85e0e9fd19cf89b4e15f8ee42a8bb" "38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "cf28bfffbf8726a31989e662986065b5319670902ac1af0e63fb8e773c119488" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "f64c9f8b4241b680b186f4620afb9c82fa2a76cf4498a7431f90db59bb1892eb" "34e7163479ef3669943b3b9b1fabe639d6e0a0453e0de79cea2c52cb520d3bc4" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "71ecffba18621354a1be303687f33b84788e13f40141580fa81e7840752d31bf" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+ '(delete-selection-mode t)
+ '(exec-path
+   (append exec-path
+           (quote
+            ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
+ '(fci-rule-color "#383838")
+ '(initial-major-mode (quote org-mode))
+ '(irony-additional-clang-options (quote ("-std=c++11")))
+ '(package-selected-packages
+   (quote
+    (expand-region eyebrowse elm-mode yafolding php-extras php-mode-map company-php unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
+ '(pos-tip-background-color "#A6E22E")
+ '(pos-tip-foreground-color "#272822")
+ '(prefer-coding-system (quote utf-8))
+ '(same-window-buffer-names (quote ("*shell*")))
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#bf616a")
+     (40 . "#DCA432")
+     (60 . "#ebcb8b")
+     (80 . "#B4EB89")
+     (100 . "#89EBCA")
+     (120 . "#89AAEB")
+     (140 . "#C189EB")
+     (160 . "#bf616a")
+     (180 . "#DCA432")
+     (200 . "#ebcb8b")
+     (220 . "#B4EB89")
+     (240 . "#89EBCA")
+     (260 . "#89AAEB")
+     (280 . "#C189EB")
+     (300 . "#bf616a")
+     (320 . "#DCA432")
+     (340 . "#ebcb8b")
+     (360 . "#B4EB89"))))
+ '(vc-annotate-very-old-color nil)
+ '(weechat-color-list
+   (unspecified "#272822" "#3C3D37" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
+
+
 ;; backup
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups"))
+      delete-old-versions -1
+      version-control t
+      backup-inhibited t
+      auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+
+
+;; hist
+(setq savehist-file "~/.emacs.d/savehist")
+(savehist-mode +1)
+(setq savehist-save-minibuffer-history +1
+      savehist-additional-variables
+      '(kill-ring
+        search-ring
+        regexp-search-ring))
+
+
+
+;; confirmation
+(fset 'yes-or-no-p 'y-or-n-p);; replace yes to y
+(setq confirm-nonexistent-file-or-buffer nil)
 
 ;; insert ret if last line
 (setq next-line-add-newlines nil)
 
 ;; scratch message
-(setq initial-scratch-message nil)
-(setq initial-major-mode 'org-mode)
+(setq initial-scratch-message nil
+      initial-major-mode 'org-mode
+      inhibit-startup-screen t)
 
 ;; replace dabbrev by hippie-expand
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
 ;; save
- (setq auto-save-default nil
-       auto-save-interval 0)
+(setq auto-save-default nil
+      auto-save-interval 0)
 
 ;; kill process no prompt
 (setq kill-buffer-query-functions
-  (remq 'process-kill-buffer-query-function
-         kill-buffer-query-functions))
+      (remq 'process-kill-buffer-query-function
+            kill-buffer-query-functions))
 
-;; desktop mode
-(desktop-save-mode)
+
+;; browser
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "chromium-browser")
 
 ;; search regex
 (setq case-fold-search nil)
 
+;; default minor mode
+
+(fringe-mode 0)
+
+
+;; FUNCTIONS
 ;; save on focus out
 (defun my-save-out-hook ()
   (interactive)
@@ -1554,12 +1894,33 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 
 
 
-(defun my-sudo ()
+(defun sudo-edit-current-file ()
   (interactive)
-  (when buffer-file-name
-    (find-alternate-file
-     (concat "/sudo:root@localhost:"
-             buffer-file-name))))
+  (let ((my-file-name) ; fill this with the file to open
+        (position))    ; if the file is already open save position
+    (if (equal major-mode 'dired-mode) ; test if we are in dired-mode 
+        (progn
+          (setq my-file-name (dired-get-file-for-visit))
+          (find-alternate-file (prepare-tramp-sudo-string my-file-name)))
+      (setq my-file-name (buffer-file-name); hopefully anything else is an already opened file
+            position (point))
+      (find-alternate-file (prepare-tramp-sudo-string my-file-name))
+      (goto-char position))))
+
+
+(defun prepare-tramp-sudo-string (tempfile)
+  (if (file-remote-p tempfile)
+      (let ((vec (tramp-dissect-file-name tempfile)))
+
+        (tramp-make-tramp-file-name
+         "sudo"
+         (tramp-file-name-user nil)
+         (tramp-file-name-host vec)
+         (tramp-file-name-localname vec)
+         (format "ssh:%s@%s|"
+                 (tramp-file-name-user vec)
+                 (tramp-file-name-host vec))))
+    (concat "/sudo:root@localhost:" tempfile)))
 
 
 (defun my-kill-all-dired-buffers ()
@@ -1845,14 +2206,14 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 
 
 (defun my-toogle-case ()
-    (interactive)
-    (if case-fold-search
-        (progn
-          (setq case-fold-search nil)
-          (message "toogle off"))
+  (interactive)
+  (if case-fold-search
       (progn
-        (setq case-fold-search t)
-        (message "toggle on"))))
+        (setq case-fold-search nil)
+        (message "toogle off"))
+    (progn
+      (setq case-fold-search t)
+      (message "toggle on"))))
 
 
 (defmacro def-pairs (pairs)
@@ -2050,8 +2411,8 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 
 
 (defun my-goto-to-projectile-dired ()
-    (interactive)
-    (window-number-select 1))
+  (interactive)
+  (window-number-select 1))
 
 
 
@@ -2110,8 +2471,17 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "M-Z" 'scroll-other-window)
 (bind-key "C-M-Z" 'scroll-other-window-down)
 (bind-key "C-\\" 'xah-open-file-at-cursor)
-(bind-key* "C-M-h" 'elscreen-previous)
-(bind-key* "C-M-n" 'elscreen-next)
+
+
+(bind-key* "C-M-t" 'eyebrowse-create-window-config)
+(bind-key* "C-M-c" 'eyebrowse-close-window-config)
+(bind-key* "C-M-h" 'eyebrowse-prev-window-config)
+(bind-key* "C-M-n" 'eyebrowse-next-window-config)
+(bind-key* "C-M-\'" 'persp-prev)
+(bind-key* "C-M-," 'persp-next)
+(bind-key* "C-M-." 'persp-switch)
+(bind-key* "C-M-p" 'persp-kill)
+
 
 (bind-key "C-M-c" 'occur)
 (bind-key "M-H" 'sp-backward-sexp)
@@ -2199,14 +2569,17 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key* "C-S-o" 'helm-recentf)
 (bind-key "C-p" 'helm-semantic-or-imenu)
 (bind-key* "C-y" 'helm-show-kill-ring)
-(bind-key* "C-f" 'helm-projectile-ag)
-(bind-key* "C-F" 'helm-ag)
+(bind-key* "M-y" 'helm-all-mark-rings)
+(bind-key* "C-S-f" 'helm-do-ag)
+(bind-key* "C-f" 'my-helm-do-ag-project-root)
 (bind-key "C-h a" 'helm-apropos)
 (bind-key "C-h o" 'helm-man-woman)
 (bind-key* "M--" 'yafolding-toggle-element)
 (bind-key* "M-_" 'yafolding-toggle-all)
 (global-set-key (kbd "M-o") 'projectile-find-file)
 (global-set-key (kbd "C-e") 'helm-buffers-list)
+(global-set-key (kbd "C-M-e") 'helm-do-ag-buffers)
+(global-set-key (kbd "C-S-M-e") 'helm-projectile-switch-to-buffer)
 
 ;; DIRED
 (bind-key "C-x j" 'dired-jump)
@@ -2231,8 +2604,12 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key "C-M-r" 'helm-multi-swoop-current-mode)
 (bind-key "C-S-r" 'helm-swoop-back-to-last-point)
 (bind-key "M-7" 'helm-multi-swoop)
-(bind-key "M-*" 'helm-multi-swoop-all)
 (bind-key "M-8" 'helm-multi-swoop-current-mode)
+(bind-key "C-M-e"'my-helm-multi-swoop-projectile)
+(bind-key "C-M-S-e" 'helm-multi-swoop-all)
+
+
+
 
 ;; MAGIT
 (bind-key "C-x g" 'magit-status)
@@ -2253,8 +2630,8 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key* "M-," 'my-next-user-buffer)
 (bind-key* "M-\"" 'my-previous-user-dired-buffer)
 (bind-key* "M-<" 'my-next-user-dired-buffer)
-(bind-key* "C-M-'" 'my-previous-user-dired-buffer)
-(bind-key* "C-M-," 'my-next-user-dired-buffer)
+;; (bind-key* "C-M-'" 'my-previous-user-dired-buffer)
+;; (bind-key* "C-M-," 'my-next-user-dired-buffer)
 
 (bind-key* "C-'" 'smartscan-symbol-go-backward)
 (bind-key* "C-," 'smartscan-symbol-go-forward)
@@ -2334,31 +2711,17 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 
 
 
-(defhydra hydra-elscreen (:color red :hint nil)
+(defhydra hydra-eyebrowse (:color red :hint nil)
   "
-  [_c_] create    [_n_] next        [_d_] kill     [_e_] helm     [_i_] show-tab
-  [_C_] clone     [_h_] previous    [_D_] killB    [_j_] dired    [_b_] show-buf
-  [_a_] toggle    [_t_] goto        [_s_] swap     [_l_] list
+  [_c_] create    [_n_] next        [_d_] kill     [_e_] helm
+  [_r_] rename    [_h_] previous    
 "
-  ("a" elscreen-toggle)
-  ("c" elscreen-create)
-  ("C" elscreen-clone)
-  ("d" elscreen-kill)
-  ("D" elscreen-kill-screen-and-buffers)
-  ("s" elscreen-swap)
-  ("n" elscreen-next)
-  ("h" elscreen-previous)
-  ("t" elscreen-goto)
-  ("e" helm-elscreen :color blue)
-  ("j" elscreen-dired)
-  ("i" elscreen-toggle-display-tab)
-  ("b" elscreen-toggle-display-screen-number)
-  ("l" elscreen-display-screen-name-list)
-  ("1" (elscreen-goto 0) :color blue)
-  ("2" (elscreen-goto 1) :color blue)
-  ("3" (elscreen-goto 2) :color blue)
-  ("4" (elscreen-goto 3) :color blue)
-  ("5" (elscreen-goto 4) :color blue)
+  ("c" eyebrowse-create-window-config)
+  ("d" eyebrowse-close-window-config)
+  ("n" eyebrowse-next-window-config)
+  ("h" eyebrowse-prev-window-config)
+  ("e" eyebrowse-switch-to-window-config)
+  ("r" eyebrowse-rename-window-config)
   ("g" keyboard-quit)
   ("q" nil :color blue))
 
@@ -2744,7 +3107,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
 
 (defhydra hydra-macro (:hint nil :color pink :pre 
                              (when defining-kbd-macro
-                                 (kmacro-end-macro 1)))
+                               (kmacro-end-macro 1)))
   "
   ^^Create-Cycle^^   ^Basic^            ^   ^       ^Insert^        ^Save^           ^Edit^
 ╭───────────────────────────────────────────────────────────────────────────────────╯
@@ -2878,7 +3241,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("a" abbrev-mode)
   ("d" toggle-debug-on-error)
   ("f" auto-fill-mode)
-  ("l" line-number-mode)
+  ("l" linum-mode)
   ("n" nyan-mode)
   ("r" toggle-truncate-lines)
   ("s" auto-save-buffers-enhanced-toggle-activity)
@@ -2898,15 +3261,23 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
 
 (defhydra hydra-execute (:color blue :hint nil)
   "
-[_o_] open  [_e_] execute  [_w_] dirname
+    [_o_] open    [_e_] execute  [_w_] dirname  [_r_] auto-revert  [_a_] git-gutter
+    [_g_] google  [_s_] surfraw  [_c_] calc     [_f_] flycheck     
 "
   ("o" my-open-with)
-  ("e" my-sudo)
+  ("e" sudo-edit-current-file)
   ("w" my-dirname-buffer)
-  ("r" global-auto-revert-mode)
-  ("R" auto-revert-mode)
-  ("q" nil :color blue)
-  ("g" nil))
+  ("g" helm-google-suggest)
+  ("c" helm-calcul-expression)
+  ("s" helm-surfraw)
+  ("r" auto-revert-mode)
+  ("R" global-auto-revert-mode)
+  ("f" flycheck-mode)
+  ("F" global-flycheck-mode)
+  ("a" git-gutter-mode)
+  ("A" global-git-gutter-mode)
+  
+  ("q" nil :color blue))
 
 
 (defhydra hydra-apropos (:color teal)
@@ -3053,7 +3424,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 
 
 (bind-key "C-x o" 'hydra-window/body)
-(bind-key "C-x e" 'hydra-elscreen/body)
+(bind-key "C-x e" 'hydra-eyebrowse/body)
 (bind-key "C-t" 'hydra-multiple-cursors/body)
 (bind-key "C-n" 'hydra-navigate/body)
 (bind-key "C-." 'hydra-execute/body)
@@ -3081,70 +3452,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
 
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
- '(auto-compression-mode nil)
- '(blink-cursor-mode nil)
- '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
- '(browse-url-browser-function (quote browse-url-chromium))
- '(column-number-mode t)
- '(company-backends
-   (quote
-    (company-tern company-go company-ycmd company-racer company-c-headers company-robe company-css company-semantic company-xcode company-cmake company-dabbrev-code company-capf company-gtags company-files)))
- '(current-language-environment "UTF-8")
- '(custom-enabled-themes nil)
- '(custom-safe-themes
-   (quote
-    ("0537901f4422f0d5f41ff43e51e39dc17d45d254fa36ce8d8d2786457759aef9" "ed317c0a3387be628a48c4bbdb316b4fa645a414838149069210b66dd521733f" "938d8c186c4cb9ec4a8d8bc159285e0d0f07bad46edf20aa469a89d0d2a586ea" "130319ab9b4f97439d1b8fd72345ab77b43301cf29dddc88edb01e2bc3aff1e7" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" default)))
- '(delete-selection-mode 1)
- '(exec-path
-   (append exec-path
-           (quote
-            ("/usr/local/sbin" "/usr/local/bin" "/usr/sbin" "/usr/bin" "/sbin" "/bin" "/opt/node/bin"))))
- '(fci-rule-color "#383838")
- '(inf-ruby-default-implementation "ruby")
- '(initial-major-mode (quote org-mode))
- '(initial-scratch-message nil)
- '(irony-additional-clang-options (quote ("-std=c++11")))
- '(js-indent-level 2)
- '(org-babel-python-command "python3")
- '(package-selected-packages
-   (quote
-    (elm-mode yafolding php-extras php-mode-map company-php unicode-fonts buffer-move neotree cider-mode cider popwin elisp--witness--lisp company-irony expand-region company-quickhelp company yaml-mode windata use-package tree-mode smartparens shm scss-mode rainbow-delimiters python-info pydoc-info nyan-mode multiple-cursors molokai-theme markdown-mode lua-mode leuven-theme json-rpc json-mode js2-mode jinja2-mode jedi iedit hi2 helm-swoop helm-projectile helm-hoogle helm-css-scss helm-company goto-chg fullscreen-mode framemove f emmet-mode drag-stuff company-tern company-jedi coffee-mode auto-save-buffers-enhanced auto-compile)))
- '(prefer-coding-system (quote utf-8))
- '(ring-bell-function (quote ignore) t)
- '(same-window-buffer-names (quote ("*shell*")))
- '(scroll-error-top-bottom t)
- '(typescript-indent-level 4)
- '(vc-annotate-background nil)
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#bf616a")
-     (40 . "#DCA432")
-     (60 . "#ebcb8b")
-     (80 . "#B4EB89")
-     (100 . "#89EBCA")
-     (120 . "#89AAEB")
-     (140 . "#C189EB")
-     (160 . "#bf616a")
-     (180 . "#DCA432")
-     (200 . "#ebcb8b")
-     (220 . "#B4EB89")
-     (240 . "#89EBCA")
-     (260 . "#89AAEB")
-     (280 . "#C189EB")
-     (300 . "#bf616a")
-     (320 . "#DCA432")
-     (340 . "#ebcb8b")
-     (360 . "#B4EB89"))))
- '(vc-annotate-very-old-color nil))
+
 ;; (setq debug-on-error t)
 
 
@@ -3163,6 +3471,8 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(eyebrowse-mode-line-active ((t (:foreground "green"))))
+ '(persp-selected-face ((t (:foreground "green" :weight bold))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "royal blue"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "firebrick"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "forest green"))))
@@ -3184,3 +3494,5 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
   "Prevent y-or-n-p from activating a dialog"
   (let ((use-dialog-box nil))
     ad-do-it))
+
+
