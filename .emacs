@@ -217,7 +217,7 @@
 
 
 (use-package yafolding :ensure t)
-
+(use-package smart-shift :ensure t)
 
 (use-package hydra
   :ensure t :defer t)
@@ -296,9 +296,7 @@
           (setq sp-highlight-wrap-overlay nil)
           (setq sp-highlight-wrap-tag-overlay nil)
           (show-smartparens-global-mode)
-          (smartparens-global-mode t)
-          
-          ))
+          (smartparens-global-mode t)))
 
 
 (use-package ace-jump-mode
@@ -322,8 +320,6 @@
 
 
 
-
-
 (use-package bookmark+
   :ensure t :defer t)
 
@@ -334,17 +330,6 @@
           (setq eyebrowse-keymap-prefix "")
           (eyebrowse-mode t)))
 
-;; (use-package workgroups2
-;;   :ensure t
-;;   :init (progn
-;;           (setq wg-prefix-key (kbd "C-c z")
-;;                 wg-session-file "~/.emacs.d/.emacs_workgroups"))
-;;   (workgroups-mode 1))
-
-;; (use-package persp-mode
-;;   :ensure t
-;;   :init(progn
-;;          (persp-mode)))
 
 (use-package perspective
   :ensure t
@@ -702,19 +687,20 @@
 (use-package dired-subtree :ensure t :defer t)
 (use-package dired-filter :ensure t :defer t)
 (use-package dired-ranger :ensure t :defer t)
-(use-package dired-open :ensure t :defer t)
+(use-package dired-open :ensure t)
 
 
 (use-package emmet-mode
   :ensure t
   :init(progn
+         (setq emmet-indentation 2
+               emmet-preview-default nil)
+         
          (add-hook 'web-mode-hook 'emmet-mode)
          (add-hook 'html-mode-hook 'emmet-mode)
          (add-hook 'jinja2-mode-hook 'emmet-mode)
          (add-hook 'css-mode-hook 'emmet-mode)
-         (setq emmet-indentation 2)
-         (setq emmet-preview-default nil)
-         (add-hook' emmet-mode-hook (lambda()
+         (add-hook 'emmet-mode-hook (lambda()
                                       (bind-key "C-c C-w" #'emmet-wrap-with-markup emmet-mode-keymap)
                                       (bind-key "C-c w" #'emmet-wrap-with-markup emmet-mode-keymap)))))
 
@@ -724,13 +710,31 @@
   :ensure t :defer t)
 
 (use-package web-mode
-  :ensure t :defer t
+  :ensure t
   :init (progn
+          (defun my/web-mode-toggle-indent ()
+            (interactive)
+            (setq web-mode-markup-indent-offset (if (= web-mode-markup-indent-offset 2) 4 2))
+            (setq web-mode-css-indent-offset (if (= web-mode-css-indent-offset 2) 4 2))
+            (setq web-mode-code-indent-offset (if (= web-mode-code-indent-offset 2) 4 2))
+            (setq emmet-indentation (if (= emmet-indentation 2) 4 2))
+            (message "markup-offset, css-offset, code-offset set to %d"
+                     web-mode-markup-indent-offset))
+          
+          (add-hook 'web-mode-hook (lambda ()
+                                     (highlight-indentation-mode 1)))
+          
+
+          
           (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
           (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
           (add-to-list 'auto-mode-alist '("\\.html\\.eex\\'" . web-mode))
           (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-          (add-to-list 'auto-mode-alist '("\\.ejs?\\'" . web-mode))))
+          (add-to-list 'auto-mode-alist '("\\.ejs?\\'" . web-mode)))
+
+  :config (progn
+            (bind-key "C-c C-/" 'my/web-mode-toggle-indent web-mode-map)
+            (bind-key "C-c /" 'my/web-mode-toggle-indent web-mode-map)))
 
 
 (use-package sws-mode :ensure t :defer t)
@@ -781,13 +785,20 @@
                                      (tern-mode -1)))))
 
 (use-package yaml-mode
-  :ensure t :defer t)
+  :ensure t
+  :init(progn
+         (add-hook 'yaml-mode-hook (lambda ()
+                                     (flycheck-mode 1)
+                                     (highlight-indentation-mode 1)))))
 
 
 (use-package inf-mongo
   :ensure t :defer t
   :init(progn
          (setq inf-mongo-command "mongo")))
+
+(use-package redis
+  :ensure t :defer t)
 
 (use-package imenu
   :defer t
@@ -893,16 +904,18 @@
   :defer t
   :init (progn
           (with-eval-after-load 'doc-view
-            (bind-key "h" 'doc-view-previous-page doc-view-mode-map )
-            (bind-key "n" 'doc-view-next-page doc-view-mode-map )
-            (bind-key "c" 'previous-line doc-view-mode-map )
-            (bind-key "t" 'next-line doc-view-mode-map )
-            (bind-key "g" 'scroll-down-command doc-view-mode-map )
-            (bind-key "r" 'scroll-up-command doc-view-mode-map )
-            (bind-key "b" 'doc-view-first-page doc-view-mode-map )
-            (bind-key "B" 'doc-view-last-page doc-view-mode-map )
-            (bind-key "l" 'doc-view-goto-page doc-view-mode-map )
-            (bind-key "/" 'doc-view-shrink doc-view-mode-map )
+            (bind-key "h" 'doc-view-previous-page doc-view-mode-map)
+            (bind-key "n" 'doc-view-next-page doc-view-mode-map)
+            (bind-key "<left>" 'doc-view-previous-page doc-view-mode-map)
+            (bind-key "<right>" 'doc-view-next-page doc-view-mode-map)
+            (bind-key "c" 'previous-line doc-view-mode-map)
+            (bind-key "t" 'next-line doc-view-mode-map)
+            (bind-key "g" 'scroll-down-command doc-view-mode-map)
+            (bind-key "r" 'scroll-up-command doc-view-mode-map)
+            (bind-key "b" 'doc-view-first-page doc-view-mode-map)
+            (bind-key "B" 'doc-view-last-page doc-view-mode-map)
+            (bind-key "l" 'doc-view-goto-page doc-view-mode-map)
+            (bind-key "/" 'doc-view-shrink doc-view-mode-map)
             (bind-key "=" 'doc-view-enlarge doc-view-mode-map ))))
 
 
@@ -1085,6 +1098,8 @@
             (bind-key "C-c /" 'my/js2-toggle-indent js2-mode-map)))
 
 
+
+
 ;; TERN
 (use-package tern
   :ensure t
@@ -1106,6 +1121,21 @@
            (bind-key "C-c C-\." 'tern-find-definition-by-name tern-mode-keymap)
            (bind-key "C-c C-t" 'tern-get-type tern-mode-keymap)
            (bind-key "C-c C-d" 'tern-get-docs tern-mode-keymap)))
+
+
+(use-package js-doc
+  :ensure t :defer t
+  :init (progn
+          (setq js-doc-mail-address ""
+                js-doc-author (format "vincent <%s>" js-doc-mail-address)
+                js-doc-url "url of your website"
+                js-doc-license "license name")
+          (add-hook 'js2-mode-hook
+                    (lambda ()
+                      (bind-key "C-c C-1" 'js-doc-insert-function-doc js2-mode-map)
+                      (bind-key "C-c C-2" 'js-doc-insert-tag js2-mode-map)
+                      (bind-key "C-c C-3" 'js-doc-insert-file-doc js2-mode-map)
+                      (bind-key "C-c C-4" 'js-doc-describe-tag js2-mode-map)))))
 
 
 (use-package company-tern :ensure t)
@@ -1600,7 +1630,6 @@ change what is evaluated to the statement on the current line."
   (scroll-bar-mode -1))
 
 
-
 ;; ring
 (setq ring-bell-function 'ignore
       visible-bell t)
@@ -1673,7 +1702,8 @@ change what is evaluated to the statement on the current line."
 
 ;; browser
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "google-chrome")
+      browse-url-generic-program "chromium-browser"
+      )
 
 ;; search regex
 (setq case-fold-search nil)
@@ -2112,38 +2142,8 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 
 
 
-(defun my-indent-shift-left (start end &optional count)
-  (interactive
-   (if mark-active
-       (list (region-beginning) (region-end) current-prefix-arg)
-     (list (line-beginning-position) (line-end-position) current-prefix-arg)))
-  (if count
-      (setq count (prefix-numeric-value count))
-    (setq count 2))
-  (when (> count 0)
-    (let ((deactivate-mark nil))
-      (save-excursion
-        (goto-char start)
-        (while (< (point) end)
-          (if (and (< (current-indentation) count)
-                   (not (looking-at "[ \t]*$")))
-              (error "Can't shift all lines enough"))
-          (forward-line))
-        (indent-rigidly start end (- count))))))
 
-
-(defun my-indent-shift-right (start end &optional count)
-  (interactive
-   (if mark-active
-       (list (region-beginning) (region-end) current-prefix-arg)
-     (list (line-beginning-position) (line-end-position) current-prefix-arg)))
-  (let ((deactivate-mark nil))
-    (setq count (if count (prefix-numeric-value count)
-                  2))
-    (indent-rigidly start end count)))
-
-
-(defun my-toogle-case ()
+(defun my-toggle-case ()
   (interactive)
   (if case-fold-search
       (progn
@@ -2171,6 +2171,18 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
             (single-quote . "'")
             (double-quote . "\"")
             (back-quote   . "`")))
+
+
+
+
+(defun my-toggle-indent-level ()
+  (interactive)
+  (setq tab-width (if (= tab-width 2) 4 2))
+  (message "Indent level %d"
+           tab-width))
+
+
+
 
 
 (defun my-revert-buffer-no-confirm ()
@@ -2358,13 +2370,15 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 ;; MARK COMMAND, COMPLETE, YAS, TAB, SAVE
 (bind-key "M-SPC" 'set-mark-command)
 (bind-key "C-SPC" 'company-complete)
-(bind-key "M-C--" 'my-indent-shift-left)
-(bind-key "M-C-\\" 'my-indent-shift-right)
-(bind-key "<backtab>" 'my-indent-shift-left)
+(bind-key "C-M--" 'smart-shift-left)
+(bind-key "C-M-\\" 'smart-shift-right)
+(bind-key "<backtab>" 'smart-shift-left)
+(bind-key "C-<tab>" 'smart-shift-right)
 (bind-key "C--" 'yas-expand)
 (bind-key "M-\\" 'flycheck-mode)
-(bind-key "C-M-\\" 'global-flycheck-mode)
+(bind-key "C-M-|" 'global-flycheck-mode)
 (bind-key* "C-a" 'mark-whole-buffer)
+(bind-key "C-c C-/" 'my-toggle-indent-level)
 (bind-key "<M-return>" 'smart-ret)
 (bind-key "<S-return>" 'smart-ret-reverse)
 (bind-key "<escape>" 'keyboard-espace-quit)
@@ -2568,8 +2582,6 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 (bind-key* "M-," 'my-next-user-buffer)
 (bind-key* "M-\"" 'my-previous-user-dired-buffer)
 (bind-key* "M-<" 'my-next-user-dired-buffer)
-;; (bind-key* "C-M-'" 'my-previous-user-dired-buffer)
-;; (bind-key* "C-M-," 'my-next-user-dired-buffer)
 
 (bind-key* "C-'" 'smartscan-symbol-go-backward)
 (bind-key* "C-," 'smartscan-symbol-go-forward)
@@ -2847,7 +2859,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
   ("il" center-line)
   ("ih" center-region)
   ("ij" join-line-or-lines-in-region)
-  ("C-t" my-toogle-case)
+  ("C-t" my-toggle-case)
   ("x" exchange-point-and-mark)
   ("w" delete-trailing-whitespace)
   ("s" er/expand-region)
@@ -3191,7 +3203,7 @@ _H_  _h_ ←   → _n_ _N_      [_l_] line        [_d_] fix          [_i_] table
   ("c" flycheck-mode)
   ("wb" subword-mode)
   ("ws" superword-mode)
-  ("C-t" my-toogle-case)
+  ("C-t" my-toggle-case)
   ("q" nil :color blue)
   ("g" nil))
 
@@ -3419,7 +3431,7 @@ Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote   
  '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("938d8c186c4cb9ec4a8d8bc159285e0d0f07bad46edf20aa469a89d0d2a586ea" "28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "130319ab9b4f97439d1b8fd72345ab77b43301cf29dddc88edb01e2bc3aff1e7" "43c1a8090ed19ab3c0b1490ce412f78f157d69a29828aa977dae941b994b4147" "a75df2964b894c97f633920b95a7f1536238cc86e4f2447bfebabd95eaa326a0" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "cd560f7570de0dcdcf06953b3f1a25145492a54f100f9c8da3b4091b469f7f02" "b9293d120377ede424a1af1e564ba69aafa85e0e9fd19cf89b4e15f8ee42a8bb" "38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "cf28bfffbf8726a31989e662986065b5319670902ac1af0e63fb8e773c119488" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "f64c9f8b4241b680b186f4620afb9c82fa2a76cf4498a7431f90db59bb1892eb" "34e7163479ef3669943b3b9b1fabe639d6e0a0453e0de79cea2c52cb520d3bc4" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "71ecffba18621354a1be303687f33b84788e13f40141580fa81e7840752d31bf" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
+    ("fed140fbad5134f2ca780b4507d79060cd4fcd59e6f647bbc24a9b4face10420" "938d8c186c4cb9ec4a8d8bc159285e0d0f07bad46edf20aa469a89d0d2a586ea" "28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "130319ab9b4f97439d1b8fd72345ab77b43301cf29dddc88edb01e2bc3aff1e7" "43c1a8090ed19ab3c0b1490ce412f78f157d69a29828aa977dae941b994b4147" "a75df2964b894c97f633920b95a7f1536238cc86e4f2447bfebabd95eaa326a0" "c7a9a68bd07e38620a5508fef62ec079d274475c8f92d75ed0c33c45fbe306bc" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "cd560f7570de0dcdcf06953b3f1a25145492a54f100f9c8da3b4091b469f7f02" "b9293d120377ede424a1af1e564ba69aafa85e0e9fd19cf89b4e15f8ee42a8bb" "38e64ea9b3a5e512ae9547063ee491c20bd717fe59d9c12219a0b1050b439cdd" "cf28bfffbf8726a31989e662986065b5319670902ac1af0e63fb8e773c119488" "6df30cfb75df80e5808ac1557d5cc728746c8dbc9bc726de35b15180fa6e0ad9" "f64c9f8b4241b680b186f4620afb9c82fa2a76cf4498a7431f90db59bb1892eb" "34e7163479ef3669943b3b9b1fabe639d6e0a0453e0de79cea2c52cb520d3bc4" "1177fe4645eb8db34ee151ce45518e47cc4595c3e72c55dc07df03ab353ad132" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "71ecffba18621354a1be303687f33b84788e13f40141580fa81e7840752d31bf" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "38ba6a938d67a452aeb1dada9d7cdeca4d9f18114e9fc8ed2b972573138d4664" "8aa7eb0cc23931423f719e8b03eb14c4f61aa491e5377073d6a55cba6a7bc125" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "0c311fb22e6197daba9123f43da98f273d2bfaeeaeb653007ad1ee77f0003037" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "dcf229d4673483cb7b38505360824fa56a0d7b52f54edbcdca98cf5059fa1662" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "0820d191ae80dcadc1802b3499f84c07a09803f2cb90b343678bdb03d225b26b" "94ba29363bfb7e06105f68d72b268f85981f7fba2ddef89331660033101eb5e5" "cdd26fa6a8c6706c9009db659d2dffd7f4b0350f9cc94e5df657fa295fffec71" "47ac4658d9e085ace37e7d967ea1c7d5f3dfeb2f720e5dec420034118ba84e17" "af960831c1b33b719cda2ace858641dd8accc14d51e8ffb65b39ca75f07d595d" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "8fed5e4b89cf69107d524c4b91b4a4c35bcf1b3563d5f306608f0c48f580fdf8" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "3ed645b3c08080a43a2a15e5768b893c27f6a02ca3282576e3bc09f3d9fa3aaa" "f0d8af755039aa25cd0792ace9002ba885fd14ac8e8807388ab00ec84c9497d7" "11636897679ca534f0dec6f5e3cb12f28bf217a527755f6b9e744bd240ed47e1" "50ce37723ff2abc0b0b05741864ae9bd22c17cdb469cae134973ad46c7e48044" "08851585c86abcf44bb1232bced2ae13bc9f6323aeda71adfa3791d6e7fea2b6" "01d299b1b3f88e8b83e975484177f89d47b6b3763dfa3297dc44005cd1c9a3bc" "c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab")))
  '(delete-selection-mode t)
  '(exec-path
    (append exec-path
