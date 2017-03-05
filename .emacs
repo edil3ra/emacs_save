@@ -191,6 +191,20 @@
 (use-package yagist
   :ensure t)
 
+(use-package ediff
+  :init(progn
+         (defun ora-ediff-hook ()
+           (ediff-setup-keymap))
+         
+         (setq ediff-window-setup-function 'ediff-setup-windows-plain
+               ediff-split-window-function 'split-window-horizontally
+               ediff-diff-options "-w")
+         (add-hook 'ediff-mode-hook 'ora-ediff-hook)
+         (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+
+         )
+  )
+
 
 (use-package ag
   :ensure t :defer t)
@@ -680,6 +694,7 @@
             (bind-key "3" 'dired-ranger-move dired-mode-map)
             (bind-key "4" 'dired-do-delete dired-mode-map)
             (bind-key "C-w" 'kill-this-buffer dired-mode-map)
+            (bind-key "@" 'dired-do-async-shell-command dired-mode-map)
             (bind-key "#" 'dired-open-xdg dired-mode-map)
             (define-key dired-mode-map (kbd ".") dired-filter-map)))
 
@@ -935,6 +950,7 @@
                 org-babel-load-languages
                 (quote
                  ((ruby . t)
+                  (elixir . t)
                   (clojure . t)
                   (dot . t)
                   (plantuml . t)
@@ -945,9 +961,7 @@
                 org-babel-python-command "python3")
 
           (add-hook 'org-mode-hook (lambda ()
-                                     (visual-line-mode)
-                                     
-                                     )))
+                                     (visual-line-mode))))
   :config (progn
             (bind-key "C-c C-;" 'org-attach org-mode-map)
             (bind-key "C-c C-a" 'org-agenda org-mode-map)
@@ -955,12 +969,11 @@
             (unbind-key "C-e" org-mode-map)
             (unbind-key "C-j" org-mode-map)))
 
-(use-package ox-pandoc
-  :ensure t)
+(use-package ox-pandoc :ensure t)
+(use-package ob-elixir :ensure t )
+(use-package ob-mongo :ensure t :defer t)
 
 
-(use-package ob-mongo
-  :ensure t :defer t)
 
 
 (use-package delight
@@ -980,17 +993,37 @@
 
 
 
+
+
 ;; PYTHON
+(use-package jedi :ensure t :defer t)
+(use-package pyvenv :ensure t :defer t)
+
 (use-package python
   :ensure t
-  ;; :mode ("\\.py\\'" . python-mode)
   :init (progn
+         (defun my/python-switch-version ()
+           (interactive)
+           (setq python-shell-interpreter
+                 (if (string-equal python-shell-interpreter "python3") "python" "python3"))
+           (setq elpy-rpc-backend
+                 (if (string-equal elpy-rpc-backend "python") "python3" "python"))
+           (message python-shell-interpreter))
+         (defun my/python-toggle-ipython ()
+           (interactive)
+           (setq python-shell-interpreter
+                 (if (string-equal (substring python-shell-interpreter 0 1) "p")
+                     (concat "i" python-shell-interpreter)
+                   (substring python-shell-interpreter 1)))
+           (message python-shell-interpreter))
           (setq expand-region-preferred-python-mode (quote fgallina-python)
                 python-shell-interpreter "python3"))
   :config (progn
             (bind-key "C-c C-r" 'python-shell-send-region python-mode-map)
             (bind-key "C-c C-c" 'python-shell-send-defun python-mode-map)
-            (bind-key "C-c C-k" 'python-shell-send-buffer python-mode-map)))
+            (bind-key "C-c C-k" 'python-shell-send-buffer python-mode-map)
+            (bind-key "C-c C-/" 'my/python-switch-version python-mode-map)
+            (bind-key "C-c C-=" 'my/python-toggle-ipython python-mode-map)))
 
 
 (use-package elpy
@@ -1025,7 +1058,7 @@
            (bind-key "C-c C-t" 'elpy-test elpy-mode-map)
            (bind-key "C-c t" 'elpy-test elpy-mode-map)
            (bind-key "C-c C-s" 'elpy-rgrep-symbol elpy-mode-map)
-           (bind-key "C-c r" 'my/python-refactoring elpy-mode-map)
+           (bind-key "C-c r" 'my/python-refactoring elpy-mode-map)           
            (bind-key "C-c C-r" 'my/python-refactoring elpy-mode-map)
            (bind-key "C-c C-c" 'elpy-shell-send-current-statement elpy-mode-map)
            (bind-key "C-x C-e" 'elpy-shell-send-current-statement elpy-mode-map)
@@ -1034,29 +1067,62 @@
            (unbind-key "C-c C-k" elpy-mode-map)
            (unbind-key "C-c C-c" elpy-mode-map)))
 
-(use-package jedi :ensure t)
-(use-package pyvenv :ensure t)
 
 
 
 ;; RUBY
-(use-package seeing-is-believing :ensure t)
-(use-package inf-ruby :ensure t :defer t)
-(use-package company-inf-ruby :ensure t :defer t)
+(use-package seeing-is-believing :ensure t :defer t)
+
+
+
 (use-package ruby-mode
-  :defer t
   :init (progn
-          (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
           (add-hook 'ruby-mode-hook
                     (lambda ()
                       (flycheck-mode 1)
-                      (set (make-local-variable 'company-backends) '((company-inf-ruby company-dabbrev-code ))))))
-  :config(progn
-           (bind-key "<f8>" 'inf-ruby ruby-mode-map)
-           (bind-key "C-c C-c" 'ruby-send-block ruby-mode-map)
-           (bind-key "C-c C-b" 'ruby-send-last-sexp ruby-mode-map)
-           (bind-key "C-c C-k" 'ruby-send-buffer ruby-mode-map)
-           (bind-key "C-c C-z" 'run-ruby ruby-mode-map)))
+                      (set (make-local-variable 'company-backends) '((company-dabbrev-code company-robe)))
+
+                      (bind-key "C-c C-k" 'ruby-send-buffer ruby-mode-map)
+
+                      ))))
+
+
+(use-package inf-ruby
+  :ensure t :defer t
+  :init (progn
+          (setq inf-ruby-default-implementation "pry")
+          (add-hook 'ruby-mode-hook
+                    (lambda ()
+                      (bind-key "<f8>" 'inf-ruby ruby-mode-map)
+                      (bind-key "C-c C-z" 'ruby-switch-to-inf ruby-mode-map)
+                      (bind-key "C-c C-k" 'ruby-send-buffer ruby-mode-map)
+                      (bind-key "C-c C-c" 'ruby-send-last-sexp ruby-mode-map)
+                      (bind-key "C-c C-b" 'ruby-send-block ruby-mode-map)
+                      (bind-key "C-c C-l" 'ruby-load-file ruby-mode-map)
+                      (bind-key "C-c C-r" 'ruby-send-region ruby-mode-map)
+                      (bind-key "C-c C-x" 'ruby-send-definition ruby-mode-map)
+                      (bind-key "C-x C-e" 'ruby-send-last-sexp ruby-mode-map)
+                      (bind-key "C-M-x" 'ruby-send-definition ruby-mode-map)
+                      (bind-key "C-c M-b" 'ruby-send-block-and-go ruby-mode-map)
+                      (bind-key "C-c M-r" 'ruby-send-region-and-go ruby-mode-map)
+                      (bind-key "C-c M-x" 'ruby-send-definition-and-go ruby-mode-map)))))
+
+
+
+(use-package robe
+  :ensure t
+  :init (progn
+          (add-hook 'ruby-mode-hook 'robe-mode))
+  :config (progn
+            (unbind-key "C-c C-k" robe-mode-map)
+            (bind-key "<f9>" 'robe-start robe-mode-map)
+            (bind-key "C-c C-a" 'robe-ask robe-mode-map)
+            (bind-key "C-c C-," 'robe-jump robe-mode-map)
+            (bind-key "C-c C-." 'robe-jump-to-module robe-mode-map)
+            (bind-key "C-c C-d" 'robe-doc robe-mode-map)))
+  
+
+
 
 
 
@@ -1095,7 +1161,8 @@
             (bind-key "C-c i" 'import-js-goto js2-mode-map)
             (bind-key "C-c C-u" 'import-js-import js2-mode-map)
             (bind-key "C-c C-/" 'my/js2-toggle-indent js2-mode-map)
-            (bind-key "C-c /" 'my/js2-toggle-indent js2-mode-map)))
+            (bind-key "C-c /" 'my/js2-toggle-indent js2-mode-map)
+            (unbind-key "C-c C-s" js2-mode-map)))
 
 
 
@@ -1112,9 +1179,9 @@
            (if (get-process "Tern<3>") (delete-process (get-process "Tern<3>")))
            (if (get-process "Tern<4>") (delete-process (get-process "Tern<4>")))
            (if (get-process "Tern<5>") (delete-process (get-process "Tern<5>")))))
-
   :config(progn
            (unbind-key "C-c C-c" tern-mode-keymap)
+           (unbind-key "C-c C-r" tern-mode-keymap)
            (bind-key "C-c C-l" 'delete-tern-process tern-mode-keymap)
            (bind-key "C-c C-," 'tern-find-definition tern-mode-keymap)
            (bind-key "C-c C-\'" 'tern-pop-find-definition tern-mode-keymap)
@@ -1187,16 +1254,10 @@
            (bind-key "C-c r" 'hydra-js2-refactor/body js2-refactor-mode-map)))
 
 
-;; COFFEESCRIPT
-(use-package coffee-mode
-  :ensure t :defer t
-  :init(progn
-         (setq coffee-tab-width 2)))
-
 
 ;; NODE
 (use-package nodejs-repl
-  :ensure t :defer t
+  :ensure t
   :init(progn
          (defun nodejs-repl--sanitize-code (text)
            "Avoid conflicts with REPL special constructs: _ and .command"
@@ -1215,13 +1276,11 @@
              (comint-simple-send proc
                                  (nodejs-repl--sanitize-code
                                   (buffer-substring-no-properties start end)))))
-
          (defun nodejs-repl-eval-node (node)
            "Evaluate `NODE', a `js2-mode' node."
            (let ((beg (js2-node-abs-pos node))
                  (end (js2-node-abs-end node)))
              (nodejs-repl-eval-region beg end)))
-
          (defun nodejs-repl--find-current-or-prev-node (pos &optional include-comments)
            "Locate the first node before `POS'.  Return a node or nil.
 If `INCLUDE-COMMENTS' is set to t, then comments are considered
@@ -1232,7 +1291,6 @@ valid nodes.  This is stupid, don't do it."
                  (unless (= 0 pos)
                    (nodejs-repl--find-current-or-prev-node (1- pos) include-comments))
                node)))
-
          (defun nodejs-repl-eval-function ()
            "Evaluate the current or previous function."
            (interactive)
@@ -1244,7 +1302,6 @@ valid nodes.  This is stupid, don't do it."
                                           (not (null (funcall fn-above-node node))))))))
              (unless (null fn)
                (nodejs-repl-eval-node fn))))
-
          (defun nodejs-repl-eval-first-stmt (pos)
            "Evaluate the first statement found from `POS' by `js2-mode'.
 If this statement is a block statement, its first parent
@@ -1254,7 +1311,6 @@ function call, or assignment statement."
              (cond
               ((js2-block-node-p node) (nodejs-repl-eval-node (js2-node-parent-stmt node)))
               ((not (null node)) (nodejs-repl-eval-node node)))))
-
          (defun nodejs-repl-eval-dwim ()
            "Heuristic evaluation of JS code in a NodeJS repl.
 Evaluates the region, if active, or the first statement found at
@@ -1267,7 +1323,6 @@ change what is evaluated to the statement on the current line."
             ((use-region-p) (nodejs-repl-eval-region (region-beginning) (region-end)))
             ((= (line-end-position) (point)) (nodejs-repl-eval-first-stmt (1- (point))))
             (t (nodejs-repl-eval-first-stmt (point)))))
-
          (defun nodejs-repl-eval-buffer (&optional buffer)
            "Evaluate the current buffer or the one given as `BUFFER'.
 `BUFFER' should be a string or buffer."
@@ -1275,13 +1330,10 @@ change what is evaluated to the statement on the current line."
            (let ((buffer (or buffer (current-buffer))))
              (with-current-buffer buffer
                (nodejs-repl-eval-region (point-min) (point-max)))))
-         
          (defun nodejs-switch-to-shell ()
            "Switch to inferior js process buffer."
            (interactive)
            (switch-to-buffer-other-window "*nodejs*"))
-
-
          (defun nodejs-clear ()
            "Switch to inferior js process buffer."
            (interactive)
@@ -1290,19 +1342,27 @@ change what is evaluated to the statement on the current line."
              (end-of-buffer)
              (insert "Object.keys(require.cache).forEach(function(key) { delete require.cache[key] })")
              (comint-send-input)
+             (insert ".clear")
+             (comint-send-input)
              (switch-to-buffer-other-window buffer-name)))
-
          (provide 'nodejs-repl-eval))
 
   :config (progn
             (add-hook 'js2-mode-hook (lambda ()
                                        (bind-key "C-c C-z" 'nodejs-switch-to-shell js2-mode-map)
-                                       (bind-key "C-c C-g" 'nodejs-clear js2-mode-map)
+                                       (bind-key "C-c C-s" 'nodejs-clear js2-mode-map)
                                        (bind-key "C-c C-c" 'nodejs-repl-eval-dwim js2-mode-map)
                                        (bind-key "C-x C-e" 'nodejs-repl-eval-node js2-mode-map)
                                        (bind-key "C-c C-r" 'nodejs-repl-eval-region js2-mode-map)
                                        (bind-key "C-c C-f" 'nodejs-repl-eval-function js2-mode-map)
                                        (bind-key "C-c C-k" 'nodejs-repl-eval-buffer js2-mode-map)))))
+
+
+;; COFFEESCRIPT
+(use-package coffee-mode
+  :ensure t :defer t
+  :init(progn
+         (setq coffee-tab-width 2)))
 
 
 ;; TYPESCRIPT
@@ -1338,7 +1398,7 @@ change what is evaluated to the statement on the current line."
 
 ;; ELM
 (use-package elm-mode
-  :ensure t
+  :ensure t :defer t
   :init (progn
           (add-hook 'elm-mode-hook
                     (lambda()
@@ -1349,7 +1409,7 @@ change what is evaluated to the statement on the current line."
 
 ;; ELISP
 (use-package emacs-lisp-mode
-  :defer t
+  :defer t 
   :init (progn
           (add-hook 'emacs-lisp-mode-hook
                     (lambda ()
@@ -1702,8 +1762,7 @@ change what is evaluated to the statement on the current line."
 
 ;; browser
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium-browser"
-      )
+      browse-url-generic-program "google-chrome")
 
 ;; search regex
 (setq case-fold-search nil)
