@@ -1,6 +1,0 @@
-alias dev npm run dev
-alias web webpack-dev-server
-alias ll ls -l
-alias la ls -a
-alias lla ls -la
-alias web-dev webpack-dev-server

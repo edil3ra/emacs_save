@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-#name : console.log.json
-# --
-console.log(JSON.stringify($0, null, '  '))
