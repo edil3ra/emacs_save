@@ -1,6 +1,3 @@
-* Config
-#+BEGIN_SRC emacs-lisp :results silent
-
 (setq max-lisp-eval-depth 10000)
 
 
@@ -188,10 +185,6 @@
             (add-hook 'toml-mode-hook 'undo-tree-mode)
             (add-hook 'rg-mode-hook 'undo-tree-mode)))
 
-
-#+END_SRC
-* Functions
-#+BEGIN_SRC emacs-lisp :results silent
 ;; save on focus out
 (defun my/save-out-hook ()
   (interactive)
@@ -828,11 +821,7 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
   (windmove-left)
   (windmove-up)
   (balance-windows))
-#+END_SRC
 
-* All
-** Helm
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package helm
   :init (progn
           (require 'helm-config)
@@ -958,10 +947,6 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 
 (use-package swiper)
 
-#+END_SRC
-
-** Company Yas
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package company-quickhelp)
 
 (use-package company
@@ -1028,10 +1013,6 @@ URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'"
 
 (use-package hydra)
 
-#+END_SRC
-
-** lsp
-   #+BEGIN_SRC emacs-lisp :results silent
 ;; npm i -g typescript-language-server typescript
 ;; npm i -g bash-language-server
 ;; npm i -g vscode-html-languageserver-bin
@@ -1178,6 +1159,9 @@ _Q_: Disconnect     _sS_: List sessions      _bl_: Set log message
                 lsp-python-ms-auto-install-server t
                 gc-cons-threshold 600000000
                 read-process-output-max (* 4096 1024))
+          
+
+          ;;          (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '(company-capf))))
 
           (add-hook 'lsp-mode-hook
                     (lambda ()
@@ -1208,26 +1192,19 @@ _Q_: Disconnect     _sS_: List sessions      _bl_: Set log message
           ;;(my/lsp-auto-configure)
           
           ))
-          #+END_SRC
-** Prettier
-   #+BEGIN_SRC emacs-lisp :results silent
-(use-package prettier-js)
-#+END_SRC
 
-** Flycheck
-#+BEGIN_SRC emacs-lisp :results silent
+(use-package prettier-js)
+
 (use-package flycheck
   :init (progn
-          (setq flycheck-check-syntax-automatically '(save mode-enabled))
+          (setq flycheck-check-syntax-automatically '(save mode-enabled)
+                flycheck-display-errors-function nil)
           (setq-default flycheck-disabled-checkers '(javascript-jshint
                                                      typescript-tslint))
 
           (set-variable 'flycheck-python-mypy-executable "mypy")
           (set-variable 'flycheck-python-mypy-args '("--py2"  "--ignore-missing-imports" "--check-untyped-defs"))))
 
-#+END_SRC
-** Ido
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package ido
   :init(progn
          (setq ido-enable-flex-matching t
@@ -1300,9 +1277,7 @@ _Q_: Disconnect     _sS_: List sessions      _bl_: Set log message
          (add-hook 'ibuffer-mode-hook
                    (lambda ()
                      (ibuffer-switch-to-saved-filter-groups "default")))))
-#+END_SRC
-** Ediff Git
-#+BEGIN_SRC emacs-lisp :results silent
+
 (use-package ediff
   :init(progn
          (defun ora-ediff-hook ()
@@ -1336,11 +1311,6 @@ _Q_: Disconnect     _sS_: List sessions      _bl_: Set log message
 (use-package magit-find-file)
 (use-package forge)
 
-
-#+END_SRC
-
-** Shell Docker Vagrant Tramp redis ansible
-   #+BEGIN_SRC emacs-lisp :results silent
 (use-package shell
   :init (progn
           (defun comint-clear-buffer ()
@@ -1440,11 +1410,6 @@ _Q_: Disconnect     _sS_: List sessions      _bl_: Set log message
   :commands (awscli-capf-add)
   :hook (shell-mode . awscli-capf-add))
 
-
-#+END_SRC
-
-** Projectile
-   #+BEGIN_SRC emacs-lisp :results silent
 (use-package projectile
   :init(progn
          (defun my/toggle-project-explorer ()
@@ -1489,10 +1454,7 @@ the frame and makes it a dedicated window for that buffer."
                projectile-use-native-indexing nil)
          (helm-projectile-on)
          (projectile-mode)))
-   #+END_SRC
 
-** Navigation
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package ag)
 
 ;; RG
@@ -1578,10 +1540,6 @@ This function is meant to be mapped to a key in `rg-mode-map'."
   :init (progn
           (setq dumb-jump-selector 'helm)))
 
-
-#+END_SRC
-** Window
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package winner
   :init (progn
          (winner-mode)))
@@ -1627,11 +1585,6 @@ If prefix ARG is given, delete the window instead of selecting it."
                 elscreen-default-buffer-initial-message nil)
           (elscreen-start)))
 
-
-#+END_SRC
-
-** Visual
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package rainbow-delimiters
   :init (progn
           (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)))
@@ -1663,12 +1616,6 @@ If prefix ARG is given, delete the window instead of selecting it."
   ;; (highlight-indent-guides-responsive t)
   (highlight-indent-guides-method 'column))
 
-
-
-#+END_SRC
-
-** Others
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package comment-dwim-2)
 
 
@@ -1705,12 +1652,6 @@ If prefix ARG is given, delete the window instead of selecting it."
 (use-package pandoc-mode)
 (use-package password-generator)
 
-
-
-#+END_SRC
-
-** Dired
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package dired-subtree
   :init (progn
           (setq dired-subtree-use-backgrounds nil)))
@@ -1850,11 +1791,6 @@ If prefix ARG is given, delete the window instead of selecting it."
             (bind-key "C-r" 'dired-isearch-filenames-regexp dired-mode-map)
             (define-key dired-mode-map (kbd "p") dired-filter-map)))
 
-#+END_SRC
-
-** Tremacs
-   
-   #+BEGIN_SRC emacs-lisp :result silent
 (use-package treemacs
   :init
   (with-eval-after-load 'winum
@@ -1922,17 +1858,9 @@ If prefix ARG is given, delete the window instead of selecting it."
 
 (use-package treemacs-projectile :after treemacs projectile)
 (use-package treemacs-magit :after treemacs magit)
-   #+END_SRC
 
-   #+RESULTS:
+(use-package broadcast)
 
-** Broadcast
-   #+BEGIN_SRC emacs-lisp :result silent
-   (use-package broadcast)
-   #+END_SRC
-
-** Web
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package emmet-mode
   :init(progn
          (setq emmet-indentation 4
@@ -2021,10 +1949,6 @@ If prefix ARG is given, delete the window instead of selecting it."
 (use-package graphql-mode)
 (use-package graphql)
 
-#+END_SRC
-
-** Markup
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package markdown-mode
   :init(progn
          (setq markdown-xhtml-standalone-regexp ""
@@ -2073,9 +1997,6 @@ If prefix ARG is given, delete the window instead of selecting it."
 (use-package toml-mode)
 (use-package csv-mode)
 
-  #+END_SRC
-** SQL
-#+BEGIN_SRC emacs-lisp :results silent
 ;; gem install anbt-sql-formatter
 ;; gem install sqlint
 (use-package sql-indent)
@@ -2088,7 +2009,19 @@ If prefix ARG is given, delete the window instead of selecting it."
                              (sql-server "")
                              (sql-user "postgres")
                              (sql-password nil)
-                             (sql-database "postgres"))))
+                             (sql-database "postgres"))
+                  (odoo-docker (sql-product 'postgres)
+                               (sql-port 5433)
+                               (sql-server "localhost")
+                               (sql-user "odoo")
+                               (sql-password "odoo")
+                               (sql-database "odoo"))
+                  (odoo-local (sql-product 'postgres)
+                              (sql-port 5432)
+                              (sql-server "localhost")
+                              (sql-user "odoo")
+                              (sql-password "odoo")
+                              (sql-database "odoo"))))
 
           (defun my-sql-localhost ()
             (interactive)
@@ -2157,12 +2090,6 @@ If prefix ARG is given, delete the window instead of selecting it."
             (bind-key "C-M-t" 'comint-next-input sql-interactive-mode-map)
             ))
 
-
-
-#+END_SRC
-
-** ElasticSearch
-   #+BEGIN_SRC emacs-lisp :results silent
 (use-package es-mode
   :init (progn
           (defun my-set-authentication-es (auth)
@@ -2179,10 +2106,7 @@ If prefix ARG is given, delete the window instead of selecting it."
   :config (progn
             (bind-key "<f8>" 'es-command-center es-mode-map)
             (bind-key "<f9>" 'my-set-authentication-es es-mode-map)))
-   #+END_SRC
 
-** Restclient
-   #+BEGIN_SRC emacs-lisp :results silent
 (use-package company-restclient)
 (use-package restclient
   :init (progn
@@ -2193,10 +2117,6 @@ If prefix ARG is given, delete the window instead of selecting it."
                     (company-mode 1)
                     (set (make-local-variable 'company-backends) '((company-dabbrev-code company-restclient)))))))
 
-
-   #+END_SRC
-** Themes
-   #+BEGIN_SRC emacs-lisp :results silent
 ;; (use-package zenburn-theme)
 ;; (use-package leuven-theme)
 (use-package cyberpunk-theme)
@@ -2210,12 +2130,6 @@ If prefix ARG is given, delete the window instead of selecting it."
       (setq active-theme 'leuven)
     (setq active-theme 'cyberpunk))
   (load-theme active-theme))
-
-
-   #+END_SRC
-
-** Org
-   #+BEGIN_SRC emacs-lisp :results silent
 
 (use-package ob-async)
 (use-package ob-sql-mode)
@@ -2280,45 +2194,25 @@ If prefix ARG is given, delete the window instead of selecting it."
           (unbind-key "C-c C-k" org-mode-map)
           (unbind-key "C-c C-k" org-src-mode-map)))
 
-#+END_SRC
-
-** Accounting
-   #+begin_src emacs-lisp results silent
 (use-package ledger-mode)
 (use-package ledger-import)
 
-   #+end_src
-
-   #+RESULTS:
-
-** Google
-   #+BEGIN_SRC emacs-lisp :results silent
 (use-package google-translate
   :init (progn
           (setq google-translate-default-source-language "en"
                 google-translate-default-target-language "nl")))
 
 (use-package google-this)
-   #+END_SRC
 
-** Music
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package bongo
   :init (progn
           (setq bongo-enabled-backends (quote (vlc))
                 bongo-default-directory "~/Music")))
-#+END_SRC
 
-** Epub
-   #+BEGIN_SRC  emacs-lisp :results silent
-   (use-package nov
-     :init (progn
-             (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-             (setq nov-text-width 80)))
-   #+END_SRC
-** Hacking
-
-   #+BEGIN_SRC  emacs-lisp :results silent
+(use-package nov
+  :init (progn
+          (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+          (setq nov-text-width 80)))
 
 (bind-key "<up>" 'comint-previous-input comint-mode-map)
 (bind-key "<down>" 'comint-next-input comint-mode-map)
@@ -2334,10 +2228,7 @@ If prefix ARG is given, delete the window instead of selecting it."
 (bind-key "M-t" 'next-line hexl-mode-map)
 (bind-key "M-d" 'beginning-of-line hexl-mode-map)
 (unbind-key  "M-b" hexl-mode-map)
-   #+END_SRC
-   
-** blog help
-   #+BEGIN_SRC  emacs-lisp :results silent
+
 (use-package  grammarly
   :config (progn
             (defun test-on-message (data)
@@ -2345,10 +2236,6 @@ If prefix ARG is given, delete the window instead of selecting it."
               (message "[DATA] %s" data))            
             )
   (add-to-list 'grammarly-on-message-function-list 'test-on-message))
-   #+END_SRC
-
-** cloud formation
-   #+BEGIN_SRC  emacs-lisp :results silent
 
 ;; Set up a mode for YAML based templates if yaml-mode is installed
 ;; Get yaml-mode here https://github.com/yoshiki/yaml-mode
@@ -2383,11 +2270,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
   (add-to-list 'flycheck-checkers 'cfn-lint)
   (add-hook 'cfn-yaml-mode-hook 'flycheck-mode))
 
-   #+END_SRC
-
-* Languages
-** Python
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package pyvenv
   :config (progn
             (defun my/python-pipenv-activate ()
@@ -2478,11 +2360,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
 
 (use-package python-pytest)
 
-#+END_SRC
-
-** Ruby
-#+BEGIN_SRC emacs-lisp :results silent
-
 ;; gem install rdoc pry pry-doc bundler solargraph
 (use-package ruby-mode
   :config (progn
@@ -2505,11 +2382,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
           (setq inf-ruby-default-implementation "pry")
           (bind-key "C-l" 'comint-clear-buffer inf-ruby-mode-map)))
 
-
-
-#+END_SRC
-** R Language
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package ess
   :init (progn
           (setq ess-ask-for-ess-directory nil
@@ -2522,9 +2394,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
                       (bind-key "C-l" 'comint-clear-buffer inferior-ess-mode-map)
                       (unbind-key "M-j" ess-mode-map)))))
 
-#+END_SRC
-** Javascript
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package add-node-modules-path)
 (use-package rjsx-mode)
 (use-package xref-js2)
@@ -2659,9 +2528,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
            (bind-key "C-c C-r" 'indium-reload indium-repl-mode-map)
            (bind-key "C-c C-l" 'indium-repl-clear-output indium-repl-mode-map)
            (bind-key "C-c C-c" 'my/cacheclear indium-repl-mode-map)))
- #+END_SRC
-** Typescript
- #+BEGIN_SRC emacs-lisp :results silent
+
 (use-package typescript-mode
   :mode (("\\.ts\\'" . typescript-mode)
          ("\\.tsx\\'" . typescript-mode ))
@@ -2698,10 +2565,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
             (bind-key "C-c /" 'my/ts2-toogle-indent typescript-mode-map)
             (bind-key "C-c C-p" 'prettier-js typescript-mode-map)
             ))
-#+END_SRC
 
-** Elm
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package elm-mode
   :init (progn
           (defun my/elm-toggle-indent ()
@@ -2717,10 +2581,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
             (bind-key "C-c M-d" 'elm-documentation-lookup elm-mode-map)
             (bind-key "C-c C-/" 'my/elm-toggle-indent elm-mode-map)))
 
-
-            #+END_SRC
-** Cofeescript
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package coffee-mode
   :init (progn
           (defun my/coffee-toggle-indent ()
@@ -2736,9 +2596,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
                       (tern-mode 1))))
   :config (progn
             (bind-key "C-c C-/" 'my/coffee-toggle-indent coffee-mode-map)))
-#+END_SRC
-** Vue
-#+BEGIN_SRC emacs-lisp :results silent
+
 ;; npm install -g vls
 
 (use-package vue-mode
@@ -2747,11 +2605,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
   ;; (setq prettier-js-args '("--parser vue")
 
   )
-  
-#+END_SRC
 
-** Elisp
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package emacs-lisp
   :straight nil
   :ensure nil
@@ -2773,9 +2627,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
           (bind-key "C-c C-f" 'eval-last-sexp emacs-lisp-mode-map)
           (bind-key "C-c C-d" 'my-describe-symbol-at-point emacs-lisp-mode-map)
           ))
-#+END_SRC
-** Clojure
-#+BEGIN_SRC emacs-lisp :results silent
+
 (use-package clojure-mode)
 (use-package cider
   :init (progn
@@ -2807,27 +2659,17 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
                                         (clj-refactor-mode 1)
                                         (cljr-add-keybindings-with-prefix "C-c a")))))
 
-
-
-#+END_SRC
-** Scala
-   #+BEGIN_SRC emacs-lisp
 (use-package scala-mode
   :interpreter
   ("scala" . scala-mode))
 
-   #+END_SRC
-** Common Lisp
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package slime
   :init (progn
           (setq inferior-lisp-program "/usr/bin/sbcl")
           (slime-setup '(slime-fancy)))
   :config (progn
             (bind-key "<f8>" 'slime slime-mode-map)))
-#+END_SRC
-** Lua
-#+BEGIN_SRC emacs-lisp :results silent
+
 (use-package company-lua)
 (use-package lua-mode
   :init(progn
@@ -2844,9 +2686,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
            (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
            (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))))
 
-#+END_SRC
-** Elixir
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package elixir-mode)
 
 (use-package alchemist
@@ -2880,10 +2719,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
             ;; (unbind-key "C-M-c"  alchemist-iex-mode-map)
             ;; (unbind-key "C-M-t"  alchemist-iex-mode-map)
             (bind-key "C-l" 'alchemist-iex-clear-buffer alchemist-iex-mode-map)))
-#+END_SRC
 
-** Shell
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package company-shell)
 (use-package sh-script
   :init (progn
@@ -2927,9 +2763,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
                     )
           (bind-key "C-c C-c" 'sh-send-line-or-region-and-step sh-mode-map)
           (bind-key "C-c C-r" 'sh-send-line-or-region-and-step sh-mode-map)))
-#+END_SRC
-** Php
-#+BEGIN_SRC emacs-lisp :results silent
+
 (use-package php-mode
   :mode (("\\.php\\'" . php-mode))
   :config (progn
@@ -2938,10 +2772,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
           (unbind-key "C-d" php-mode-map)
           (unbind-key "C-." php-mode-map)))
 
-
-#+END_SRC
-** C/C++
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package c-mode-common
   :straight nil
   :ensure nil
@@ -2962,11 +2792,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
                      (unbind-key "M-q" c++-mode-map)
                      (unbind-key "C-c C-d" c++-mode-map)))))
 
-
-#+END_SRC
-
-** Java
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package cc-mode
   :init (progn
           (add-hook 'java-mode-hook
@@ -2976,10 +2801,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
             (unbind-key "C-d" java-mode-map)
             (unbind-key "C-C C-c" java-mode-map)
             )))
-#+END_SRC
 
-** Go
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package go-mode
  
   :init (progn
@@ -3012,12 +2834,6 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
   :init (progn
           (add-hook 'go-mode-hook 'go-eldoc-setup)))
 
-
-#+END_SRC
-** Rust
-#+BEGIN_SRC emacs-lisp :results silent
-
-
 ;; curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ;;curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-linux -o ~/.local/bin/rust-analyzer
 ;; ln -s ~/.local/bin/rust-analyzer /home/vince/.cargo/bin
@@ -3038,25 +2854,12 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
   :straight (:host github :repo "rhololkeolke/ron-mode" :branch "master")
   :mode "\\.ron\\'"
 )
-#+END_SRC
 
-** gdscript
-#+BEGIN_SRC emacs-lisp :results silent
 (use-package gdscript-mode)
-#+END_SRC
-* blockchain
-#+BEGIN_SRC emacs-lisp :results silent
+
 ;; sudo pacman -S ganache
 ;; sudo pacman -S solidity
 ;; npm install -g solium
-
-
-
-
-
-#+END_SRC
-* Keys
-#+BEGIN_SRC emacs-lisp :results silent
 
 (bind-key "C-M-c" 'previous-line-or-history-element minibuffer-local-map)
 (bind-key "C-M-t" 'next-line-or-history-element minibuffer-local-map)
@@ -3315,10 +3118,7 @@ See `https://github.com/aws-cloudformation/cfn-python-lint'."
 (bind-key* "M-4" 'split-window-below)
 (bind-key* "M-$" 'split-window-right)
 (bind-key* "M-@" 'balance-windows)
-#+END_SRC
 
-* Hydra
-#+BEGIN_SRC emacs-lisp :results silent
 (defhydra hydra-window (:hint nil :color pink)
   "
     ^Movement^      ^Split^             ^Switch^     ^Resize^     ^Buffer^
@@ -4507,11 +4307,6 @@ _l_ hide level
 (add-hook 'markdown-mode-hook (lambda() (bind-key "C--" #'hydra-markdown/body markdown-mode-map)))
 (add-hook 'pdf-view-mode-hook  (lambda() (bind-key "C--" #'hydra-pdftools/body pdf-view-mode-map)))
 
-#+END_SRC
-
-* Custom
-#+BEGIN_SRC emacs-lisp :results silent
-
 ;; mac related
 (setq mac-option-modifier 'super)
 (setq mac-command-modifier 'meta)
@@ -4525,9 +4320,3 @@ _l_ hide level
   "Prevent y-or-n-p from activating a dialog"
   (let ((use-dialog-box nil))
     ad-do-it))
-
-#+END_SRC
-
-
-
-
